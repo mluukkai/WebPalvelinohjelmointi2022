@@ -1,5 +1,5 @@
 
-## Web-palvelinohjelmointi syksy 2018, Tietojenkäsittelytieteen laitos, Helsingin Yliopisto
+## Web-palvelinohjelmointi syksy 2022, Tietojenkäsittelytieteen osasto, Helsingin Yliopisto
 
 https://github.com/mluukkai/WebPalvelinohjelmointi2018/blob/master/wadror.md
 

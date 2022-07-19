@@ -73,10 +73,8 @@ irb(main):014:0> h3 = { :nimi => "Esko", :osoite => "Westend" }
 => {:nimi=>"Esko", :osoite=>"Westend"}
 ```
 
-lue seuraavista ainakin ensimmäinen:
-* https://www.railstutorial.org/book/rails_flavored_ruby#sec-hashes_and_symbols
-* http://ruby.learncodethehardway.org/book/ex39.html
-* http://rubylearning.com/satishtalim/ruby_hashes.html
+lue seuraavasta linkistä lisää:
+* http://nicholasjohnson.com/ruby/ruby-course/exercises/hashes-and-symbols/
 
 ## taulukko
 
@@ -112,10 +110,8 @@ toka
 irb(main):026:0>
 ```
 
-lue seuraavista ainakin ensimmäinen
-* https://www.railstutorial.org/book/rails_flavored_ruby#sec-arrays_and_ranges
+lue seuraavasta linkistä lisää:
 * http://www.techotopia.com/index.php/Understanding_Ruby_Arrays
-* http://rubylearning.com/satishtalim/ruby_arrays.html
 
 ## each
 
@@ -151,8 +147,7 @@ lisätietoja
 # merkkijonot
 
 ks.
-* https://www.railstutorial.org/book/rails_flavored_ruby#sec-strings
-* http://ruby.learncodethehardway.org/book/ex6.html
+* https://www.rubyguides.com/2019/07/ruby-string-concatenation/
 
 # moduuli
 

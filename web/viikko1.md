@@ -2,7 +2,7 @@
 
 Web-sovellusten toimintaperiaate on periaatteessa yksinkertainen. Käyttäjä avaa selaimen ja kirjoittaa osoiteriville haluamansa sivun URL:in, esim. https://www.cs.helsinki.fi/u/mluukkai/. URL:in ensimmäinen osa, eli esimerkissämme www.cs.helsinki.fi on yleensä DNS-nimi, jonka avulla pystytään selvittämään www-sivua hallinnoivan palvelimen ip-osoite. Selain lähettää web-palvelimelle pyynnön sivusta käyttäen HTTP-protokollan GET-metodia. Jos osoite on oikea, ja sivupyynnön lähettäjällä on oikeus URL:n polun määrittelemään resurssiin (esimerkissämme opiskelu/index.html), palvelin palauttaa selaimelle _statuskoodin_ 200 ja sivun sisällön HTML-muodossa. Selain renderöi sitten sivun käyttäjälle. Jos sivua ei ole olemassa, palvelin palauttaa selaimelle virheestä kertovan statuskoodin 404.
 
-Palvelimen palauttama www-sivu voi olla __staattinen__, eli "käsin" palvelimella sijaitsevaan html-tiedostoon kirjoitettu tai __dynaaminen__, eli esim. palvelimen tietokannassa olevan datan perusteella pyynnön yhteydessä generoitu. Esim. sivulla https://guide.student.helsinki.fi/fi/node/811 oleva kurssien lista luetaan tietokannasta ja sivun renderöivä html-koodi muodostetaan aina uudelleen sivulle mentäessä, senhetkisen tietokannassa olevan kurssien listan perusteella.
+Palvelimen palauttama www-sivu voi olla __staattinen__, eli "käsin" palvelimella sijaitsevaan html-tiedostoon kirjoitettu tai __dynaaminen__, eli esim. palvelimen tietokannassa olevan datan perusteella pyynnön yhteydessä generoitu. Esim. [opintotarjonnan sivulla](https://studies.helsinki.fi/opintotarjonta?organisation=hy-org-116716376&page=0&period=hy-university-root-id%2F2022%2F0%2F1&searchText=&studyYear=2022) oleva kurssien lista luetaan tietokannasta ja sivun renderöivä html-koodi muodostetaan aina uudelleen sivulle mentäessä, senhetkisen tietokannassa olevan kurssien listan perusteella.
 
 Toisinaan www-sivuilla tiedon kulun suunta muuttuu ja dataa lähetetään selaimelta palvelimelle. Useimmiten tämä tapahtuu siten, että sivustolla on _lomake_, jolle käyttäjä syöttää palvelimelle lähetettävät tiedot. Tietojen lähettämistä varten HTTP-protokolla tarjoaa metodin POST (myös HTTP:n GET-metodia voi käyttää tietojen lähettämiseen).  
 
@@ -23,7 +23,7 @@ Kun moderneissa sovelluksissa palvelimelta haetaan dataa, ei palvelin välttäm�
 
 Tällä kurssilla keskitymme lähes yksinomaan web-sovellusten palvelinpuolen toiminnallisuuden toteuttamiseen. Viikoilla 6 ja 7 näemme muutaman esimerkin selaimen päässä javascriptillä toteutettavasta toiminnallisuudesta sekä sovelluksen ulkoasun muotoilusta CSS:n avulla.
 
-Kurssilla [Full stack -websovellushehitys](https://fullstackopen.github.io/) taas keskitytään pääosin selaimen puolella toteutettavaan toiminnallisuuteen. 
+Kurssilla [Full stack -websovellushehitys](https://fullstackopen.com/) taas keskitytään pääosin selaimen puolella toteutettavaan toiminnallisuuteen. 
 
 ## Kurssin materiaalin ja tehtävät
 
@@ -40,9 +40,9 @@ Kurssilla kaikki tehtävät ovat upotettu tähän materiaaliin. Seuraavaa tehtä
 >
 > Pyyntö palauttaa siis välilehdellä response näytettävän HTML-koodin. Koodi sisältää viitteitä css-tyylitiedostoihin, javascript-tiedostoihin sekä kuviin. Sivua renderöitäessä selain hakee kunkin näistä omalla GET-pyynnöllä.
 >
-> Pidä edelleen sama networking-välilehti auki. Tyhjennä developer toolsin välilehti painamalla vasemman reunan halkaistu pallo -symbolia (:no_entry_sign:). Kirjoita jotain tekstikenttään ja paina "Talleta". Tekstikenttä on toteutettu _html:n lomakkeena_ (engl. form). Lomakkeen tietojen lähetys palvelimelle tapahtuu HTTP-protokollan POST-metodin sisältävän pyynnön avulla.
+> Pidä edelleen sama networking-välilehti auki. Tyhjennä developer toolsin välilehti painamalla vasemman reunan halkaistu pallo -symbolia (:no_entry_sign:). Kirjoita jotain tekstikenttään ja paina "Save". Tekstikenttä on toteutettu _html:n lomakkeena_ (engl. form). Lomakkeen tietojen lähetys palvelimelle tapahtuu HTTP-protokollan POST-metodin sisältävän pyynnön avulla.
 >
-> Tutki POST-pyynnön sisältöä (listalla ylimpänä). Kohdan _headers_ alaosasta löytyy _Form data_, eli lomakkeen mukana lähtetety tieto. Huomaat, että pyyntöön vastattiin statuskoodilla 302, joka taas tarkoittaa sitä, että palvelin tekee selaimelle __uudelleenohjauksen__, eli pyytää selainta menemään vastauksen headereissa ilmoittamaan osoitteeseen. POST-pyynnön vastaus ei siis sisällä ollenkaan HTML-koodia jonka selain voisi renderöidä käyttäjälle. Heti POST-kutsun perään selain tekeekin automaattisesti GET-kutsun POST:in vastauksen headerissa __Location__ olevaan osoitteeseen. Vasta tämän uudelleenohjauksen aiheuttaman pyynnön vastauksena tullut sivu renderöidään käyttäjälle.
+> Tutki POST-pyynnön sisältöä (pyynnön nimi on new_note). Välilehdeltä _Payload_  löytyy _Form data_, eli lomakkeen mukana lähtetety tieto. Huomaat, että pyyntöön vastattiin statuskoodilla 302, joka taas tarkoittaa sitä, että palvelin tekee selaimelle __uudelleenohjauksen__, eli pyytää selainta menemään vastauksen headereissa ilmoittamaan osoitteeseen. POST-pyynnön vastaus ei siis sisällä ollenkaan HTML-koodia jonka selain voisi renderöidä käyttäjälle. Heti POST-kutsun perään selain tekeekin automaattisesti GET-kutsun POST:in vastauksen headerissa __Location__ olevaan osoitteeseen. Vasta tämän uudelleenohjauksen aiheuttaman pyynnön vastauksena tullut sivu renderöidään käyttäjälle.
 >
 > Tutki vielä joillekin muille www-sivuille tekemisesi pyyntöjen aiheuttamaa HTTP-protokollan viestintää.
 
@@ -88,15 +88,15 @@ Railsilla sovellusten tekeminen edellyttää luonnollisesti jonkinasteista Rubyn
 
 ## Komentorivi
 
-Railsilla tapahtuvassa sovelluskehityksessä komentorivin käyttön hallinta on suhteellisen tärkeää. Jos rutiinisi komentorivin käyttöön on huono, kannattaa tehdän Ohjelmistotekniikan menetelmien viikon 1 tehtävistä [osat 1 ja 2](https://github.com/mluukkai/otm-2018/blob/master/tehtavat/viikko1.md)
+Railsilla tapahtuvassa sovelluskehityksessä komentorivin käyttön hallinta on suhteellisen tärkeää. Jos rutiinisi komentorivin käyttöön on huono, kannattaa tehdän Ohjelmistotekniikka-kurssin [viikon 1 tehtävät](https://ohjelmistotekniikka-hy.github.io/python/viikko1)
 
 ## Kurssin suoritusmuoto
 
-Kurssin rakenne poikkeaa jossain määrin laitoksen kurssistandardista. Kurssilla tehdään ainoastaan yksi sovellus, samaa sovellusta tehdään sekä kurssimateriaalissa että materiaalin sekaan upotetuissa laskareissa. Kurssin materiaalia ei pystykään pelkästään lukemaan. Materiaalia seuratessa tulee itse rakentaa matkan varrella täydentyvää sovellusta, sillä muuten tehtävien tekeminen on mahdotonta. Toisin sanoen **kurssia on seurattava tasaisesti koko kurssin ajan**.
+Kurssin rakenne poikkeaa jossain määrin osaston kurssistandardista. Kurssilla tehdään ainoastaan yksi sovellus, samaa sovellusta tehdään sekä kurssimateriaalissa että materiaalin sekaan upotetuissa tehtävissä. Kurssin materiaalia ei pystykään pelkästään lukemaan. Materiaalia seuratessa tulee itse rakentaa matkan varrella täydentyvää sovellusta, sillä muuten tehtävien tekeminen on mahdotonta. Toisin sanoen **kurssia on seurattava tasaisesti koko kurssin ajan**.
 
 Jokaisen viikon deadlinen (sunnuntai klo 23.59) jälkeen pääset näkemääm edellisen viikon esimerkkivastauksen. Seuraavalla viikolla on mahdollista jatkaa joko oman sovelluksen rakentamista tai ottaa pohjaksi edellisen viikon esimerkkivastaus.
 
-Osa viikon tehtävistä on käytännössä pakollisia, muuten eteneminen pysähtyy viikon osalta. Osa tehtävistä taas on vapaaehtoisia, eikriittisten ominaisuuksien toteutuksia. Osa näistä ominaisuuksista oletetaan olevan ohjelmistossa seuraavalla viikolla, joten jos et ole tehnyt kaikkia viikon tehtäviä, kannattaa aloittaa esimerkkivastauksesta tai vaihtoehtoisesti copypasteta sieltä tarvittavat asiat koodiisi.
+Osa viikon tehtävistä on käytännössä pakollisia, muuten eteneminen pysähtyy viikon osalta. Osa tehtävistä taas on vapaaehtoisia, ei-kriittisten ominaisuuksien toteutuksia. Osa näistä ominaisuuksista oletetaan olevan ohjelmistossa seuraavalla viikolla, joten jos et ole tehnyt kaikkia viikon tehtäviä, kannattaa aloittaa esimerkkivastauksesta tai vaihtoehtoisesti copypasteta sieltä tarvittavat asiat koodiisi.
 
 ## Railsin asennus
 
@@ -703,42 +703,27 @@ Näkymätemplatet, eli erb-tiedostot ovat html:ää, joihin on upotettu Ruby-koo
 Tarkastellaan valmiiksigeneroitua näkymätemplatea eli tiedostoa app/views/breweries/index.html.erb
 
 ```
-<h1>Listing breweries</h1>
+<p style="color: green"><%= notice %></p>
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Year</th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
+<h1>Breweries</h1>
 
-  <tbody>
-    <% @breweries.each do |brewery| %>
-      <tr>
-        <td><%= brewery.name %></td>
-        <td><%= brewery.year %></td>
-        <td><%= link_to 'Show', brewery %></td>
-        <td><%= link_to 'Edit', edit_brewery_path(brewery) %></td>
-        <td><%= link_to 'Destroy', brewery, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<div id="breweries">
+  <% @breweries.each do |brewery| %>
+    <%= render brewery %>
+    <p>
+      <%= link_to "Show this brewery", brewery %>
+    </p>
+  <% end %>
+</div>
 
-<br>
-
-<%= link_to 'New Brewery', new_brewery_path %>
+<%= link_to "New brewery", new_brewery_path %>
 ```
 
-Näkymätemplate muodostaa taulukon, jossa jokainen muuttujan @breweries sisältämä panimo tulee omalle rivilleen.
+Näkymätemplate muodostaa listan, jossa jokainen muuttujan @breweries sisältämä panimo tulee omalle rivilleen.
 
 Näkymätemplateen upotettu Ruby-koodi tulee <% %> merkkien sisälle. <%= %> taas aiheuttaa Ruby-komennon arvon tulostumisen ruudulle.
 
-Tutustumme taulukon generointiin kohta hieman tarkemmin. Lisätään ensin sivulle (eli erb-templateen) tieto panimoiden yhteenlasketusta määrästä. Eli lisää johonkin kohtaan sivua, esim. heti h1-tagien sisällä olevan otsikon jälkeen seuraava rivi
+Tutustumme listan generointiin kohta hieman tarkemmin. Lisätään ensin sivulle (eli erb-templateen) tieto panimoiden yhteenlasketusta määrästä. Eli lisää johonkin kohtaan sivua, esim. heti h1-tagien sisällä olevan otsikon jälkeen seuraava rivi
 
 ```
 <p> Number of breweries: <%= @breweries.count %> </p>
@@ -746,44 +731,41 @@ Tutustumme taulukon generointiin kohta hieman tarkemmin. Lisätään ensin sivul
 
 Mene nyt selaimella [panimot listaavalle sivulle](http://localhost:3000/breweries) ja varmista, että lisäys toimii.
 
-Palataan sitten tarkemmin HTML-taulukon muodostavaan koodiin. Jokainen panimo tulostuu omalle rivilleen taulukkoon Rubyn <code>each</code>-iteraattoria käyttäen:
+Palataan sitten tarkemmin HTML-taulukon muodostavaan koodiin. Jokainen panimo tulostuu omalle rivilleen listaan Rubyn <code>each</code>-iteraattoria käyttäen:
 
 ```
-<% @breweries.each do |brewery| %>
-  <tr>
-    <td><%= brewery.name %></td>
-    <td><%= brewery.year %></td>
-    <td><%= link_to 'Show', brewery %></td>
-    <td><%= link_to 'Edit', edit_brewery_path(brewery) %></td>
-    <td><%= link_to 'Destroy', brewery, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
-<% end %>
+  <% @breweries.each do |brewery| %>
+    <%= render brewery %>
+    <p>
+      <%= link_to "Show this brewery", brewery %>
+    </p>
+  <% end %>
 ```
 
-Muuttujaan ```@breweries``` talletettu panimoiden lista käydään läpi ```each```-iteraattorin avulla. (lisää eachista ks. https://github.com/mluukkai/WebPalvelinohjelmointi2018/blob/master/web/rubyn_perusteita.md#each). Jokaista yksittäistä panimoa (joihin viitataan iteraattorin toistettavassa koodilohkossa nimellä <code>brewery</code>) kohti luodaan taulukkoon tr-tagien sisällä oleva rivi, jossa on viisi saraketta. Ensimmäiseen sarakkeeseen tulee panimon nimi ```<%= brewery.name %>``` ja toiseen perustamisvuosi. Kolmanteen sarakkeeseen generoituu linkki panimon tiedot näyttävälle sivulle. Linkin generoiva Ruby-koodi on ```<%= link_to 'Show', brewery %>``` .
+Muuttujaan ```@breweries``` talletettu panimoiden lista käydään läpi ```each```-iteraattorin avulla. (lisää eachista ks. https://github.com/mluukkai/WebPalvelinohjelmointi2018/blob/master/web/rubyn_perusteita.md#each). Jokaista yksittäistä panimoa (joihin viitataan iteraattorin toistettavassa koodilohkossa nimellä <code>brewery</code>) kohti luodaan listaan div-tagien sisällä olevat rivit. Ensimmäiselle riville tulee panimon nimi ja toiselle perustamisvuosi. Rails luo rivit käyttäen <code>render</code> metodia jokaista panimoa kohden. <code>render</code> metodi käyttää hyväkseen [Partial templateja](https://guides.rubyonrails.org/layouts_and_rendering.html#using-partials) eli tutummin "partialseja". Rails on luonut yksittäiselle panimolle automaattisesti partials-tiedoston (app/views/breweries/_brewery.html.erb). Partials-tiedostot nimetään käyttäen tiedoston alussa alaviivaa, jotta ne pystytänä jo silmäyksellä erottamaan normaaleista näkymistä. Kolmannelle riville luodaan  linkki panimon tiedot näyttävälle sivulle. Linkin generoiva Ruby-koodi on ```<%= link_to "Show this brewery", brewery %>``` .
 
 Kyseessä on oikeastaan lyhennysmerkintä seuraavasta:
 
 ```
-<%= link_to 'Show', brewery_path(brewery.id) %>
+<%= link_to "Show this brewery", brewery_path(brewery.id) %>
 ```
 joka generoi sivulle seuraavanlaisen HTML-koodin (seuraavassa oleva numero riippuu taulukon rivillä olevan olion id-kentän arvosta):
 
 ```
-<a href="/breweries/3">Show</a>
+<a href="/breweries/1">Show this brewery</a>
 ```
 
-eli linkin osoitteeseen "breweries/3". Komennon ```link_to``` ensimmäinen parametri siis on a-tagiin tuleva nimi, ja toinen on linkin osoite.
+eli linkin osoitteeseen "breweries/1". Komennon ```link_to``` ensimmäinen parametri siis on a-tagiin tuleva nimi, ja toinen on linkin osoite.
 
 Itse osoite luodaan tässä pitemmässä muodossa apumetodilla ```brewery_path(brewery.id)```, joka palauttaa polun id:n ```brewery.id``` omaavan panimon sivulle. Saman asian siis metodin <code>link_to</code> parametrina saa aikaan olio itse, eli esimerkkimme tapauksessa muuttuja <code>brewery</code>
 
-Linkin generoivan komennon voisi myös "kovakoodata" muodossa ```<%= link_to 'Show', "breweries/#{brewery.id}" %>```, mutta kovakoodaus ei ole yleensä eikä tässäkään tapauksessa kovin järkevää.
+Linkin generoivan komennon voisi myös "kovakoodata" muodossa ```<%= link_to "Show this brewery", "breweries/#{brewery.id}" %>```, mutta kovakoodaus ei ole yleensä eikä tässäkään tapauksessa kovin järkevää.
 
-Mitä tarkoittaa ```"breweries/#{brewery.id}"```? Ks. https://github.com/mluukkai/WebPalvelinohjelmointi2018/blob/master/web/rubyn_perusteita.md#merkkijonot
+Mitä tarkoittaa ```"breweries/#{brewery.id}"```? Kyseinen merkkijonon alussa on ensiksi kaikkiin panimoihin viittaava "breweries", jonka jälkeen siihen tulee yksilöivän panimon id muttujana. Muuttuja asetetaan käyttäen <code>#{}</code>-notaatiota, jonka avulla merkkijonoon voidaan upottaa muuttajia. 
 
 > ## Tehtävä 6
 >
-> muuta panimon nimi klikattavaksi ja poista taulukosta show-kenttä linkkeineen
+> muuta panimon nimi klikattavaksi (partials-tiedostossa) ja poista listasta show-kenttä linkkeineen
 
 Tehtävän jälkeen sovelluksesi panimot näyttävien sivujen tulisi näyttää seuraavalta
 
@@ -807,7 +789,7 @@ end
 
 Metodi ei sisällä mitään koodia! Huomaamme kuitenkin, että luokan määrittelyn alussa on rivi
 
-    before_action :set_brewery, only: [:show, :edit, :update, :destroy]
+      before_action :set_brewery, only: %i[ show edit update destroy ]
 
 Tämä taas saa aikaan sen, että ennen jokaista lueteltua metodia (show, edit, update ja destroy) suoritetaan metodin <code>set_brewery</code> koodi. Metodin määrittely löytyy luokan loppupuolelta:
 
@@ -834,7 +816,7 @@ Ennen metodin <code>show</code> suoritusta siis suoritetaan komento
 
     @brewery = Brewery.find(params[:id])
 
-joka viittaa muuttujaan ```params```, joka taas sisältää suorituksen alla olevaan HTTP-kutsuun liittyvät tiedot. Muuttuja <code>params</code> on tyypiltään assosiatiivinen taulukko eli hash. Erityisesti muuttujan arvo avaimella <code>:id</code> eli ```params[:id]``` kertoo tässä tapauksessa tarkasteltavana olevan panimon id:n, eli sivun polun breweries/xx, kenoviivan jälkeisen osan.
+joka viittaa muuttujaan ```params```, joka taas sisältää suorituksen alla olevaan HTTP-kutsuun liittyvät tiedot. Muuttuja <code>params</code> on tyypiltään assosiatiivinen taulukko eli hash. Erityisesti muuttujan arvo avaimella <code>:id</code> eli ```params[:id]``` kertoo tässä tapauksessa tarkasteltavana olevan panimon id:n, eli polun breweries/#{id}, kenoviivan jälkeisen osan.
 
 Panimo haetaan tietokannasta tutulla komennolla ```Brewery.find``` ja sijoitetaan muuttujaan ```@brewery```.
 Metodi <code>show</code> renderöi lopuksi näkymätemplaten ```show.html.erb```. Näkymätemplaten generointi tapahtuu jälleen automaattisesti Railsin konvention perusteella, eli panimokontrollerin metodin ```show``` suorituksen lopussa renderöidään näkymä views/breweries/show.html.erb ellei koodi määrää muuta.
@@ -849,29 +831,27 @@ render :show
 Näkymätemplaten views/breweries/show.html.erb koodi on seuraavassa:
 
 ```
-<p id="notice"><%= notice %></p>
+<p style="color: green"><%= notice %></p>
 
-<p>
-  <strong>Name:</strong>
-  <%= @brewery.name %>
-</p>
+<%= render @brewery %>
 
-<p>
-  <strong>Year:</strong>
-  <%= @brewery.year %>
-</p>
+<div>
+  <%= link_to "Edit this brewery", edit_brewery_path(@brewery) %> |
+  <%= link_to "Back to breweries", breweries_path %>
 
-<%= link_to 'Edit', edit_brewery_path(@brewery) %> |
-<%= link_to 'Back', breweries_path %>
+  <%= button_to "Destroy this brewery", @brewery, method: :delete %>
+</div>
 ```
 
 Sivun yläosassa oleva id:llä __notice__ varustettu osa on tarkoitettu näyttämään panimon luomiseen tai muutokseen liittyviä viestejä, asiasta lisää myöhemmin.
+
+Sivulla käytetään samaa partialsia render-metodissa, kuin etusivulla. Aiemman muutoksen seurauksena sivun otsikko on nyt linkki sivuun itseensä.
 
 > ## Tehtävä 7: Panimon sivun hiominen
 >
 > Lisätään sivulle tieto panimoon liittyvien oluiden määrästä eli renderöi sivun sisällä <code>@brewery.beers.count</code>
 >
-> Muokkaa valmista sivua siten, että panimon nimestä tulee h2-tason otsikko ja vuosi ilmoitetaan kursivoituna tyyliin "_Established_ _in_ _1897_".
+> Muokkaa valmista sivua siten, että panimon nimestä tulee h2-tason otsikko ja vuosi ilmoitetaan kursivoituna tyyliin "_Established_ _in_ _1897_". Tämän tehdäksesi on otettava partialsin renderöinti pois käytöstä ja tehtävä renderöinti ilman sen apua.
 
 Jatketaan muutosten tekemistä.
 
@@ -908,7 +888,7 @@ Viritellään lopuksi kaikkien oluiden listaa.
 >
 > Muuta sivua siten että panimon id:n sijaan näytetään olueeseen liittyvän panimon nimi, ja että nimeä klikkaamalla päästään panimon sivulle
 >
-> Muuta myös oluen nimi klikattavaksi ja poista show-sarake
+> Muuta myös oluen nimi klikattavaksi ja poista show-linkki
 >
 > Huom: jos törmäät ongelmiin, kannattaa lukea seuraava luku!
 
@@ -1033,8 +1013,8 @@ Jos et ole käyttänyt aiemmin herokua
 * luo Herokuun tunnus.
 * luo ssh-avain ja lisää se herokuun sivulla https://dashboard.heroku.com/account
   * ohje ssh-avaimen luomiseen https://github.com/mluukkai/otm-2018/blob/master/tehtavat/viikko1.md#julkinen-avain 
-* Asenna komentoriviliittymän sisältävä Heroku Toolbelt sivun https://toolbelt.heroku.com/ ohjeiden mukaan.
-  * laitoksen koneilta ja päivitysten suhteen ajantasaisista
+* Asenna komentoriviliittymän sisältävä Heroku CLI sivun https://devcenter.heroku.com/articles/heroku-cli ohjeiden mukaan.
+  * osaston koneilta ja päivitysten suhteen ajantasaisista
 
 Asennettuasi komentorivikäyttöliittymän mene sovelluksen juurihakemistoon, ja luo sovellusta varten heroku-instanssi komennolla <code>heroku create</code>:
 
@@ -1067,21 +1047,23 @@ end
 
 group :production do
    gem 'pg'
-   gem 'rails_12factor'
 end
 ```
 
 Suoritetaan komentoriviltä komento <code>bundle install</code>, jotta muutokset tulevat käyttöön:
 
 ```ruby
-$ ratebeer git:(master) ✗ bundle install
-Using rake 12.3.1
-Using concurrent-ruby 1.0.5
-Using i18n 1.1.0
-Using minitest 5.11.3
-Using thread_safe 0.3.6
+$ ratebeer git:(master) ✗ bundle install            
+Fetching gem metadata from https://rubygems.org/..........
+Resolving dependencies...
+Using rake 13.0.6
+Using concurrent-ruby 1.1.10
+Using minitest 5.16.1
+Using builder 3.2.4
 ...
-Bundle complete! 19 Gemfile dependencies, 94 gems now installed.
+Using rails 7.0.3
+Installing pg 1.4.1 with native extensions
+Bundle complete! 16 Gemfile dependencies, 75 gems now installed.
 Use `bundle info [gemname]` to see where a bundled gem is installed.
 ```
 
@@ -1099,10 +1081,10 @@ git add -A
 git commit -m"updated Gemfile for Heroku"
 ```
 
-Nyt olemme valmiina käynnistämään sovelluksen herokussa. Sovellus käynnistetään suorittamalla komentoriviltä operaatio <code>git push heroku master</code>
+Nyt olemme valmiina käynnistämään sovelluksen herokussa. Sovellus käynnistetään suorittamalla komentoriviltä operaatio <code>git push heroku main</code>
 
 ```ruby
-$ git push heroku master
+$ git push heroku main
 Counting objects: 136, done.
 Delta compression using up to 4 threads.
 Compressing objects: 100% (122/122), done.
@@ -1123,7 +1105,7 @@ remote:        https://young-escarpment-87255.herokuapp.com/ deployed to Heroku
 remote:
 remote: Verifying deploy... done.
 To https://git.heroku.com/young-escarpment-87255.git
- * [new branch]      master -> master
+ * [new branch]      main -> main
 ```
 
 Sovelluksen käynnistys näytti onnistuneen ongelmitta.
@@ -1172,26 +1154,25 @@ Kuten edellisessä luvussa mainittiin Rails-sovelluksen käyttämät kirjastot e
 Ennen edellisessä luvussa tekemiämme muutoksia Gemfilen alku näyttää seuraavalta (poiskommentoidut osat on jätetty allaolevasta pois):
 
 ```ruby
-source 'https://rubygems.org'
+source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.5.1'
-gem 'rails', '~> 5.2.1'
-gem 'sqlite3'
-gem 'puma', '~> 3.11'
-gem 'sass-rails', '~> 5.0'
-gem 'uglifier', '>= 1.3.0'
-gem 'coffee-rails', '~> 4.2'
-gem 'turbolinks', '~> 5'
-gem 'jbuilder', '~> 2.5'
-gem 'bootsnap', '>= 1.1.0', require: false
+ruby "3.1.2"
+
+gem "rails", "~> 7.0.3"
+gem "sprockets-rails"
+gem "puma", "~> 5.0"
+gem "importmap-rails"
+gem "turbo-rails"
+gem "stimulus-rails"
+gem "jbuilder"
 ```
 
 Gemfile siis listaa joukon gemejä, joita sovellus käyttää. Kuten huomaamme, on Rails itsekin gem. Joissain tapauksissa gemin yhteydessä määritellään käytettävä versio tai minimissään käyvä versionumero.
 
 Riippuvuudet ladataan osoitteesta https://rubygems.org Bundler-ohjelmaa, ks. http://bundler.io/ käyttäen antamalla komentoriviltä komento <code>bundle install</code>. Bundler lataa gemit ja niiden riippuvuudet rubygems.org:ista ja tämän jälkeen sovellus on valmiina käytettäväksi.
 
-Kun <code>bundle install</code> on suoritettu ensimmäisen kerran, syntyy tiedosto <code>Gemfile.lock</code> joka määrittelee tarkasti mitkä versiot gemeistä on asennettu. Gemfilehän ei määrittele välttämättä tarkkoja versioita. Tämän jälkeen kutsuttaessa <code>bundle install</code> asennetaan Gemfile.lock tiedostossa määritellyt versiot. Suorittamalla <code>bundle update</code> saadaan tarvittaessa ladattua uusimmat gemit ja luodaan uusi Gemfile.lock-tiedosto. Katso tarkemmin Bundlerin toiminnasta ositteesta http://bundler.io/v1.6/rationale.html
+Kun <code>bundle install</code> on suoritettu ensimmäisen kerran, syntyy tiedosto <code>Gemfile.lock</code> joka määrittelee tarkasti mitkä versiot gemeistä on asennettu. Gemfilehän ei määrittele välttämättä tarkkoja versioita. Tämän jälkeen kutsuttaessa <code>bundle install</code> asennetaan Gemfile.lock tiedostossa määritellyt versiot. Suorittamalla <code>bundle update</code> saadaan tarvittaessa ladattua uusimmat gemit ja luodaan uusi Gemfile.lock-tiedosto. Katso tarkemmin Bundlerin toiminnasta ositteesta https://bundler.io/docs.html
 
 ## Suoritusympäristöt
 
@@ -1213,28 +1194,27 @@ Joskus eri ympäristöt tarvitsevat erilaisia riippuvuuksia, esim. kun sovellust
 Eri ympäristöjen käyttämät gemit voidaan määritellä Gemfilessä group-lohkojen avulla. Seuraavassa sovelluksemme Gemfile Herokun edellyttämien muutosten jälkeen:
 
 ```ruby
-source 'https://rubygems.org'
+source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.5.1'
-gem 'rails', '~> 5.2.1'
+ruby "3.1.2"
+
+gem "rails", "~> 7.0.3"
+gem "sprockets-rails"
+gem "puma", "~> 5.0"
+gem "importmap-rails"
+gem "turbo-rails"
+gem "stimulus-rails"
+gem "jbuilder"
 
 group :development, :test do
   gem 'sqlite3'
 end
 
 group :production do
-   gem 'pg'
-   gem 'rails_12factor'
+  gem 'pg'
 end
 
-gem 'puma', '~> 3.11'
-gem 'sass-rails', '~> 5.0'
-gem 'uglifier', '>= 1.3.0'
-gem 'coffee-rails', '~> 4.2'
-gem 'turbolinks', '~> 5'
-gem 'jbuilder', '~> 2.5'
-gem 'bootsnap', '>= 1.1.0', require: false
 ```
 
 sqlite3 gem on siis käytössä ainoastaan development- ja test-ympäristöissä. Ainoastaan tuotantoympäristössä taas käytössä ovat gemit pg ja rails_12factor.
@@ -1243,4 +1223,4 @@ sqlite3 gem on siis käytössä ainoastaan development- ja test-ympäristöissä
 
 Commitoi kaikki tekemäsi muutokset ja pushaa koodi Githubiin. Lisää Githubin readme-tiedostoon linkki sovelluksen Heroku-instanssiin. Oletusarvoisesti Rails-sovelluksen readme-tiedostoon generoituvan sisältö kannattanee poistaa. _Sovelluksen vieminen Herokuun ei ole edellytys palautuksen tekeminen, se on kuitenkin ehdottoman suositeltavaa ja hyödyllistä._
 
-Tehtävät kirjataan palautetuksi osoitteeseen https://studies.cs.helsinki.fi/courses/#/rails2018
+Tehtävät kirjataan palautetuksi osoitteeseen https://studies.cs.helsinki.fi/courses/#/rails2022

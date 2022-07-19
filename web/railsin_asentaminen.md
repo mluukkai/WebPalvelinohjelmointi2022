@@ -1,10 +1,12 @@
 **HUOM** sudoa ei tule käyttää rbenv:iä tai muita rubyn versiomanagereja käyttäessä (poislukien kirjastojen asentaminen), sillä asennus tehdään käyttäjän omaan kotihakemistoon. 
 
 Varaa asennukseen kunnolla aikaa ja tee se mieluusti joskus kun levypalvelinten käyttö on muutoin vähäistä. Älä jätä asennusta ohjauksen alkuun, jos haluat tehdä muutakin kuin pyöritellä peukaloita.
- 
+
+Kurssilla suositellaan ensisijaisesti käytettävän omaa tietokonetta.
+
 --
 
-Asennamme tässä Rubyn version 2.5.1 ja Railsin version 5.2.1 viimeaikoina suosioon nousseella [rbenv-versiomanagerilla](https://github.com/sstephenson/rbenv)
+Asennamme tässä Rubyn version 3.1.2 ja Railsin version 7.0.3 [rbenv-versiomanagerilla](https://github.com/sstephenson/rbenv)
 
 Voit halutessasi käyttää myös [RVM:ää](https://rvm.io/rvm/install)  eli rbenvin lähisukulaista.
 
@@ -16,7 +18,9 @@ Voit halutessasi käyttää myös [RVM:ää](https://rvm.io/rvm/install)  eli rb
 
 Ruby on Railsin asentaminen Windowsiin onnistuu (ehkä) sivun [http://railsinstaller.org/en](http://railsinstaller.org/en) ohjeilla.
 
-Jos haluat välttämättä käyttää Windowsia ja et suostu käyttämään laitoksen konetta, tapahtuu kurssille osallistuminen omalla vastuulla.
+Windowsilla suositellaan käytettäväksi [WSL:ää](https://docs.microsoft.com/en-us/windows/wsl/install)
+
+Jos haluat välttämättä käyttää Windowsia ja et suostu käyttämään osaston konetta tai omaa fuksiläppäriä, tapahtuu kurssille osallistuminen omalla vastuulla.
 
 ## Yliopiston etätyöpöytä
 
@@ -27,9 +31,9 @@ Myös etätyöpöytää käyttäessäsi joudut asentamaan Rubyn ja Railsin allao
 
 ## rbenv Linuxille
 
-Allaolevat on testattu laitoksen koneissa ja Ubuntun uusimman LTS version kanssa. Seuraavassa luvussa ohjeet OSX:lle. Windowsiin asentaminen ainoastaan omalla vastuulla! 
+Allaolevat on testattu osaston koneissa ja Ubuntun uusimman LTS version kanssa. Seuraavassa luvussa ohjeet OSX:lle. Windowsiin asentaminen ainoastaan omalla vastuulla! 
 
-**Huom:** koneella tulee olla muutamia kirjastoja, joiden asennus onnistuu Ubuntussa komennolla <code>sudo apt-get install git-core curl zlib1g-dev build-essential libssl-dev libreadline-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt1-dev libcurl4-openssl-dev software-properties-common libffi-dev nodejs yarn</code>. **Laitoksen koneilla ja ajantasalla olevilla fuksikannettavilla kirjastot ovat valmiina.**
+**Huom:** koneella tulee olla muutamia kirjastoja, joiden asennus onnistuu Ubuntussa komennolla <code>sudo apt-get install git-core curl zlib1g-dev build-essential libssl-dev libreadline-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt1-dev libcurl4-openssl-dev software-properties-common libffi-dev nodejs yarn</code>. **Osaston koneilla ja ajantasalla olevilla fuksikannettavilla kirjastot ovat valmiina.**
 
 Toimitaan sivun [https://github.com/rbenv/rbenv#installation](https://github.com/rbenv/rbenv#installation) kohdan _Installation, Basic GitHub Checkout_ mukaan, eli annetaan terminaalissa seuraavat komennot:
 
@@ -46,17 +50,17 @@ Uudelleenkäynnistä terminaali
 
 Käynnistä terminaali ja varmista seuraavan komennon avulla, että kaikki on kunnossa
 
-* curl -fsSL https://github.com/rbenv/rbenv-installer/raw/master/bin/rbenv-doctor | bash
+* curl -fsSL https://github.com/rbenv/rbenv-installer/raw/main/bin/rbenv-doctor | bash
 
 Komennon tulostuksen pitäisi näyttää suunilleen seuraavalta:
 
 ```
-Checking for `rbenv' in PATH: /usr/local/bin/rbenv
+Checking for `rbenv' in PATH: /home/user/.rbenv/bin/rbenv
 Checking for rbenv shims in PATH: OK
-Checking `rbenv install' support: /usr/local/bin/rbenv-install (ruby-build 20170523)
+Checking `rbenv install' support: /home/user/.rbenv/plugins/ruby-build/bin/rbenv-install (ruby-build 20220610)
 Counting installed Ruby versions: none
-  There aren't any Ruby versions installed under `~/.rbenv/versions'.
-  You can install Ruby versions like so: rbenv install 2.2.4
+  There aren't any Ruby versions installed under `/home/user/.rbenv/versions'.
+  You can install Ruby versions like so: rbenv install 3.1.2
 Checking RubyGems settings: OK
 Auditing installed plugins: OK
 ```
@@ -95,10 +99,10 @@ Käynnistä tässä vaiheessa terminaali uudelleen.
 
 Kun _rbenv_ on asennettu, asennetaan ja määritellään käytettävä Ruby:n versio komennoilla
 
-    rbenv install 2.5.1
-    rbenv global 2.5.1
+    rbenv install 3.1.2
+    rbenv global 3.1.2
 
-Komento asentaa Rubyn version 2.5.1, joka on Rubyn uusin versio. Voit tarkistaa asennettavissa olevat versiot komennolla <code>rbenv install --list</code>
+Komento asentaa Rubyn version 3.1.2, joka on Rubyn uusin versio. Voit tarkistaa asennettavissa olevat versiot komennolla <code>rbenv install --list</code>
 
 Varmista, että komennon <code>which ruby</code> tulos on suunnilleen seuraava:
 
@@ -111,5 +115,5 @@ Asennetaan sitten Rails antamalla komentoriviltä seuraavat komennot (vastaa mah
     gem install rspec
     gem install rake 
     rbenv rehash
-    gem install rails -v 5.2.1
+    gem install rails -v 7.0.3
     rbenv rehash
