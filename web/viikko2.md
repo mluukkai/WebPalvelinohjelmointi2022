@@ -10,7 +10,9 @@ Tämä asetus muistetaan jatkossa, joten pelkkä `bundle install` riittää kun 
 
 Käytäthän jo järkevää editoria, eli jotain muuta kun nanoa, geditiä tai notepadia? Suositeltavia editoreja ovat esim. RubyMine, Visual Studio Code ks lisää [täältä](https://github.com/mluukkai/WebPalvelinohjelmointi2018/blob/master/wadror.md#editoriide)
 
-Itse käytän nykyään [Visual Studio Codea](https://code.visualstudio.com). Suosittelen! Jos käytät VSC:tä, kannattaa ehdottamasti asentaa [Ruby-plugin](https://code.visualstudio.com/docs/languages/overview)
+Nykyään hyvin yleisesti käytössä on [Visual Studio Codea](https://code.visualstudio.com). Jos käytät VSC:tä, kannattaa ehdottamasti asentaa [Ruby-plugin](https://code.visualstudio.com/docs/languages/overview)
+
+Tärkeintä editorin valinnassa on kuitenkin loppuviimeeksi se, että käyttäjälle sen käyttäminen on mieluisaa.
 
 ## Parempi konsoli 
 
@@ -20,9 +22,9 @@ Lisää tiedostoon _Gemfile_ rivi <code>gem 'pry-rails'</code> seuraavaan kohtaa
 
 ```
 group :development, :test do
-  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
-  gem 'pry-rails'  # lisää siis tämä rivi!
+  # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
+  gem "debug", platforms: %i[ mri mingw x64_mingw ]
+  gem 'pry-rails' # lisää siis tämä rivi
 end
 ```
 
@@ -387,11 +389,9 @@ b.ratings << Rating.create(score:15)
 Yritetään luoda olut ilman panimoa:
 
 ```ruby
-> b = Beer.create name: 'anonymous', style: 'watery'
-   (0.1ms)  begin transaction
-   (0.1ms)  rollback transaction
-=> #<Beer:0x00007fb9d5b7f958 id: nil, name: "anonymous", style: "watery", brewery_id: nil, created_at: nil, updated_at: nil>
-[3] pry(main)>
+pry(main)> b = Beer.create name:"anonymous", style: "watery"
+=> #<Beer:0x00007f4444abc8b0 id: nil, name: "anonymous", style: "watery", brewery_id: nil, created_at: nil, updated_at: nil>
+pry(main)>
 ```
 
 _id_ ja aikaleimakentät eivät saa arvoja ollenkaan, näyttääkin siltä että olut ei talletu ollenkaan tietokantaan.
@@ -399,12 +399,8 @@ _id_ ja aikaleimakentät eivät saa arvoja ollenkaan, näyttääkin siltä että
 Jos kutsumme oluen metodia _errors_, kertoo olut syyn tallettumisen epäonnistumiselle
 
 ```ruby
-> b.errors
-=> #<ActiveModel::Errors:0x00007fb9d54f8b98
- @base=
-  #<Beer:0x00007fb9d5b7f958 id: nil, name: "anonymous", style: "watery", brewery_id: nil, created_at: nil, updated_at: nil>,
- @details={:brewery=>[{:error=>:blank}]},
- @messages={:brewery=>["must exist"]}>
+pry(main)> b.errors
+=> #<ActiveModel::Errors [#<ActiveModel::Error attribute=brewery, type=blank, options={:message=>:required}>]>
 ```
 
 eli olut ei suostu tallettumaan kantaan ilman tietoa panimosta. Voimme korjata tilanteen antamalla arvon panimolle ja kutsumalla oluelle metodia _save_:
@@ -466,7 +462,7 @@ Tässä vaiheessa sivun pitäisi näyttää suunnilleen seuraavalta
 
 Reittaus renderöityy hiukan ikävässä muodossa. Tämä johtuu siitä, että li-elementin sisällä on pelkkä olion nimi, ja koska emme ole määritelleet Ratingille olion merkkijonomuotoa määrittelevää <code>to_s</code>-metodia, käytössä on kaikkien luokkien yliluokalta Objectilta peritty oletusarvoinen <code>to_s</code>.
 
-Määrittelemme hetken kuluttua reittauksille metodin <code>to_s</code>, tutkitaan ensin kuitenkin muutamaa asiaa liittyen olion metodien määrittelyyn.
+Luomme hetken kuluttua reittauksille partials-tiedoston, joka pilkkoo koodia osiin ja jonka avulla voimme tuottaa helposti luettavan muodon arvosteluille. Tutkitaan ensin kuitenkin muutamaa asiaa liittyen olion metodien määrittelyyn.
 
 ## Muutamia selvennyksiä Railsin model-olioista
 
@@ -608,9 +604,12 @@ Panimon sisällä <code>year</code> siis on ActiveRecordin tietokantaan tallenta
 
 > ## Tehtävä 3
 >
-> Tee sitten luokalle Rating metodi <code>to_s</code>, joka palauttaa oliosta paremman merkkijonoesityksen, esim. muodossa "karhu 35", eli ensin reitatun oluen nimi ja sen jälkeen reittauksen pistemäärä.
+> Tee sitten luokalle Rating partials-tiedosto, jossa arvostelu oliosta tehdään parempi mmerkkijonoesitys muodossa "karhu 35", eli ensin reitatun oluen nimi ja sen jälkeen reittauksen pistemäärä.
 >
 > Merkkijonon muodostamisessa myös seuraavasta voi olla apua https://github.com/mluukkai/WebPalvelinohjelmointi2018/blob/master/web/rubyn_perusteita.md#merkkijonot
+>
+> Apua partials-tiedoston tekemiseen ja renderöimiseen voi katsoa esim. _beer.html.erb ja vastaavasta index.html.erb tiedostosta. Muista partials-tiedostojen nimeämiskäytäntö!
+>
 
 
 Tehtävän jälkeen reittausten sivujen tulisi näyttää suunnilleen seuraavalta:
@@ -676,6 +675,8 @@ Eli kuten yllä näemme, ei pelkkä koodin uudelleenlataaminen vielä riitä, si
 >  beer has some ratings
 ><% end %>
 >```
+> Muista palauttaa keskiarvo liukulukuna, tässä voi käyttää apuna to_f metodia
+>
 
 Tehtävän jälkeen oluen sivun tulisi näyttää suunnilleen seuraavalta (huom: edellisen viikon jäljiltä sivullasi saattaa näkyä panimon nimen sijaan panimon id. Jos näin on, muuta näkymäsi vastaamaan kuvaa):
 
@@ -683,11 +684,11 @@ Tehtävän jälkeen oluen sivun tulisi näyttää suunnilleen seuraavalta (huom:
 
 > ## Tehtävä 5
 >
-> Moduuli enumerable (ks. https://ruby-doc.org/core-2.5.1/Enumerable.html) sisältää runsaasti oliokokoelmien läpikäyntiin tarkoitettuja apumetodeja.
+> Moduuli enumerable (ks. https://ruby-doc.org/core-3.1.2/Enumerable.html) sisältää runsaasti oliokokoelmien läpikäyntiin tarkoitettuja apumetodeja.
 >
 > Oliokokoelmamaiset luokat voivat sisällyttää moduulin enumerable toiminnallisuuden itselleen, ja tällöin ne perivät moduulin tarjoaman toiminnallisuuden.
 >
-> Tutustu nyt <code>map</code>- ja <code>reduce</code>-metodeihin (ks. esim. [reduce](https://ruby-doc.org/core-2.5.1/Enumerable.html#reduce) [map](https://ruby-doc.org/core-2.5.1/Enumerable.html#map) ja etsi googlella lisää ohjeita) ja muuta (tarvittaessa) oluen reittausten keskiarvon laskeva metodi käyttämään reducea tai mapia ja sumia.
+> Tutustu nyt <code>map</code>- ja <code>reduce</code>-metodeihin (ks. esim. [reduce](https://ruby-doc.org/core-3.1.2/Enumerable.html#reduce) [map](https://ruby-doc.org/core-3.1.2/Enumerable.html#map) ja etsi googlella lisää ohjeita) ja muuta (tarvittaessa) oluen reittausten keskiarvon laskeva metodi käyttämään reducea tai mapia ja sumia.
 >
 > Keskiarvon laskeminen onnistuu tässä tapauksessa myös helpommin hyödyntämällä ActiveRecordin metodeja, ks. http://api.rubyonrails.org/classes/ActiveRecord/Calculations.html
 
@@ -773,8 +774,7 @@ Tässä vaiheessa metodi ei tee muuta kuin aiheuttaa poikkeuksen (metodikutsu <c
 Kokeillaan nyt lähettää lomakkeella tietoa. Kontrollerin metodissa heittämä poikkeus aiheuttaa virheilmoituksen. Rails lisää virhesivulle erilaista diagnostiikkaa, mm. HTTP-pyynnön parametrit sisältävän hashin, joka näyttää seuraavalta:
 
 ```ruby
-{"utf8"=>"✓",
- "authenticity_token"=>"1OfMRb9BTZzTnM5PfpFUupImkdIbLbwWi0FB90XBSqs=",
+{"authenticity_token"=>"[FILTERED]",
  "rating"=>{"beer_id"=>"1", "score"=>"2"},
  "commit"=>"Create Rating"}
 ```
@@ -789,54 +789,54 @@ Uuden ratingin tiedot ovat hashissa avaimen <code>:rating</code> arvona, eli pä
 
 Tutkitaan hieman asiaa kontrollerista käsin Railsin debuggeria hyödyntäen
 
-Rails on jo konfiguroinut sovelluksesi käyttöön [byebug](https://github.com/deivid-rodriguez/byebug)-debuggerin (ja railsin web-konsolin, jota tarkastelemme hieman myöhemmin).
+Rails on jo konfiguroinut sovelluksesi käyttöön [debuggerin](https://github.com/ruby/debug) (ja railsin web-konsolin, jota tarkastelemme hieman myöhemmin). Aiemmissa Rails-versioissa oli käytössä byebyg-gem, mutta Rails 7 versiossa tämä on korvattu ylläolevalla debuggerilla.
 
-Lisätään kontrollerin alkuun, eli sille kohtaan koodia jota haluamme tarkkailla, komento <code>byebug</code>
+Lisätään kontrollerin alkuun, eli sille kohtaan koodia jota haluamme tarkkailla, komento <code>binding.break</code>
 
 ```ruby
 def create
-  byebug
+  binding.break
 end
 ```
 
-Kun luot lomakkeella uuden reittauksen, sovellus pysähtyy komennon <code>byebug</code> kohdalle. Terminaaliin josta Rails on käynnistetty, avautuu nyt interaktiivinen konsolinäkymä:
+Kun luot lomakkeella uuden reittauksen, sovellus pysähtyy komennon <code>binding.break</code> kohdalle. Terminaaliin josta Rails on käynnistetty, avautuu nyt interaktiivinen konsolinäkymä:
 
 ```ruby
-Started POST "/ratings" for 127.0.0.1 at 2018-09-07 18:45:05 +0300
-Processing by RatingsController#create as HTML
-  Parameters: {"utf8"=>"✓", "authenticity_token"=>"ILMJj9dNNuAV6ivJaqN2LMyazdVCg3CYscTzHiU9n3MfP07ry27rZq6r/Lq+m/9d/r2cr47r95XWO1ZN/8/ZUw==", "rating"=>{"beer_id"=>"1", "score"=>"20"}, "commit"=>"Create Rating"}
-Return value is: nil
-
-[4, 13] in /Users/mluukkai/opetus/ratebeer/app/controllers/ratings_controller.rb
-    4:   end
-    5:
-    6:   def new
-    7:     @rating = Rating.new
-    8:   end
-    9:
-   10:   def create
-   11:     byebug
-=> 12:   end
-   13: end
-(byebug)
+Started POST "/ratings" for ::1 at 2022-07-20 14:02:51 +0300
+Processing by RatingsController#create as TURBO_STREAM
+  Parameters: {"authenticity_token"=>"[FILTERED]", "rating"=>{"beer_id"=>"12", "score"=>"12"}, "commit"=>"Create Rating"}
+[7, 15] in ~/ratebeer/app/controllers/ratings_controller.rb
+     7|     def new
+     8|       @rating = Rating.new
+     9|     end
+    10|     
+    11|     def create
+=>  12|       binding.break
+    13|     end
+    14| 
+    15| end
+=>#0    RatingsController#create at ~/ratebeer/app/controllers/ratings_controller.rb:12
+  #1    ActionController::BasicImplicitRender#send_action(method="create", args=[]) at ~/.rbenv/versions/3.1.2/lib/ruby/gems/3.1.0/gems/actionpack-7.0.3/lib/action_controller/metal/basic_implicit_render.rb:6
+  # and 73 frames (use `bt' command for all frames)
+(ruby)
 ```
 
-Nuoli kertoo seuraavana vuorossa olevan komennon. Tutkitaan nyt <code>params</code>-muuttujan sisältöä:
+Nuoli kertoo kohdan jossa suoritus keskeytettiin. Tutkitaan nyt <code>params</code>-muuttujan sisältöä:
 
 ```ruby
-(byebug) params
-<ActionController::Parameters {"utf8"=>"✓", "authenticity_token"=>"ILMJj9dNNuAV6ivJaqN2LMyazdVCg3CYscTzHiU9n3MfP07ry27rZq6r/Lq+m/9d/r2cr47r95XWO1ZN/8/ZUw==", "rating"=>{"beer_id"=>"1", "score"=>"20"}, "commit"=>"Create Rating", "controller"=>"ratings", "action"=>"create"} permitted: false>
-(byebug) params[:rating][:beer_id]
-"1"
-(byebug) params[:rating][:score]
-"20"
+(rdbg) params
+#<ActionController::Parameters {"authenticity_token"=>"2pGKvP6I-RYAoEbZr6eJltrNZt_T0YlQvO4K7EOyMFrF1W_OzJoPTKd39LBQoMyG5u_ScQrLjztIcB8TyWpDTw", "rating"=>#<ActionController::Parameters {"beer_id"=>"12", "score"=>"12"} permitted: false>, "commit"=>"Create Rating", "controller"=>"ratings", "action"=>"create"} permitted: false>
+(ruby) params[:rating][:beer_id]
+"12"
+(ruby) params[:rating][:score]
+"12"
 ```
 
 Debuggerin konsolissa voi tarpeen vaatiessa suorittaa mitä tahansa koodia Rails-konsolin tavoin.
 
 Debuggerin tärkeimmät komennot lienevät _step, next, continue_ ja _help_. Step suorittaa koodista seuraavan askeleen, edeten mahdollisiin metodikutsuihin. Next suorittaa seuraavan rivin kokonaisuudessaan. Continue jatkaa ohjelman suorittamista normaaliin tapaan.
 
-Lisätietoa byebugista seuraavassa http://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-byebug-gem
+Lisätietoa debuggerista seuraavassa https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
 
 
 ## debuggas Pry:n avulla
@@ -849,7 +849,7 @@ def create
 end
 ```
 
-kun koodirivi suoritetaan, suoritus pysähtyy ja Pry-sessio aukeaa koodirivin kohdalle. Voit jatkaa suoritusta komennolla <code>exit</code>. On makuasia kumpaa käytät debuggaukseen _byebugia_ vai _Prytä_.
+kun koodirivi suoritetaan, suoritus pysähtyy ja Pry-sessio aukeaa koodirivin kohdalle. Voit jatkaa suoritusta komennolla <code>exit</code>. On makuasia kumpaa käytät debuggaukseen _debuggeria_ vai _Prytä_.
 
 ## Reittauksen talletus
 
@@ -902,9 +902,9 @@ Kokeile nyt reittauksen luomista. HUOM: kun luot lomakkeella reittausta, tarkist
 Reittausten luominen onnistuu jo, voit tarkastaa tilanne konsolista tai kaikkien reittausten sivulta. Ainakin chromella reittauksen luominen sellaisen tilanteen että selain näyttää pysyvän samalla sivulla, mutta sivu "jäätyy". Syy tälle paljastuu sovelluksen konsoliin kirjoittamasta lokiviestistä:
 
 ```
-app/controllers/ratings_controller.rb:11
+↳ app/controllers/ratings_controller.rb:12:in `create'
 No template found for RatingsController#create, rendering head :no_content
-Completed 204 No Content in 137ms (ActiveRecord: 1.7ms)
+Completed 204 No Content in 55ms (ActiveRecord: 16.4ms | Allocations: 12093)
 ```
 
 eli koska sovellukseen ei ole määritelty näkymätemplatea create-operaatiolle, lähettää selain tyhjän vastauksen, eli vastauksen, mikä ei sisällä ollenkaan HTML-koodia. Chrome näyttää kuitenkin jättävän edellisen sivun näkyviin saadessaan tyhjän vastauksen.
@@ -1144,7 +1144,7 @@ Onkin hyvin tyypillistä, että kontrollerimetodit <code>new</code> ja <code>edi
 
 REST (representational state transfer) on HTTP-protokollaan perustuva arkkitehtuurimalli erityisesti web-pohjaisten sovellusten toteuttamiseen. Taustaidea on periaatteessa yksinkertainen: osoitteilla määritellään haettavat ja muokattavat resurssit, pyyntömetodit kuvaavat resurssiin kohdistuvaa operaatiota, ja pyynnön rungossa on tarvittaessa resurssiin liittyvää dataa.
 
-Lue nyt http://guides.rubyonrails.org/routing.html kohtaan 2.5 asti. Rails siis tekee helpoksi REST-tyylisen rakenteen noudattamisen. Jos kiinnostaa, RESTistä voi lukea lisää esim. [täältä](http://www.ibm.com/developerworks/webservices/library/ws-restful/)
+Lue nyt http://guides.rubyonrails.org/routing.html kohtaan 2.5 asti. Rails siis tekee helpoksi REST-tyylisen rakenteen noudattamisen. Jos kiinnostaa, RESTistä voi lukea lisää esim. [täältä](https://en.wikipedia.org/wiki/Representational_state_transfer)
 
 Muutetaan reittauksen polut tiedostoon routes.rb siten, että käytetään valmista <code>resources</code>-määrittelyä:
 
@@ -1180,7 +1180,7 @@ Lisätään sitten reittauksien listalle linkki, jonka avulla kunkin reittauksen
 ```erb
 <ul>
   <% @ratings.each do |rating| %>
-    <li> <%= rating %> <%= link_to 'delete', rating_path(rating.id), method: :delete %> </li>
+    <li> <%= render rating %> <%= button_to 'delete', rating_path(rating.id), method: :delete %> </li>
   <% end %>
 </ul>
 ```
@@ -1192,7 +1192,7 @@ Kuten jo aiemmin mainittiin, voi <code>rating_path(rating.id)</code>-kutsun sija
 ```erb
 <ul>
   <% @ratings.each do |rating| %>
-    <li> <%= rating %> <%= link_to 'delete', rating, method: :delete %> </li>
+    <li> <%= render rating %> <%= button_to 'delete', rating, method: :delete %> </li>
   <% end %>
 </ul>
 ```
@@ -1215,7 +1215,7 @@ Lopussa suoritetaan uudelleenohjaus takaisin kaikkien reittausten sivulle. Uudel
 >
 > Reittauksen poisto on nyt siinä mielessä ikävä, että herkkäsorminen sivuston käyttäjä saattaa vahinkoklikkauksella tuhota reittauksia.
 >
-> Katso esim. kaikki oluet listaavan sivun templatesta /app/views/beers/index.html.erb mallia ja tee ratingin tuhoamisesta sellainen, että käyttäjältä kysytään varmistus reittauksen tuhoamisen yhteydessä.
+> Katso esim. kaikki oluet listaavan sivun templatesta /app/views/beers/show.html.erb mallia ja tee ratingin tuhoamisesta sellainen, että käyttäjältä kysytään varmistus reittauksen tuhoamisen yhteydessä.
 
 ## Orvot oliot
 
@@ -1434,10 +1434,10 @@ Kannattaa huomata, että HTTP Basic -autentikaatiota ei tule käyttää kuin suo
 >
 > Testatessasi toiminnallisuutta, muista että joudut käyttämän incognito-selainta jos haluat kirjautua uudelleen annettuasi kertaalleen oikean käyttäjätunnus/salasanaparin.
 >
-> VIHJE: oikean koodin kirjoittaminen saattaa olla helpointa debuggerin avulla, pysäytä ohjelman suorutus byebugilla:
+> VIHJE: oikean koodin kirjoittaminen saattaa olla helpointa debuggerin avulla, pysäytä ohjelman suoritus:
 >
 >    authenticate_or_request_with_http_basic do |username, password|
->      byebug
+>      binding.break
 >    end
 >
 > ja kokeile mitä muuttujissa _admin_accounts_, _username_ ja _password_ on arvoina ja kehittele oikea komento.  
@@ -1557,4 +1557,4 @@ Koska kyseessä on tuotannossa oleva ohjelma, tietokannan resetointi (<code>rail
 
 Commitoi kaikki tekemäsi muutokset ja pushaa koodi Githubiin. Deployaa myös uusin versio Herokuun.
 
-Tehtävät kirjataan palautetuksi osoitteeseen https://studies.cs.helsinki.fi/courses/#/rails2018
+Tehtävät kirjataan palautetuksi osoitteeseen https://studies.cs.helsinki.fi/courses/#/rails2022
