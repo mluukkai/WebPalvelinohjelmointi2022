@@ -1,6 +1,6 @@
 Jatkamme sovelluksen rakentamista siitä, mihin jäimme viikon 2 lopussa. Allaoleva materiaali olettaa, että olet tehnyt kaikki edellisen viikon tehtävät. Jos et tehnyt kaikkia tehtäviä, voit täydentää ratkaisusi tehtävien palautusjärjestelmän kautta näkyvän esimerkivastauksen avulla.
 
-**Huom:** muutamilla on ollut ongelmia Herokun tarvitseman pg-gemin kanssa. Paikallisesti gemiä ei tarvita ja se määriteltiinkin asennettavaksi ainoastaan tuotantoympäristöön. Jos ongelmia ilmenee, voit asentaa gemit antamalla <code>bundle install</code>-komentoon seuraavan lisämääreen:
+**Huom:** Jos sinulla on ollut ongelmia Herokun tarvitseman pg-gemin kanssa lue tämä. Paikallisesti gemiä ei tarvita ja se määriteltiinkin asennettavaksi ainoastaan tuotantoympäristöön. Jos ongelmia ilmenee, voit asentaa gemit antamalla <code>bundle install</code>-komentoon seuraavan lisämääreen:
 
     bundle install --without production
 
@@ -38,7 +38,7 @@ Voisimme toteuttaa keskiarvon laskemisen "javamaisesti" laskemalla summan käym�
 
 Kaikki rubyn kokoelmamaiset asiat (mm. taulukko ja <code>has_many</code>-kenttä) sisältävät Enumerable-moduulin (ks. http://ruby-doc.org/core-2.5.1/Enumerable.html) tarjoamat apumetodit. Päätetäänkin hyödyntää apumetodeja keskiarvon laskemisessa.
 
-Koodin kirjoittamisessa kannattaa _ehdottomasti_ hyödyntää konsolia. Oikeastaan konsoliakin parempi vaihtoehdo on debuggerin käyttö. Debuggerin avulla saadaan avattua konsoli suoraan siihen kontekstiin, johon koodia ollaan kirjoittamassa. Lisätään metodikutsuun debuggerin käynnistävä komento <code>byebug</code> tai komento <code>binding.pry</code> jos käytössä on pry-konsoli:
+Koodin kirjoittamisessa kannattaa _ehdottomasti_ hyödyntää konsolia. Oikeastaan konsoliakin parempi vaihtoehdo on debuggerin käyttö. Debuggerin avulla saadaan avattua konsoli suoraan siihen kontekstiin, johon koodia ollaan kirjoittamassa. Lisätään metodikutsuun debuggerin käynnistävä komento <code>binding.break</code> tai komento <code>binding.pry</code> jos käytössä on pry-konsoli:
 
 ```ruby
 class Beer < ApplicationRecord
@@ -237,7 +237,7 @@ class Beer < ApplicationRecord
 end
 ```
 
-Testataan metodia, eli poistutaan debuggerista (prystä poistutaan komennolla exit ja byebugista komennolla c eli jatkamalla aiemman tyhjän metodin suoritus loppuun), _lataamalla_ uusi koodi, hakemalla olio ja suorittamalla metodi:
+Testataan metodia, eli poistutaan debuggerista (prystä poistutaan komennolla exit ja debuggerista komennolla c eli jatkamalla aiemman tyhjän metodin suoritus loppuun), _lataamalla_ uusi koodi, hakemalla olio ja suorittamalla metodi:
 
 ```ruby
 > exit
@@ -314,9 +314,9 @@ Kutakin kieltä käytettäessä tulee kuitenkin mukautua kielen omaan tyyliin, v
 
 Jos et ole jo rutinoitunut debuggerin käyttöön, kannattaa ehdottomasti kerrata viime viikon debuggeria käsittelevä materiaali.
 
-## byebug vai binding.pry deguggaukseen?
+## binding.break vai binding.pry deguggaukseen?
 
-Jos käytössäsi on [Pry](https://github.com/mluukkai/WebPalvelinohjelmointi2018/blob/master/web/viikko2.md#parempi-konsoli) komento `byebug` ei käyttäydy kaikissa tilanteissa hyvin, kannattaakin käyttää oikeastaan aina komentoa `binding.pry`
+Jos käytössäsi on [Pry](https://github.com/mluukkai/WebPalvelinohjelmointi2018/blob/master/web/viikko2.md#parempi-konsoli) komento `binding.break` ei (välttämättä) käyttäydy kaikissa tilanteissa hyvin, kannattaakin käyttää oikeastaan aina komentoa `binding.pry`
 
 ## Rubocop: tyyli ratkaisee
 
@@ -382,13 +382,13 @@ app/models/rating.rb:7:1: C: Layout/TrailingWhitespace: Trailing whitespace dete
 >
 > HUOM: voit suorittaa tarkastuksen vain yksittäiselle tiedostolle tai hakemiston sisällölle. Esim. komento _rubocop app/models/beer.rb_ tekee tarkastuksen tiedostolle _beer.rb_
 >
-> HUOM2: jos ei suoraan ymmärrä mistä kussakin sääntörikkeessä on kyse, tarkasta asia [dokumentaatiosta](http://docs.rubocop.org/en/latest/cops/)
+> HUOM2: jos ei suoraan ymmärrä mistä kussakin sääntörikkeessä on kyse, tarkasta asia [dokumentaatiosta](https://docs.rubocop.org/rubocop/)
 
 > ## Tehtävä 2
 >
 > Ota käyttöön sääntö, joka estää yli 15 riviä pitkät metodit. Varmista, että _rubocop_ ilmoittaa, jos koodiisi tulee liian pitkä metodi.
 >
-> Löydät ohjeita säännön määrittelyyn [dokumentaation](http://docs.rubocop.org/en/latest/cops/) Metrics-osuudesta.
+> Löydät ohjeita säännön määrittelyyn [dokumentaation](https://docs.rubocop.org/rubocop/cops_metrics.html) Metrics-osuudesta.
 
 Tästä lähtien kannattaa pitää huoli, että kaikki koodi mitä teet säilyy rubocopin sääntöjen mukaisena. Voit halutessasi muokata konfiguroituja sääntöjä mielesi mukaiseksi.
 
@@ -497,13 +497,13 @@ Kirjautumissivun app/views/sessions/new.html.erb koodi on seuraavassa:
 ```erb
 <h1>Sign in</h1>
 
-<%= form_tag session_path do %>
-  <%= text_field_tag :username, params[:username] %>
-  <%= submit_tag "Log in" %>
+<%= form_with url: session_path, method: :post do |form| %>
+  <%= form.text_field :username %>
+  <%= form.submit "Log in" %>
 <% end %>
 ```
 
-Toisin kuin reittauksille tekemämme formi (kertaa asia [viime viikolta](https://github.com/mluukkai/WebPalvelinohjelmointi2018/blob/master/web/viikko2.md#lomake-ja-post)), nyt tekemämme lomake ei perustu olioon ja lomake luodaan <code>form_tag</code>-metodilla, ks. http://guides.rubyonrails.org/form_helpers.html#dealing-with-basic-forms
+Toisin kuin reittauksille tekemämme formi (kertaa asia [viime viikolta](https://github.com/mluukkai/WebPalvelinohjelmointi2018/blob/master/web/viikko2.md#lomake-ja-post)), nyt tekemämme lomake ei perustu olioon ja lomake luodaan <code>form_with</code>-metodilla, ks. http://guides.rubyonrails.org/form_helpers.html#dealing-with-basic-forms
 
 Lomakkeen lähettäminen siis aiheuttaa HTTP POST -pyynnön session_pathiin (huomaa yksikkömuoto!) eli osoitteeseen **session**.
 
@@ -606,7 +606,7 @@ eli mahdollistaa uloskirjautuminen HTTP GET:in avulla. Ei kuitenkaan pidetä hyv
 
 > ## Tehtävä 4
 >
-> Muokkaa nyt sovelluksen application layoutissa olevaa navigaatiopalkkia siten, että palkkiin tulee näkyville sisään- ja uloskirjautumislinkit. Huomioi, että uloskirjautumislinkin yhteydessä on määriteltävä käytettäväksi HTTP-metodiksi DELETE, katso esimerkki tähän esim. kaikki käyttäjät listaavalta sivulta.
+> Muokkaa nyt sovelluksen application layoutissa olevaa navigaatiopalkkia siten, että palkkiin tulee näkyville sisään- ja uloskirjautumislinkit. Huomioi, että uloskirjautumislinkin yhteydessä on määriteltävä käytettäväksi HTTP-metodiksi DELETE. Railsin versiossa 7 linkeille ei enää ole suoraa tukea deleten käyttöön, [linkit saa kuitenkin edelleen käyttämään delete-metodia](https://github.com/heartcombo/devise/issues/5439#issuecomment-997927041)
 >
 > Edellisten lisäksi lisää palkkiin linkki kaikkien käyttäjien sivulle, sekä kirjautuneen käyttäjän nimi, joka toimii linkkinä käyttäjän omalle sivulle. Käyttäjän ollessa kirjaantuneena tulee palkissa olla myös linkki uuden oluen reittaukseen.
 >
@@ -650,7 +650,7 @@ Ratkaisu ei kuitenkaan tällaisenaan toimi. Yhteyden takia _ratings_-tietokantat
 Hakemistoon _db/migrate_ ilmestyy tiedosto, jonka sisältö on seuraava
 
 ```ruby
-class AddUserIdToRatings < ActiveRecord::Migration[5.2]
+class AddUserIdToRatings < ActiveRecord::Migration[7.0]
   def change
   end
 end
@@ -661,7 +661,7 @@ Huomaa, että hakemistossa on jo omat migraatiotiedostot kaikkia luotuja tietoka
 Tällä kertaa tarvittava migraatio on yksinkertainen:
 
 ```ruby
-class AddUserIdToRatings < ActiveRecord::Migration[5.2]
+class AddUserIdToRatings < ActiveRecord::Migration[7.0]
   def change
     add_column :ratings, :user_id, :integer
   end
@@ -705,20 +705,12 @@ Päätetään että laitetaan kaikkien olemassaolevien reittausten käyttäjäks
 >  Lisää käyttäjän sivulle eli näkymään app/views/users/show.html.erb
 > * käyttäjän reittausten määrä ja keskiarvo (huom: käytä edellisellä viikolla  määriteltyä moduulia <code>RatingAverage</code>, jotta saat keskiarvon laskevan koodin käyttäjälle!)
 > * lista käyttäjän reittauksista ja mahdollisuus poistaa reittauksia
+>
+> Tee nämä muutokset käyttäjän partials-tiedostoon, eli app/views/users/_user.html.erb
 
 Käyttäjän sivu siis näyttää suunilleen seuraavalta:
 
 ![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2018/raw/master/images/ratebeer-w3-3.png)
-
-Reittauksen poisto vie nyt kaikkien reittausten sivulle. Luontevinta olisi, että poiston jälkeen palattaisiin takaisin käyttäjän sivulle. Tee seuraava muutos reittauskontrolleriin, jotta näin tapahtuisi:
-
-```ruby
-def destroy
-  rating = Rating.find(params[:id])
-  rating.delete
-  redirect_to user_path(current_user)
-end
-```
 
 Uusien reittausten luominen www-sivulta ei siis tällä hetkellä toimi, koska reittaukseen ei tällä hetkellä liitetä kirjautuneena olevaa käyttäjää. Muokataan siis  reittauskontrolleria siten, että kirjautuneena oleva käyttäjä linkitetään luotavaan reittaukseen:
 
@@ -915,12 +907,12 @@ def create
     redirect_to user_path current_user
   else
     @beers = Beer.all
-    render :new
+    render :new, status: 422
   end
 end
 ```
 
-Metodissa luodaan siis ensin Rating-olio <code>new</code>:llä, eli sitä ei vielä talleteta tietokantaan. Tämän jälkeen suoritetaan tietokantaan tallennus metodilla <code>save</code>. Jos tallennuksen yhteydessä suoritettava olion validointi epäonnistuu, metodi palauttaa epätoden, ja olio ei tallennu kantaan. Tällöin renderöidään new-näkymätemplate. Näkymätemplaten renderöinti edellyttää, että oluiden lista on talletettu muuttujaan <code>@beers</code>.
+Metodissa luodaan siis ensin Rating-olio <code>new</code>:llä, eli sitä ei vielä talleteta tietokantaan. Tämän jälkeen suoritetaan tietokantaan tallennus metodilla <code>save</code>. Jos tallennuksen yhteydessä suoritettava olion validointi epäonnistuu, metodi palauttaa epätoden, ja olio ei tallennu kantaan. Tällöin renderöidään new-näkymätemplate. Näkymätemplaten renderöinti edellyttää, että oluiden lista on talletettu muuttujaan <code>@beers</code>. [Rails 7 ei suoraan palauta erroreita näkymään](https://stackoverflow.com/questions/71751952/rails-7-signup-form-doesnt-show-error-messages), joten siksi palautamme myös HTTP-tilakoodin 422. Lisää tilakoodeista voi lukea esim. [wikipediasta](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes) tai kuvien kanssa [täältä](https://http.cat/).
 
 Kun nyt yritämme luoda virheellisen reittauksen, käyttäjä pysyy lomakkeen näyttävässä näkymässä (joka siis teknisesti ottaen renderöidään uudelleen POST-kutsun jälkeen). Virheilmoituksia ei kuitenkaan vielä näy.
 
@@ -981,7 +973,7 @@ http://guides.rubyonrails.org/active_record_validations.html ja https://apidock.
 >
 > Lisää ohjelmaasi seuraavat validoinnit
 > * oluen ja panimon nimi on epätyhjä
-> * panimon perustamisvuosi on kokonaisluku väliltä 1040-2018
+> * panimon perustamisvuosi on kokonaisluku väliltä 1040-2022
 > * käyttäjätunnuksen eli User-luokan attribuutin username pituus on vähintään 3 mutta enintään 30 merkkiä
 
 Jos yrität luoda oluen tyhjällä nimellä, seurauksena on virheilmoitus:
@@ -1172,7 +1164,7 @@ Muutetaan sovellusta vielä siten, että käyttäjillä on myös salasana. Tieto
 migraation (ks. hakemisto db/migrate) koodiksi tulee seuraava:
 
 ```ruby
-class AddPasswordDigestToUser < ActiveRecord::Migration[5.2]
+class AddPasswordDigestToUser < ActiveRecord::Migration[7.0]
   def change
     add_column :users, :password_digest, :string
   end
@@ -1205,16 +1197,6 @@ Tämän jälkeen annetaan komentoriviltä komento <code>bundle install</code> jo
 Kokeillaan nyt hieman uutta toiminnallisuutta konsolista. Uudelleenkäynnistä konsoli, jotta se saa käyttöönsä uuden gemin. Myös rails-sovellus kannattaa tässä vaiheessa uudelleenkäynnistää. Muista myös suorittaa migraatio!
 
 Salasanatoiminnallisuus <code>has_secure_password</code> lisää oliolle  attribuutit <code>password</code> ja <code>password_confirmation</code>. Ideana on, että salasana ja se varmistettuna sijoitetaan näihin attribuutteihin. Kun olio talletetaan tietokantaan esim. metodin <code>save</code> kutsun yhteydessä, lasketaan tiiviste joka tallettuu tietokantaan olion sarakkeen <code>password_digest</code> arvoksi. Selväkielinen salasana eli attribuutti <code>password</code> ei siis tallennu tietokantaan, vaan on ainoastaan olion muistissa olevassa representaatiossa.
-
-*HUOM* törmäsin seuraavaa tehdessäni virheilmoitukseen
-
-<pre>
-You don't have bcrypt installed in your application. Please add it to your Gemfile and run bundle install
-LoadError: cannot load such file -- bcrypt
-from /Users/mluukkai/.rbenv/versions/2.5.1/lib/ruby/gems/2.5.0/gems/bootsnap-1.3.1/lib/bootsnap/load_path_cache/core_ext/kernel_require.rb:32:in `require'
-</pre>
-
-Jos näin käy, sulje konsoli, anna komentoriviltä komento _spring stop_ ja käynnistä konsoli uudelleen.
 
 Talletetaan käyttäjälle salasana:
 
@@ -1255,10 +1237,10 @@ Lisätään nyt kirjautumiseen salasanan tarkistus. Muutetaan ensin kirjautumiss
 
 <p id="notice"><%= notice %></p>
 
-<%= form_tag session_path do %>
-  username <%= text_field_tag :username, params[:username] %>
-  password <%= password_field_tag :password, params[:password] %>
-  <%= submit_tag "Log in" %>
+<%= form_with url: session_path, method: :post do |form| %>
+  username <%= form.text_field :username %>
+  password <%= form.password_field :password %>
+  <%= form.submit "Log in" %>
 <% end %>
 ```
 
@@ -1282,14 +1264,14 @@ Kokeillaan toimiiko kirjautuminen (**huom: jotta bcrypt-gem tulisi sovelluksen k
 Lisätään vielä uuden käyttäjän luomiseen (eli näkymään view/users/_form.html.erb) salasanan syöttökenttä:
 
 ```erb
-<div class="field">
-  <%= form.label :password %><br />
+<div>
+  <%= form.label :password, style: "display: block"%>
   <%= form.password_field :password %>
 </div>
 
-<div class="field">
-  <%= form.label :password_confirmation %><br />
-  <%= form.password_field :password_confirmation  %>
+<div>
+  <%= form.label :password_confirmation, style: "display: block"%>
+  <%= form.password_field :password_confirmation %>
 </div>
 ```
 
@@ -1329,11 +1311,10 @@ Reittauksen poistolinkkiä ei oikeastaan ole edes syytä näyttää muuta kuin k
 
 ```erb
 <ul>
-  <% @user.ratings.each do |rating| %>
-    <li>
-      <%= rating %>
+  <% user.ratings.each do |rating| %>
+    <li><%= "#{rating.to_s}" %> 
       <% if @user == current_user %>
-          <%= link_to 'delete', rating, method: :delete, data: { confirm: 'Are you sure?' } %>
+        <%= link_to "Delete", rating, data: {turbo_method: :delete} %>
       <% end %>
     </li>
   <% end %>
@@ -1344,7 +1325,7 @@ Huomaa, että pelkkä **delete**-linkin poistaminen ei estä poistamasta muiden 
 
 > ## Tehtävä 13
 >
-> Kaikkien käyttäjien listalla [http://localhost:3000/users](http://localhost:3000/users) on nyt linkki **destroy**, jonka avulla käyttäjän voi tuhota, sekä linkki **edit** käyttäjän tietojen muuttamista varten. Poista molemmat linkit sivulta ja lisää ne (oikeastaan deleten siirto riittää, sillä edit on jo valmiina) käyttäjän sivulle.
+> Jokaisen käyttäjän omalla sivulla [http://localhost:3000/user/1](http://localhost:3000/user/1) on nyt painike **destroy this user**, jonka avulla käyttäjän voi tuhota, sekä linkki **edit** käyttäjän tietojen muuttamista varten.
 >
 > Näytä editointi- ja tuhoamislinkki vain kirjautuneen käyttäjän itsensä sivulla. Muuta myös User-kontrollerin metodeja <code>update</code> ja <code>destroy</code> siten, että olion tietojen muutosta tai poistoa ei voi tehdä kuin kirjaantuneena oleva käyttäjä itselleen.
 
@@ -1352,7 +1333,6 @@ Huomaa, että pelkkä **delete**-linkin poistaminen ei estä poistamasta muiden 
 >
 > Luo uusi käyttäjätunnus, kirjaudu käyttäjänä ja tuhoa käyttäjä. Käyttäjätunnuksen tuhoamisesta seuraa ikävä virhe. **Pääset virheestä eroon tuhoamalla selaimesta cookiet.** Mieti mistä virhe johtuu ja korjaa asia myös sovelluksesta siten, että käyttäjän tuhoamisen jälkeen sovellus ei joudu virhetilanteeseen.
 >
-> Tämä tehtävä on vuosien varrella osoittautunut hankalaksi. Jos et pääse eteenpäin, kysy apua pajassa, kurssin telegram-kanavalta, ks. kurssisivu
 
 > ## Tehtävä 15
 >
@@ -1364,7 +1344,7 @@ Huomaa, että pelkkä **delete**-linkin poistaminen ei estä poistamasta muiden 
 
 Käyttäjän editointitoiminto mahdollistaa nyt myös käyttäjän <code>username</code>:n muuttamisen. Tämä ei ole ollenkaan järkevää. Poistetaan tämä mahdollisuus.
 
-Uuden käyttäjän luominen ja käyttäjän editoiminen käyttävät molemmat samaa, tiedostossa views/users/_form.html.erb määriteltyä lomaketta. Alaviivalla alkavat näkymätemplatet ovat Railsissa ns. [partiaaleja](http://guides.rubyonrails.org/layouts_and_rendering.html#using-partials), joita liitetään muihin templateihin <code>render</code>-kutsun avulla.
+Uuden käyttäjän luominen ja käyttäjän editoiminen käyttävät molemmat samaa, tiedostossa views/users/_form.html.erb määriteltyä lomaketta. Myös scaffoldin generoimat formit ovat Railsissa partiaaleja, joita liitetään muihin templateihin <code>render</code>-kutsun avulla.
 
 Käyttäjän editointiin tarkoitettu näkymätemplate on seuraavassa:
 
@@ -1373,42 +1353,42 @@ Käyttäjän editointiin tarkoitettu näkymätemplate on seuraavassa:
 
 <%= render 'form' %>
 
-<%= link_to 'Show', @user %> |
-<%= link_to 'Back', users_path %>
+<%= link_to "Show this user", @user %> |
+<%= link_to "Back to users", users_path %>
 ```
 
 eli ensin se renderöi _form-templatessa olevat elementit ja sen jälkeen pari linkkiä. Lomakkeen koodi on seuraava:
 
 ```erb
-<%= form_with(model: user, local: true) do |form| %>
+<%= form_with(model: user) do |form| %>
   <% if user.errors.any? %>
-    <div id="error_explanation">
+    <div style="color: red">
       <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
 
       <ul>
-      <% user.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
+        <% user.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
       </ul>
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :username %>
+  <div>
+    <%= form.label :username, style: "display: block" %>
     <%= form.text_field :username %>
   </div>
-
-  <div class="field">
-    <%= form.label :password %><br />
+  
+  <div>
+    <%= form.label :password, style: "display: block"%>
     <%= form.password_field :password %>
   </div>
   
-  <div class="field">
-    <%= form.label :password_confirmation %><br />
+  <div>
+    <%= form.label :password_confirmation, style: "display: block"%>
     <%= form.password_field :password_confirmation %>
   </div>
 
-  <div class="actions">
+  <div>
     <%= form.submit %>
   </div>
 <% end %>
@@ -1535,4 +1515,4 @@ Jos käytät Visual Studio Codea, voit asentaa [ruby-rubocop](https://marketplac
 
 Commitoi kaikki tekemäsi muutokset ja pushaa koodi Githubiin. Deployaa myös uusin versio Herokuun.
 
-Tehtävät kirjataan palautetuksi osoitteeseen https://studies.cs.helsinki.fi/courses/#/rails2018
+Tehtävät kirjataan palautetuksi osoitteeseen https://studies.cs.helsinki.fi/courses/#/rails2022

@@ -5,6 +5,7 @@ AllCops:
   Exclude:
     - __test/**
     - test/**
+    - test/channels/application_cable/** # for whatever reason this directory was not excluded even though two previous exclusion lines
     - bin/**
     - spec/**/*
     - config/**/*
@@ -13,7 +14,8 @@ AllCops:
     - "*.gemspec"
     - bundler/**/*
     - vendor/bundle/**/* # travis with --deployment
-  TargetRubyVersion: 2.5
+  TargetRubyVersion: 3.1.2
+  NewCops: enable
 
 Style/PercentLiteralDelimiters:
   PreferredDelimiters:
@@ -58,7 +60,7 @@ Style/Alias:
 Style/BeginBlock:
   Enabled: true
 
-Naming/UncommunicativeMethodParamName:
+Naming/MethodParameterName:
   AllowedNames:
     - cn
 
