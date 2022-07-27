@@ -8,7 +8,7 @@ Tämä asetus muistetaan jatkossa, joten pelkkä `bundle install` riittää kun 
 
 ## Järkevä editori
 
-Käytäthän jo järkevää editoria, eli jotain muuta kun nanoa, geditiä tai notepadia? Suositeltavia editoreja ovat esim. RubyMine, Visual Studio Code ks lisää [täältä](https://github.com/mluukkai/WebPalvelinohjelmointi2018/blob/master/wadror.md#editoriide)
+Käytäthän jo järkevää editoria, eli jotain muuta kun nanoa, geditiä tai notepadia? Suositeltavia editoreja ovat esim. RubyMine, Visual Studio Code ks lisää [täältä](https://github.com/ollikehy/wepa22/blob/master/wadror.md#editoriide)
 
 Nykyään hyvin yleisesti käytössä on [Visual Studio Codea](https://code.visualstudio.com). Jos käytät VSC:tä, kannattaa ehdottamasti asentaa [Ruby-plugin](https://code.visualstudio.com/docs/languages/overview)
 
@@ -303,7 +303,7 @@ ja nyt sivu toimii!
 
 Huomaa taas Railsin konventiot, tiedoston sijainti on tarkasti määritelty, eli koska kyseessä on näkymätemplate jota kutsutaan ratings-kontrollerista (joka siis on täydelliseltä nimeltään RatingsController), sijoitetaan se hakemistoon /views/ratings.
 
-Muistutuksena vielä [viime viikosta](https://github.com/mluukkai/WebPalvelinohjelmointi2018/blob/master/web/viikko1.md#kontrollerin-ja-viewien-yhteys): kontrollerimetodi <code>index</code> renderöi oletusarvoisesti suorituksensa lopuksi (oikeassa hakemistossa olevan) index-nimisen näkymän. Eli koodi
+Muistutuksena vielä [viime viikosta](https://github.com/ollikehy/wepa22/blob/master/web/viikko1.md#kontrollerin-ja-viewien-yhteys): kontrollerimetodi <code>index</code> renderöi oletusarvoisesti suorituksensa lopuksi (oikeassa hakemistossa olevan) index-nimisen näkymän. Eli koodi
 
 ```ruby
 class RatingsController < ApplicationController
@@ -354,7 +354,7 @@ Jos olet suorittanut jo migraation ja huomaat että generaattorin luoma koodi on
 
     rails db:rollback
 
-Jotta yhteydet saadaan myös oliotasolle (muistutuksena [viime viikon materiaali](https://github.com/mluukkai/WebPalvelinohjelmointi2018/blob/master/web/viikko1.md#oluet-ja-yhden-suhde-moneen--yhteys)), tulee luokkia päivittää seuraavasti
+Jotta yhteydet saadaan myös oliotasolle (muistutuksena [viime viikon materiaali](https://github.com/ollikehy/wepa22/blob/master/web/viikko1.md#oluet-ja-yhden-suhde-moneen--yhteys)), tulee luokkia päivittää seuraavasti
 
 ```ruby
 class Beer < ApplicationRecord
@@ -436,7 +436,7 @@ vierasavaimen arvo [ei saa olla alustamaton](https://blog.bigbinary.com/2016/02/
 >
 >lisää molemmille oluille muutama reittaus
 >
->Kertaa tarvittaessa edellisen viikon [materiaalista](https://github.com/mluukkai/WebPalvelinohjelmointi2018/blob/master/web/viikko1.md) konsolia käsittelevät osuudet.
+>Kertaa tarvittaessa edellisen viikon [materiaalista](https://github.com/ollikehy/wepa22/blob/master/web/viikko1.md) konsolia käsittelevät osuudet.
 >
 >Palauta tämä tehtävä lisäämällä sovelluksellesi hakemisto exercises ja sinne tiedosto exercise1, joka sisältää copypasten konsolisessiosta
 
@@ -458,7 +458,7 @@ Nyt tietokannassamme on reittauksia, ja haluamme saada ne listattua kaikkien rei
 
 Tässä vaiheessa sivun pitäisi näyttää suunnilleen seuraavalta
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2018/raw/master/images/ratebeer-w2-1.png)
+![kuva](https://github.com/ollikehy/wepa22/raw/master/images/ratebeer-w2-1.png)
 
 Reittaus renderöityy hiukan ikävässä muodossa. Tämä johtuu siitä, että li-elementin sisällä on pelkkä olion nimi, ja koska emme ole määritelleet Ratingille olion merkkijonomuotoa määrittelevää <code>to_s</code>-metodia, käytössä on kaikkien luokkien yliluokalta Objectilta peritty oletusarvoinen <code>to_s</code>.
 
@@ -606,7 +606,7 @@ Panimon sisällä <code>year</code> siis on ActiveRecordin tietokantaan tallenta
 >
 > Tee sitten luokalle Rating partials-tiedosto, jossa arvostelu oliosta tehdään parempi mmerkkijonoesitys muodossa "karhu 35", eli ensin reitatun oluen nimi ja sen jälkeen reittauksen pistemäärä.
 >
-> Merkkijonon muodostamisessa myös seuraavasta voi olla apua https://github.com/mluukkai/WebPalvelinohjelmointi2018/blob/master/web/rubyn_perusteita.md#merkkijonot
+> Merkkijonon muodostamisessa myös seuraavasta voi olla apua https://github.com/ollikehy/wepa22/blob/master/web/rubyn_perusteita.md#merkkijonot
 >
 > Apua partials-tiedoston tekemiseen ja renderöimiseen voi katsoa esim. _beer.html.erb ja vastaavasta index.html.erb tiedostosta. Muista partials-tiedostojen nimeämiskäytäntö!
 >
@@ -614,7 +614,7 @@ Panimon sisällä <code>year</code> siis on ActiveRecordin tietokantaan tallenta
 
 Tehtävän jälkeen reittausten sivujen tulisi näyttää suunnilleen seuraavalta:
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2018/raw/master/images/ratebeer-w2-2.png)
+![kuva](https://github.com/ollikehy/wepa22/raw/master/images/ratebeer-w2-2.png)
 
 Huom: kun kirjoitat sovelluksellesi uutta koodia, useimmiten on järkevämpää tehdä kokeiluja konsolista käsin. Seuraavassa kokeillaan reittauksen oletusarvoista <code>to_s</code>-metodin palauttamaa arvoa:
 
@@ -680,7 +680,7 @@ Eli kuten yllä näemme, ei pelkkä koodin uudelleenlataaminen vielä riitä, si
 
 Tehtävän jälkeen oluen sivun tulisi näyttää suunnilleen seuraavalta (huom: edellisen viikon jäljiltä sivullasi saattaa näkyä panimon nimen sijaan panimon id. Jos näin on, muuta näkymäsi vastaamaan kuvaa):
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2018/raw/master/images/ratebeer-w2-3.png)
+![kuva](https://github.com/ollikehy/wepa22/raw/master/images/ratebeer-w2-3.png)
 
 > ## Tehtävä 5
 >
@@ -694,7 +694,7 @@ Tehtävän jälkeen oluen sivun tulisi näyttää suunnilleen seuraavalta (huom:
 
 Lisätään konsolista jollekin vielä reittaamattomalle oluelle yksi reittaus. Oluen sivu näyttää nyt seuraavalta:
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2018/raw/master/images/ratebeer-w2-4.png)
+![kuva](https://github.com/ollikehy/wepa22/raw/master/images/ratebeer-w2-4.png)
 
 Sivulla on pieni, mutta ikävä kielioppivirhe:
 
@@ -995,7 +995,7 @@ end
 
 Kun nyt luot reittauksen, renderöityy tuttu virhesivu. Virhesivun alalaidassa olevassa konsolinäkymässä voi nyt suorittaa ruby-komentoja täsmälleen samalla tavalla kuin debuggeria käytettäessä:
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2018/raw/master/images/ratebeer-w2-9.png)
+![kuva](https://github.com/ollikehy/wepa22/raw/master/images/ratebeer-w2-9.png)
 
 Aivan kuten debuggeria käytettäessä, web-konsolin näkymä avautuu siihen kontekstiin, jossa virhe tapahtuu, eli esim. muuttuja <code>params</code> on viitattavissa, samoin voidaan suorittaa kaikkia komentoja, joita konrollerimetodista käsin voitaisiin suorittaa, esim. hakea reittauksia tietokannasta modelin <code>Rating</code> avulla.
 
@@ -1049,7 +1049,7 @@ Esim alimmat 3 reittiä kertovat seuraavaa:
 
 Kuten olemme jo huomanneet komennon <code>rails routes</code> informaatio tulee myös virhetilanteissa renderöityvälle web-sivulle. Sivu jopa tarjoaa interaktiivisen työkalun, jonka avulla voi kokeilla miten sovellus reitittää syötetyn esimerkkipolun:
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2018/raw/master/images/ratebeer-w2-6.png)
+![kuva](https://github.com/ollikehy/wepa22/raw/master/images/ratebeer-w2-6.png)
 
 
 > ## Tehtävä 7
@@ -1277,7 +1277,7 @@ Lisää yhteys koodiisi ja kokeile seuraavaa konsolista (muista ensin <code>relo
 
 Panimon sivun tulisi näyttää muutoksen jälkeen suunnilleen seuraavalta:
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2018/raw/master/images/ratebeer-w2-8.png)
+![kuva](https://github.com/ollikehy/wepa22/raw/master/images/ratebeer-w2-8.png)
 
 ## Yhteisen koodin siirto moduuliin
 
@@ -1285,7 +1285,7 @@ Huomaamme, että oluella ja panimolla on täsmälleen samalla tavalla toimiva ja
 
 > ## Tehtävä 15
 >
-> Ruby tarjoaa keinon jakaa metodeja kahden luokan välillä moduulien avulla, ks. https://github.com/mluukkai/WebPalvelinohjelmointi2018/blob/master/web/rubyn_perusteita.md#moduuli
+> Ruby tarjoaa keinon jakaa metodeja kahden luokan välillä moduulien avulla, ks. https://github.com/ollikehy/wepa22/blob/master/web/rubyn_perusteita.md#moduuli
 >
 > Moduleilla on useampia käyttötarkoituksia, niiden avulla voidaan mm. muodostaa nimiavaruuksia. Nyt olemme kuitenkin kiinnostuneita modulien avulla toteutettavasta _mixin_-perinnästä.
 >

@@ -100,7 +100,7 @@ Osa viikon tehtävistä on käytännössä pakollisia, muuten eteneminen pysäht
 
 ## Railsin asennus
 
-Asennusohje osoitteessa https://github.com/mluukkai/WebPalvelinohjelmointi2018/blob/master/web/railsin_asentaminen.md
+Asennusohje osoitteessa https://github.com/ollikehy/wepa22/blob/master/web/railsin_asentaminen.md
 
 ## Sovelluksen luominen
 
@@ -347,7 +347,7 @@ Olemme tässä hyödyntäneet Rubyn vapaamielistä suhtautumista sulkujen käytt
 
     Brewery.new( name: "Stadin Panimo", year: 1997 )
 
-Myös parametri on hieman erikoisessa formaatissa. Kyseessä on symboleilla indeksöity assosiatiivinen taulukko eli _hash_, ks. https://github.com/mluukkai/WebPalvelinohjelmointi2018/blob/master/web/rubyn_perusteita.md#hash-ja-symbolit
+Myös parametri on hieman erikoisessa formaatissa. Kyseessä on symboleilla indeksöity assosiatiivinen taulukko eli _hash_, ks. https://github.com/ollikehy/wepa22/blob/master/web/rubyn_perusteita.md#hash-ja-symbolit
 
 Kuten yo. linkistä selviää, hashit määritellään aaltosuluissa:
 
@@ -393,7 +393,7 @@ Seuraavassa muutamia esimerkkejä, kokeile kaikkia konsolista:
     t = Brewery.where name:"Koff"
     t.first.year                   # t.first tarkoittaa kuin t[0] eli taulukon 1. alkiota
 
-Lisää Rubyn taulukosta ks. https://github.com/mluukkai/WebPalvelinohjelmointi2018/blob/master/web/rubyn_perusteita.md#taulukko
+Lisää Rubyn taulukosta ks. https://github.com/ollikehy/wepa22/blob/master/web/rubyn_perusteita.md#taulukko
 
 Huomaa, että jätimme edellä kaikissa esimerkeissä metodikutsuista sulut pois. <code>Brewery.find 1</code> siis tarkoittaa samaa kuin <code>Brewery.find(1)</code>
 
@@ -663,7 +663,7 @@ irb(main):071:0> koff.beers.create name:"Extra Light Triple Brewed", style:"Lage
 > * Päädymme kuitenkin siihen että Hartwall on huonon laatunsa takia poistettava. Ennen poistamista, ota muistiin Hartwall-olion id
 > * Hartwallin poistaminen jättää tietokantaan olut-olioita, jotka liittyvät jo poistettuun panimoon
 > * Hae orvoksi jääneet oluet komennolla <code>Beer.where tähänsopivaparametri</code>
-> * Tuhoa operaation palauttamat oluet. Ohjeita oluiden listan läpikäyntiin esim. seuraavasta https://github.com/mluukkai/WebPalvelinohjelmointi2018/blob/master/web/rubyn_perusteita.md#taulukko
+> * Tuhoa operaation palauttamat oluet. Ohjeita oluiden listan läpikäyntiin esim. seuraavasta https://github.com/ollikehy/wepa22/blob/master/web/rubyn_perusteita.md#taulukko
 
 ## Kontrollerin ja viewien yhteys
 
@@ -742,7 +742,7 @@ Palataan sitten tarkemmin HTML-taulukon muodostavaan koodiin. Jokainen panimo tu
   <% end %>
 ```
 
-Muuttujaan ```@breweries``` talletettu panimoiden lista käydään läpi ```each```-iteraattorin avulla. (lisää eachista ks. https://github.com/mluukkai/WebPalvelinohjelmointi2018/blob/master/web/rubyn_perusteita.md#each). Jokaista yksittäistä panimoa (joihin viitataan iteraattorin toistettavassa koodilohkossa nimellä <code>brewery</code>) kohti luodaan listaan div-tagien sisällä olevat rivit. Ensimmäiselle riville tulee panimon nimi ja toiselle perustamisvuosi. Rails luo rivit käyttäen <code>render</code> metodia jokaista panimoa kohden. <code>render</code> metodi käyttää hyväkseen [Partial templateja](https://guides.rubyonrails.org/layouts_and_rendering.html#using-partials) eli tutummin "partialseja". Rails on luonut yksittäiselle panimolle automaattisesti partials-tiedoston (app/views/breweries/_brewery.html.erb). Partials-tiedostot nimetään käyttäen tiedoston alussa alaviivaa, jotta ne pystytänä jo silmäyksellä erottamaan normaaleista näkymistä. Kolmannelle riville luodaan  linkki panimon tiedot näyttävälle sivulle. Linkin generoiva Ruby-koodi on ```<%= link_to "Show this brewery", brewery %>``` .
+Muuttujaan ```@breweries``` talletettu panimoiden lista käydään läpi ```each```-iteraattorin avulla. (lisää eachista ks. https://github.com/ollikehy/wepa22/blob/master/web/rubyn_perusteita.md#each). Jokaista yksittäistä panimoa (joihin viitataan iteraattorin toistettavassa koodilohkossa nimellä <code>brewery</code>) kohti luodaan listaan div-tagien sisällä olevat rivit. Ensimmäiselle riville tulee panimon nimi ja toiselle perustamisvuosi. Rails luo rivit käyttäen <code>render</code> metodia jokaista panimoa kohden. <code>render</code> metodi käyttää hyväkseen [Partial templateja](https://guides.rubyonrails.org/layouts_and_rendering.html#using-partials) eli tutummin "partialseja". Rails on luonut yksittäiselle panimolle automaattisesti partials-tiedoston (app/views/breweries/_brewery.html.erb). Partials-tiedostot nimetään käyttäen tiedoston alussa alaviivaa, jotta ne pystytänä jo silmäyksellä erottamaan normaaleista näkymistä. Kolmannelle riville luodaan  linkki panimon tiedot näyttävälle sivulle. Linkin generoiva Ruby-koodi on ```<%= link_to "Show this brewery", brewery %>``` .
 
 Kyseessä on oikeastaan lyhennysmerkintä seuraavasta:
 
@@ -769,7 +769,7 @@ Mitä tarkoittaa ```"breweries/#{brewery.id}"```? Kyseinen merkkijonon alussa on
 
 Tehtävän jälkeen sovelluksesi panimot näyttävien sivujen tulisi näyttää seuraavalta
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2018/raw/master/images/brewery-w1-0a.png)
+![kuva](https://github.com/ollikehy/wepa22/raw/master/images/brewery-w1-0a.png)
 
 ## Oluiden listaaminen panimon sivulla
 
@@ -872,7 +872,7 @@ Jatketaan muutosten tekemistä.
 
 Sivusi tulisi näyttää tehtävän jälkeen seuraavalta
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2018/raw/master/images/brewery-w1-1.png)
+![kuva](https://github.com/ollikehy/wepa22/raw/master/images/brewery-w1-1.png)
 
 Parannellaan vielä hieman sovelluksemme navigaatiota.
 
@@ -894,13 +894,13 @@ Viritellään lopuksi kaikkien oluiden listaa.
 
 Lopputuloksen pitäisi näyttää seuraavalta:
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2018/raw/master/images/brewery-w1-2.png)
+![kuva](https://github.com/ollikehy/wepa22/raw/master/images/brewery-w1-2.png)
 
 ## nil
 
 Saatat törmätä seuraavanlaiseen virheilmoitukseen
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2018/raw/master/images/brewery-w1-3.png)
+![kuva](https://github.com/ollikehy/wepa22/raw/master/images/brewery-w1-3.png)
 
 Kyse on oikeastaan klassisesta nullpointer-poikkeuksesta, tai sen Ruby-versiosta nilpointer-poikkeuksesta. Rails vihjaa, että olet yrittänyt kutsua nil:ille (joka on Rubyssä olio!) metodia name, ja että sellaista ei ole. Syynä tälle on todennäköisesti se, että tietokannassasi on oluita joihin ei liity panimoa tai että niihin liittyvä panimo on poistettu.
 

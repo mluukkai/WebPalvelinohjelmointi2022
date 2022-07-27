@@ -316,7 +316,7 @@ Jos et ole jo rutinoitunut debuggerin käyttöön, kannattaa ehdottomasti kerrat
 
 ## binding.break vai binding.pry deguggaukseen?
 
-Jos käytössäsi on [Pry](https://github.com/mluukkai/WebPalvelinohjelmointi2018/blob/master/web/viikko2.md#parempi-konsoli) komento `binding.break` ei (välttämättä) käyttäydy kaikissa tilanteissa hyvin, kannattaakin käyttää oikeastaan aina komentoa `binding.pry`
+Jos käytössäsi on [Pry](https://github.com/ollikehy/wepa22/blob/master/web/viikko2.md#parempi-konsoli) komento `binding.break` ei (välttämättä) käyttäydy kaikissa tilanteissa hyvin, kannattaakin käyttää oikeastaan aina komentoa `binding.pry`
 
 ## Rubocop: tyyli ratkaisee
 
@@ -328,7 +328,7 @@ Rubocop asennetaan antamalla komentoriviltä komento
 
     gem install rubocop
 
-Rubocopin tarkastama säännöstö määritellään projektin juureen sijoitettavassa tiedostossa _.rubocop.yml_. Luo tiedosto projektiisi (huomaa, että tiedoston nimen alussa on piste) ja kopioi sille sisältö [täältä](https://github.com/mluukkai/WebPalvelinohjelmointi2018/blob/master/misc/.rubocop.yml)
+Rubocopin tarkastama säännöstö määritellään projektin juureen sijoitettavassa tiedostossa _.rubocop.yml_. Luo tiedosto projektiisi (huomaa, että tiedoston nimen alussa on piste) ja kopioi sille sisältö [täältä](https://github.com/ollikehy/wepa22/blob/master/misc/.rubocop.yml)
 
 Tiedoston määrittelemä säännöstö perustuu [Relaxed Ruby](https://relaxed.ruby.style/) -tyyliin, jota se tiukentaa muutamien sääntöjen osalta. Tiedostossa myös jätetään osa projektin tiedostoista tyylitarkastuksen ulkopuolelle.
 
@@ -503,11 +503,11 @@ Kirjautumissivun app/views/sessions/new.html.erb koodi on seuraavassa:
 <% end %>
 ```
 
-Toisin kuin reittauksille tekemämme formi (kertaa asia [viime viikolta](https://github.com/mluukkai/WebPalvelinohjelmointi2018/blob/master/web/viikko2.md#lomake-ja-post)), nyt tekemämme lomake ei perustu olioon ja lomake luodaan <code>form_with</code>-metodilla, ks. http://guides.rubyonrails.org/form_helpers.html#dealing-with-basic-forms
+Toisin kuin reittauksille tekemämme formi (kertaa asia [viime viikolta](https://github.com/ollikehy/wepa22/blob/master/web/viikko2.md#lomake-ja-post)), nyt tekemämme lomake ei perustu olioon ja lomake luodaan <code>form_with</code>-metodilla, ks. http://guides.rubyonrails.org/form_helpers.html#dealing-with-basic-forms
 
 Lomakkeen lähettäminen siis aiheuttaa HTTP POST -pyynnön session_pathiin (huomaa yksikkömuoto!) eli osoitteeseen **session**.
 
-Pyynnön käsittelevä metodi ottaa <code>params</code>-olioon talletetun käyttäjätunnuksen ja hakee sitä vastaavan käyttäjäolion kannasta ja tallettaa olion id:n sessioon jos käyttäjä on olemassa. Lopuksi käyttäjä _uudelleenohjataan_ (kertaa [viime viikolta](https://github.com/mluukkai/WebPalvelinohjelmointi2018/blob/master/web/viikko2.md#uudelleenohjaus) mitä uudelleenohjauksella tarkoitetaan) omalle sivulleen. Kontrollerin koodi vielä uudelleen seuraavassa:
+Pyynnön käsittelevä metodi ottaa <code>params</code>-olioon talletetun käyttäjätunnuksen ja hakee sitä vastaavan käyttäjäolion kannasta ja tallettaa olion id:n sessioon jos käyttäjä on olemassa. Lopuksi käyttäjä _uudelleenohjataan_ (kertaa [viime viikolta](https://github.com/ollikehy/wepa22/blob/master/web/viikko2.md#uudelleenohjaus) mitä uudelleenohjauksella tarkoitetaan) omalle sivulleen. Kontrollerin koodi vielä uudelleen seuraavassa:
 
 ```ruby
 def create
@@ -517,7 +517,7 @@ def create
 end
 ```
 
-Huom1: komento <code>redirect_to user</code> siis on lyhennysmerkintä seuraavalla <code>redirect_to user_path(user)</code>, ks. [viikko 1](https://github.com/mluukkai/WebPalvelinohjelmointi2018/blob/master/web/viikko1.md#kertausta-polkujen-ja-kontrollerien-niment%C3%A4konventiot).
+Huom1: komento <code>redirect_to user</code> siis on lyhennysmerkintä seuraavalla <code>redirect_to user_path(user)</code>, ks. [viikko 1](https://github.com/ollikehy/wepa22/blob/master/web/viikko1.md#kertausta-polkujen-ja-kontrollerien-niment%C3%A4konventiot).
 
 Huom2: Rubyssa yhdistelmän <code>if not</code> sijaan voidaan käyttää myös komentoa <code>unless</code>, eli metodin toinen rivi oltaisiin voitu kirjoittaa muodossa
 
@@ -614,11 +614,11 @@ eli mahdollistaa uloskirjautuminen HTTP GET:in avulla. Ei kuitenkaan pidetä hyv
 
 Tehtävän jälkeen sovelluksesi näyttää suunnilleen seuraavalta jos käyttäjä on kirjautuneena:
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2018/raw/master/images/ratebeer-w3-1.png)
+![kuva](https://github.com/ollikehy/wepa22/raw/master/images/ratebeer-w3-1.png)
 
 ja seuraavalta jos käyttäjä ei ole kirjautuneena (huomaa, että nyt näkyvillä on myös uuden käyttäjän rekisteröitymiseen tarkoitettu signup-linkki):
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2018/raw/master/images/ratebeer-w3-2.png)
+![kuva](https://github.com/ollikehy/wepa22/raw/master/images/ratebeer-w3-2.png)
 
 ## Reittaukset käyttäjälle
 
@@ -710,7 +710,7 @@ Päätetään että laitetaan kaikkien olemassaolevien reittausten käyttäjäks
 
 Käyttäjän sivu siis näyttää suunilleen seuraavalta:
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2018/raw/master/images/ratebeer-w3-3.png)
+![kuva](https://github.com/ollikehy/wepa22/raw/master/images/ratebeer-w3-3.png)
 
 Uusien reittausten luominen www-sivulta ei siis tällä hetkellä toimi, koska reittaukseen ei tällä hetkellä liitetä kirjautuneena olevaa käyttäjää. Muokataan siis  reittauskontrolleria siten, että kirjautuneena oleva käyttäjä linkitetään luotavaan reittaukseen:
 
@@ -737,7 +737,7 @@ Reittauksen luomisen jälkeen kontrolleri on laitettu uudelleenohjaamaan selain 
 
 Kaikkien reittausten sivun tulisi siis näyttää edellisen tehtävän jälkeen seuraavalta:
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2018/raw/master/images/ratebeer-w3-4.png)
+![kuva](https://github.com/ollikehy/wepa22/raw/master/images/ratebeer-w3-4.png)
 
 ## Kirjautumisen hienosäätöä
 
@@ -978,7 +978,7 @@ http://guides.rubyonrails.org/active_record_validations.html ja https://apidock.
 
 Jos yrität luoda oluen tyhjällä nimellä, seurauksena on virheilmoitus:
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2018/raw/master/images/ratebeer-w3-9.png)
+![kuva](https://github.com/ollikehy/wepa22/raw/master/images/ratebeer-w3-9.png)
 
 Mistä tämä johtuu? Jos oluen luonti epäonnistuu validoinnissa tapahtuneen virheen takia, olutkontrollerin metodi <code>create</code> suorittaa else-haaran, eli renderöi uudelleen oluiden luomiseen käytettävän lomakkeen. Oluiden luomiseen käytettävä lomake käyttää muuttujaan <code>@styles</code> talletettua oluttyylien listaa lomakkeen generointiin. Virheilmoituksen syynä onkin se, että muuttujaa ei ole nyt alustettu (toisin kuin jos lomakkeeseen mennään kontrollerimetodin <code>new</code> kautta). Lomake olettaa myös, että muuttujaan <code>@breweries</code> on talletettu kaikkien panimoiden lista. Eli ongelma korjautuu jos alustamme muuttujat else-haarassa:
 
@@ -1020,7 +1020,7 @@ end
 
 Yhteen olueeseen liittyy monta reittausta, ja reittaus liittyy aina yhteen käyttäjään, eli olueeseen liittyy monta reittauksen tehnyttä käyttäjää. Vastaavasti käyttäjällä on monta reittausta ja reittaus liittyy yhteen olueeseen. Eli käyttäjään liittyy monta reitattua olutta. Oluiden ja käyttäjien välillä on siis **monen suhde moneen -yhteys**, jossa ratings-taulu toimii liitostaulun tavoin.
 
-Saammekin tuotua tämän many to many -yhteyden kooditasolle helposti käyttämällä jo [edellisen viikon lopulta tuttua](https://github.com/mluukkai/WebPalvelinohjelmointi2018/blob/master/web/viikko2.md#olioiden-ep%C3%A4suora-yhteys) tapaa, eli **has_many through** -yhteyttä:
+Saammekin tuotua tämän many to many -yhteyden kooditasolle helposti käyttämällä jo [edellisen viikon lopulta tuttua](https://github.com/ollikehy/wepa22/blob/master/web/viikko2.md#olioiden-ep%C3%A4suora-yhteys) tapaa, eli **has_many through** -yhteyttä:
 
 ```ruby
 class Beer < ApplicationRecord
@@ -1153,9 +1153,9 @@ Trendinä kuitenkin on, että metodin has_and_belongs_to_many sijaan käytetää
 
 Seuraavat kaksi kuvaa antavat suuntaviivoja sille miltä sovelluksesi voi näyttää tehtävien 9-11 jälkeen.
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2018/raw/master/images/ratebeer-w3-5.png)
+![kuva](https://github.com/ollikehy/wepa22/raw/master/images/ratebeer-w3-5.png)
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2018/raw/master/images/ratebeer-w3-6.png)
+![kuva](https://github.com/ollikehy/wepa22/raw/master/images/ratebeer-w3-6.png)
 
 ## Salasana
 
@@ -1338,7 +1338,7 @@ Huomaa, että pelkkä **delete**-linkin poistaminen ei estä poistamasta muiden 
 
 > ## Tehtävä 15
 >
-> Laajenna vielä sovellusta siten, että käyttäjän tuhoutuessa käyttäjän tekemät reittaukset tuhoutuvat automaattisesti. Ks. https://github.com/mluukkai/WebPalvelinohjelmointi2018/blob/master/web/viikko2.md#orvot-oliot
+> Laajenna vielä sovellusta siten, että käyttäjän tuhoutuessa käyttäjän tekemät reittaukset tuhoutuvat automaattisesti. Ks. https://github.com/ollikehy/wepa22/blob/master/web/viikko2.md#orvot-oliot
 >
 > Jos teit tehtävät 9-11 eli toteutit järjestelmään olutkerhot, tuhoa käyttäjän tuhoamisen yhteydessä myös käyttäjän jäsenyydet olutkerhoissa
 
@@ -1438,13 +1438,13 @@ end
 
 Muutosten jälkeen käyttäjän tietojen muuttamislomake näyttää seuraavalta:
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2018/raw/master/images/ratebeer-w3-7.png)
+![kuva](https://github.com/ollikehy/wepa22/raw/master/images/ratebeer-w3-7.png)
 
 > ## Tehtävä 16
 >
 > Ainoa käyttäjään liittyvä tieto on nyt salasana, joten muuta käyttäjän tietojen muuttamiseen tarkoitettua lomaketta siten, että se näyttää allaolevassa kuvassa olevalta. Huomaa, että uuden käyttäjän rekisteröitymisen (signup) on edelleen näytettävä samalta kuin ennen.
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2018/raw/master/images/ratebeer-w3-8.png)
+![kuva](https://github.com/ollikehy/wepa22/raw/master/images/ratebeer-w3-8.png)
 
 ## Ongelmia herokussa
 
@@ -1453,7 +1453,7 @@ Kun ohjelman päivitetty versio deployataan herokuun, törmätään jälleen ong
 ![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2017/raw/master/images/ratebeer-w2-12.png)
 
 Kuten [viime viikolla](
-https://github.com/mluukkai/WebPalvelinohjelmointi2018/blob/master/web/viikko2.md#ongelmia-herokussa) jo totesimme, tulee ongelman syy selvittää herokun lokeista.
+https://github.com/ollikehy/wepa22/blob/master/web/viikko2.md#ongelmia-herokussa) jo totesimme, tulee ongelman syy selvittää herokun lokeista.
 
 Kaikkien käyttäjien sivu aiheuttaa seuraavan virheen:
 
@@ -1511,7 +1511,7 @@ Muista testata rubocopilla, että koodisi noudattaa edelleen määriteltyjä tyy
 
 Jos käytät Visual Studio Codea, voit asentaa [ruby-rubocop](https://marketplace.visualstudio.com/items?itemName=misogi.ruby-rubocop) laajennuksen, jolloin editori huomauttaa heti jos teet koodiin tyylivirheen:
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2018/raw/master/images/ratebeer-w3-10.png)
+![kuva](https://github.com/ollikehy/wepa22/raw/master/images/ratebeer-w3-10.png)
 
 ## Tehtävien palautus
 
