@@ -1,6 +1,6 @@
 Jatkamme sovelluksen rakentamista siitä, mihin jäimme viikon 4 lopussa. Allaoleva materiaali olettaa, että olet tehnyt kaikki edellisen viikon tehtävät. Jos et tehnyt kaikkia tehtäviä, voit täydentää ratkaisusi tehtävien palautusjärjestelmän kautta näkyvän esimerkivastauksen avulla.
 
-**Huom:** muutamilla Macin käyttäjillä oli ongelmia Herokun tarvitseman pg-gemin kanssa. Paikallisesti gemiä ei tarvita ja se määriteltiinkin asennettavaksi ainoastaan tuotantoympäristöön. Jos ongelmia ilmenee, voit asentaa gemit antamalla <code>bundle install</code>-komentoon seuraavan lisämääreen:
+**Huom:** Jos sinulla on ollut ongelmia Herokun tarvitseman pg-gemin kanssa lue tämä: Paikallisesti gemiä ei tarvita ja se määriteltiinkin asennettavaksi ainoastaan tuotantoympäristöön. Jos ongelmia ilmenee, voit asentaa gemit antamalla <code>bundle install</code>-komentoon seuraavan lisämääreen:
 
     bundle install --without production
 
@@ -34,7 +34,7 @@ Kuten huomaamme, vastaus tulee XML-muodossa. Käytänne on hieman vanhahtava, si
 
 Selaimella näemme palautetun XML:n hieman ihmisluettavammassa muodossa:
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2018/raw/master/images/ratebeer-w5-1.png)
+![kuva](https://github.com/ollikehy/wepa22/raw/master/images/ratebeer-w5-1.png)
 
 **HUOM: älä käytä tässä näytettyä API-avainta vaan rekisteröi itsellesi oma avain.**
 
@@ -58,9 +58,9 @@ ja näkymä app/views/places/index.html.erb, joka aluksi ainoastaan näyttää h
 ```erb
 <h1>Beer places search</h1>
 
-<%= form_tag places_path do %>
-  city <%= text_field_tag :city, params[:city] %>
-  <%= submit_tag "Search" %>
+<%= form_with url: places_path, method: :get do |form| %>
+  city <%= form.text_field :city %>
+  <%= form.submit "Search" %>
 <% end %>
 ```
 
@@ -135,7 +135,7 @@ HTTP-pyynnön statuskoodi selviää seuraavasti:
  => 200
 ```
 
-Statuskoodi ks. http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html on tällä kertaa 200 eli ok, kutsu on siis onnistunut.
+Statuskoodi ks. https://www.rfc-editor.org/rfc/rfc9110.html#name-successful-2xx on tällä kertaa 200 eli ok, kutsu on siis onnistunut.
 
 Vastausolion metodi <code>parsed_response</code> palauttaa metodin palauttaman datan rubyn hashina:
 
@@ -212,7 +212,7 @@ class Place < OpenStruct
 end
 ```
 
-Koska luomme luokan olutravintolaa esittävän hashin perusteella, teemme luokan siten että perimme siihen Rubyn valmiin [OpenStruc](https://ruby-doc.org/stdlib-2.5.1/libdoc/ostruct/rdoc/OpenStruct.html)-luokan toiminnallisuuden.
+Koska luomme luokan olutravintolaa esittävän hashin perusteella, teemme luokan siten että perimme siihen Rubyn valmiin [OpenStruct](https://ruby-doc.org/stdlib-3.1.2/libdoc/ostruct/rdoc/OpenStruct.html)-luokan toiminnallisuuden.
 
 OpenStructin avulla hash on helppo "kääriä" olioksi, joka mahdollistaa hashin kenttiin viittaamisen pistenotaatiolla.
 
@@ -252,7 +252,7 @@ baari.city
 
 ja näin saamme aikaan olion joka muistuttaa käyttötavaltaan normaaleja Railsin modeleja, kuten Beer, Brewery ym.
 
-Emme kuitenkaan halua käyttää ohjelmassamme suoraan OpenStrcteja ja siksi luomme olutpaikoille oman luokan _Places_ joka perii OpenStructin:
+Emme kuitenkaan halua käyttää ohjelmassamme suoraan OpenStructeja ja siksi luomme olutpaikoille oman luokan _Places_ joka perii OpenStructin:
 
 ```ruby
 class Place < OpenStruct
@@ -289,19 +289,21 @@ class PlacesController < ApplicationController
     places_from_api = response.parsed_response["bmp_locations"]["location"]
     @places = [ Place.new(places_from_api.first) ]
 
-    render :index
+    render :index, status: 418
   end
 end
 ```
+
+Lisätään myös renderiin status-koodi 418, jotta Railsin käyttämä turbo osaa renderöidä saman sivun uudestaan post-pyynnön jälkeen. Tämän statuskoodin avulla myös testit toimivat, sillä jos statuskoodiksi asettaisi esimerkiksi 303 [testit hajoaisivat](https://stackoverflow.com/a/30555199). Tämä hack on esimerkki huonosta koodista, mutta navigoidaksemme turbon ja testien kanssa se on vaadittu.
 
 Muokataan app/views/places/index.html.erb:tä siten, että se näyttää löydetyt ravintolat
 
 ```erb
 <h1>Beer places search</h1>
 
-<%= form_tag places_path do %>
-  city <%= text_field_tag :city, params[:city] %>
-  <%= submit_tag "Search" %>
+<%= form_with url: places_path, method: :post do |form| %>
+  city <%= form.text_field :city %>
+  <%= form.submit "Search" %>
 <% end %>
 
 <% if @places %>
@@ -327,7 +329,7 @@ Laajennetaan sitten koodi näyttämään kaikki panimot ja käyttämään lomakk
       Place.new(place)
     end
 
-    render :index
+    render :index, status: 418
   end
 ```
 
@@ -352,14 +354,14 @@ class PlacesController < ApplicationController
     response = HTTParty.get "#{url}#{params[:city]}"
     places_from_api = response.parsed_response["bmp_locations"]["location"]
 
-    if places_from_api.is_a?(Hash) and places_from_api['id'].nil?
+    if places_from_api.is_a?(Hash) && places_from_api['id'].nil?
       redirect_to places_path, notice: "No places in #{params[:city]}"
     else
       places_from_api = [places_from_api] if places_from_api.is_a?(Hash)
       @places = places_from_api.map do | location |
         Place.new(location)
       end
-      render :index
+      render :index, status: 418
     end
   end
 
@@ -379,11 +381,13 @@ end
 index.html.erb:n paranneltu koodi seuraavassa:
 
 ```erb
+<h1>Beer places search</h1>
+
 <p id="notice"><%= notice %></p>
 
-<%= form_tag places_path do %>
-  city <%= text_field_tag :city, params[:city] %>
-  <%= submit_tag "Search" %>
+<%= form_with url: places_path, method: :post do |form| %>
+  city <%= form.text_field :city %>
+  <%= form.submit "Search" %>
 <% end %>
 
 <% if @places %>
@@ -555,6 +559,8 @@ module Ratebeer
 end
 ```
 
+Jotta muutokset tulevat voimaan täytyy sovellus käynnistää uudestaan.
+
 Kontrollerista tulee nyt siisti:
 
 ```ruby
@@ -619,7 +625,7 @@ Kun nyt testissä tehdään HTTP-pyyntö places-kontrollerille, ja kontrolleri k
 > * jos API palauttaa useita olutpaikkoja, kaikki näistä näytetään sivulla
 > * jos API ei löydä paikkakunnalta yhtään olutpaikkaa (eli paluuarvo on tyhjä taulukko), sivulla näytetään ilmoitus "No locations in _etsitty paikka_"
 >
-> Viikon 3 luku [kirjautumisen hienosäätöä](https://github.com/mluukkai/WebPalvelinohjelmointi2018/blob/master/web/viikko3.md#kirjautumisen-hienos%C3%A4%C3%A4t%C3%B6%C3%A4) antaa vihjeitä toista kohtaa varte.
+> Viikon 3 luku [kirjautumisen hienosäätöä](https://github.com/ollikehy/wepa22/blob/master/web/viikko3.md#kirjautumisen-hienos%C3%A4%C3%A4t%C3%B6%C3%A4) antaa vihjeitä toista kohtaa varte.
 
 Siirrytään sitten luokan <code>BeermappingApi</code> testaamiseen. Luokka siis tekee HTTP GET -pyynnön HTTParty-kirjaston avulla Beermapping-palveluun. Voisimme edellisen esimerkin tapaan stubata HTTPartyn get-metodin. Tämän on kuitenkin hieman ikävää, sillä metodi palauttaa <code>HTTPartyResponse</code>-olion ja sellaisen muodostaminen stubauksen yhteydessä käsin ei välttämättä ole kovin mukavaa.
 
@@ -723,6 +729,8 @@ Kuten virheilmoitus antaa ymmärtää, voidaan komennon <code>stub_request</code
 > * HTTP GET palauttaa useita paikkoja, eli tällöin metodin <code>places_in</code> tulee palauttaa kaikki HTTP-kutsun XML-muodossa palauttamat ravintolat taulukollisena Place-olioita
 >
 > Stubatut vastaukset kannattaa jälleen muodostaa curl-komennon avulla API:n tehdyillä kyselyillä
+>
+> Muista käyttää debuggeria apuna testatessa
 
 Erilaisten lavastekomponenttien tekeminen eli metodien ja kokonaisten olioiden stubaus sekä mockaus on hyvin laaja aihe. Voit lukea aiheesta Rspeciin liittyen seuraavasta http://rubydoc.info/gems/rspec-mocks/
 
@@ -780,8 +788,6 @@ Tuotantokäytössä välimuistin datan tallettaminen tiedostojärjestelmään ei
 ```ruby
 config.cache_store = :memory_store
 ```
-
-Jos et tee muutosta, cachea käyttävät testit eivät toimi Travisissa, sillä Travisin käytössä on readonly-tiedostojärjestelmä.
 
 Viritellään luokkaa <code>BeermappingApi</code> siten, että se tallettaa tehtyjen kyselyjen tulokset välimuistiin. Jos kysely kohdistuu jo välimuistissa olevaan kaupunkiin, palautetaan tulos välimuistista.
 
@@ -943,11 +949,9 @@ Testi sisältää nyt paljon toisteisuutta ja kaipaisi refaktorointia, mutta men
 config.cache_store = :memory_store
 ```
 
-Jos et tee muutosta, cachea käyttävät testit eivät toimi Travisissa, sillä Travisin käytössä on readonly-tiedostojärjestelmä.
-
 ## Sovelluskohtaisen datan tallentaminen
 
-Koodissamme API-key on nyt kirjoitettu sovelluksen koodiin. Tämä ei tietenkään ole ollenkaan järkevää. Railsissa on useita mahdollisuuksia konfiguraatiotiedon tallentamiseen, ks. esim. http://quickleft.com/blog/simple-rails-app-configuration-settings
+Koodissamme API-key on nyt kirjoitettu sovelluksen koodiin. Tämä ei tietenkään ole ollenkaan järkevää. Railsissa on useita mahdollisuuksia konfiguraatiotiedon tallentamiseen, ks. https://guides.rubyonrails.org/configuring.html
 
 Ehkä paras vaihtoehto suhteellisen yksinkertaisen sovelluskohtaisen datan tallettamiseen ovat ympäristömuuttujat. Esimerkki seuraavassa:
 
@@ -973,7 +977,7 @@ class BeermappingApi
 
   def self.key
     raise "BEERMAPPING_APIKEY env variable not defined" if ENV['BEERMAPPING_APIKEY'].nil?
-    ENV['BEERMAPPING_APIKEY']
+    ENV.fetch('BEERMAPPING_APIKEY')
   end
 end
 ```
@@ -998,12 +1002,12 @@ Voit myös määritellä ympäristömuuttujan arvon (export-komennolla) komentot
 Ympäristömuuttujille on helppo asettaa arvo myös Herokussa, ks.
 https://devcenter.heroku.com/articles/config-vars
 
-**HUOM** Jos haluat pitää Traviksen toimintakunnossa, joudut määrittelemään ympäristömuuttujan Travis-konfiguraatioon ks.
-http://docs.travis-ci.com/user/environment-variables/
+**HUOM** Jos haluat pitää Github actionsin toimintakunnossa, joudut määrittelemään ympäristömuuttujan workflown-konfiguraatioon ks.
+https://docs.github.com/en/actions/learn-github-actions/environment-variables
 
 ## Lisäselvennys kontrollerin toiminnasta
 
-Muutamien osalla on ollut havaittavissa hienoista epäselvyyttä kontrollereiden <code>show</code>-metodien toimintaperiaatteessa. Seuraavaakin tehtävää silmälläpitäen kerrataan asiaa hieman.
+Tarkastellaan hieman tarkemmin kontrollerien <code>show</code>-metodien toimintaperiaatetta. Seuraavaakin tehtävää silmälläpitäen kerrataan asiaa.
 
 Tarkastellaan panimon kontrolleria. Yksittäisen panimon näyttämisestä vastaava kontrollerimetodi ei sisällä mitään koodia:
 
@@ -1046,7 +1050,7 @@ joka lataa panimo-olion muistista ja tallettaa sen näkymää varten muuttujaan.
 
 Kuten koodista on pääteltävissä, kontrolleri pääsee käsiksi panimon id:hen <code>params</code>-hashin kautta. Mihin tämä perustuu?
 
-Kun katsomme sovelluksen routeja joko komennolla <code>rails routes</code> tai selaimesta (menemällä mihin tahansa epävalidiin osoitteeseen), huomaamme, että yksittäiseen panimoon liittyvä routetieto on seuraava
+Kun katsomme sovelluksen routeja joko komennolla <code>rails routes</code> tai selaimesta (menemällä mihin tahansa epävalidiin osoitteeseen kuten localhost:3000/foobar), huomaamme, että yksittäiseen panimoon liittyvä routetieto on seuraava
 
 ```ruby
 brewery_path	 GET	 /breweries/:id(.:format)	 breweries#show
@@ -1096,7 +1100,7 @@ eli tällä kertaa routeissa määriteltiin, että panimon id:hen viitataan <cod
 > post 'places', to:'places#search'
 > ```
 >
->* HUOM: ravintolan tiedot löytyvät hieman epäsuorasti cachesta siinä vaiheessa kun ravintolan sivulle ollaan menossa. Jotta pääset tietoihin käsiksi on ravintolan id:n lisäksi "muistettava" kaupunki, josta ravintolaa etsittiin, tai edelliseksi tehdyn search-operaation tulos. Yksi tapa muistamiseen on käyttää sessiota, ks. https://github.com/mluukkai/WebPalvelinohjelmointi2018/blob/master/web/viikko3.md#k%C3%A4ytt%C3%A4j%C3%A4-ja-sessio
+>* HUOM: ravintolan tiedot löytyvät hieman epäsuorasti cachesta siinä vaiheessa kun ravintolan sivulle ollaan menossa. Jotta pääset tietoihin käsiksi on ravintolan id:n lisäksi "muistettava" kaupunki, josta ravintolaa etsittiin, tai edelliseksi tehdyn search-operaation tulos. Yksi tapa muistamiseen on käyttää sessiota, ks. https://github.com/ollikehy/wepa22/blob/master/web/viikko3.md#k%C3%A4ytt%C3%A4j%C3%A4-ja-sessio
 >
 > Toinen tapa toiminnallisuuden toteuttamiseen on sivulla http://beermapping.com/api/reference/ oleva "Locquery Service"
 >
@@ -1141,7 +1145,7 @@ eli tällä kertaa routeissa määriteltiin, että panimon id:hen viitataan <cod
 
 Tehtävän jälkeen sovelluksesi voi näyttää esim. seuraavalta:
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2018/raw/master/images/ratebeer-w5-2.png)
+![kuva](https://github.com/ollikehy/wepa22/raw/master/images/ratebeer-w5-2.png)
 
 ## Oluen reittaus suoraan oluen sivulta
 
@@ -1161,55 +1165,39 @@ Eli siltä varalta, että oluelle tehdään reittaus, luodaan näykymätemplatea
 Näkymätemplatea /views/beers/show.html.erb muutetaan seuraavasti:
 
 ```erb
-<p id="notice"><%= notice %></p>
+<p style="color: green"><%= notice %></p>
 
-<h2>
-  <%= @beer.name %>
-</h2>
-
-<p>
-  <strong>Style:</strong>
-  <%= @beer.style %>
-</p>
-
-<p>
-  <strong>Brewery:</strong>
-  <%= @beer.brewery.name %>
-</p>
-
-<p>
-  <% if @beer.ratings.empty? %>
-    beer has not yet been rated!
-  <% else %>
-    Has <%= pluralize(@beer.ratings.count, 'rating') %>, average <%= @beer.average_rating %>
-  <% end %>
-</p>
+<%= render @beer %>
 
 <% if current_user %>
-  <h4>give a rating:</h4>
-
-  <%= form_for(@rating) do |f| %>
-    <%= f.hidden_field :beer_id %>
-    score: <%= f.number_field :score %>
-    <%= f.submit %>
+  <h4>give a rating:<h4>
+  
+  <%= form_with(model: @rating) do |form| %>
+    <%= form.hidden_field :beer_id %>
+    score: <%= form.number_field :score %>
+    <%= form.submit "Create rating" %>
   <% end %>
-
-  <%= link_to 'Edit', edit_beer_path(@beer) %> 
-  <%= link_to 'Destroy', @beer, method: :delete, data: { confirm: 'Are you sure?' } %>
+  
+  <div>
+    <%= link_to "Edit this beer |", edit_beer_path(@beer) %>
+    <%= link_to "Destroy this beer", @beer, form: { data: {turbo_confirm: "Are you sure?"} }, method: :delete if current_user%>
+  </div>
 <% end %>
+
+<%= link_to "Back to beers", beers_path %>
 ```
 
 Jotta lomake lähettäisi oluen id:n, tulee <code>beer_id</code>-kenttä lisätä lomakkeeseen. Emme kuitenkaan halua käyttäjän pystyvän manipuloimaan kenttää, joten kenttä on määritelty lomakkeelle <code>hidden_field</code>:iksi.
 
-Koska lomake on luotu <code>form_for</code>-helperillä, tapahtuu sen lähettäminen automaattisesti HTTP POST -pyynnöllä <code>ratings_path</code>:iin eli reittauskontrollerin <code>create</code>-metodi käsittelee lomakkeen lähetyksen. Kontrolleri toimii ilman muutoksia!
+Koska lomake on luotu <code>form_with</code>-helperillä, tapahtuu sen lähettäminen automaattisesti HTTP POST -pyynnöllä <code>ratings_path</code>:iin eli reittauskontrollerin <code>create</code>-metodi käsittelee lomakkeen lähetyksen. Kontrolleri toimii ilman muutoksia!
 
 Ratkaisussa on pieni ongelma. Jos reittauksessa yritetään antaa epävalidi pistemäärä:
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2018/raw/master/images/ratebeer-w5-4.png)
+![kuva](https://github.com/ollikehy/wepa22/raw/master/images/ratebeer-w5-4.png)
 
 renderöi kontrolleri (eli reittauskontrollerin metodi <code>create</code>) oluen näkymän sijaan uuden reittauksen luomislomakkeen:
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2018/raw/master/images/ratebeer-w5-3.png)
+![kuva](https://github.com/ollikehy/wepa22/raw/master/images/ratebeer-w5-3.png)
 
 Ongelman voisi kiertää katsomalla mistä osoitteesta create-metodiin on tultu ja renderöidä sitten oikea sivu riippuen tulo-osoitteesta. Emme kuitenkaan tee nyt tätä muutosta.
 
@@ -1232,16 +1220,14 @@ Eli muutetaan näkymätemplate app/views/ratings/new.html.erb seuraavaan muotoon
       <h2><%= pluralize(@rating.errors.count, "error") %> prohibited rating from being saved:</h2>
 
       <ul>
-        <% @rating.errors.full_messages.each do |msg| %>
-            <li><%= msg %></li>
-        <% end %>
+      <% @rating.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
       </ul>
     </div>
   <% end %>
-
   <%= f.select :beer_id, options_from_collection_for_select(@beers, :id, :to_s, selected: @rating.beer_id) %>
   score: <%= f.number_field :score %>
-
   <%= f.submit %>
 <% end %>
 ```
@@ -1252,13 +1238,14 @@ Sama ongelma itse asiassa vaivaa muutamia sovelluksemme lomakkeita, kokeile esim
 >
 > Tee myös olutkerhoihin liittyminen mahdolliseksi suoraan olutkerhon sivulta.
 >
-> Kannattaa noudattaa samaa toteutusperiaatetta kuin oluen sivulta tapahtuvassa reittaamisessa, eli lisää olutseuran sivulle lomake, jonka avulla voidaan luoda uusi <code>Membership</code>-olio, joka liittyy olutseuraan ja kirjautuneena olevaan käyttäjään. Lomakkeeseen ei tarvita muuta kuin 'submit'-painike:
+> Kannattaa noudattaa samaa toteutusperiaatetta kuin oluen sivulta tapahtuvassa reittaamisessa, eli lisää olutseuran sivulle lomake, jonka avulla voidaan luoda uusi <code>Membership</code>-olio, joka liittyy olutseuraan ja kirjautuneena olevaan käyttäjään. Lomakkeen hidden_field kenttiin voi asettaa arvot käyttämällä <code>value</code>-parametriä:
 >
 >```erb
-><%= form_for(@membership) do |f| %>
->  <%= f.hidden_field :beer_club_id %>
->  <%= f.submit value:"join the club" %>
-><% end %>
+> <%= form_with(model: @membership) do |form| %>
+>   <%= form.hidden_field :beer_club_id, value: @beerclub.id %>
+>   <%= form.hidden_field :user_id, value: current_user.id %>
+>   <%= form.submit "Join the beerclub" %>
+> <% end %>
 >```
 
 Hienosäädetään olutseuraan liittymistä
@@ -1269,7 +1256,7 @@ Hienosäädetään olutseuraan liittymistä
 >
 > Muokkaa koodiasi siten (membership-kontrollerin sopivaa metodia), että olutseuraan liittymisen jälkeen selain ohjautuu olutseuran sivulle ja sivu näyttää allaolevan kuvan mukaisen ilmoituksen uuden käyttäjän liittymisestä.
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2018/raw/master/images/ratebeer-w5-5.png)
+![kuva](https://github.com/ollikehy/wepa22/raw/master/images/ratebeer-w5-5.png)
 
 > ## Tehtävä 9
 >
@@ -1280,10 +1267,12 @@ Hienosäädetään olutseuraan liittymistä
 > Vihje: eroamistoiminnallisuuden voi toteuttaa liittymistoiminnalisuuden tapaan olutseuran sivulle sijoitettavalla lomakkeella. Lomakkeen käyttämäksi HTTP-metodiksi tulee määritellä delete:
 >
 >```erb
-><%= form_for(@membership, method: "delete") do |f| %>
->  <%= f.hidden_field :beer_club_id %>
->  <%= f.submit value: "end the membership" %>
-><% end %>
+> <%= form_with(model: @membership, ..., method: :delete) do |form| %>
+>   ...
+>   <%= form.hidden_field :beer_club_id, value: @beerclub.id %>
+>   <%= form.hidden_field :user_id, value: current_user.id %>
+>   <%= form.submit "End the membership" %>
+> <% end %>
 >```
 >
 > **HUOM:** saatat saada virheilmoituksen <code>No route matches [DELETE] "/memberships"</code>
@@ -1292,15 +1281,17 @@ Hienosäädetään olutseuraan liittymistä
 >
 > Metodi <code>form_for</code> tuottaa polun muotoa _memberships_ jos sen parametrina oleva olio _ei ole_ talletettu tietokantaan. Jos parametrina oleva olio on talletettu tietokantaan, generoituva polku on muotoa _memberships/42_, missä 42 siis parametrina olevan olion id.
 >
-> Lomaketta käytettäessä on siis kontrollerissa asetettava muuttujan <code>@membership</code> arvoksi käyttäjän seuraan liittävä olio.
+> Tehtävän toteuttamiseen on monta keinoa, yksi keino on saada selville käyttäjän <code>membership</code> olion id, jonka avulla voi käsin asettaa oikean id:n polkuun.
+>
+> Lomaketta käytettäessä on siis kontrollerissa asetettava muuttujan <code>@membership</code> arvoksi käyttäjän seuraan liittävä olio. Jos toteutat tehtävän käyttämällä <code>membership</code> olion id:tä, on se myös päästettävä kontrollerissa läpi <code>membership_params</code> metodissa.
 
 Jos käyttäjä on seuran jäsen, näytetään seuran sivulla eroamisen mahdollistava painike:
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2018/raw/master/images/ratebeer-w5-5a.png)
+![kuva](https://github.com/ollikehy/wepa22/raw/master/images/ratebeer-w5-5a.png)
 
 Erottaessa seurasta tehdään uudelleenohjaus käyttäjän sivulle ja näytetään asianmukainen ilmoitus:
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2018/raw/master/images/ratebeer-w5-5b.png)
+![kuva](https://github.com/ollikehy/wepa22/raw/master/images/ratebeer-w5-5b.png)
 
 ## Migraatioista
 
@@ -1333,7 +1324,7 @@ Olemme käyttäneet Railsin migraatioita jo ensimmäisestä viikosta alkaen. On 
 >
 > **Huomaa, että Heroku-instanssin ajantasaistaminen kannattaa tehdä samalla!**
 >
-> Vihje: voit harjoitella datamigraation tekemistä siten, että kopioit ennen migraation aloittamista tietokannan eli tiedoston _db/development.sqlite3_ ja jos migraatiossa menee jokin pieleen, voit palauttaa tilanteen ennalleen kopion avulla. Myös debuggeri (byebug tai bindings.pry) saattaa osoittautua hyödylliseksi migraation kehittelemisessä.
+> Vihje: voit harjoitella datamigraation tekemistä siten, että kopioit ennen migraation aloittamista tietokannan eli tiedoston _db/development.sqlite3_ ja jos migraatiossa menee jokin pieleen, voit palauttaa tilanteen ennalleen kopion avulla. Myös debuggeri (binding.break tai binding.pry) saattaa osoittautua hyödylliseksi migraation kehittelemisessä.
 >
 > Voit myös suorittaa siirtymisen uusiin tietokannassa oleviin tyyleihin suoraviivaisemmin eli poistamalla oluilta _style_-sarakkeen ja asettamalla oluiden tyylit esim. konsolista.
 >
@@ -1343,13 +1334,11 @@ Olemme käyttäneet Railsin migraatioita jo ensimmäisestä viikosta alkaen. On 
 >
 > **HUOM1** Jos lisäät luokalle _Beer_ määreen <code>belongs_to :style</code> et enää pääse käsiksi _style_-nimiseen merkkijonomuotoiseen attribuuttiin pistenotaatiolla _beer.style_, vaan joudut käyttämään muotoa _beer['style']_
 >
-> **HUOM2** Jos et tee myös datan migraatiota migraatiotiedostojen avulla, tämä tehtävä todennäköisesti hajottaa Travisin. Voit merkitä tehtävän siitä huolimatta. Travisia ei ole pakko pitää toimintakunnossa kurssin seuraavilla viikoilla. Toki on syytä potea hieman huonoa omaatuntoa, jos Travis-build rikkoutuu.
->
-> **HUOM3** varmista, että _uusien oluiden luominen toimii_ vielä laajennuksen jälkeen! Joudut muuttamaan muutamaakin kohtaa, näistä vaikein huomata lienee olutkontrollerin apumetodi <code>beer_params</code>.
+> **HUOM2** varmista, että _uusien oluiden luominen toimii_ vielä laajennuksen jälkeen! Joudut muuttamaan muutamaakin kohtaa, näistä vaikein huomata lienee olutkontrollerin apumetodi <code>beer_params</code>.
 
 Tehtävän jälkeen oluttyylin sivu voi näyttää esim. seuraavalta
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2017/raw/master/images/ratebeer-w5-6.png)
+![kuva](https://github.com/ollikehy/wepa22/raw/master/images/ratebeer-w5-6.png)
 
 Hyvä lista oluttyyleistä kuvauksineen löytyy osoitteesta http://beeradvocate.com/beer/style/
 
@@ -1366,11 +1355,11 @@ Hyvä lista oluttyyleistä kuvauksineen löytyy osoitteesta http://beeradvocate.
 
 > ## Tehtävä 15
 >
-> Lisää olutpaikat näyttävälle sivulle paikan tämänhetkinen säätiedoitus. Säätiedoituksen tarjoavia palveluita on kymmeniä. Itse käytin [https://www.apixu.com](https://www.apixu.com):ta. Muista jälleen käsitellä koodissa apiavainta järkevästi!
+> Lisää olutpaikat näyttävälle sivulle paikan tämänhetkinen säätiedoitus. Säätiedoituksen tarjoavia palveluita on kymmeniä. Itse käytin [https://weatherstack.com/](https://weatherstack.com/):ta. Muista jälleen käsitellä koodissa apiavainta järkevästi!
 
 Tehtävän jälkeen olutpaikkojen sivu voi näyttää esim. seuraavalta
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2018/raw/master/images/ratebeer-w5-6.png)
+![kuva](https://github.com/ollikehy/wepa22/raw/master/images/ratebeer-w5-7.png)
 
 ## Tehtävien palautus
 

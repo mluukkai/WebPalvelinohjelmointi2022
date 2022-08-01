@@ -60,6 +60,9 @@ Style/Alias:
 Style/BeginBlock:
   Enabled: true
 
+Style/OpenStructUse:
+  Enabled: false
+
 Naming/MethodParameterName:
   AllowedNames:
     - cn
