@@ -6,9 +6,9 @@ Osa tämän viikon tehtävistä saattaa hajottaa jotain edellisinä viikkoina te
 
 ## Muistutus debuggerista
 
-Viikolla 2 tutustuimme [debuggeriin](https://github.com/mluukkai/WebPalvelinohjelmointi2018/blob/master/web/viikko2.md#debuggeri). Valitettavasti debuggeri ei ole vielä löytänyt tietänsä jokaisen kurssilaisen työkaluvalikoimaan.
+Viikolla 2 tutustuimme [debuggeriin](https://github.com/ollikehy/wepa22/blob/master/web/viikko2.md#debuggeri). Jos debuggeri ei ole vielä löytänyt tietänsä sinun työkaluvalikoimaan niin tässä vielä nopea kertaus käytöstä.
 
-Debuggerin käyttö on erittäin helppoa. Riittää kirjoittaa komento <code>binding.pry</code> (tai <code>byebug</code>)  _mihin tahansa_ kohtaan sovelluksen koodia. Seuraavassa esimerkki:
+Debuggerin käyttö on erittäin helppoa. Riittää kirjoittaa komento <code>binding.pry</code> (tai <code>binding.break</code>)  _mihin tahansa_ kohtaan sovelluksen koodia. Seuraavassa esimerkki:
 
 ```ruby
 class PlacesController < ApplicationController
@@ -51,7 +51,7 @@ From: /Users/mluukkai/opetus/ratebeer/app/controllers/places_controller.rb @ lin
 
 eli pystymme mm. tarkastamaan että <code>params</code> hashin sisältö on sellainen kuin oletamme sen olevan.
 
-Suoritetaan sitten seuraava komento ja katsotaan että tulos on odotetun kaltainen. Jos käytämme _byebugia_ voi seuraavan komennon suorittaa komennolla <code>next</code>. Pry ei tätä mahdollisuutta tarjoa ja seuraava komento pitää käytännössa suoritta kopioimalla komento terminaaliin:
+Suoritetaan sitten seuraava komento ja katsotaan että tulos on odotetun kaltainen. Jos käytämme _debuggeria_ voi seuraavan komennon suorittaa komennolla <code>continue/c</code>. Pry ei tätä mahdollisuutta tarjoa ja seuraava komento pitää käytännössa suorittaa kopioimalla komento terminaaliin:
 
 ```ruby
 > @places = BeermappingApi.places_in(city)
@@ -101,7 +101,7 @@ Näkymätemplateen on siis lisätty <code><% binding.pry %></code>. Kuten huomaa
 => "<option value=\"1\">European pale lager</option>\n<option value=\"2\">Pale Ale</option>\n<option value=\"3\">Porter</option>\n<option value=\"4\">German hefeweizen</option>\n<option value=\"5\">IPA</option>\n<option value=\"6\">Ilowalcohol</option>\n<option value=\"7\">Pale ale</option>"
 ```
 
-Eli vielä kertauksena **kun kohtaat ongelman, turvaudu arvailun sijaan byebugiin!**
+Eli vielä kertauksena **kun kohtaat ongelman, turvaudu arvailun sijaan debuggeriin!**
 
 Rails-konsolin käytön tärkeyttä sovelluskehityksen välineenä on yritetty korostaa läpi kurssin. Eli **kun teet jotain vähänkin epätriviaalia, testaa asia ensin konsolissa.** Joissain tilanteissa voi olla jopa parempi tehdä kokeilut debuggerin avulla avautuvassa konsolissa, sillä tällöin on mahdollista avata konsolisessio juuri siihen kontekstiin, mihin koodia ollaan kirjoittamassa. Näin ollen päästään käsiksi esim. muuttujiin <code>params</code>, <code>sessions</code> ym. suorituskontekstista riippuvaan dataan.
 
@@ -146,18 +146,19 @@ Määrittelimme viikolla 2 navigointipalkille tyylin lisäämällä hakemistossa
 
 CSS:ää käyttämällä koko sivuston ulkoasu voitaisiin muotoilla sivuston suunnittelijan haluamalla tavalla, jos silmää ja kykyä muotoiluun löytyy.
 
-Sivuston muotoilunkaan suhteen ei onneksi ole enää tarvetta keksiä pyörää uudelleen. Bootstrap http://getbootstrap.com/ on "kehys", joka sisältää suuren määrän web-sivujen ulkoasun muotoiluun tarkoitettuja CSS-tyylitiedostoja ja javascriptiä. Bootstrap onkin noussut nopeasti suureen suosioon web-sivujen ulkoasun muotoilussa.
+Sivuston muotoilunkaan suhteen ei onneksi ole enää tarvetta keksiä pyörää uudelleen. Bootstrap http://getbootstrap.com/ on "kehys", joka sisältää suuren määrän web-sivujen ulkoasun muotoiluun tarkoitettuja CSS-tyylitiedostoja ja javascriptiä. Bootstrap on pitkään nauttinut suosiota web-sivujen ulkoasun muotoilussa käytettävien kirjastojen joukossa.
 
 Aloitetaan sitten sovelluksemme bootstrappaaminen gemin <https://github.com/twbs/bootstrap-rubygem> avulla. Lisätään Gemfileen seuraavat:
 
 ```ruby
-gem 'bootstrap', '~> 4.1.3'
-gem 'jquery-rails', '>= 4.3.3'
+gem 'bootstrap', '~> 5.2.0'
+gem 'jquery-rails'
+gem 'mini_racer'
 ```
 
 Asennetaan gemit komennolla <code>bundle install</code>, asennuksen jälkeen sovellus tulee uudelleenkäynnistää.
 
-Gemin [asennusohjetta](https://github.com/twbs/bootstrap-rubygem#a-ruby-on-rails) noudattaen lisätään tiedoston _app/assets/javascript/application.js_ loppuun seuraavat 
+Gemin [asennusohjetta](https://github.com/twbs/bootstrap-rubygem#a-ruby-on-rails) noudattaen lisätään tiedoston _app/assets/javascript/application.js_ **ALKUUN** seuraavat 
 
 ```
 //= require jquery3
@@ -175,7 +176,7 @@ Kun nyt avaamme sovelluksen selaimella (ja sovellus on uudelleenkäynnistettu), 
 
 ### Navbar
 
-Bootstrapissa käyttöliittymä rakennetaan CSS-luokkina määritellyistä komponenteista. Eräs esimerkki bootstrapin komponenteista on [navbar](https://getbootstrap.com/docs/4.0/components/navbar/), jonka avulla voidaan muotoilla sovelluksen navigaatiopalkki.
+Bootstrapissa käyttöliittymä rakennetaan CSS-luokkina määritellyistä komponenteista. Eräs esimerkki bootstrapin komponenteista on [navbar](https://getbootstrap.com/docs/5.2/components/navbar/), jonka avulla voidaan muotoilla sovelluksen navigaatiopalkki.
 
 Muutetaan tiedosto _app/views/layouts/application.html.erb_  seuraavaan muotoon:
 
@@ -184,15 +185,15 @@ Muutetaan tiedosto _app/views/layouts/application.html.erb_  seuraavaan muotoon:
 <html>
   <head>
     <title>Ratebeer</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
   </head>
 
   <body>
-
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
         <span class="navbar-toggler-icon"></span>
@@ -201,47 +202,48 @@ Muutetaan tiedosto _app/views/layouts/application.html.erb_  seuraavaan muotoon:
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
-            <%= link_to 'breweries', breweries_path, { class: "nav-link" } %>
+            <%= link_to 'breweries', breweries_path, { class: "nav-link" }  %>
           </li>
           <li class="nav-item">
-            <%= link_to 'beers', beers_path, { class: "nav-link" } %>
+            <%= link_to 'beers', beers_path , { class: "nav-link" } %>
           </li>
           <li class="nav-item">
-            <%= link_to 'styles', styles_path, { class: "nav-link" } %>
+            <%= link_to 'ratings', ratings_path , { class: "nav-link" } %>
           </li>
           <li class="nav-item">
-            <%= link_to 'ratings', ratings_path, { class: "nav-link" } %>
+            <%= link_to 'users', users_path , { class: "nav-link" } %>
           </li>
           <li class="nav-item">
-            <%= link_to 'users', users_path, { class: "nav-link" } %>
+            <%= link_to 'clubs', beerclubs_path , { class: "nav-link" } %>
           </li>
           <li class="nav-item">
-            <%= link_to 'clubs', beer_clubs_path, { class: "nav-link" } %>
+            <%= link_to 'places', places_path, { class: "nav-link" }  %>
           </li>
           <li class="nav-item">
-            <%= link_to 'places', places_path, { class: "nav-link" } %>
+            <%= link_to 'styles', styles_path , { class: "nav-link" } %>
           </li>
-          <% if current_user %>
-            <li class="nav-item">
-              <%= link_to current_user.username, current_user, { class: "nav-link" } %>
-            </li>
-            <li class="nav-item">
-              <%= link_to 'rate a beer ', new_rating_path, { class: "nav-link" } %>
-            </li>
-            <li class="nav-item">
-              <%= link_to 'join a club ', new_membership_path, { class: "nav-link" } %>
-            </li>
-            <li class="nav-item">
-              <%= link_to 'signout', signout_path, { class: "nav-link", method: :delete  } %>
-            </li>
-          <% else %>
-            <li class="nav-item">
-              <%= link_to 'signin', signin_path, { class: "nav-link" } %>
-            </li>
-            <li class="nav-item">
-              <%= link_to 'signup', signup_path, { class: "nav-link" } %>
-            </li>
-          <% end %>                            
+      |
+      <% if current_user %>
+        <li class="nav-item">
+          <%= link_to "#{current_user.username}", current_user , { class: "nav-link" } %>
+        </li>
+        <li class="nav-item">
+          <%= link_to "Rate a new beer", new_rating_path , { class: "nav-link" } %>
+        </li>
+        <li class="nav-item">
+          <%= link_to "Join a club", new_membership_path , { class: "nav-link" } %>
+        </li>
+        <li class="nav-item">
+          <%= link_to "Sign out", signout_path, class: "nav-link", data: {turbo_method: :delete} %>
+        </li>
+      <% else %>
+        <li class="nav-item">
+          <%= link_to "Sign up", signup_path , { class: "nav-link" } %>
+        </li>
+        <li class="nav-item">
+          <%= link_to "Sign in", signin_path , { class: "nav-link" } %>
+        </li>
+      <% end %>
         </ul>
       </div>
     </nav>
@@ -255,17 +257,17 @@ Bootstrapin dokumentaatio ei ole ihan selkein mahdollinen, mutta pienellä ihmet
 
 Vaikka bootstrapilla muotoiltu navigaatiopalkki on koodina pidempi ja sotkuisempikin kuin aiempi navigaatiopalkkimme, on sillä kuitenkin eräs merkittävä etu. Jos sovellusta tarkastellaan "isolta" näytöltä, näkyy navigaatiopalkki normaalisti:
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2018/raw/master/images/ratebeer-w6-0a.png)
+![kuva](https://github.com/ollikehy/wepa22/raw/master/images/ratebeer-w6-0a.png)
 
 Jos taas sovellusta tarkastellaan pienemmältä näytöltä, esim. mobiililaitteelta, näytetään navigaatiopalkin sijaan symboli, jota klikkaamalla navigaatiopalkki aukeaa alaspäin:
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2018/raw/master/images/ratebeer-w6-0b.png)
+![kuva](https://github.com/ollikehy/wepa22/raw/master/images/ratebeer-w6-0b.png)
 
 Bootstrapilla muotoiltu navigaatiopalkki on _responsiivinen_, se mukautuu sovellusta käyttävän selaimen kokoon.
 
 ### Grid
 
-Sen lisäksi että Bootstrapilla voi helposti muodostaa responsiivisen navigointipalkin, voidaan Bootstrapin grid-järjestelmän avulla jakaa sivu erillisiin osiin, ks. https://getbootstrap.com/docs/4.0/layout/grid/
+Sen lisäksi että Bootstrapilla voi helposti muodostaa responsiivisen navigointipalkin, voidaan Bootstrapin grid-järjestelmän avulla jakaa sivu erillisiin osiin, ks. https://getbootstrap.com/docs/5.2/layout/grid/
 
 Muutetaan tiedoston _app/views/layout/application.html.erb_ alaosassa oleva yksittäisten näkymätemplatejen renderöinnin kohdan merkkaava 
 
@@ -306,7 +308,7 @@ Useissa sovelluksen näkymissä on rivi
 
 jonka avulla käyttäjälle näytetään erilaisia notifikaatioita, mm. _Beer was successfully created._
 
-Notifikaatiot kannattaa muotoilla bootstrapin [alert](https://getbootstrap.com/docs/4.0/components/alerts/)-komponentin avulla:
+Notifikaatiot kannattaa muotoilla bootstrapin [alert](https://getbootstrap.com/docs/5.2/components/alerts/)-komponentin avulla:
 
 
 ```erb
@@ -340,7 +342,7 @@ Jos käytät Visual Studio Codea, niin voit käyttää _replace in files_ -toimi
 
 ### lisää komponentteja
 
-Muotoillaan seuraavaksi hieman sivulla käyttämiämme taulukoita. Bootstrapin sivulta https://getbootstrap.com/docs/4.0/content/tables/ näemme, että taulukon normaali bootstrap-muotoilu saadaan käyttöön lisäämällä taulukon HTML-koodille luokka <code>table</code>, seuraavasti:
+Bootstrap tarjoaa paljon erilaisia komponentteja, esimerkiksi taulukot saa tyylikkäiksi käyttämällä bootstrapin tarjoamaa komponenttia: https://getbootstrap.com/docs/5.2/content/tables/ . Taulukon normaali bootstrap-muotoilu saadaan käyttöön lisäämällä taulukon HTML-koodille luokka <code>table</code>, seuraavasti:
 
 ```erb
 <table class="table">
@@ -348,7 +350,7 @@ Muotoillaan seuraavaksi hieman sivulla käyttämiämme taulukoita. Bootstrapin s
 </table>
 ```
 
-Lisätään luokkamäärittely esim. oluiden sivulle ja kokeillaan. Näyttää jo paljon professionaalimmalta. Päätetään vielä lisätä luokka <code>table-hover</code>, jonka ansioista se rivi jonka kohdalla hiiri on muuttuu korostetuksi, eli taulukon luokkamäärittelyksi tulee
+Lisäämällä taulukolle vielä luokka <code>table-hover</code>, saadaan se rivi jonka kohdalla hiiri on muuttumaan korostetuksi, eli taulukon luokkamäärittelyksi tulee
 
 ```erb
 <table class="table table-hover">
@@ -358,22 +360,22 @@ Lisätään luokkamäärittely esim. oluiden sivulle ja kokeillaan. Näyttää j
 
 > ## Tehtävä 1
 >
-> Muuta ainakin muutama sovelluksen taulukoista käyttämään bootstrapin tyylejä.
+> Oluet listaava sivu muuttuu melko lukukelvottomaksi oluiden lukumäärän kasvaessa. Muutetaan olueiden näkymä käyttämään [taulukkoa](https://www.w3schools.com/html/html_tables.asp) ja otetaan käyttöön bootstrapin määrittelemät tyylit.
 >
-> VS Coden käyttäjille muutos onnistuu helposti _replace in files_ -toiminnolla
+> Jos muokkaat yhden oluen rivin käyttämällä partials-tiedostoa muista ottaa muutokset huomioon muissa tiedostoissa. Voikin olla järkevämpää eritellä oluen näyttävän sivun koodi kokonaan <code>show.html.erb</code>-tiedostoon
 
-Bootstrap tarjoaa valmiit tyylit myös painikkeille https://getbootstrap.com/docs/4.0/components/buttons/
+Bootstrap tarjoaa valmiit tyylit myös painikkeille https://getbootstrap.com/docs/5.2/components/buttons/
 
 Päätetään käyttää luokkaparin <code>btn btn-primary</code> määrittelemää sinistä painiketta. Seuraavassa esimerkki, missä luokka on lisätty oluen reittauksen tekevälle painikkeelle:
 
 ```erb
-  <h4>give a rating:</h4>
+<h4>give a rating:<h4>
 
-  <%= form_for(@rating) do |f| %>
-    <%= f.hidden_field :beer_id %>
-    score: <%= f.number_field :score %>
-    <%= f.submit class:"btn btn-primary" %>
-  <% end %>
+<%= form_with(model: @rating) do |form| %>
+  <%= form.hidden_field :beer_id %>
+  score: <%= form.number_field :score %>
+  <%= form.submit "Create rating", class:"btn btn-primary" %>
+<% end %>
 ```
 
 Luokka voidaan lisätä myös niihin linkkeihin, jotka halutaan napin painikkeen näköisiksi:
@@ -388,17 +390,17 @@ Luokka voidaan lisätä myös niihin linkkeihin, jotka halutaan napin painikkeen
 
 > ## Tehtävä 3
 >
-> Sovelluksemme lomakkeet ovat tällä hetkellä melko rumia. Tee ainakin uuden olutseuran luomislomakkeesta tyylikkäämpi Bootstrapin [lomakkeiden](https://getbootstrap.com/docs/4.0/components/forms/) muotoiluun tarkoitettujen komponenttien avulla. 
+> Sovelluksemme lomakkeet ovat tällä hetkellä melko rumia. Tee ainakin uuden olutseuran luomislomakkeesta tyylikkäämpi Bootstrapin [lomakkeiden](https://getbootstrap.com/docs/5.2/components/forms/) muotoiluun tarkoitettujen komponenttien avulla. 
 >
 >Saat päättää lomakkeen tarkan tyylin itse. Eräs tapa muotoilla lomake on seuraava
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2018/raw/master/images/ratebeer-w6-3a.png)
+![kuva](https://github.com/ollikehy/wepa22/raw/master/images/ratebeer-w6-3a.png)
 
 > ## Tehtävä 4
 >
 > Muuta navigointipalkkia siten, että käyttäjän kirjautuessa kirjautunutta käyttäjää koskevat toiminnot tulevat menupalkin dropdowniksi alla olevan kuvan tapaan.
 >
-> Apua löydät [navbarin](https://getbootstrap.com/docs/4.0/components/navbar/) ohjeiden _dropdown_-elementtejä sisältävistä esimerkeistä.
+> Apua löydät [navbarin](https://getbootstrap.com/docs/5.2/components/navbar/) ohjeiden _dropdown_-elementtejä sisältävistä esimerkeistä.
 >
 > Ratkaisu ei ole kaikilta osin ihan suoraviivainen. Eräs mahdollisuus muokata apufunktion <code>link_to</code> tekemän linkin _class_ halutun kaltaiseksi:
 >
@@ -406,7 +408,9 @@ Luokka voidaan lisätä myös niihin linkkeihin, jotka halutaan napin painikkeen
 > <%= link_to 'signout', signout_path, { class: "dropdown-item", method: :delete } %>
 > ```
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2018/raw/master/images/ratebeer-w6-3c.png)
+![kuva](https://github.com/ollikehy/wepa22/raw/master/images/ratebeer-w6-3c.png)
+>
+> Jos dropdownit eivät tunnu toimivan varmista, että <code>application.js</code> tiedoston requiret ja importit ovat oikein päin, eli requiret ennen importteja
 
 > ## Tehtävä 5
 >
@@ -421,7 +425,7 @@ Osa panimoista on jo lopettanut toimintansa ja haluaisimme eriyttää lopettanee
 Huom: koska migraation nimi alkaa sanalla Add ja loppuu olion nimeen Brewery, ja sisältää tiedon lisättävästä sarakkeesta, generoituu juuri oikea migraatiokoodi automaattisesti. Asia on kuitenkin syytä varmistaa tarkistamalla generoituneen migraatiotiedoston sisältö
 
 ```ruby
-class AddActivityToBrewery < ActiveRecord::Migration[5.2]
+class AddActivityToBrewery < ActiveRecord::Migration[7.0]
   def change
     add_column :breweries, :active, :boolean
   end
@@ -442,7 +446,7 @@ Muutetaan sitten panimon sivua siten, että se kertoo panimon mahdollisen epäak
  <h2>
   <%= @brewery.name %>
   <% if not @brewery.active  %>
-    <span class="badge badge-info">retired</span>
+    <span class="badge bg-secondary">retired</span>
   <% end %>
 </h2>
 
@@ -474,9 +478,9 @@ Muutetaan sitten panimon sivua siten, että se kertoo panimon mahdollisen epäak
 Panimon luomis- ja editointilomakkeeseen on syytä lisätä mahdollisuus panimon aktiivisuuden asettamiseen. Lisätään views/breweries/_form.html.erb:iin checkbox aktiivisuuden säätelyä varten:
 
 ```erb
-<div class="field">
-  <%= f.label :active %>
-  <%= f.check_box :active %>
+<div>
+  <%= form.label :active, style: "display: block" %>
+  <%= form.check_box :active %>
 </div>
 ```
 
@@ -505,7 +509,7 @@ end
 ```
 
 Kuten [viikolla 2 totesimme](
-https://github.com/mluukkai/WebPalvelinohjelmointi2018/blob/master/web/viikko2.md#reittauksen-talletus) on jokainen massasijoitettavaksi tarkoitettu attribuutti eksplisiittisesti sallittava <code>permit</code> metodin avulla. Muutetaan metodia <code>brewery_params</code> seuraavasti:
+https://github.com/ollikehy/wepa22/blob/master/web/viikko2.md#reittauksen-talletus) on jokainen massasijoitettavaksi tarkoitettu attribuutti eksplisiittisesti sallittava <code>permit</code> metodin avulla. Muutetaan metodia <code>brewery_params</code> seuraavasti:
 ```ruby
 def brewery_params
   params.require(:brewery).permit(:name, :year, :active)
@@ -526,57 +530,33 @@ Kentän <code>active</code>-arvo voi olla joko eksplisiittisesti asetettu <code>
 Copypastetaan näkymään taulukko kahteen kertaan, erikseen aktiivisille ja eläköityneille:
 
 ```erb
+
 <h1>Breweries</h1>
 
 <h2>Active</h2>
 
 <p> Number of active breweries: <%= @active_breweries.count %> </p>
 
-<table class="table table-hover">
-  <thead>
-    <tr>
-    <th>Name</th>
-    <th>Year</th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @active_breweries.each do |brewery| %>
-      <tr>
-        <td><%= link_to brewery.name, brewery %></td>
-        <td><%= brewery.year %></td>
-        <td></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<div id="breweries">
+  <% @active_breweries.each do |brewery| %>
+    <%= render brewery %>
+  <% end %>
+</div>
 
 <h2>Retired</h2>
 
 <p> Number of retired breweries: <%= @retired_breweries.count %> </p>
 
-<table class="table table-hover">
-  <thead>
-  <tr>
-    <th>Name</th>
-    <th>Year</th>
-  </tr>
-  </thead>
-
-  <tbody>
+<div id="breweries">
   <% @retired_breweries.each do |brewery| %>
-      <tr>
-        <td><%= link_to brewery.name, brewery %></td>
-        <td><%= brewery.year %></td>
-        <td></td>
-      </tr>
+    <%= render brewery %>
   <% end %>
-  </tbody>
-</table>
+</div>
 
-<br>
-
-<%= link_to 'New Brewery', new_brewery_path, class:"btn btn-primary" %>
+<p>
+<%= link_to "List of beers", beers_path%>
+</p>
+<%= link_to("New brewery", new_brewery_path, class:"btn btn-primary") if current_user %> 
 ```
 
 Ratkaisu on toimiva, mutta siinä on parillakin tapaa parantamisen varaa. Parannellaan ensin kontrolleria.
@@ -644,59 +624,6 @@ ActiveRecord osaa siis optimoida ketjutetut metodikutsut yhdeksi SQL-operaatioks
 Brewery.active.where("year>2000")
 ```
 
-## Partiaalit
-
-Siistitään seuraavaksi panimolistan näyttötemplatea. Templatessa on nyt käytännössä sama taulukko kopioituna kahteen kertaan peräkkäin. Eristämme taulukon omaksi __partiaaliksi__, eli näyttötemplateen upotettavaksi tarkoitetuksi näyttötemplaten palaksi, ks. http://guides.rubyonrails.org/layouts_and_rendering.html#using-partials.
-
-Annetaan partialille nimi views/breweries/_list.html.erb (Huom: partialien nimet ovat aina alaviiva-alkuisia!). Sisältö on seuraava:
-
-```erb
-<table class="table table-hover">
-  <thead>
-  <tr>
-    <th>Name</th>
-    <th>Year</th>
-  </tr>
-  </thead>
-
-  <tbody>
-    <% breweries.each do |brewery| %>
-      <tr>
-        <td><%= link_to brewery.name, brewery %></td>
-        <td><%= brewery.year %></td>
-        <td></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-```
-
-Partiaali viittaa nyt taulukkoon sijoitettavien panimoiden listaan nimellä <code>breweries</code>.
-
-Kaikki panimot renderöivä template ainoastaan *renderöi partiaalin* ja lähettää sille renderöitävän panimolistan parametriksi:
-
-```erb
-<h1>Breweries</h1>
-
-<h2>Active</h2>
-
-<p> Number of active breweries: <%= @active_breweries.count %> </p>
-
-<%= render 'list', breweries: @active_breweries %>
-
-<h2>Retired</h2>
-
-<p> Number of retired breweries: <%= @retired_breweries.count %> </p>
-
-<%= render 'list', breweries: @retired_breweries %>
-
-<br>
-
-<%= link_to 'New Brewery', new_brewery_path, class:"btn btn-primary" %>
-```
-
-Panimoiden sivun template on nyt lähes silmiä hivelevä!
-
 > ## Tehtävä 6-7 (kahden tehtävän arvoinen)
 >
 > Ratings-sivumme on tällä hetkellä hieman tylsä. Muuta sivua siten, että sillä näytetään reittausten sijaan:
@@ -741,9 +668,9 @@ Panimoiden sivun template on nyt lähes silmiä hivelevä!
 
 Reittausten sivu voi näyttää tehtävävien jälkeen esim. seuraavalta:
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2018/raw/master/images/ratebeer-w6-4.png)
+![kuva](https://github.com/ollikehy/wepa22/raw/master/images/ratebeer-w6-4.png)
 
-Sivun muotoiluun voi olla apua seuraavasta: https://getbootstrap.com/docs/4.0/layout/grid/#nesting
+Sivun muotoiluun voi olla apua seuraavasta: https://getbootstrap.com/docs/5.2/layout/grid/#nesting
 
 ## Näyttöjen koodin siistiminen helpereillä
 
@@ -778,7 +705,7 @@ module ApplicationHelper
     unless current_user.nil?
       edit = link_to('Edit', url_for([:edit, item]), class: "btn btn-primary")
       del = link_to('Destroy', item, method: :delete,
-                                     data: { confirm: 'Are you sure?' },
+                                     form: { data: { turbo_confirm: "Are you sure ?" } },
                                      class: "btn btn-danger")
       raw("#{edit} #{del}")
     end
@@ -843,7 +770,7 @@ Kun nyt teemme komennon <code>rails routes</code> huomaamme panimolle ilmestynee
 Päätämme lisätä aktiivisuusstatuksen muutostoiminnon yksittäisen panimon sivulle. Eli lisätään panimon sivulle app/views/breweries/show.html.erb seuraava:
 
 ```erb
-<%= link_to "change activity", toggle_activity_brewery_path(@brewery.id), method: :post, class: "btn btn-primary" %>
+<%= link_to "change activity", toggle_activity_brewery_path(@brewery.id), data: {turbo_method: "post"}, class: "btn btn-primary" %>
 ```
 
 Kun nyt klikkaamme painiketta, tekee selain HTTP POST -pyynnön osoitteeseen /breweries/:id/toggle_activity, missä :id on sen panimon id, jolla linkkiä klikattiin. Railsin reititysmekanismi yrittää kutsua breweries-kontrollerin metodia <code>toggle_activity</code> jota ei ole, joten seurauksena on virheilmoitus. Metodi voidaan toteuttaa esim. seuraavasti:
@@ -892,7 +819,7 @@ http://guides.rubyonrails.org/routing.html#adding-more-restful-actions
 >
 > Validointien suorittamisen voi ohittaa myös tallentamalla olion komennolla <code>u.save(validate: false)</code>
 >
-> **HUOM:** toteutuksessa kannattanee hyödyntää [esifiltteriä](https://github.com/mluukkai/WebPalvelinohjelmointi2018/blob/master/web/viikko4.md#kirjautuneiden-toiminnot)
+> **HUOM:** toteutuksessa kannattanee hyödyntää [esifiltteriä](https://github.com/ollikehy/wepa22/blob/master/web/viikko4.md#kirjautuneiden-toiminnot)
 
 > ## Tehtävät 11-12 (kahden tehtävän arvoinen)
 >
@@ -902,19 +829,19 @@ http://guides.rubyonrails.org/routing.html#adding-more-restful-actions
 
 Administraattori voi sulkea käyttäjätunnuksen käyttäjän sivulta
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2018/raw/master/images/ratebeer-w6-1c.png)
+![kuva](https://github.com/ollikehy/wepa22/raw/master/images/ratebeer-w6-1c.png)
 
 Administraattori näkee käyttäjien näkymästä suljetut käyttäjätunnukset
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2018/raw/master/images/ratebeer-w6-1b.png)
+![kuva](https://github.com/ollikehy/wepa22/raw/master/images/ratebeer-w6-1b.png)
 
 Jos käyttjätunnus on suljettu, kirjautuminen ei onnistu
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2018/raw/master/images/ratebeer-w6-1x.png)
+![kuva](https://github.com/ollikehy/wepa22/raw/master/images/ratebeer-w6-1x.png)
 
 Administraattori voi uudelleenaktivoida suljetun käyttäjätunnuksen käyttäjän sivulta
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2018/raw/master/images/ratebeer-w6-1d.png)
+![kuva](https://github.com/ollikehy/wepa22/raw/master/images/ratebeer-w6-1d.png)
 
 ## Monimutkaisempi pääsynhallinta
 
@@ -945,7 +872,7 @@ Emme ole vielä toistaiseksi puhuneet mitään Rails-sovellusten tietoturvasta. 
 
 Ylläolevasta dokumentista ei käy täysin selväksi se, että Rails _sanitoi_ (eli escapettaa kaikki script- ja html-tagit yms) oletusarvoisesti sivuilla renderöitävän syötteen, eli esim. jos yrittäisimme syöttää javascript-pätkän <code> &lt;script&gt;alert(&#39;Evil XSS attack&#39;);&lt;/script&gt;</code> oluttyylin kuvaukseen, koodia ei suoriteta, vaan koodi renderöityy sivulle 'tekstinä':
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2018/raw/master/images/ratebeer-w5-7.png)
+![kuva](https://github.com/ollikehy/wepa22/raw/master/images/ratebeer-w5-7.png)
 
 Jos katsomme sivun lähdekoodia, huomaamme, että Rails on korvannut HTML-tägit aloittavat ja sulkevat < -ja > -merkit niitä vastaavilla tulostuvilla merkeillä, jolloin syöte muuttuu selaimen kannalta normaaliksi tekstiksi:
 
@@ -963,7 +890,7 @@ Oletusarvoisen sanitoinnin saa 'kytkettyä pois' pyytämällä eksplisiittisesti
 
 suoritetaan javascript-koodi sivun renderöinnion yhteydessä:
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2018/raw/master/images/ratebeer-w5-8.png)
+![kuva](https://github.com/ollikehy/wepa22/raw/master/images/ratebeer-w5-8.png)
 
 Lisätietoa http://www.railsdispatch.com/posts/security ja http://railscasts.com/episodes/204-xss-protection-in-rails-3
 
@@ -971,7 +898,7 @@ Lisätietoa http://www.railsdispatch.com/posts/security ja http://railscasts.com
 
 Tällä viikolla ei ole enää enempää tehtäviä. Riittää että luet tästä eteenpäin olevan materiaalin. Seuraavan viikon materiaali ei riipu millään tavalla tämän viikon päättävästä refaktoroinnista.
 
-Viikon 4 [tehtävissä 3 ja 4](https://github.com/mluukkai/WebPalvelinohjelmointi2018/blob/master/web/viikko4.md#teht%C3%A4v%C3%A4-3)  toteutettiin metodit henkilön suosikkipanimon ja oluttyylin selvittämiseen. Seuraavassa on eräs melko suoraviivainen ratkaisu metodien <code>favorite_style</code> ja <code>favorite_brewery</code> toteuttamiseen:
+Viikon 4 [tehtävissä 3 ja 4](https://github.com/ollikehy/wepa22/blob/master/web/viikko4.md#teht%C3%A4v%C3%A4-3)  toteutettiin metodit henkilön suosikkipanimon ja oluttyylin selvittämiseen. Seuraavassa on eräs melko suoraviivainen ratkaisu metodien <code>favorite_style</code> ja <code>favorite_brewery</code> toteuttamiseen:
 
 ```ruby
 class User
@@ -1111,7 +1038,7 @@ grouped_ratings = ratings.group_by{ |r| r.beer.style }
 grouped_ratings = ratings.group_by{ |r| r.beer.brewery }
 ```
 
-Saamme nämäkin rivin täsmälleen samanlaisiksi kutsumalla metodia epäsuoraan viime viikolta tuttua [send](https://github.com/mluukkai/WebPalvelinohjelmointi2018/blob/master/web/viikko5.md#olion-metodien-kutsuminen-send-metodin-avulla)-metodia hyödyntäen:
+Saamme nämäkin rivin täsmälleen samanlaisiksi kutsumalla metodia epäsuoraan viime viikolta tuttua [send](https://github.com/ollikehy/wepa22/blob/master/web/viikko5.md#olion-metodien-kutsuminen-send-metodin-avulla)-metodia hyödyntäen:
 
 ```ruby
 def favorite_style
@@ -1265,7 +1192,6 @@ Poistetaan kuitenkin nyt tässä tekemämme method_missing:iin perustuva toteutu
 
 Jos tässä luvussa esitellyn tyyliset temput kiinnostavat, voit jatkaa esim. seuraavista:
 
-* http://ruby-metaprogramming.rubylearning.com/
 * https://github.com/sathish316/metaprogramming_koans
 * myös kirja [Eloquent Ruby](http://www.amazon.com/Eloquent-Ruby-Addison-Wesley-Professional-Series/dp/0321584104) käsittelee aihepiiriä varsin hyvin
 
