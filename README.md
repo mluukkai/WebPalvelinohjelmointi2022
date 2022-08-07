@@ -14,3 +14,7 @@ materiaali ja tehtävät [1](https://github.com/ollikehy/wepa22/blob/master/web/
 [viikko 5](https://github.com/ollikehy/wepa22/blob/master/web/viikko5.md)
 
 [viikko 6](https://github.com/ollikehy/wepa22/blob/master/web/viikko6.md)
+
+[viikko 7](https://github.com/ollikehy/wepa22/blob/master/web/viikko7.md)
+
+[Materiaalista](https://github.com/ollikehy/wepa22/blob/master/web/materiaalista.md)
