@@ -212,7 +212,7 @@ huomaamme että lopputulos pyöristyy väärin. Kyse on tietenkin siitä että s
 
 Jos et tiedä miten joku asia tehdään Rubyllä, google tietää.
 
-Mieti sopiva hakusana niin saat melko varmasti vastauksen. Kannattaa kuitenkin olla hiukan varovainen ja tutkia ainakin muutama googlen vastaus. Ainakin kannattaa varmistaa että vastauksessa puhutaan riittävän tuoreesta rubyn tai railsin versiosta. 
+Mieti sopiva hakusana niin saat melko varmasti vastauksen. Kannattaa kuitenkin olla hiukan varovainen ja tutkia ainakin muutama googlen vastaus. Ainakin kannattaa varmistaa että vastauksessa puhutaan riittävän tuoreesta rubyn tai railsin versiosta.
 
 Rubyssä ja Railsissa on useimmiten joku valmis metodi tai gemi melkein kaikkeen, eli pyörän uudelleenkeksimisen sijaan kannattaa aina googlata tai vilkuilla dokumentaatiota.
 
@@ -316,7 +316,7 @@ Jos et ole jo rutinoitunut debuggerin käyttöön, kannattaa ehdottomasti kerrat
 
 ## binding.break vai binding.pry deguggaukseen?
 
-Jos käytössäsi on [Pry](https://github.com/ollikehy/wepa22/blob/master/web/viikko2.md#parempi-konsoli) komento `binding.break` ei (välttämättä) käyttäydy kaikissa tilanteissa hyvin, kannattaakin käyttää oikeastaan aina komentoa `binding.pry`
+Jos käytössäsi on [Pry](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/viikko2.md#parempi-konsoli) komento `binding.break` ei (välttämättä) käyttäydy kaikissa tilanteissa hyvin, kannattaakin käyttää oikeastaan aina komentoa `binding.pry`
 
 ## Rubocop: tyyli ratkaisee
 
@@ -328,11 +328,11 @@ Rubocop asennetaan antamalla komentoriviltä komento
 
     gem install rubocop
 
-Rubocopin tarkastama säännöstö määritellään projektin juureen sijoitettavassa tiedostossa _.rubocop.yml_. Luo tiedosto projektiisi (huomaa, että tiedoston nimen alussa on piste) ja kopioi sille sisältö [täältä](https://github.com/ollikehy/wepa22/blob/master/misc/.rubocop.yml)
+Rubocopin tarkastama säännöstö määritellään projektin juureen sijoitettavassa tiedostossa _.rubocop.yml_. Luo tiedosto projektiisi (huomaa, että tiedoston nimen alussa on piste) ja kopioi sille sisältö [täältä](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/misc/.rubocop.yml)
 
 Tiedoston määrittelemä säännöstö perustuu [Relaxed Ruby](https://relaxed.ruby.style/) -tyyliin, jota se tiukentaa muutamien sääntöjen osalta. Tiedostossa myös jätetään osa projektin tiedostoista tyylitarkastuksen ulkopuolelle.
 
-Tyylitarkastus suoritetaan komentoriviltä komennolla _rubocop_. 
+Tyylitarkastus suoritetaan komentoriviltä komennolla _rubocop_.
 
 Koodista löytyy melko paljon ongelmia, esim. seuraava:
 
@@ -359,7 +359,7 @@ Seuraava virhe
 app/models/concerns/rating_average.rb:9:38: C: Layout/SpaceAroundOperators: Surrounding space missing for operator +.
     ratings.reduce(0.0){ |sum, r| sum+r.score } / ratings.count    
                                      ^
-</pre>                                   
+</pre>
 
 taas rikkoo sääntöä, jonka mukaan [matemaattisen operaattorin vasemmalla ja oikealla puolella on oltava välilyönti](http://docs.rubocop.org/en/latest/cops_layout/#layoutspacearoundoperators)
 
@@ -413,7 +413,7 @@ HTTP on tilaton protokolla, eli kaikki HTTP-protokollalla suoritetut pyynnöt ov
 
 Lyhyesti sanottuna evästeiden toimintaperiaate on seuraava: kun selaimella mennään jollekin sivustolle, voi palvelin lähettää vastauksessa selaimelle pyynnön evästeen tallettamisesta. Jatkossa selain liittää evästeen kaikkiin sivustolle kohdistuneisiin HTTP-pyyntöihin. Eväste on käytännössä pieni määrä dataa, ja palvelin voi käyttää evästeessä olevaa dataa haluamallaan tavalla evästeen omaavan selaimen tunnistamiseen.
 
-Railsissa sovelluskehittäjän ei ole tarvetta työskennellä suoraan evästeiden kanssa, sillä Railsiin on toteutettu evästeiden avulla hieman korkeammalla abstraktiotasolla toimivat __sessiot__ ks.
+Railsissa sovelluskehittäjän ei ole tarvetta työskennellä suoraan evästeiden kanssa, sillä Railsiin on toteutettu evästeiden avulla hieman korkeammalla abstraktiotasolla toimivat **sessiot** ks.
 <http://guides.rubyonrails.org/action_controller_overview.html#session> joiden avulla sovellus voi "muistaa" tiettyyn selaimeen liittyviä asioita, esim. käyttäjän identiteetin, useiden HTTP-pyyntöjen ajan.
 
 Kokeillaan ensin sessioiden käyttöä muistamaan käyttäjän viimeksi tekemä reittaus. Rails-sovelluksen koodissa HTTP-pyynnön tehneen käyttäjän (tai tarkemmin ottaen selaimen) sessioon pääsee käsiksi hashin kaltaisesti toimivan olion <code>session</code> kautta.
@@ -503,11 +503,11 @@ Kirjautumissivun app/views/sessions/new.html.erb koodi on seuraavassa:
 <% end %>
 ```
 
-Toisin kuin reittauksille tekemämme formi (kertaa asia [viime viikolta](https://github.com/ollikehy/wepa22/blob/master/web/viikko2.md#lomake-ja-post)), nyt tekemämme lomake ei perustu olioon ja lomake luodaan <code>form_with</code>-metodilla, ks. http://guides.rubyonrails.org/form_helpers.html#dealing-with-basic-forms
+Toisin kuin reittauksille tekemämme formi (kertaa asia [viime viikolta](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/viikko2.md#lomake-ja-post)), nyt tekemämme lomake ei perustu olioon ja lomake luodaan <code>form_with</code>-metodilla, ks. http://guides.rubyonrails.org/form_helpers.html#dealing-with-basic-forms
 
 Lomakkeen lähettäminen siis aiheuttaa HTTP POST -pyynnön session_pathiin (huomaa yksikkömuoto!) eli osoitteeseen **session**.
 
-Pyynnön käsittelevä metodi ottaa <code>params</code>-olioon talletetun käyttäjätunnuksen ja hakee sitä vastaavan käyttäjäolion kannasta ja tallettaa olion id:n sessioon jos käyttäjä on olemassa. Lopuksi käyttäjä _uudelleenohjataan_ (kertaa [viime viikolta](https://github.com/ollikehy/wepa22/blob/master/web/viikko2.md#uudelleenohjaus) mitä uudelleenohjauksella tarkoitetaan) omalle sivulleen. Kontrollerin koodi vielä uudelleen seuraavassa:
+Pyynnön käsittelevä metodi ottaa <code>params</code>-olioon talletetun käyttäjätunnuksen ja hakee sitä vastaavan käyttäjäolion kannasta ja tallettaa olion id:n sessioon jos käyttäjä on olemassa. Lopuksi käyttäjä _uudelleenohjataan_ (kertaa [viime viikolta](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/viikko2.md#uudelleenohjaus) mitä uudelleenohjauksella tarkoitetaan) omalle sivulleen. Kontrollerin koodi vielä uudelleen seuraavassa:
 
 ```ruby
 def create
@@ -517,7 +517,7 @@ def create
 end
 ```
 
-Huom1: komento <code>redirect_to user</code> siis on lyhennysmerkintä seuraavalla <code>redirect_to user_path(user)</code>, ks. [viikko 1](https://github.com/ollikehy/wepa22/blob/master/web/viikko1.md#kertausta-polkujen-ja-kontrollerien-niment%C3%A4konventiot).
+Huom1: komento <code>redirect_to user</code> siis on lyhennysmerkintä seuraavalla <code>redirect_to user_path(user)</code>, ks. [viikko 1](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/viikko1.md#kertausta-polkujen-ja-kontrollerien-niment%C3%A4konventiot).
 
 Huom2: Rubyssa yhdistelmän <code>if not</code> sijaan voidaan käyttää myös komentoa <code>unless</code>, eli metodin toinen rivi oltaisiin voitu kirjoittaa muodossa
 
@@ -587,7 +587,7 @@ Voimme muotoilla ehdon myös tyylikkäämmin:
 
 Pelkkä <code>current_user</code> toimii ehtona, sillä arvo <code>nil</code> tulkitaan Rubyssä epätodeksi.
 
-Kirjautumisen osoite __sessions/new__ on hieman ikävä. Määritelläänkin kirjautumista varten luontevampi vaihtoehtoinen osoite __signin__. Määritellään myös reitti uloskirjautumiselle. Lisätään siis seuraavat routes.rb:hen:
+Kirjautumisen osoite **sessions/new** on hieman ikävä. Määritelläänkin kirjautumista varten luontevampi vaihtoehtoinen osoite **signin**. Määritellään myös reitti uloskirjautumiselle. Lisätään siis seuraavat routes.rb:hen:
 
 ```ruby
 get 'signin', to: 'sessions#new'
@@ -614,11 +614,11 @@ eli mahdollistaa uloskirjautuminen HTTP GET:in avulla. Ei kuitenkaan pidetä hyv
 
 Tehtävän jälkeen sovelluksesi näyttää suunnilleen seuraavalta jos käyttäjä on kirjautuneena:
 
-![kuva](https://github.com/ollikehy/wepa22/raw/master/images/ratebeer-w3-1.png)
+![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/ratebeer-w3-1.png)
 
 ja seuraavalta jos käyttäjä ei ole kirjautuneena (huomaa, että nyt näkyvillä on myös uuden käyttäjän rekisteröitymiseen tarkoitettu signup-linkki):
 
-![kuva](https://github.com/ollikehy/wepa22/raw/master/images/ratebeer-w3-2.png)
+![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/ratebeer-w3-2.png)
 
 ## Reittaukset käyttäjälle
 
@@ -643,7 +643,7 @@ class Rating < ApplicationRecord
 end
 ```
 
-Ratkaisu ei kuitenkaan tällaisenaan toimi. Yhteyden takia _ratings_-tietokantatauluun riveille tarvitaan vierasavaimeksi viite käyttäjän id:hen. Railsissa kaikki muutokset tietokantaan tehdään Ruby-koodia olevien *migraatioiden* avulla. Luodaan nyt uuden sarakkeen lisäävä migraatio. Generoidaan ensin migraatiotiedosto komentoriviltä komennolla:
+Ratkaisu ei kuitenkaan tällaisenaan toimi. Yhteyden takia _ratings_-tietokantatauluun riveille tarvitaan vierasavaimeksi viite käyttäjän id:hen. Railsissa kaikki muutokset tietokantaan tehdään Ruby-koodia olevien _migraatioiden_ avulla. Luodaan nyt uuden sarakkeen lisäävä migraatio. Generoidaan ensin migraatiotiedosto komentoriviltä komennolla:
 
     rails g migration AddUserIdToRatings
 
@@ -702,17 +702,18 @@ Päätetään että laitetaan kaikkien olemassaolevien reittausten käyttäjäks
 
 > ## Tehtävä 5
 >
->  Lisää käyttäjän sivulle eli näkymään app/views/users/show.html.erb
-> * käyttäjän reittausten määrä ja keskiarvo (huom: käytä edellisellä viikolla  määriteltyä moduulia <code>RatingAverage</code>, jotta saat keskiarvon laskevan koodin käyttäjälle!)
-> * lista käyttäjän reittauksista ja mahdollisuus poistaa reittauksia
+> Lisää käyttäjän sivulle eli näkymään app/views/users/show.html.erb
 >
-> Tee nämä muutokset käyttäjän partials-tiedostoon, eli app/views/users/_user.html.erb
+> - käyttäjän reittausten määrä ja keskiarvo (huom: käytä edellisellä viikolla määriteltyä moduulia <code>RatingAverage</code>, jotta saat keskiarvon laskevan koodin käyttäjälle!)
+> - lista käyttäjän reittauksista ja mahdollisuus poistaa reittauksia
+>
+> Tee nämä muutokset käyttäjän partials-tiedostoon, eli app/views/users/\_user.html.erb
 
 Käyttäjän sivu siis näyttää suunilleen seuraavalta:
 
-![kuva](https://github.com/ollikehy/wepa22/raw/master/images/ratebeer-w3-3.png)
+![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/ratebeer-w3-3.png)
 
-Uusien reittausten luominen www-sivulta ei siis tällä hetkellä toimi, koska reittaukseen ei tällä hetkellä liitetä kirjautuneena olevaa käyttäjää. Muokataan siis  reittauskontrolleria siten, että kirjautuneena oleva käyttäjä linkitetään luotavaan reittaukseen:
+Uusien reittausten luominen www-sivulta ei siis tällä hetkellä toimi, koska reittaukseen ei tällä hetkellä liitetä kirjautuneena olevaa käyttäjää. Muokataan siis reittauskontrolleria siten, että kirjautuneena oleva käyttäjä linkitetään luotavaan reittaukseen:
 
 ```ruby
 def create
@@ -737,7 +738,7 @@ Reittauksen luomisen jälkeen kontrolleri on laitettu uudelleenohjaamaan selain 
 
 Kaikkien reittausten sivun tulisi siis näyttää edellisen tehtävän jälkeen seuraavalta:
 
-![kuva](https://github.com/ollikehy/wepa22/raw/master/images/ratebeer-w3-4.png)
+![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/ratebeer-w3-4.png)
 
 ## Kirjautumisen hienosäätöä
 
@@ -771,7 +772,7 @@ def create
 end
 ```
 
-Jotta viesti saadaan näkyville kirjautumissivulle, lisätään näkymään ```app/views/sessions/new.html.erb``` seuraava elementti:
+Jotta viesti saadaan näkyville kirjautumissivulle, lisätään näkymään `app/views/sessions/new.html.erb` seuraava elementti:
 
 ```erb
 <p id="notice"><%= notice %></p>
@@ -779,7 +780,7 @@ Jotta viesti saadaan näkyville kirjautumissivulle, lisätään näkymään ```a
 
 Elementti on jo valmiina käyttäjän sivun templatessa (ellet vahingossa poistanut sitä), joten viesti toimii siellä.
 
-Sivulla tarvittaessa näytettävät, seuraavaan HTTP-pyyntöön muistettavat eli uudelleenohjauksenkin yhteydessä toimivat viestit eli __flashit__ on toteutettu Railssissa sessioiden avulla, ks. lisää http://guides.rubyonrails.org/action_controller_overview.html#the-flash
+Sivulla tarvittaessa näytettävät, seuraavaan HTTP-pyyntöön muistettavat eli uudelleenohjauksenkin yhteydessä toimivat viestit eli **flashit** on toteutettu Railssissa sessioiden avulla, ks. lisää http://guides.rubyonrails.org/action_controller_overview.html#the-flash
 
 ## Olioiden kenttien validointi
 
@@ -937,7 +938,7 @@ Muutetaan lomaketta siten, että lomake näyttää kentän <code>@rating.errors<
 
 Kun nyt luot virheellisen reittauksen, huomaat että virheen syy selviää kenttään <code>@rating.errors</code> talletetusta oliosta.
 
-Otetaan sitten mallia esim. näkymätemplatesta views/users/_form.html.erb ja muokataan lomakettamme (views/ratings/new.html.erb) seuraavasti:
+Otetaan sitten mallia esim. näkymätemplatesta views/users/\_form.html.erb ja muokataan lomakettamme (views/ratings/new.html.erb) seuraavasti:
 
 ```erb
 <h2>Create new rating</h2>
@@ -972,17 +973,18 @@ http://guides.rubyonrails.org/active_record_validations.html ja https://apidock.
 > ## Tehtävä 7
 >
 > Lisää ohjelmaasi seuraavat validoinnit
-> * oluen ja panimon nimi on epätyhjä
-> * panimon perustamisvuosi on kokonaisluku väliltä 1040-2022
-> * käyttäjätunnuksen eli User-luokan attribuutin username pituus on vähintään 3 mutta enintään 30 merkkiä
+>
+> - oluen ja panimon nimi on epätyhjä
+> - panimon perustamisvuosi on kokonaisluku väliltä 1040-2022
+> - käyttäjätunnuksen eli User-luokan attribuutin username pituus on vähintään 3 mutta enintään 30 merkkiä
 
 Jos yrität luoda oluen tyhjällä nimellä, seurauksena on virheilmoitus:
 
-![kuva](https://github.com/ollikehy/wepa22/raw/master/images/ratebeer-w3-9.png)
+![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/ratebeer-w3-9.png)
 
 Mistä tämä johtuu? Jos oluen luonti epäonnistuu validoinnissa tapahtuneen virheen takia, olutkontrollerin metodi <code>create</code> suorittaa else-haaran, eli renderöi uudelleen oluiden luomiseen käytettävän lomakkeen. Oluiden luomiseen käytettävä lomake käyttää muuttujaan <code>@styles</code> talletettua oluttyylien listaa lomakkeen generointiin. Virheilmoituksen syynä onkin se, että muuttujaa ei ole nyt alustettu (toisin kuin jos lomakkeeseen mennään kontrollerimetodin <code>new</code> kautta). Lomake olettaa myös, että muuttujaan <code>@breweries</code> on talletettu kaikkien panimoiden lista. Eli ongelma korjautuu jos alustamme muuttujat else-haarassa:
 
-``` ruby
+```ruby
 def create
   @beer = Beer.new(beer_params)
 
@@ -1008,7 +1010,7 @@ end
 >
 > Huomaa, että seuraava ei toimi halutulla tavalla:
 >
->   validates :year, numericality: { less_than_or_equal_to: Time.now.year }
+> validates :year, numericality: { less_than_or_equal_to: Time.now.year }
 >
 > Nyt käy siten, että <code>Time.now.year</code> evaluoidaan siinä vaiheessa kun ohjelma lataa luokan koodin. Jos esim. ohjelma käynnistetään vuoden 2018 lopussa, ei vuoden 2019 alussa voida rekisteröidä 2019 aloittanutta panimoa, sillä vuoden yläraja validoinnissa on ohjelman käynnistyshetkellä evaluoitunut 2018
 >
@@ -1020,7 +1022,7 @@ end
 
 Yhteen olueeseen liittyy monta reittausta, ja reittaus liittyy aina yhteen käyttäjään, eli olueeseen liittyy monta reittauksen tehnyttä käyttäjää. Vastaavasti käyttäjällä on monta reittausta ja reittaus liittyy yhteen olueeseen. Eli käyttäjään liittyy monta reitattua olutta. Oluiden ja käyttäjien välillä on siis **monen suhde moneen -yhteys**, jossa ratings-taulu toimii liitostaulun tavoin.
 
-Saammekin tuotua tämän many to many -yhteyden kooditasolle helposti käyttämällä jo [edellisen viikon lopulta tuttua](https://github.com/ollikehy/wepa22/blob/master/web/viikko2.md#olioiden-ep%C3%A4suora-yhteys) tapaa, eli **has_many through** -yhteyttä:
+Saammekin tuotua tämän many to many -yhteyden kooditasolle helposti käyttämällä jo [edellisen viikon lopulta tuttua](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/viikko2.md#olioiden-ep%C3%A4suora-yhteys) tapaa, eli **has_many through** -yhteyttä:
 
 ```ruby
 class Beer < ApplicationRecord
@@ -1070,7 +1072,7 @@ ja oluesta päin:
   updated_at: Tue, 11 Sep 2018 07:50:37 UTC +00:00>,
  #<User:0x00007fbe240caa28
   id: 1,
-  username: "hellas", 
+  username: "hellas",
   # ...
 ```
 
@@ -1080,7 +1082,7 @@ Vaikuttaa ihan toimivalta, mutta tuntuu hieman kömpeltä viitata oluen reitanne
 has_many :raters, through: :ratings, source: :user
 ```
 
-Oletusarvoisesti <code>has_many</code> etsii liitettävää taulun nimeä ensimmäisen parametrinsa nimen perusteella. Koska <code>raters</code> ei ole nyt yhteyden kohteen nimi, on se määritelty erikseen _source_-option avulla.
+Oletusarvoisesti <code>has*many</code> etsii liitettävää taulun nimeä ensimmäisen parametrinsa nimen perusteella. Koska <code>raters</code> ei ole nyt yhteyden kohteen nimi, on se määritelty erikseen \_source*-option avulla.
 
 Yhteytemme uusi nimi toimii:
 
@@ -1093,7 +1095,7 @@ Yhteytemme uusi nimi toimii:
   updated_at: Tue, 11 Sep 2018 07:50:37 UTC +00:00>,
  #<User:0x00007fbe240caa28
   id: 1,
-  username: "hellas", 
+  username: "hellas",
   # ...
 ```
 
@@ -1109,7 +1111,7 @@ Koska sama käyttäjä voi tehdä useita reittauksia samasta oluesta, näkyy kä
 >
 ```
 
-On myös mahdollista määritellä, että oluen <code>raters</code> palauttaa oletusarvoisesti vain kertaalleen yksittäisen käyttäjän. Tämä onnistuisi asettamalla <code>has_many</code>-määreelle [rajoite](https://guides.rubyonrails.org/association_basics.html#scopes-for-has-many) _distinct_, joka rajoittaa niiden olioiden joukkoa, jotka näytetään assosiaatioon liittyviksi siten, että samaa oliota ei näytetä kahteen kertaan:
+On myös mahdollista määritellä, että oluen <code>raters</code> palauttaa oletusarvoisesti vain kertaalleen yksittäisen käyttäjän. Tämä onnistuisi asettamalla <code>has*many</code>-määreelle [rajoite](https://guides.rubyonrails.org/association_basics.html#scopes-for-has-many) \_distinct*, joka rajoittaa niiden olioiden joukkoa, jotka näytetään assosiaatioon liittyviksi siten, että samaa oliota ei näytetä kahteen kertaan:
 
 ```ruby
 class Beer < ApplicationRecord
@@ -1147,15 +1149,15 @@ Trendinä kuitenkin on, että metodin has_and_belongs_to_many sijaan käytetää
 
 > ## Tehtävä 11
 >
-> Hio edellisessä tehävässä toteuttamaasi toiminnallisuutta siten, että käyttäjä ei voi liittyä useampaan kertaan samaan olutseuraan. 
+> Hio edellisessä tehävässä toteuttamaasi toiminnallisuutta siten, että käyttäjä ei voi liittyä useampaan kertaan samaan olutseuraan.
 >
-> Tämän tehtävän tekemiseen on monia tapoja, validointien käyttö ei ole välttämättä järkevin tapa tehtävän toteuttamiseen. Liittymislomakkeella tuskin kannattaa edes tarjota sellasia seuroja joiden jäsenenä käyttäjä jo on. 
+> Tämän tehtävän tekemiseen on monia tapoja, validointien käyttö ei ole välttämättä järkevin tapa tehtävän toteuttamiseen. Liittymislomakkeella tuskin kannattaa edes tarjota sellasia seuroja joiden jäsenenä käyttäjä jo on.
 
 Seuraavat kaksi kuvaa antavat suuntaviivoja sille miltä sovelluksesi voi näyttää tehtävien 9-11 jälkeen.
 
-![kuva](https://github.com/ollikehy/wepa22/raw/master/images/ratebeer-w3-5.png)
+![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/ratebeer-w3-5.png)
 
-![kuva](https://github.com/ollikehy/wepa22/raw/master/images/ratebeer-w3-6.png)
+![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/ratebeer-w3-6.png)
 
 ## Salasana
 
@@ -1187,7 +1189,7 @@ class User < ApplicationRecord
 end
 ```
 
-<code>has_secure_password</code> (ks. http://api.rubyonrails.org/classes/ActiveModel/SecurePassword/ClassMethods.html) lisää luokalle toiminnallisuuden, jonka avulla salasanan _tiiviste_ talletetaan kantaan ja käyttäjä voidaan tarpeen vaatiessa autentikoida.
+<code>has*secure_password</code> (ks. http://api.rubyonrails.org/classes/ActiveModel/SecurePassword/ClassMethods.html) lisää luokalle toiminnallisuuden, jonka avulla salasanan \_tiiviste* talletetaan kantaan ja käyttäjä voidaan tarpeen vaatiessa autentikoida.
 
 Rails käyttää tiivisteen tallettamiseen <code>bcrypt-ruby</code> gemiä. Otetaan se käyttöön lisäämällä Gemfile:en rivi
 
@@ -1195,10 +1197,9 @@ Rails käyttää tiivisteen tallettamiseen <code>bcrypt-ruby</code> gemiä. Otet
 
 Tämän jälkeen annetaan komentoriviltä komento <code>bundle install</code> jotta gem asentuu.
 
-
 Kokeillaan nyt hieman uutta toiminnallisuutta konsolista. Uudelleenkäynnistä konsoli, jotta se saa käyttöönsä uuden gemin. Myös rails-sovellus kannattaa tässä vaiheessa uudelleenkäynnistää. Muista myös suorittaa migraatio!
 
-Salasanatoiminnallisuus <code>has_secure_password</code> lisää oliolle  attribuutit <code>password</code> ja <code>password_confirmation</code>. Ideana on, että salasana ja se varmistettuna sijoitetaan näihin attribuutteihin. Kun olio talletetaan tietokantaan esim. metodin <code>save</code> kutsun yhteydessä, lasketaan tiiviste joka tallettuu tietokantaan olion sarakkeen <code>password_digest</code> arvoksi. Selväkielinen salasana eli attribuutti <code>password</code> ei siis tallennu tietokantaan, vaan on ainoastaan olion muistissa olevassa representaatiossa.
+Salasanatoiminnallisuus <code>has_secure_password</code> lisää oliolle attribuutit <code>password</code> ja <code>password_confirmation</code>. Ideana on, että salasana ja se varmistettuna sijoitetaan näihin attribuutteihin. Kun olio talletetaan tietokantaan esim. metodin <code>save</code> kutsun yhteydessä, lasketaan tiiviste joka tallettuu tietokantaan olion sarakkeen <code>password_digest</code> arvoksi. Selväkielinen salasana eli attribuutti <code>password</code> ei siis tallennu tietokantaan, vaan on ainoastaan olion muistissa olevassa representaatiossa.
 
 Talletetaan käyttäjälle salasana:
 
@@ -1232,7 +1233,7 @@ Autentikointi tapahtuu <code>User</code>-olioille lisätyn metodin <code>authent
 
 eli metodi <code>authenticate</code> palauttaa <code>false</code>, jos sille parametrina annettu salasana on väärä. Jos salasana on oikea, palauttaa metodi olion itsensä.
 
-Lisätään nyt kirjautumiseen salasanan tarkistus. Muutetaan ensin kirjautumissivua (app/views/sessions/new.html.erb) siten että käyttäjätunnuksen lisäksi pyydetään salasanaa (huomaa että lomakkeen kentän tyyppi on nyt *password_field*, joka näyttää kirjoitetun salasanan sijasta ruudulla ainoastaan tähtiä):
+Lisätään nyt kirjautumiseen salasanan tarkistus. Muutetaan ensin kirjautumissivua (app/views/sessions/new.html.erb) siten että käyttäjätunnuksen lisäksi pyydetään salasanaa (huomaa että lomakkeen kentän tyyppi on nyt _password_field_, joka näyttää kirjoitetun salasanan sijasta ruudulla ainoastaan tähtiä):
 
 ```erb
 <h1>Sign in</h1>
@@ -1263,7 +1264,7 @@ end
 
 Kokeillaan toimiiko kirjautuminen (**huom: jotta bcrypt-gem tulisi sovelluksen käyttöön, käynnistä rails server uudelleen**). Kirjautuminen onnistuu toistaiseksi vain niiden käyttäjien tunnuksilla joihin olet lisännyt salasanan konsolista käsin.
 
-Lisätään vielä uuden käyttäjän luomiseen (eli näkymään view/users/_form.html.erb) salasanan syöttökenttä:
+Lisätään vielä uuden käyttäjän luomiseen (eli näkymään view/users/\_form.html.erb) salasanan syöttökenttä:
 
 ```erb
 <div>
@@ -1307,14 +1308,14 @@ def destroy
 end
 ```
 
-eli tehdään poisto-operaatio ainoastaan, jos ```current_user``` on sama kuin reittaukseen liittyvä käyttäjä. 
+eli tehdään poisto-operaatio ainoastaan, jos `current_user` on sama kuin reittaukseen liittyvä käyttäjä.
 
 Reittauksen poistolinkkiä ei oikeastaan ole edes syytä näyttää muuta kuin kirjaantuneen käyttäjän omalla sivulla. Eli muutetaan käyttäjän show-sivua seuraavasti:
 
 ```erb
 <ul>
   <% user.ratings.each do |rating| %>
-    <li><%= "#{rating.to_s}" %> 
+    <li><%= "#{rating.to_s}" %>
       <% if @user == current_user %>
         <%= link_to "Delete", rating, data: {turbo_method: :delete} %>
       <% end %>
@@ -1334,11 +1335,10 @@ Huomaa, että pelkkä **delete**-linkin poistaminen ei estä poistamasta muiden 
 > ## Tehtävä 14
 >
 > Luo uusi käyttäjätunnus, kirjaudu käyttäjänä ja tuhoa käyttäjä. Käyttäjätunnuksen tuhoamisesta seuraa ikävä virhe. **Pääset virheestä eroon tuhoamalla selaimesta cookiet.** Mieti mistä virhe johtuu ja korjaa asia myös sovelluksesta siten, että käyttäjän tuhoamisen jälkeen sovellus ei joudu virhetilanteeseen.
->
 
 > ## Tehtävä 15
 >
-> Laajenna vielä sovellusta siten, että käyttäjän tuhoutuessa käyttäjän tekemät reittaukset tuhoutuvat automaattisesti. Ks. https://github.com/ollikehy/wepa22/blob/master/web/viikko2.md#orvot-oliot
+> Laajenna vielä sovellusta siten, että käyttäjän tuhoutuessa käyttäjän tekemät reittaukset tuhoutuvat automaattisesti. Ks. https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/viikko2.md#orvot-oliot
 >
 > Jos teit tehtävät 9-11 eli toteutit järjestelmään olutkerhot, tuhoa käyttäjän tuhoamisen yhteydessä myös käyttäjän jäsenyydet olutkerhoissa
 
@@ -1346,7 +1346,7 @@ Huomaa, että pelkkä **delete**-linkin poistaminen ei estä poistamasta muiden 
 
 Käyttäjän editointitoiminto mahdollistaa nyt myös käyttäjän <code>username</code>:n muuttamisen. Tämä ei ole ollenkaan järkevää. Poistetaan tämä mahdollisuus.
 
-Uuden käyttäjän luominen ja käyttäjän editoiminen käyttävät molemmat samaa, tiedostossa views/users/_form.html.erb määriteltyä lomaketta. Myös scaffoldin generoimat formit ovat Railsissa partiaaleja, joita liitetään muihin templateihin <code>render</code>-kutsun avulla.
+Uuden käyttäjän luominen ja käyttäjän editoiminen käyttävät molemmat samaa, tiedostossa views/users/\_form.html.erb määriteltyä lomaketta. Myös scaffoldin generoimat formit ovat Railsissa partiaaleja, joita liitetään muihin templateihin <code>render</code>-kutsun avulla.
 
 Käyttäjän editointiin tarkoitettu näkymätemplate on seuraavassa:
 
@@ -1359,7 +1359,7 @@ Käyttäjän editointiin tarkoitettu näkymätemplate on seuraavassa:
 <%= link_to "Back to users", users_path %>
 ```
 
-eli ensin se renderöi _form-templatessa olevat elementit ja sen jälkeen pari linkkiä. Lomakkeen koodi on seuraava:
+eli ensin se renderöi \_form-templatessa olevat elementit ja sen jälkeen pari linkkiä. Lomakkeen koodi on seuraava:
 
 ```erb
 <%= form_with(model: user) do |form| %>
@@ -1379,12 +1379,12 @@ eli ensin se renderöi _form-templatessa olevat elementit ja sen jälkeen pari l
     <%= form.label :username, style: "display: block" %>
     <%= form.text_field :username %>
   </div>
-  
+
   <div>
     <%= form.label :password, style: "display: block"%>
     <%= form.password_field :password %>
   </div>
-  
+
   <div>
     <%= form.label :password_confirmation, style: "display: block"%>
     <%= form.password_field :password_confirmation %>
@@ -1438,13 +1438,13 @@ end
 
 Muutosten jälkeen käyttäjän tietojen muuttamislomake näyttää seuraavalta:
 
-![kuva](https://github.com/ollikehy/wepa22/raw/master/images/ratebeer-w3-7.png)
+![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/ratebeer-w3-7.png)
 
 > ## Tehtävä 16
 >
 > Ainoa käyttäjään liittyvä tieto on nyt salasana, joten muuta käyttäjän tietojen muuttamiseen tarkoitettua lomaketta siten, että se näyttää allaolevassa kuvassa olevalta. Huomaa, että uuden käyttäjän rekisteröitymisen (signup) on edelleen näytettävä samalta kuin ennen.
 
-![kuva](https://github.com/ollikehy/wepa22/raw/master/images/ratebeer-w3-8.png)
+![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/ratebeer-w3-8.png)
 
 ## Ongelmia herokussa
 
@@ -1452,14 +1452,13 @@ Kun ohjelman päivitetty versio deployataan herokuun, törmätään jälleen ong
 
 ![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2017/raw/master/images/ratebeer-w2-12.png)
 
-Kuten [viime viikolla](
-https://github.com/ollikehy/wepa22/blob/master/web/viikko2.md#ongelmia-herokussa) jo totesimme, tulee ongelman syy selvittää herokun lokeista.
+Kuten [viime viikolla](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/viikko2.md#ongelmia-herokussa) jo totesimme, tulee ongelman syy selvittää herokun lokeista.
 
 Kaikkien käyttäjien sivu aiheuttaa seuraavan virheen:
 
-  ActionView::Template::Error (PG::UndefinedTable: ERROR:  relation "users" does not exist
+ActionView::Template::Error (PG::UndefinedTable: ERROR: relation "users" does not exist
 
-eli tietokantataulua *users* ei ole olemassa koska sovelluksen uusia migraatioita ei ole suoritettu herokussa. Ongelma korjaantuu suorittamalla migraatiot:
+eli tietokantataulua _users_ ei ole olemassa koska sovelluksen uusia migraatioita ei ole suoritettu herokussa. Ongelma korjaantuu suorittamalla migraatiot:
 
     heroku run rails db:migrate
 
@@ -1507,11 +1506,11 @@ Useimmiten tuotannossa vastaan tulevat ongelmat johtuvat siitä, että tietokant
 
 ## Rubocop
 
-Muista testata rubocopilla, että koodisi noudattaa edelleen määriteltyjä tyylisääntöjä. 
+Muista testata rubocopilla, että koodisi noudattaa edelleen määriteltyjä tyylisääntöjä.
 
 Jos käytät Visual Studio Codea, voit asentaa [ruby-rubocop](https://marketplace.visualstudio.com/items?itemName=misogi.ruby-rubocop) laajennuksen, jolloin editori huomauttaa heti jos teet koodiin tyylivirheen:
 
-![kuva](https://github.com/ollikehy/wepa22/raw/master/images/ratebeer-w3-10.png)
+![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/ratebeer-w3-10.png)
 
 ## Tehtävien palautus
 

@@ -2,18 +2,18 @@
 
 Web-sovellusten toimintaperiaate on periaatteessa yksinkertainen. Käyttäjä avaa selaimen ja kirjoittaa osoiteriville haluamansa sivun URL:in, esim. https://www.cs.helsinki.fi/u/mluukkai/. URL:in ensimmäinen osa, eli esimerkissämme www.cs.helsinki.fi on yleensä DNS-nimi, jonka avulla pystytään selvittämään www-sivua hallinnoivan palvelimen ip-osoite. Selain lähettää web-palvelimelle pyynnön sivusta käyttäen HTTP-protokollan GET-metodia. Jos osoite on oikea, ja sivupyynnön lähettäjällä on oikeus URL:n polun määrittelemään resurssiin (esimerkissämme opiskelu/index.html), palvelin palauttaa selaimelle _statuskoodin_ 200 ja sivun sisällön HTML-muodossa. Selain renderöi sitten sivun käyttäjälle. Jos sivua ei ole olemassa, palvelin palauttaa selaimelle virheestä kertovan statuskoodin 404.
 
-Palvelimen palauttama www-sivu voi olla __staattinen__, eli "käsin" palvelimella sijaitsevaan html-tiedostoon kirjoitettu tai __dynaaminen__, eli esim. palvelimen tietokannassa olevan datan perusteella pyynnön yhteydessä generoitu. Esim. [opintotarjonnan sivulla](https://studies.helsinki.fi/opintotarjonta?organisation=hy-org-116716376&page=0&period=hy-university-root-id%2F2022%2F0%2F1&searchText=&studyYear=2022) oleva kurssien lista luetaan tietokannasta ja sivun renderöivä html-koodi muodostetaan aina uudelleen sivulle mentäessä, senhetkisen tietokannassa olevan kurssien listan perusteella.
+Palvelimen palauttama www-sivu voi olla **staattinen**, eli "käsin" palvelimella sijaitsevaan html-tiedostoon kirjoitettu tai **dynaaminen**, eli esim. palvelimen tietokannassa olevan datan perusteella pyynnön yhteydessä generoitu. Esim. [opintotarjonnan sivulla](https://studies.helsinki.fi/opintotarjonta?organisation=hy-org-116716376&page=0&period=hy-university-root-id%2F2022%2F0%2F1&searchText=&studyYear=2022) oleva kurssien lista luetaan tietokannasta ja sivun renderöivä html-koodi muodostetaan aina uudelleen sivulle mentäessä, senhetkisen tietokannassa olevan kurssien listan perusteella.
 
-Toisinaan www-sivuilla tiedon kulun suunta muuttuu ja dataa lähetetään selaimelta palvelimelle. Useimmiten tämä tapahtuu siten, että sivustolla on _lomake_, jolle käyttäjä syöttää palvelimelle lähetettävät tiedot. Tietojen lähettämistä varten HTTP-protokolla tarjoaa metodin POST (myös HTTP:n GET-metodia voi käyttää tietojen lähettämiseen).  
+Toisinaan www-sivuilla tiedon kulun suunta muuttuu ja dataa lähetetään selaimelta palvelimelle. Useimmiten tämä tapahtuu siten, että sivustolla on _lomake_, jolle käyttäjä syöttää palvelimelle lähetettävät tiedot. Tietojen lähettämistä varten HTTP-protokolla tarjoaa metodin POST (myös HTTP:n GET-metodia voi käyttää tietojen lähettämiseen).
 
 Esim. yliopiston www-sivujen yläkulmassa olevaa suurennuslasia painamalla avautuu lomake, jonka avulla sivun käyttäjä voi lähettää web-palvelimelle dataa. Kun käyttäjä kirjoittaa lomakkeelle tekstiä ja painaa enter, selain lähettää palvelimelle http://www.helsinki.fi POST-metodilla varustetun pyynnön, jonka mukana lähetetään käyttäjän hakulomakkeelle kirjoittama merkkijono. Palvelin vastaa lomakkeen lähetyksen yhteydessä tehtäviin POST-kutsuihin useimmiten palauttamalla uuden HTML-tiedoston, jonka selain sitten renderöi käyttäjälle. (Todellisuudessa POST-kutsuihin ei yleensä vastata palauttamalla html-sivua, vaan suoritetaan ns. uudelleenohjaus renderöitävän html-koodin sisältävälle sivulle ks. http://en.wikipedia.org/wiki/Post/Redirect/Get asiasta tarkemmin toisella viikolla)
 
-HTTP-pyyntöihin ja vastauksiin liittyy osoitteen, datan (eli viestin rungon, engl. body) ja [statuskoodien](http://en.wikipedia.org/wiki/List_of_HTTP_status_codes) lisäksi myös otsikoissa eli __headereissä__ lähetettyä dataa (ks.
+HTTP-pyyntöihin ja vastauksiin liittyy osoitteen, datan (eli viestin rungon, engl. body) ja [statuskoodien](http://en.wikipedia.org/wiki/List_of_HTTP_status_codes) lisäksi myös otsikoissa eli **headereissä** lähetettyä dataa (ks.
 http://en.wikipedia.org/wiki/List_of_HTTP_header_fields), joiden avulla tarkennetaan pyyntöjä ja niihin liittyviä vastauksia, esim. määritellään minkä tyyppistä dataa selain on valmis vastaanottamaan.
 
 Web-palvelinohjelmoinnilla tarkoitetaan juuri niitä toimia, miten web-palvelin muodostaa selaimelle näytettäviä web-sivuja ja käsittelee selaimen lomakkeen avulla lähettämää, käyttäjän syöttämää dataa.
 
-Web-sivut eivät ole pelkkää html:ää. Html:nä pyritään kuvaamaan sivujen rakenne ja tietosisältö. Sivujen muotoilu on tapana hoitaa CSS-tyylitiedostojen avulla, ks. http://en.wikipedia.org/wiki/Cascading_Style_Sheets. Nykyisenä trendinä on myös sisällyttää www-sivuille yhä suurempi määrä __selaimessa__ suoritettavaa ohjelmakoodia, joka taas on javascriptiä. On hieman veteen piirretty viiva, mitä toiminnallisuuksia kannattaa toteuttaa selaimen päässä ja mitä palvelimella. 
+Web-sivut eivät ole pelkkää html:ää. Html:nä pyritään kuvaamaan sivujen rakenne ja tietosisältö. Sivujen muotoilu on tapana hoitaa CSS-tyylitiedostojen avulla, ks. http://en.wikipedia.org/wiki/Cascading_Style_Sheets. Nykyisenä trendinä on myös sisällyttää www-sivuille yhä suurempi määrä **selaimessa** suoritettavaa ohjelmakoodia, joka taas on javascriptiä. On hieman veteen piirretty viiva, mitä toiminnallisuuksia kannattaa toteuttaa selaimen päässä ja mitä palvelimella.
 
 Esim. jos www-sivu sisältää lomakkeen, jonka avulla suoritetaan sivustolle kirjautuminen, on selvää että salasanan ja käyttäjätunnuksen tarkastamisen täytyy tapahtua palvelimella. Sen sijaan selaimen päässä voidaan javascriptillä tehdä tarkistus onko käyttäjän salasanakenttä tyhjä kun käyttäjä yrittää kirjautua sivulle. Tälläisessä tilanteissa on turha vaivata palvelinta ollenkaan, sillä kirjautuminen ei tulisi kuitenkaan onnistumaan.
 
@@ -23,7 +23,7 @@ Kun moderneissa sovelluksissa palvelimelta haetaan dataa, ei palvelin välttäm�
 
 Tällä kurssilla keskitymme lähes yksinomaan web-sovellusten palvelinpuolen toiminnallisuuden toteuttamiseen. Viikoilla 6 ja 7 näemme muutaman esimerkin selaimen päässä javascriptillä toteutettavasta toiminnallisuudesta sekä sovelluksen ulkoasun muotoilusta CSS:n avulla.
 
-Kurssilla [Full stack -websovellushehitys](https://fullstackopen.com/) taas keskitytään pääosin selaimen puolella toteutettavaan toiminnallisuuteen. 
+Kurssilla [Full stack -websovellushehitys](https://fullstackopen.com/) taas keskitytään pääosin selaimen puolella toteutettavaan toiminnallisuuteen.
 
 ## Kurssin materiaalin ja tehtävät
 
@@ -40,9 +40,9 @@ Kurssilla kaikki tehtävät ovat upotettu tähän materiaaliin. Seuraavaa tehtä
 >
 > Pyyntö palauttaa siis välilehdellä response näytettävän HTML-koodin. Koodi sisältää viitteitä css-tyylitiedostoihin, javascript-tiedostoihin sekä kuviin. Sivua renderöitäessä selain hakee kunkin näistä omalla GET-pyynnöllä.
 >
-> Pidä edelleen sama networking-välilehti auki. Tyhjennä developer toolsin välilehti painamalla vasemman reunan halkaistu pallo -symbolia (:no_entry_sign:). Kirjoita jotain tekstikenttään ja paina "Save". Tekstikenttä on toteutettu _html:n lomakkeena_ (engl. form). Lomakkeen tietojen lähetys palvelimelle tapahtuu HTTP-protokollan POST-metodin sisältävän pyynnön avulla.
+> Pidä edelleen sama networking-välilehti auki. Tyhjennä developer toolsin välilehti painamalla vasemman reunan halkaistu pallo -symbolia (:no*entry_sign:). Kirjoita jotain tekstikenttään ja paina "Save". Tekstikenttä on toteutettu \_html:n lomakkeena* (engl. form). Lomakkeen tietojen lähetys palvelimelle tapahtuu HTTP-protokollan POST-metodin sisältävän pyynnön avulla.
 >
-> Tutki POST-pyynnön sisältöä (pyynnön nimi on new_note). Välilehdeltä _Payload_  löytyy _Form data_, eli lomakkeen mukana lähtetety tieto. Huomaat, että pyyntöön vastattiin statuskoodilla 302, joka taas tarkoittaa sitä, että palvelin tekee selaimelle __uudelleenohjauksen__, eli pyytää selainta menemään vastauksen headereissa ilmoittamaan osoitteeseen. POST-pyynnön vastaus ei siis sisällä ollenkaan HTML-koodia jonka selain voisi renderöidä käyttäjälle. Heti POST-kutsun perään selain tekeekin automaattisesti GET-kutsun POST:in vastauksen headerissa __Location__ olevaan osoitteeseen. Vasta tämän uudelleenohjauksen aiheuttaman pyynnön vastauksena tullut sivu renderöidään käyttäjälle.
+> Tutki POST-pyynnön sisältöä (pyynnön nimi on new*note). Välilehdeltä \_Payload* löytyy _Form data_, eli lomakkeen mukana lähtetety tieto. Huomaat, että pyyntöön vastattiin statuskoodilla 302, joka taas tarkoittaa sitä, että palvelin tekee selaimelle **uudelleenohjauksen**, eli pyytää selainta menemään vastauksen headereissa ilmoittamaan osoitteeseen. POST-pyynnön vastaus ei siis sisällä ollenkaan HTML-koodia jonka selain voisi renderöidä käyttäjälle. Heti POST-kutsun perään selain tekeekin automaattisesti GET-kutsun POST:in vastauksen headerissa **Location** olevaan osoitteeseen. Vasta tämän uudelleenohjauksen aiheuttaman pyynnön vastauksena tullut sivu renderöidään käyttäjälle.
 >
 > Tutki vielä joillekin muille www-sivuille tekemisesi pyyntöjen aiheuttamaa HTTP-protokollan viestintää.
 
@@ -72,16 +72,17 @@ Tutkitaan mitä tapahtuu kun käyttäjä menee Railsilla toteutetulle web-sivull
 
 8. ja web-palvelin palauttaa generoidun HTML-sivun ja siihen liittyvät headerit selaimelle.
 
-MVC-mallissa modelit ovat useimmiten olioita, joiden tila talletetaan tietokantaan. Tietokannan käsittely on yleensä abstrahoitu siten, että ohjelmakoodin tasolla on harvoin tarve kirjoittaa SQL-kieltä tai tietokannan konfiguraatioita. Detaljit hoituvat [Object Relational Mapping (ORM)](https://en.wikipedia.org/wiki/Object-relational_mapping) -kirjaston avulla. Railsissa käytettävä ORM on nimeltään ActiveRecord, joka toimii hieman eri tavalla kuin joillekin ehkä  Javamaailmasta tutut JPA-standardia noudattavat EclipseLink ja Hibernate.
+MVC-mallissa modelit ovat useimmiten olioita, joiden tila talletetaan tietokantaan. Tietokannan käsittely on yleensä abstrahoitu siten, että ohjelmakoodin tasolla on harvoin tarve kirjoittaa SQL-kieltä tai tietokannan konfiguraatioita. Detaljit hoituvat [Object Relational Mapping (ORM)](https://en.wikipedia.org/wiki/Object-relational_mapping) -kirjaston avulla. Railsissa käytettävä ORM on nimeltään ActiveRecord, joka toimii hieman eri tavalla kuin joillekin ehkä Javamaailmasta tutut JPA-standardia noudattavat EclipseLink ja Hibernate.
 
-Railsin taustalla on vahvana periaatteena __convention over configuration__, mikä tarkoittaa tapaa, jolla Rails pyrkii minimoimaan konfiguraatioiden tekemisen tarpeen määrittelemällä joukon konventioita, eli "sääntöjä", esim. tiedostojen nimennälle ja niiden sijainnille tiedostohierarkiassa. Tulemme pian näkemään mitä CoC-periaate tarkoittaa käytännössä sovellusohjelmoijan kannalta. Rails mahdollistaa toki konventiosta poikkeamisen, mutta siinä tapauksessa ohjelmoijan on jossain määrin konfiguroitava asioita käsin.
+Railsin taustalla on vahvana periaatteena **convention over configuration**, mikä tarkoittaa tapaa, jolla Rails pyrkii minimoimaan konfiguraatioiden tekemisen tarpeen määrittelemällä joukon konventioita, eli "sääntöjä", esim. tiedostojen nimennälle ja niiden sijainnille tiedostohierarkiassa. Tulemme pian näkemään mitä CoC-periaate tarkoittaa käytännössä sovellusohjelmoijan kannalta. Rails mahdollistaa toki konventiosta poikkeamisen, mutta siinä tapauksessa ohjelmoijan on jossain määrin konfiguroitava asioita käsin.
 
 Railsilla sovellusten tekeminen edellyttää luonnollisesti jonkinasteista Rubyn hallintaa. Ruby on dynaamisesti tyypitetty tulkattu oliokieli, joka mahdollistaa myös funktionaalisen ohjelmointityylin. Ruby-koodia ei siis käännetä ollenkaan, vaan tulkki suorittaa koodia komento komennolta. Koska kääntäjää ei ole, ilmenevät myös koodiin tehdyt syntaksivirheet vasta ajon aikana toisin kuin käännettävillä kielillä. Modernit kehitysympäristöt auttavat hiukan, tarjoten jonkin verran lennossa tapahtuvaa "syntaksitarkastusta", mutta kehitysympäristön tuki ei ole läheskään samaa luokkaa kuin esim. Javalla.
 
 > ## Tehtävä 2: Rubyn alkeet
 >
 > Tee/käy läpi seuraava
-> * [http://www.ruby-lang.org/en/documentation/quickstart/](http://www.ruby-lang.org/en/documentation/quickstart/)
+>
+> - [http://www.ruby-lang.org/en/documentation/quickstart/](http://www.ruby-lang.org/en/documentation/quickstart/)
 >
 > Jos aikaa ja intoa riittää, voit käydä läpi myös osoitteessa
 > [https://github.com/HY-TKTL/ruby-materiaali/blob/master/Perusteet.md](https://github.com/HY-TKTL/ruby-materiaali/blob/master/Perusteet.md) olevan materiaalin
@@ -100,7 +101,7 @@ Osa viikon tehtävistä on käytännössä pakollisia, muuten eteneminen pysäht
 
 ## Railsin asennus
 
-Asennusohje osoitteessa https://github.com/ollikehy/wepa22/blob/master/web/railsin_asentaminen.md
+Asennusohje osoitteessa https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/railsin_asentaminen.md
 
 ## Sovelluksen luominen
 
@@ -168,7 +169,7 @@ Huom: saatat törmätä tässä vaiheessa virheeseen joka johtuu siitä että ko
 
 ja suorittaa komentoriviltä komento <code>bundle install</code>
 
-Kokeile selaimella osoitteessa [http://localhost:3000](http://localhost:3000) että sovellus on käynnissä. 
+Kokeile selaimella osoitteessa [http://localhost:3000](http://localhost:3000) että sovellus on käynnissä.
 
 HUOM: **Tarkoituksena on, että tätä dokumenttia lukiessasi teet koko ajan samat asiat itse omaan sovellukseesi kuin mitä tässä dokumentissa esimerkkisovellukselle tehdään**. Osa toteutettavista asioista on muotoiltu tehtäviksi, kuten seuraava kohta, ja osa askelista taas tulee tehdä, jotta materiaalissa eteneminen on ylipäätään mahdollista.
 
@@ -185,10 +186,11 @@ HUOM: **Tarkoituksena on, että tätä dokumenttia lukiessasi teet koko ajan sam
 > Tämän dokumentin lopussa on ohje varsinaisen palautuksen tekemiseksi
 
 Aloitetaan sovelluksen rakentaminen. Päätetään aloittaa panimoista, eli:
-* luodaan tietokantataulu panimoita varten
-* tehdään toiminnallisuus, joka listaa kaikki panimot
-* tehdään toiminnallisuus, joka mahdollistaa uuden panimon lisäyksen
-* saamme myös kaupan päälle toiminnallisuuden panimon tietojen muuttamiseen ja panimon poistamiseen
+
+- luodaan tietokantataulu panimoita varten
+- tehdään toiminnallisuus, joka listaa kaikki panimot
+- tehdään toiminnallisuus, joka mahdollistaa uuden panimon lisäyksen
+- saamme myös kaupan päälle toiminnallisuuden panimon tietojen muuttamiseen ja panimon poistamiseen
 
 Railsissa konventiona on, että (melkein) jokaista tietokantaan talletettavaa 'asiaa' varten sovelluksessa on oma model-luokka, kontrolleri-luokka sekä joukko omia näytön muodostavia tiedostoja.
 
@@ -197,18 +199,20 @@ Luodaan kaikki nämä Railsin valmista scaffold-generaattoria käyttäen. Panimo
     rails g scaffold brewery name:string year:integer
 
 Syntyy joukko tiedostoja. Tärkeimmät näistä ovat
-* app/models/Brewery.rb
-* app/controllers/breweries_controller.rb
-* app/views/breweries/index.html.erb
-* app/views/breweries/show.html.erb
-* views-hakemistoon tulee näiden lisäksi muutama muukin tiedosto.
+
+- app/models/Brewery.rb
+- app/controllers/breweries_controller.rb
+- app/views/breweries/index.html.erb
+- app/views/breweries/show.html.erb
+- views-hakemistoon tulee näiden lisäksi muutama muukin tiedosto.
 
 Railsin scaffold-generaattori luo siis kaikki tarvittavat tiedostopohjat nimettyinä ja sijoiteltuna Railsin konvention mukaisesti.
 
 Loimme koodin generaattorilla <code>rails g scaffold brewery name:string year:integer</code>. Generaattorissa kirjoitimme luotavan asian, eli panimotietokantataulun ja siihen liittyvät asiat yksikössä (brewery). Railsin nimeämiskäytäntöjen mukaan tästä syntyy
-* tietokantataulu nimeltään breweries
-* kontrolleri nimeltään BreweriesController (tiedosto breweries_controller.rb)
-* model eli yhtä olutpanimoa edustava luokka Brewery (tiedosto Brewery.rb)
+
+- tietokantataulu nimeltään breweries
+- kontrolleri nimeltään BreweriesController (tiedosto breweries_controller.rb)
+- model eli yhtä olutpanimoa edustava luokka Brewery (tiedosto Brewery.rb)
 
 Alussa saattaa olla hieman sekavaa milloin ja missä käytetään yksikkö- ja milloin monikkomuotoa, miten tiedostot on nimetty ja mikä niiden sijainti on. Pikkuhiljaa kuitenkin käytänteet juurtuvat selkärankaan ja alkavat vaikuttamaan loogisilta.
 
@@ -224,7 +228,7 @@ Tästä aiheutuu kuitenkin virheilmoitus:
 Migrations are pending; run 'bin/rails db:migrate RAILS_ENV=development' to resolve this issue.
 ```
 
-Syynä virheelle on se, että panimot tallettavan tietokantataulun luomisesta huolehtiva *tietokantamigraatio* on suorittamatta.
+Syynä virheelle on se, että panimot tallettavan tietokantataulun luomisesta huolehtiva _tietokantamigraatio_ on suorittamatta.
 
 Scaffoldin suorittaminen luo hieman erikoisella tavalla nimetyn tiedoston
 
@@ -245,7 +249,7 @@ Refreshaa panimot näyttävä sivu [http://localhost:3000/breweries](http://loca
 
 Kuten huomaamme, on railsin scaffoldingilla saatu jo melko paljon valmista toiminnallisuutta. Scaffoldingilla luotu toiminnallisuus on hyvä tapa päästä nopeasti alkuun. Mikään silver bullet scaffoldingit eivät kuitenkaan ole, sillä suurin osa scaffoldingeilla valmiiksi luodusta toiminnallisuudesta tullaan ajan myötä korvaamaan itse kirjoitetulla koodilla. Luomme kurssin aikana, viikosta 2 alkaen toiminnallisuutta myös kokonaan käsin, joten myös scaffoldingien automaattisesti generoima koodi tulee tutuksi.
 
-**Huom:** railsin generaattorin luomat tiedostot on mahdollista poistaa komennolla *destroy*:
+**Huom:** railsin generaattorin luomat tiedostot on mahdollista poistaa komennolla _destroy_:
 
     rails destroy scaffold brewery
 
@@ -286,7 +290,7 @@ class Brewery < ApplicationRecord
 end
 ```
 
-Kuten äskeinen konsolisessio paljasti, on luokalla kuitenkin metodit all ja count, nämä ja todella suuren määrän muita metodeja luokka saa __perimästään__ luokasta <code>ApplicationRecord</code> joka taas perii toiminnallisuutensa luokasta <code>ActiveRecord</code>.
+Kuten äskeinen konsolisessio paljasti, on luokalla kuitenkin metodit all ja count, nämä ja todella suuren määrän muita metodeja luokka saa **perimästään** luokasta <code>ApplicationRecord</code> joka taas perii toiminnallisuutensa luokasta <code>ActiveRecord</code>.
 
 Rails-guiden (http://guides.rubyonrails.org/active_record_basics.html) sanoin:
 
@@ -294,8 +298,7 @@ Rails-guiden (http://guides.rubyonrails.org/active_record_basics.html) sanoin:
 Active Record is the M in MVC - the model - which is the layer of the system responsible for representing business data and logic. Active Record facilitates the creation and use of business objects whose data requires persistent storage to a database. It is an implementation of the Active Record pattern (https://en.wikipedia.org/wiki/Active_record_pattern) which itself is a description of an Object Relational Mapping system.
 </blockquote>
 
-
-Periaatteena ActiveRecordissa on lyhyesti sanottuna se, että jokaista tietokannan taulua (esim. breweries) vastaa koodissa oma luokka (Brewery). Luokka tarjoaa __luokkametodeina__ metodit, joiden avulla tietokantaa käsitellään. Kun tietokannasta haetaan rivillinen dataa (yhden panimon tiedot), luodaan siitä luokan instanssi (eli Brewery-olio).
+Periaatteena ActiveRecordissa on lyhyesti sanottuna se, että jokaista tietokannan taulua (esim. breweries) vastaa koodissa oma luokka (Brewery). Luokka tarjoaa **luokkametodeina** metodit, joiden avulla tietokantaa käsitellään. Kun tietokannasta haetaan rivillinen dataa (yhden panimon tiedot), luodaan siitä luokan instanssi (eli Brewery-olio).
 
 ActiveRecordissa luokilla on siis kaksoisrooli, luokkametodien (joita Rubyssä kutsutaan luokan nimen kautta tyyliin <code>Brewery.all</code>) avulla hoidetaan suurin osa tietokantaoperaatioista, esim. tietokantakyselyt. Tietokantaan talletettu data taas mäppäytyy ActiveRecord-luokkien instansseiksi.
 
@@ -347,7 +350,7 @@ Olemme tässä hyödyntäneet Rubyn vapaamielistä suhtautumista sulkujen käytt
 
     Brewery.new( name: "Stadin Panimo", year: 1997 )
 
-Myös parametri on hieman erikoisessa formaatissa. Kyseessä on symboleilla indeksöity assosiatiivinen taulukko eli _hash_, ks. https://github.com/ollikehy/wepa22/blob/master/web/rubyn_perusteita.md#hash-ja-symbolit
+Myös parametri on hieman erikoisessa formaatissa. Kyseessä on symboleilla indeksöity assosiatiivinen taulukko eli _hash_, ks. https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/rubyn_perusteita.md#hash-ja-symbolit
 
 Kuten yo. linkistä selviää, hashit määritellään aaltosuluissa:
 
@@ -365,7 +368,7 @@ Huom: Rubyssä on myös vaihtoehtoinen syntaksi hashien määrittelyyn, sitä k�
 
 Jos haluat luoda tietueita tai muuten harjoitella Railsin käyttöä konsolista käsin ilman pysyviä muutoksia tietokantaan, voit ajaa konsolin hiekkalaatikko-tilassa komennolla:
 
-```rails console --sandbox``` tai lyhyemmin ```rails c -s```
+`rails console --sandbox` tai lyhyemmin `rails c -s`
 
 ## ActiveRecordin hakurajapinta
 
@@ -393,18 +396,20 @@ Seuraavassa muutamia esimerkkejä, kokeile kaikkia konsolista:
     t = Brewery.where name:"Koff"
     t.first.year                   # t.first tarkoittaa kuin t[0] eli taulukon 1. alkiota
 
-Lisää Rubyn taulukosta ks. https://github.com/ollikehy/wepa22/blob/master/web/rubyn_perusteita.md#taulukko
+Lisää Rubyn taulukosta ks. https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/rubyn_perusteita.md#taulukko
 
 Huomaa, että jätimme edellä kaikissa esimerkeissä metodikutsuista sulut pois. <code>Brewery.find 1</code> siis tarkoittaa samaa kuin <code>Brewery.find(1)</code>
 
 ## Alaviiva
 
-Edellisen metodikutsun palauttamaan arvoon voi konsolissa viitata alaviivalla, eli merkillä <code>_</code>, eli jos konsolissa työskennellessä unohtuu sijoittaa metodin tulos muuttujaan, saa tuloksen vielä kiinni alaviivalla:
+Edellisen metodikutsun palauttamaan arvoon voi konsolissa viitata alaviivalla, eli merkillä <code>\_</code>, eli jos konsolissa työskennellessä unohtuu sijoittaa metodin tulos muuttujaan, saa tuloksen vielä kiinni alaviivalla:
 
 ```ruby
 irb(main):013 > Brewery.where "year<1900"
 ```
+
 tuloksen tallettaminen muuttujaan unohtui... käytetään alaviivaa
+
 ```ruby
 irb(main):014 > vanhat = _
 irb(main):015 > vanhat.count
@@ -419,13 +424,14 @@ irb(main):017 >
 > Lue http://guides.rubyonrails.org/active_record_basics.html#crud-reading-and-writing-data
 >
 > Tee kaikki seuraavat Rails-konsolista:
-> * Luo panimo nimeltä "Kumpulan panimo", jonka perustamisvuosi on 2012 <br />
-> * Hae panimo kannasta <code>find_by</code>-metodilla nimen perusteella<br />
-> * Muuta panimon perustamisvuodeksi 2018 <br />
-> * Hae panimo kannasta uudelleen <code>find_by</code>:lla ja varmista että perustamisvuoden muutos tapahtui <br />
-> * Tarkista myös, että panimon kentän <code>updated_at</code> arvo on muuttunut, eli ettei se ole enää sama kuin <code>created at</code> <br />
-> * Tuhoa panimo <br />
-> * Varmista, että panimo tuhoutui
+>
+> - Luo panimo nimeltä "Kumpulan panimo", jonka perustamisvuosi on 2012 <br />
+> - Hae panimo kannasta <code>find_by</code>-metodilla nimen perusteella<br />
+> - Muuta panimon perustamisvuodeksi 2018 <br />
+> - Hae panimo kannasta uudelleen <code>find_by</code>:lla ja varmista että perustamisvuoden muutos tapahtui <br />
+> - Tarkista myös, että panimon kentän <code>updated_at</code> arvo on muuttunut, eli ettei se ole enää sama kuin <code>created at</code> <br />
+> - Tuhoa panimo <br />
+> - Varmista, että panimo tuhoutui
 
 Vilkaistaan vielä panimon koodia:
 
@@ -459,12 +465,13 @@ jotta saamme tietokannan päivitettyä, suoritetaan tietokantamigraatio antamall
     rails db:migrate
 
 Nyt siis on luotu
-* oluet tallettava tietokantataulu beers
-* tietokantamäppäykseen käytettävä luokka Beer tiedostoon app/models/beer.rb
-* oluista huolehtiva kontrolleri BeersController tiedostoon app/controllers/beers_controller.rb
-* sekä näkymätiedostoja hakemistoon app/views/beers/
 
-Loimme oluelle string-tyyppiset nimen ja tyylin tallettavat kentät <code>name</code> ja <code>style</code>. Loimme myös integer-tyyppisen kentän <code>brewery_id</code>, jonka tarkoitus on toimia __vierasavaimena__ (engl. foreign key), jonka liittää oluen panimoon.
+- oluet tallettava tietokantataulu beers
+- tietokantamäppäykseen käytettävä luokka Beer tiedostoon app/models/beer.rb
+- oluista huolehtiva kontrolleri BeersController tiedostoon app/controllers/beers_controller.rb
+- sekä näkymätiedostoja hakemistoon app/views/beers/
+
+Loimme oluelle string-tyyppiset nimen ja tyylin tallettavat kentät <code>name</code> ja <code>style</code>. Loimme myös integer-tyyppisen kentän <code>brewery_id</code>, jonka tarkoitus on toimia **vierasavaimena** (engl. foreign key), jonka liittää oluen panimoon.
 
 Tarvittaessa kentät voi tarkistaa kirjoittamalla tietokantataulua vastaavan luokan nimi rails-konsoliin:
 
@@ -488,7 +495,7 @@ irb(main):045 > Beer.create name:"Karhu", style:"Lager", brewery_id:koff.id
 irb(main):046 >
 ```
 
-Luodut oluet __iso 3__ ja __Karhu__ siis liitetään panimoon Koff. Tietokannan tasolla oluiden ja panimon välillä on liitos. Koodin tasolla liitos ei kuitenkaan vielä toimi.
+Luodut oluet **iso 3** ja **Karhu** siis liitetään panimoon Koff. Tietokannan tasolla oluiden ja panimon välillä on liitos. Koodin tasolla liitos ei kuitenkaan vielä toimi.
 
 Jotta saamme liitokset toimimaan myös koodin tasolla, muokataan modeleja seuraavasti:
 
@@ -577,7 +584,7 @@ Poistetaan kaikki vanha data tietokannasta antamalla komentoriviltä komento:
 
     rails db:reset
 
-Komento "seedaa" kannan automaattisesti eli vanhan datan poistamisen lisäksi suorittaa myös tiedoston seeds.rb sisällön. 
+Komento "seedaa" kannan automaattisesti eli vanhan datan poistamisen lisäksi suorittaa myös tiedoston seeds.rb sisällön.
 
 **Sovellus sekä rails-konsoli kannattaa uudelleenkäynnistää seedauksen jälkeen.**
 
@@ -659,11 +666,12 @@ irb(main):071:0> koff.beers.create name:"Extra Light Triple Brewed", style:"Lage
 > ## Tehtävä 5: Panimoja ja oluita
 >
 > Tee konsolista käsin seuraavat toimenpiteet:
-> * Luo panimo Hartwall ja sille kolme olutta kaikkia kolmea yllä demonstroitua tapaa käyttäen.
-> * Päädymme kuitenkin siihen että Hartwall on huonon laatunsa takia poistettava. Ennen poistamista, ota muistiin Hartwall-olion id
-> * Hartwallin poistaminen jättää tietokantaan olut-olioita, jotka liittyvät jo poistettuun panimoon
-> * Hae orvoksi jääneet oluet komennolla <code>Beer.where tähänsopivaparametri</code>
-> * Tuhoa operaation palauttamat oluet. Ohjeita oluiden listan läpikäyntiin esim. seuraavasta https://github.com/ollikehy/wepa22/blob/master/web/rubyn_perusteita.md#taulukko
+>
+> - Luo panimo Hartwall ja sille kolme olutta kaikkia kolmea yllä demonstroitua tapaa käyttäen.
+> - Päädymme kuitenkin siihen että Hartwall on huonon laatunsa takia poistettava. Ennen poistamista, ota muistiin Hartwall-olion id
+> - Hartwallin poistaminen jättää tietokantaan olut-olioita, jotka liittyvät jo poistettuun panimoon
+> - Hae orvoksi jääneet oluet komennolla <code>Beer.where tähänsopivaparametri</code>
+> - Tuhoa operaation palauttamat oluet. Ohjeita oluiden listan läpikäyntiin esim. seuraavasta https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/rubyn_perusteita.md#taulukko
 
 ## Kontrollerin ja viewien yhteys
 
@@ -742,26 +750,27 @@ Palataan sitten tarkemmin HTML-taulukon muodostavaan koodiin. Jokainen panimo tu
   <% end %>
 ```
 
-Muuttujaan ```@breweries``` talletettu panimoiden lista käydään läpi ```each```-iteraattorin avulla. (lisää eachista ks. https://github.com/ollikehy/wepa22/blob/master/web/rubyn_perusteita.md#each). Jokaista yksittäistä panimoa (joihin viitataan iteraattorin toistettavassa koodilohkossa nimellä <code>brewery</code>) kohti luodaan listaan div-tagien sisällä olevat rivit. Ensimmäiselle riville tulee panimon nimi ja toiselle perustamisvuosi. Rails luo rivit käyttäen <code>render</code> metodia jokaista panimoa kohden. <code>render</code> metodi käyttää hyväkseen [Partial templateja](https://guides.rubyonrails.org/layouts_and_rendering.html#using-partials) eli tutummin "partialseja". Rails on luonut yksittäiselle panimolle automaattisesti partials-tiedoston (app/views/breweries/_brewery.html.erb). Partials-tiedostot nimetään käyttäen tiedoston alussa alaviivaa, jotta ne pystytänä jo silmäyksellä erottamaan normaaleista näkymistä. Kolmannelle riville luodaan  linkki panimon tiedot näyttävälle sivulle. Linkin generoiva Ruby-koodi on ```<%= link_to "Show this brewery", brewery %>``` .
+Muuttujaan `@breweries` talletettu panimoiden lista käydään läpi `each`-iteraattorin avulla. (lisää eachista ks. https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/rubyn_perusteita.md#each). Jokaista yksittäistä panimoa (joihin viitataan iteraattorin toistettavassa koodilohkossa nimellä <code>brewery</code>) kohti luodaan listaan div-tagien sisällä olevat rivit. Ensimmäiselle riville tulee panimon nimi ja toiselle perustamisvuosi. Rails luo rivit käyttäen <code>render</code> metodia jokaista panimoa kohden. <code>render</code> metodi käyttää hyväkseen [Partial templateja](https://guides.rubyonrails.org/layouts_and_rendering.html#using-partials) eli tutummin "partialseja". Rails on luonut yksittäiselle panimolle automaattisesti partials-tiedoston (app/views/breweries/\_brewery.html.erb). Partials-tiedostot nimetään käyttäen tiedoston alussa alaviivaa, jotta ne pystytänä jo silmäyksellä erottamaan normaaleista näkymistä. Kolmannelle riville luodaan linkki panimon tiedot näyttävälle sivulle. Linkin generoiva Ruby-koodi on `<%= link_to "Show this brewery", brewery %>` .
 
 Kyseessä on oikeastaan lyhennysmerkintä seuraavasta:
 
 ```
 <%= link_to "Show this brewery", brewery_path(brewery.id) %>
 ```
+
 joka generoi sivulle seuraavanlaisen HTML-koodin (seuraavassa oleva numero riippuu taulukon rivillä olevan olion id-kentän arvosta):
 
 ```
 <a href="/breweries/1">Show this brewery</a>
 ```
 
-eli linkin osoitteeseen "breweries/1". Komennon ```link_to``` ensimmäinen parametri siis on a-tagiin tuleva nimi, ja toinen on linkin osoite.
+eli linkin osoitteeseen "breweries/1". Komennon `link_to` ensimmäinen parametri siis on a-tagiin tuleva nimi, ja toinen on linkin osoite.
 
-Itse osoite luodaan tässä pitemmässä muodossa apumetodilla ```brewery_path(brewery.id)```, joka palauttaa polun id:n ```brewery.id``` omaavan panimon sivulle. Saman asian siis metodin <code>link_to</code> parametrina saa aikaan olio itse, eli esimerkkimme tapauksessa muuttuja <code>brewery</code>
+Itse osoite luodaan tässä pitemmässä muodossa apumetodilla `brewery_path(brewery.id)`, joka palauttaa polun id:n `brewery.id` omaavan panimon sivulle. Saman asian siis metodin <code>link_to</code> parametrina saa aikaan olio itse, eli esimerkkimme tapauksessa muuttuja <code>brewery</code>
 
-Linkin generoivan komennon voisi myös "kovakoodata" muodossa ```<%= link_to "Show this brewery", "breweries/#{brewery.id}" %>```, mutta kovakoodaus ei ole yleensä eikä tässäkään tapauksessa kovin järkevää.
+Linkin generoivan komennon voisi myös "kovakoodata" muodossa `<%= link_to "Show this brewery", "breweries/#{brewery.id}" %>`, mutta kovakoodaus ei ole yleensä eikä tässäkään tapauksessa kovin järkevää.
 
-Mitä tarkoittaa ```"breweries/#{brewery.id}"```? Kyseinen merkkijonon alussa on ensiksi kaikkiin panimoihin viittaava "breweries", jonka jälkeen siihen tulee yksilöivän panimon id muttujana. Muuttuja asetetaan käyttäen <code>#{}</code>-notaatiota, jonka avulla merkkijonoon voidaan upottaa muuttajia. 
+Mitä tarkoittaa `"breweries/#{brewery.id}"`? Kyseinen merkkijonon alussa on ensiksi kaikkiin panimoihin viittaava "breweries", jonka jälkeen siihen tulee yksilöivän panimon id muttujana. Muuttuja asetetaan käyttäen <code>#{}</code>-notaatiota, jonka avulla merkkijonoon voidaan upottaa muuttajia.
 
 > ## Tehtävä 6
 >
@@ -769,7 +778,7 @@ Mitä tarkoittaa ```"breweries/#{brewery.id}"```? Kyseinen merkkijonon alussa on
 
 Tehtävän jälkeen sovelluksesi panimot näyttävien sivujen tulisi näyttää seuraavalta
 
-![kuva](https://github.com/ollikehy/wepa22/raw/master/images/brewery-w1-0a.png)
+![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/brewery-w1-0a.png)
 
 ## Oluiden listaaminen panimon sivulla
 
@@ -816,10 +825,10 @@ Ennen metodin <code>show</code> suoritusta siis suoritetaan komento
 
     @brewery = Brewery.find(params[:id])
 
-joka viittaa muuttujaan ```params```, joka taas sisältää suorituksen alla olevaan HTTP-kutsuun liittyvät tiedot. Muuttuja <code>params</code> on tyypiltään assosiatiivinen taulukko eli hash. Erityisesti muuttujan arvo avaimella <code>:id</code> eli ```params[:id]``` kertoo tässä tapauksessa tarkasteltavana olevan panimon id:n, eli polun breweries/#{id}, kenoviivan jälkeisen osan.
+joka viittaa muuttujaan `params`, joka taas sisältää suorituksen alla olevaan HTTP-kutsuun liittyvät tiedot. Muuttuja <code>params</code> on tyypiltään assosiatiivinen taulukko eli hash. Erityisesti muuttujan arvo avaimella <code>:id</code> eli `params[:id]` kertoo tässä tapauksessa tarkasteltavana olevan panimon id:n, eli polun breweries/#{id}, kenoviivan jälkeisen osan.
 
-Panimo haetaan tietokannasta tutulla komennolla ```Brewery.find``` ja sijoitetaan muuttujaan ```@brewery```.
-Metodi <code>show</code> renderöi lopuksi näkymätemplaten ```show.html.erb```. Näkymätemplaten generointi tapahtuu jälleen automaattisesti Railsin konvention perusteella, eli panimokontrollerin metodin ```show``` suorituksen lopussa renderöidään näkymä views/breweries/show.html.erb ellei koodi määrää muuta.
+Panimo haetaan tietokannasta tutulla komennolla `Brewery.find` ja sijoitetaan muuttujaan `@brewery`.
+Metodi <code>show</code> renderöi lopuksi näkymätemplaten `show.html.erb`. Näkymätemplaten generointi tapahtuu jälleen automaattisesti Railsin konvention perusteella, eli panimokontrollerin metodin `show` suorituksen lopussa renderöidään näkymä views/breweries/show.html.erb ellei koodi määrää muuta.
 
 Eksplisiittisesti auki kirjoitettuna metodin <code>show</code> suorituksen yhteydessä suoritettava koodi on siis seuraava:
 
@@ -843,7 +852,7 @@ Näkymätemplaten views/breweries/show.html.erb koodi on seuraavassa:
 </div>
 ```
 
-Sivun yläosassa oleva id:llä __notice__ varustettu osa on tarkoitettu näyttämään panimon luomiseen tai muutokseen liittyviä viestejä, asiasta lisää myöhemmin.
+Sivun yläosassa oleva id:llä **notice** varustettu osa on tarkoitettu näyttämään panimon luomiseen tai muutokseen liittyviä viestejä, asiasta lisää myöhemmin.
 
 Sivulla käytetään samaa partialsia render-metodissa, kuin etusivulla. Aiemman muutoksen seurauksena sivun otsikko on nyt linkki sivuun itseensä.
 
@@ -868,17 +877,18 @@ Jatketaan muutosten tekemistä.
 >  <% end %>
 > </p>
 > ```
+>
 > Muuta vielä oluiden nimet klikattavaksi metodin <code>link_to</code> avulla
 
 Sivusi tulisi näyttää tehtävän jälkeen seuraavalta
 
-![kuva](https://github.com/ollikehy/wepa22/raw/master/images/brewery-w1-1.png)
+![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/brewery-w1-1.png)
 
 Parannellaan vielä hieman sovelluksemme navigaatiota.
 
 > ## Tehtävä 9
 >
-> Lisää kaikkien panimojen sivulle linkki oluiden sivulle ja vastaavasti oluiden sivulle linkki panimoiden sivulle, esim. linkki oluiden sivulle saadaan komennolla ```link_to 'list of beers', beers_path```
+> Lisää kaikkien panimojen sivulle linkki oluiden sivulle ja vastaavasti oluiden sivulle linkki panimoiden sivulle, esim. linkki oluiden sivulle saadaan komennolla `link_to 'list of beers', beers_path`
 
 Viritellään lopuksi kaikkien oluiden listaa.
 
@@ -894,13 +904,13 @@ Viritellään lopuksi kaikkien oluiden listaa.
 
 Lopputuloksen pitäisi näyttää seuraavalta:
 
-![kuva](https://github.com/ollikehy/wepa22/raw/master/images/brewery-w1-2.png)
+![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/brewery-w1-2.png)
 
 ## nil
 
 Saatat törmätä seuraavanlaiseen virheilmoitukseen
 
-![kuva](https://github.com/ollikehy/wepa22/raw/master/images/brewery-w1-3.png)
+![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/brewery-w1-3.png)
 
 Kyse on oikeastaan klassisesta nullpointer-poikkeuksesta, tai sen Ruby-versiosta nilpointer-poikkeuksesta. Rails vihjaa, että olet yrittänyt kutsua nil:ille (joka on Rubyssä olio!) metodia name, ja että sellaista ei ole. Syynä tälle on todennäköisesti se, että tietokannassasi on oluita joihin ei liity panimoa tai että niihin liittyvä panimo on poistettu.
 
@@ -925,15 +935,16 @@ Panimo ja siihen liittyvät kontrollerit ja näkymät luotiin Railsin scaffold-g
     rails g scaffold Brewery name:string year:integer
 
 Tästä seurauksena syntyi
-* tietokantataulu <code>breweries</code>
-* kontrolleri <code>BreweriesController</code> hakemistoon app/controllers/
-* model <code>Brewery</code> hakemistoon app/models/
-* joukko näkymiä hakemistoon app/views/breweries
-* tietokannan muodostamisesta huolehtiva migraatiotiedosto hakemistoon /db/migrate
+
+- tietokantataulu <code>breweries</code>
+- kontrolleri <code>BreweriesController</code> hakemistoon app/controllers/
+- model <code>Brewery</code> hakemistoon app/models/
+- joukko näkymiä hakemistoon app/views/breweries
+- tietokannan muodostamisesta huolehtiva migraatiotiedosto hakemistoon /db/migrate
 
 Railsin konvention mukaan kaikkien panimoiden sivun URL on breweries, yksittäisten panimoiden sivujen URLit taas ovat muotoa _breweries/3_, missä numerona on panimon id.
 
-URLeja ei itse kannata kirjoittaa näkymätemplateihin sillä Rails tarjoaa *path_helper*-metodeja (ks. http://guides.rubyonrails.org/routing.html#path-and-url-helpers), joiden avulla URLit saa generoitua.
+URLeja ei itse kannata kirjoittaa näkymätemplateihin sillä Rails tarjoaa _path_helper_-metodeja (ks. http://guides.rubyonrails.org/routing.html#path-and-url-helpers), joiden avulla URLit saa generoitua.
 
 Kaikkien panimoiden URLin (tai oikeastaan vain URLin jälkiosan) generoi metodi <code>breweries_path</code>, yksittäisen panimon URL saadaan generoitua metodilla <code>brewery_path(id)</code>, missä parametrina on linkin kohteena olevan panimon id.
 
@@ -995,6 +1006,7 @@ Eksplisiittinen <code>render</code>-metodin kutsuminen on siis tarpeen vain sill
 > Kokeile mitä tapahtuu kun menet panimoiden sivulle eli osoitteeseen [http://localhost:3000/breweries](http://localhost:3000/breweries)
 >
 > Lisää nyt hakemistoon app/views/breweries tiedosto panimot.html.erb ja lisää sinne esim.
+>
 > ```ruby
 >  panimoita <%= @breweries.count %>
 > ```
@@ -1010,11 +1022,12 @@ Tällä hetkellä käytännöllisin tapa sovellusten hostaamiseen on PaaS (eli P
 Sovelluksen deployaaminen Herokuun onnistuu helpoiten jos sovelluksen hakemisto on oma git-repositorionsa.
 
 Jos et ole käyttänyt aiemmin herokua
-* luo Herokuun tunnus.
-* luo ssh-avain ja lisää se herokuun sivulla https://dashboard.heroku.com/account
-  * ohje ssh-avaimen luomiseen https://github.com/mluukkai/otm-2018/blob/master/tehtavat/viikko1.md#julkinen-avain 
-* Asenna komentoriviliittymän sisältävä Heroku CLI sivun https://devcenter.heroku.com/articles/heroku-cli ohjeiden mukaan.
-  * osaston koneilta ja päivitysten suhteen ajantasaisista
+
+- luo Herokuun tunnus.
+- luo ssh-avain ja lisää se herokuun sivulla https://dashboard.heroku.com/account
+  - ohje ssh-avaimen luomiseen https://github.com/mluukkai/otm-2018/blob/master/tehtavat/viikko1.md#julkinen-avain
+- Asenna komentoriviliittymän sisältävä Heroku CLI sivun https://devcenter.heroku.com/articles/heroku-cli ohjeiden mukaan.
+  - osaston koneilta ja päivitysten suhteen ajantasaisista
 
 Asennettuasi komentorivikäyttöliittymän mene sovelluksen juurihakemistoon, ja luo sovellusta varten heroku-instanssi komennolla <code>heroku create</code>:
 
@@ -1053,7 +1066,7 @@ end
 Suoritetaan komentoriviltä komento <code>bundle install</code>, jotta muutokset tulevat käyttöön:
 
 ```ruby
-$ ratebeer git:(master) ✗ bundle install            
+$ ratebeer git:(master) ✗ bundle install
 Fetching gem metadata from https://rubygems.org/..........
 Resolving dependencies...
 Using rake 13.0.6
@@ -1068,11 +1081,11 @@ Use `bundle info [gemname]` to see where a bundled gem is installed.
 ```
 
 Jos <code>bundle install</code> aiheuttaa virheen (näin voi käydä todennäköisesti vain OS X:llä), voit joko
-* suorittaa komennon lisäparametrilla <code>bundle install --without production</code>
-  * tämä tapa on suositeltava ellet välttämättä halua asentaa _postgresql_ tietokantaa koneellesi (tällä kurssilla sille ei ole tarvetta, koska _postgresql_ ei ole käytössä lokaalisti)
-  * huomaa, että jos päädyt tähän vaihtoehtoon, joudut jatkossa suorittamaan komennon aina näin
-* tai vaihtoehtoisesti asentaa ensin _postgresql_ tietokannan omalle koneellesi ja suorittaa komennon uudelleen
 
+- suorittaa komennon lisäparametrilla <code>bundle install --without production</code>
+  - tämä tapa on suositeltava ellet välttämättä halua asentaa _postgresql_ tietokantaa koneellesi (tällä kurssilla sille ei ole tarvetta, koska _postgresql_ ei ole käytössä lokaalisti)
+  - huomaa, että jos päädyt tähän vaihtoehtoon, joudut jatkossa suorittamaan komennon aina näin
+- tai vaihtoehtoisesti asentaa ensin _postgresql_ tietokannan omalle koneellesi ja suorittaa komennon uudelleen
 
 Committoidaan kaikki muutokset versionhallintaan antamalla komennot:
 
@@ -1127,7 +1140,7 @@ Voimme koittaa selvittää vikaa katsomalla herokun lokeja komennolla <code>hero
 2018-09-01T18:20:29.453062+00:00 app[web.1]: pg_get_expr(d.adbin, d.adrelid), a.attnotnull, a.atttypid, a.atttypmod,
 </pre>
 
-Syynä on siis se, että tietokantaa ei ole luotu _PG::UndefinedTable: ERROR:  relation "breweries" does not exist_. Meidän on siis suoritettava migraatiot Herokussa olevalle sovellukselle. Tämä onnistuu komennolla <code>heroku run rails db:migrate</code>
+Syynä on siis se, että tietokantaa ei ole luotu _PG::UndefinedTable: ERROR: relation "breweries" does not exist_. Meidän on siis suoritettava migraatiot Herokussa olevalle sovellukselle. Tämä onnistuu komennolla <code>heroku run rails db:migrate</code>
 
 Ja nyt sovellus toimii!
 
@@ -1177,9 +1190,10 @@ Kun <code>bundle install</code> on suoritettu ensimmäisen kerran, syntyy tiedos
 ## Suoritusympäristöt
 
 Rails tarjoaa oletusarvoisesti kolme eri suoritusympäristöä
-* development eli sovelluskehitykseen tarkoitettu ympäristö
-* test eli testien suorittamiseen tarkoitettu ympäristö
-* production eli tuotantokäyttöön tarkoitettu ympäristö
+
+- development eli sovelluskehitykseen tarkoitettu ympäristö
+- test eli testien suorittamiseen tarkoitettu ympäristö
+- production eli tuotantokäyttöön tarkoitettu ympäristö
 
 Jokaisessa suoritusympäristössä on käytössä oma tietokanta ja Rails toimii myös hieman eri tavalla eri ympäristöissä.
 

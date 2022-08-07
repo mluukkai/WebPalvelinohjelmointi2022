@@ -34,7 +34,7 @@ Kuten huomaamme, vastaus tulee XML-muodossa. Käytänne on hieman vanhahtava, si
 
 Selaimella näemme palautetun XML:n hieman ihmisluettavammassa muodossa:
 
-![kuva](https://github.com/ollikehy/wepa22/raw/master/images/ratebeer-w5-1.png)
+![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/ratebeer-w5-1.png)
 
 **HUOM: älä käytä tässä näytettyä API-avainta vaan rekisteröi itsellesi oma avain.**
 
@@ -97,7 +97,7 @@ Kokeillaan nyt etsiä konsolista käsin Helsingin ravintoloita (muista uudelleen
 > response = HTTParty.get "#{url}helsinki"
 ```
 
-Jos käytössäsi on normaalin rails-konsolin sijaan Pry, osaa se jo renderöidä baarien tietoja. 
+Jos käytössäsi on normaalin rails-konsolin sijaan Pry, osaa se jo renderöidä baarien tietoja.
 
 Kutsu palauttaa luokan <code>HTTParty::Response</code>-olion. [Dokumentaatiosta](https://www.rubydoc.info/github/jnunemaker/httparty/HTTParty/Response) selviää, että oliolta voidaan kysyä esim. HTTP-pyynnön vastaukseen liittyvät _headerit_ seuraavasti
 
@@ -374,7 +374,7 @@ Koodi on tällä hetkellä rumaa, mutta parantelemme sitä hetken kuluttua. Näy
 class Place < OpenStruct
   def self.rendered_fields
     [:id, :name, :status, :street, :city, :zip, :country, :overall ]
-  end  
+  end
 end
 ```
 
@@ -417,7 +417,7 @@ Taulukon rivit muodostava koodi on muodossa
   <% Place.rendered_fields.each do |field| %>
     <td><%= place.send(field) %></td>
   <% end %>
-</tr>   
+</tr>
 ```
 
 Mistä tässä oikeastaan on kyse?
@@ -440,14 +440,14 @@ Nykyinen koodimme saa aikaan saman kuin seuraava, helpommin ymmärrettävissä m
   <td><%= place.name %></td>
   <td><%= place.status %></td>
   <td><%= place.street %></td>
-  <td><%= place.city %></td> 
-  <td><%= place.zip %></td> 
-  <td><%= place.country %></td> 
-  <td><%= place.overall %></td>        
+  <td><%= place.city %></td>
+  <td><%= place.zip %></td>
+  <td><%= place.country %></td>
+  <td><%= place.overall %></td>
 </tr>
 ```
 
-Rubyssä olioiden metodeja voidaan kutsua myös "epäsuoraan" käyttämällä metodia <code>send</code>. Eli sen sijaan että sanomme <code>place.name</code> voimme tehdä metdoikutsun syntaksilla  <code>place.send(:name)</code>. Olutpaikan rivin muodostaminen voidaan siis muuttaa muotoon:
+Rubyssä olioiden metodeja voidaan kutsua myös "epäsuoraan" käyttämällä metodia <code>send</code>. Eli sen sijaan että sanomme <code>place.name</code> voimme tehdä metdoikutsun syntaksilla <code>place.send(:name)</code>. Olutpaikan rivin muodostaminen voidaan siis muuttaa muotoon:
 
 ```erb
 <tr>
@@ -455,21 +455,21 @@ Rubyssä olioiden metodeja voidaan kutsua myös "epäsuoraan" käyttämällä me
   <td><%= place.send(:name) %></td>
   <td><%= place.send(:status) %></td>
   <td><%= place.send(:street) %></td>
-  <td><%= place.send(:city) %></td> 
-  <td><%= place.send(:zip) %></td> 
-  <td><%= place.send(:country) %></td> 
-  <td><%= place.send(:overall) %></td>        
+  <td><%= place.send(:city) %></td>
+  <td><%= place.send(:zip) %></td>
+  <td><%= place.send(:country) %></td>
+  <td><%= place.send(:overall) %></td>
 </tr>
 ```
 
-Ja koska määrittelimme metodin <code>Place.rendered_fields</code> palauttamaan listan <code>[ :id, :name, :status, :street, :city, :zip, :country, :overall ]</code>, voimme generoida  _td_-tagit <code>each</code>-loopin avulla:
+Ja koska määrittelimme metodin <code>Place.rendered*fields</code> palauttamaan listan <code>[ :id, :name, :status, :street, :city, :zip, :country, :overall ]</code>, voimme generoida \_td*-tagit <code>each</code>-loopin avulla:
 
 ```erb
 <tr>
   <% Place.rendered_fields.each do |field| %>
     <td><%= place.send(field) %></td>
   <% end %>
-</tr>   
+</tr>
 ```
 
 Kannattaako näin tehdä? Kyse on osittain makuasiasta. Määrittelemällä näytettävien kenttien listan saimme nyt tehtyä myös taulukon otsakerivin looppaamalla:
@@ -488,7 +488,7 @@ Jos nyt päättäisimme lisätä tai poistaa jotain näytettäviä kenttiä, rii
 class Place < OpenStruct
   def self.rendered_fields
     [ :id, :name, :status, :street, :city, :zip, :country, :overall ]
-  end  
+  end
 end
 ```
 
@@ -622,10 +622,11 @@ Kun nyt testissä tehdään HTTP-pyyntö places-kontrollerille, ja kontrolleri k
 > ## Tehtävä 2
 >
 > Laajenna testiä kattamaan seuraavat tapaukset:
-> * jos API palauttaa useita olutpaikkoja, kaikki näistä näytetään sivulla
-> * jos API ei löydä paikkakunnalta yhtään olutpaikkaa (eli paluuarvo on tyhjä taulukko), sivulla näytetään ilmoitus "No locations in _etsitty paikka_"
 >
-> Viikon 3 luku [kirjautumisen hienosäätöä](https://github.com/ollikehy/wepa22/blob/master/web/viikko3.md#kirjautumisen-hienos%C3%A4%C3%A4t%C3%B6%C3%A4) antaa vihjeitä toista kohtaa varte.
+> - jos API palauttaa useita olutpaikkoja, kaikki näistä näytetään sivulla
+> - jos API ei löydä paikkakunnalta yhtään olutpaikkaa (eli paluuarvo on tyhjä taulukko), sivulla näytetään ilmoitus "No locations in _etsitty paikka_"
+>
+> Viikon 3 luku [kirjautumisen hienosäätöä](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/viikko3.md#kirjautumisen-hienos%C3%A4%C3%A4t%C3%B6%C3%A4) antaa vihjeitä toista kohtaa varte.
 
 Siirrytään sitten luokan <code>BeermappingApi</code> testaamiseen. Luokka siis tekee HTTP GET -pyynnön HTTParty-kirjaston avulla Beermapping-palveluun. Voisimme edellisen esimerkin tapaan stubata HTTPartyn get-metodin. Tämän on kuitenkin hieman ikävää, sillä metodi palauttaa <code>HTTPartyResponse</code>-olion ja sellaisen muodostaminen stubauksen yhteydessä käsin ei välttämättä ole kovin mukavaa.
 
@@ -644,13 +645,13 @@ end
 
 Suoritetaan <code>bundle install</code>.
 
-Tiedostoon ```spec/rails_helper.rb``` pitää vielä lisätä rivi:
+Tiedostoon `spec/rails_helper.rb` pitää vielä lisätä rivi:
 
 ```ruby
 require 'webmock/rspec'
 ```
 
-Webmock-kirjaston käyttö on melko helppoa. Esim. seuraava komento stubaa _jokaiseen_ URLiin (määritelty regexpillä <code>/.*/</code>) tulevan GET-pyynnön palauttamaan 'Lapin kullan' tiedot XML-muodossa:
+Webmock-kirjaston käyttö on melko helppoa. Esim. seuraava komento stubaa _jokaiseen_ URLiin (määritelty regexpillä <code>/.\*/</code>) tulevan GET-pyynnön palauttamaan 'Lapin kullan' tiedot XML-muodossa:
 
 ```ruby
 stub_request(:get, /.*/).to_return(body:"<beer><name>Lapin kulta</name><brewery>Hartwall</brewery></beer>", headers:{ 'Content-Type' => "text/xml" })
@@ -677,7 +678,7 @@ mluukkai@melkki$ curl http://beermapping.com/webservice/loccity/731955affc547174
 Nyt voimme copypastata HTTP-pyynnön palauttaman XML-muodossa olevan tiedon testiimme. Jotta saamme XML:n varmasti oikein sijoitetuksi merkkijonoon, käytämme hieman erikoista syntaksia
 ks. http://blog.jayfields.com/2006/12/ruby-multiline-strings-here-doc-or.html jossa merkkijono sijoitetaan merkkien <code><<-END_OF_STRING</code> ja <code>END_OF_STRING</code> väliin.
 
-Seuraavassa tiedostoon spec/lib/beermapping_api_spec.rb  sijoitettava testikoodi (päätimme sijoittaa koodin alihakemistoon lib koska testin kohde on lib-hakemistossa oleva apuluokka):
+Seuraavassa tiedostoon spec/lib/beermapping_api_spec.rb sijoitettava testikoodi (päätimme sijoittaa koodin alihakemistoon lib koska testin kohde on lib-hakemistossa oleva apuluokka):
 
 ```ruby
 require 'rails_helper'
@@ -702,11 +703,11 @@ describe "BeermappingApi" do
 end
 ```
 
-Testi siis ensin määrittelee, että URL:iin joka loppuu merkkijonoon "espoo" (määritelty regexpillä <code>/.*espoo/</code>) kohdistuvan  HTTP GET -kutsun palauttamaan kovakoodatun XML:n, HTTP-kutsun palauttamaan headeriin määritellään, että palautettu tieto on XML-muodossa. Ilman tätä määritystä HTTParty-kirjasto ei osaa parsia HTTP-pyynnön palauttamaa dataa oikein.
+Testi siis ensin määrittelee, että URL:iin joka loppuu merkkijonoon "espoo" (määritelty regexpillä <code>/.\*espoo/</code>) kohdistuvan HTTP GET -kutsun palauttamaan kovakoodatun XML:n, HTTP-kutsun palauttamaan headeriin määritellään, että palautettu tieto on XML-muodossa. Ilman tätä määritystä HTTParty-kirjasto ei osaa parsia HTTP-pyynnön palauttamaa dataa oikein.
 
 Itse testi tapahtuu suoraviivaisesti tarkastelemalla BeermappingApi:n metodin <code>places_in</code> palauttamaa taulukkoa.
 
-*Huom:* stubasimme testissä ainoastaan merkkijonoon "espoo" loppuviin URL:eihin (<code>/.*espoo/</code>) kohdistuvat HTTP GET -kutsut. Jos testin suoritus aiheuttaa jonkin muunlaisen HTTP-kutsun, huomauttaa testi tästä:
+_Huom:_ stubasimme testissä ainoastaan merkkijonoon "espoo" loppuviin URL:eihin (<code>/.\*espoo/</code>) kohdistuvat HTTP GET -kutsut. Jos testin suoritus aiheuttaa jonkin muunlaisen HTTP-kutsun, huomauttaa testi tästä:
 
 ```ruby
 ) BeermappingApi When HTTP GET returns no entries, an empty array is returned
@@ -725,8 +726,9 @@ Kuten virheilmoitus antaa ymmärtää, voidaan komennon <code>stub_request</code
 > ## Tehtävä 3
 >
 > Laajenna testejä kattamaan seuraavat tapaukset
-> * HTTP GET ei palauta yhtään paikkaa, eli tällöin metodin <code>places_in</code> tulee palauttaa tyhjä taulukko
-> * HTTP GET palauttaa useita paikkoja, eli tällöin metodin <code>places_in</code> tulee palauttaa kaikki HTTP-kutsun XML-muodossa palauttamat ravintolat taulukollisena Place-olioita
+>
+> - HTTP GET ei palauta yhtään paikkaa, eli tällöin metodin <code>places_in</code> tulee palauttaa tyhjä taulukko
+> - HTTP GET palauttaa useita paikkoja, eli tällöin metodin <code>places_in</code> tulee palauttaa kaikki HTTP-kutsun XML-muodossa palauttamat ravintolat taulukollisena Place-olioita
 >
 > Stubatut vastaukset kannattaa jälleen muodostaa curl-komennon avulla API:n tehdyillä kyselyillä
 >
@@ -742,9 +744,9 @@ Mockeista ja stubeista lisää esim. seuraavassa: http://martinfowler.com/articl
 
 Tällä hetkellä sovelluksemme toimii siten, että se tekee kyselyn beermappingin palveluun aina kun jonkin kaupungin ravintoloita haetaan. Voisimme tehostaa sovellusta muistamalla viime aikoina suoritettuja hakuja.
 
-Rails tarjoaa avain-arvopari-periaatteella toimivan hyvin helppokäyttöisen cachen eli välimuistin sovelluksen käyttöön. 
+Rails tarjoaa avain-arvopari-periaatteella toimivan hyvin helppokäyttöisen cachen eli välimuistin sovelluksen käyttöön.
 
-Välimuisti on oletusarvoisesti poissa päältä. Saat sen päälle suorittamalla komentoriviltä komennon <code>rails dev:cache</code> 
+Välimuisti on oletusarvoisesti poissa päältä. Saat sen päälle suorittamalla komentoriviltä komennon <code>rails dev:cache</code>
 
 Muuta myös tiedostosta _config/environments/development.rb_ rivi
 
@@ -758,7 +760,7 @@ muotoon
 config.cache_store = :file_store, 'tmp/cache_store'
 ```
 
-sekä uudelleenkäynnistä konsoli ja sovellus. 
+sekä uudelleenkäynnistä konsoli ja sovellus.
 
 Cacheen päästään käsiksi muuttujaan <code>Rails.cache</code> talletetun olion kautta. Kokeillaan konsolista:
 
@@ -783,7 +785,7 @@ Oletusarvoisesti Railsin cache tallettaa avain-arvo-parit tiedostojärjestelmä�
 
 Tuotantokäytössä välimuistin datan tallettaminen tiedostojärjestelmään ei ole suorituskyvyn kannalta optimaalista. Parempi ratkaisu onkin esim. [Memcached](http://memcached.org/), ks. tarkemmin esim. https://devcenter.heroku.com/articles/building-a-rails-3-application-with-memcache
 
-**Huom:** koska testimme alkavat pian testaamaan Rails.cachea hyväksikäyttävää koodia, kannattaa cache konfiguroida käyttämään testien aikana talletuspaikkanaan tiedostojärjestelmän sijaan __keskusmuistia__. Tämä tapahtuu lisäämällä tiedostoon _config/environments/test.rb_ rivi
+**Huom:** koska testimme alkavat pian testaamaan Rails.cachea hyväksikäyttävää koodia, kannattaa cache konfiguroida käyttämään testien aikana talletuspaikkanaan tiedostojärjestelmän sijaan **keskusmuistia**. Tämä tapahtuu lisäämällä tiedostoon _config/environments/test.rb_ rivi
 
 ```ruby
 config.cache_store = :memory_store
@@ -796,7 +798,7 @@ class BeermappingApi
   def self.places_in(city)
     city = city.downcase
 
-    places = Rails.cache.read(city) 
+    places = Rails.cache.read(city)
     return places if places
 
     places = get_places_in(city)
@@ -861,7 +863,7 @@ class BeermappingApi
 end
 ```
 
-Fetch toimii siten, että jos välimuiststa löytyy dataa sen parametrina olevalla avaimella, palauttaa metodi välimuistissa olevan datan. Jos välimuistissa ei ole avainta vastaavaa dataa, suoritetaan komennon mukana oleva koodilohko ja talletetaan koodilohkon paluuarvo välimuistiin. Myös itse komento _fetch_ palauttaa lohkon saaman arvon. 
+Fetch toimii siten, että jos välimuiststa löytyy dataa sen parametrina olevalla avaimella, palauttaa metodi välimuistissa olevan datan. Jos välimuistissa ei ole avainta vastaavaa dataa, suoritetaan komennon mukana oleva koodilohko ja talletetaan koodilohkon paluuarvo välimuistiin. Myös itse komento _fetch_ palauttaa lohkon saaman arvon.
 
 ## Vanhentunut data
 
@@ -937,13 +939,13 @@ describe "BeermappingApi" do
       expect(place.street).to eq("Eerikinkatu 18")
     end
 end
-``` 
+```
 
-Ensimmäisessä <code>describe</code>-lohkossa oleva <code>before :each</code>-lohko tyhjentää välimuistin ennen testien suorittamista, eli kun itse testi tekee metodikutsun <code>BeermappingApi.places_in</code>, haetaan olutpaikkojen tiedot HTTP-pyynnöllä.  Toisessa describe-lohkossa taas testeissä kutsutaan metodia  <code>BeermappingApi.places_in</code> kaksi kertaa. Ensimmäinen kutsu varmistaa, että haettavan paikan tiedot talletetaan välimuistiin. Toisen kutsun tulos tulee välimuistista ja tulosta testataan testikoodissa. 
+Ensimmäisessä <code>describe</code>-lohkossa oleva <code>before :each</code>-lohko tyhjentää välimuistin ennen testien suorittamista, eli kun itse testi tekee metodikutsun <code>BeermappingApi.places_in</code>, haetaan olutpaikkojen tiedot HTTP-pyynnöllä. Toisessa describe-lohkossa taas testeissä kutsutaan metodia <code>BeermappingApi.places_in</code> kaksi kertaa. Ensimmäinen kutsu varmistaa, että haettavan paikan tiedot talletetaan välimuistiin. Toisen kutsun tulos tulee välimuistista ja tulosta testataan testikoodissa.
 
 Testi sisältää nyt paljon toisteisuutta ja kaipaisi refaktorointia, mutta menemme kuitenkin eteenpäin.
 
-**Vielä uusi huomautus asiasta:** koska testaamme Rails.cachea hyväksikäyttävää koodia, kannattaa cache konfiguroida käyttämään testien aikana talletuspaikkanaan tiedostojärjestelmän sijaan __keskusmuistia__. Tämä tapahtuu lisäämällä tiedostoon _config/environments/test.rb_ rivi
+**Vielä uusi huomautus asiasta:** koska testaamme Rails.cachea hyväksikäyttävää koodia, kannattaa cache konfiguroida käyttämään testien aikana talletuspaikkanaan tiedostojärjestelmän sijaan **keskusmuistia**. Tämä tapahtuu lisäämällä tiedostoon _config/environments/test.rb_ rivi
 
 ```ruby
 config.cache_store = :memory_store
@@ -1087,11 +1089,11 @@ eli tällä kertaa routeissa määriteltiin, että panimon id:hen viitataan <cod
 
 > ## Tehtävät 5-6 (vastaa kahta tehtävää)
 >
-> Tee sovellukselle ominaisuus, jossa ravintolan nimeä klikkaamalla avautuu oma sivu, jossa on näkyvillä ravintolan yhteystiedot. 
+> Tee sovellukselle ominaisuus, jossa ravintolan nimeä klikkaamalla avautuu oma sivu, jossa on näkyvillä ravintolan yhteystiedot.
 >
->* ravintolan urliksi kannattaa vailta Rails-konvention mukainen places/:id, routes.rb voi näyttää esim. seuraavalta:
+> - ravintolan urliksi kannattaa vailta Rails-konvention mukainen places/:id, routes.rb voi näyttää esim. seuraavalta:
 >
->```ruby
+> ```ruby
 > resources :places, only: [:index, :show]
 > # mikä generoi samat polut kuin seuraavat kaksi
 > # get 'places', to:'places#index'
@@ -1100,31 +1102,31 @@ eli tällä kertaa routeissa määriteltiin, että panimon id:hen viitataan <cod
 > post 'places', to:'places#search'
 > ```
 >
->* HUOM: ravintolan tiedot löytyvät hieman epäsuorasti cachesta siinä vaiheessa kun ravintolan sivulle ollaan menossa. Jotta pääset tietoihin käsiksi on ravintolan id:n lisäksi "muistettava" kaupunki, josta ravintolaa etsittiin, tai edelliseksi tehdyn search-operaation tulos. Yksi tapa muistamiseen on käyttää sessiota, ks. https://github.com/ollikehy/wepa22/blob/master/web/viikko3.md#k%C3%A4ytt%C3%A4j%C3%A4-ja-sessio
+> - HUOM: ravintolan tiedot löytyvät hieman epäsuorasti cachesta siinä vaiheessa kun ravintolan sivulle ollaan menossa. Jotta pääset tietoihin käsiksi on ravintolan id:n lisäksi "muistettava" kaupunki, josta ravintolaa etsittiin, tai edelliseksi tehdyn search-operaation tulos. Yksi tapa muistamiseen on käyttää sessiota, ks. https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/viikko3.md#k%C3%A4ytt%C3%A4j%C3%A4-ja-sessio
 >
 > Toinen tapa toiminnallisuuden toteuttamiseen on sivulla http://beermapping.com/api/reference/ oleva "Locquery Service"
 >
-> *HUOM1* Koska _Place_ ei ole ActiveRecord-luokka, ei seuraava toimi
+> _HUOM1_ Koska _Place_ ei ole ActiveRecord-luokka, ei seuraava toimi
 >
-> ```link_to place.name, place```
-> 
+> `link_to place.name, place`
+>
 > linkin kohdeosoite on määriteltävä pidemmässä muodossa
 >
-> ```link_to place.name, place_path(place.id)```
-> 
-> *HUOM2* jos sinulla on vaikeuksia tehdä ravinotalan nimestä klikattava linkki, voit muuttaa taulukon _send_-metodia käyttävästä versiosta seuraavaan "karvalakkimalliin":
+> `link_to place.name, place_path(place.id)`
 >
->```erb
-><table>
+> _HUOM2_ jos sinulla on vaikeuksia tehdä ravinotalan nimestä klikattava linkki, voit muuttaa taulukon _send_-metodia käyttävästä versiosta seuraavaan "karvalakkimalliin":
+>
+> ```erb
+> <table>
 >  <thead>
 >    <th>id</th>
 >    <th>name</th>
 >    <th>status</th>
 >    <th>street</th>
->    <th>city</th> 
->    <th>zip</th> 
->    <th>country</th> 
->    <th>overall</th>               
+>    <th>city</th>
+>    <th>zip</th>
+>    <th>country</th>
+>    <th>overall</th>
 >  </thead>
 >  <% @places.each do |place| %>
 >    <tr>
@@ -1132,20 +1134,20 @@ eli tällä kertaa routeissa määriteltiin, että panimon id:hen viitataan <cod
 >      <td><%= place.name %></td>
 >      <td><%= place.status %></td>
 >      <td><%= place.street %></td>
->      <td><%= place.city %></td> 
->      <td><%= place.zip %></td> 
->      <td><%= place.country %></td> 
->      <td><%= place.overall %></td>        
+>      <td><%= place.city %></td>
+>      <td><%= place.zip %></td>
+>      <td><%= place.country %></td>
+>      <td><%= place.overall %></td>
 >    </tr>
 >  <% end %>
-></table>
->```
+> </table>
+> ```
 >
 > Kokeile hajottaako ravintoloiden sivun lisääminen mitään olemassaolevaa testiä. Jos, niin voit yrittää korjata testit. Välttämätöntä se ei kuitenkaan tässä vaiheessa ole.
 
 Tehtävän jälkeen sovelluksesi voi näyttää esim. seuraavalta:
 
-![kuva](https://github.com/ollikehy/wepa22/raw/master/images/ratebeer-w5-2.png)
+![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/ratebeer-w5-2.png)
 
 ## Oluen reittaus suoraan oluen sivulta
 
@@ -1171,13 +1173,13 @@ Näkymätemplatea /views/beers/show.html.erb muutetaan seuraavasti:
 
 <% if current_user %>
   <h4>give a rating:<h4>
-  
+
   <%= form_with(model: @rating) do |form| %>
     <%= form.hidden_field :beer_id %>
     score: <%= form.number_field :score %>
     <%= form.submit "Create rating" %>
   <% end %>
-  
+
   <div>
     <%= link_to "Edit this beer |", edit_beer_path(@beer) %>
     <%= link_to "Destroy this beer", @beer, form: { data: {turbo_confirm: "Are you sure?"} }, method: :delete if current_user%>
@@ -1193,11 +1195,11 @@ Koska lomake on luotu <code>form_with</code>-helperillä, tapahtuu sen lähettä
 
 Ratkaisussa on pieni ongelma. Jos reittauksessa yritetään antaa epävalidi pistemäärä:
 
-![kuva](https://github.com/ollikehy/wepa22/raw/master/images/ratebeer-w5-4.png)
+![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/ratebeer-w5-4.png)
 
 renderöi kontrolleri (eli reittauskontrollerin metodi <code>create</code>) oluen näkymän sijaan uuden reittauksen luomislomakkeen:
 
-![kuva](https://github.com/ollikehy/wepa22/raw/master/images/ratebeer-w5-3.png)
+![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/ratebeer-w5-3.png)
 
 Ongelman voisi kiertää katsomalla mistä osoitteesta create-metodiin on tultu ja renderöidä sitten oikea sivu riippuen tulo-osoitteesta. Emme kuitenkaan tee nyt tätä muutosta.
 
@@ -1240,13 +1242,13 @@ Sama ongelma itse asiassa vaivaa muutamia sovelluksemme lomakkeita, kokeile esim
 >
 > Kannattaa noudattaa samaa toteutusperiaatetta kuin oluen sivulta tapahtuvassa reittaamisessa, eli lisää olutseuran sivulle lomake, jonka avulla voidaan luoda uusi <code>Membership</code>-olio, joka liittyy olutseuraan ja kirjautuneena olevaan käyttäjään. Lomakkeen hidden_field kenttiin voi asettaa arvot käyttämällä <code>value</code>-parametriä:
 >
->```erb
+> ```erb
 > <%= form_with(model: @membership) do |form| %>
 >   <%= form.hidden_field :beer_club_id, value: @beerclub.id %>
 >   <%= form.hidden_field :user_id, value: current_user.id %>
 >   <%= form.submit "Join the beerclub" %>
 > <% end %>
->```
+> ```
 
 Hienosäädetään olutseuraan liittymistä
 
@@ -1256,7 +1258,7 @@ Hienosäädetään olutseuraan liittymistä
 >
 > Muokkaa koodiasi siten (membership-kontrollerin sopivaa metodia), että olutseuraan liittymisen jälkeen selain ohjautuu olutseuran sivulle ja sivu näyttää allaolevan kuvan mukaisen ilmoituksen uuden käyttäjän liittymisestä.
 
-![kuva](https://github.com/ollikehy/wepa22/raw/master/images/ratebeer-w5-5.png)
+![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/ratebeer-w5-5.png)
 
 > ## Tehtävä 9
 >
@@ -1266,20 +1268,20 @@ Hienosäädetään olutseuraan liittymistä
 >
 > Vihje: eroamistoiminnallisuuden voi toteuttaa liittymistoiminnalisuuden tapaan olutseuran sivulle sijoitettavalla lomakkeella. Lomakkeen käyttämäksi HTTP-metodiksi tulee määritellä delete:
 >
->```erb
+> ```erb
 > <%= form_with(model: @membership, ..., method: :delete) do |form| %>
 >   ...
 >   <%= form.hidden_field :beer_club_id, value: @beerclub.id %>
 >   <%= form.hidden_field :user_id, value: current_user.id %>
 >   <%= form.submit "End the membership" %>
 > <% end %>
->```
+> ```
 >
 > **HUOM:** saatat saada virheilmoituksen <code>No route matches [DELETE] "/memberships"</code>
 >
 > Syynä tälle on se, että routes-tiedoston määrittely määrittelee HTTP Delete -operaation vaan polulle, joka on muotoa _/memberships/:id_, eli esim. _memberships/42_
 >
-> Metodi <code>form_for</code> tuottaa polun muotoa _memberships_ jos sen parametrina oleva olio _ei ole_ talletettu tietokantaan. Jos parametrina oleva olio on talletettu tietokantaan, generoituva polku on muotoa _memberships/42_, missä 42 siis parametrina olevan olion id.
+> Metodi <code>form*for</code> tuottaa polun muotoa \_memberships* jos sen parametrina oleva olio _ei ole_ talletettu tietokantaan. Jos parametrina oleva olio on talletettu tietokantaan, generoituva polku on muotoa _memberships/42_, missä 42 siis parametrina olevan olion id.
 >
 > Tehtävän toteuttamiseen on monta keinoa, yksi keino on saada selville käyttäjän <code>membership</code> olion id, jonka avulla voi käsin asettaa oikean id:n polkuun.
 >
@@ -1287,11 +1289,11 @@ Hienosäädetään olutseuraan liittymistä
 
 Jos käyttäjä on seuran jäsen, näytetään seuran sivulla eroamisen mahdollistava painike:
 
-![kuva](https://github.com/ollikehy/wepa22/raw/master/images/ratebeer-w5-5a.png)
+![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/ratebeer-w5-5a.png)
 
 Erottaessa seurasta tehdään uudelleenohjaus käyttäjän sivulle ja näytetään asianmukainen ilmoitus:
 
-![kuva](https://github.com/ollikehy/wepa22/raw/master/images/ratebeer-w5-5b.png)
+![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/ratebeer-w5-5b.png)
 
 ## Migraatioista
 
@@ -1315,12 +1317,13 @@ Olemme käyttäneet Railsin migraatioita jo ensimmäisestä viikosta alkaen. On 
 >
 > Saattaa olla hieman haasteellista suorittaa muutos siten, että oluet linkitetään automaattisesti oikeisiin tyylitietokannan tauluihin.
 > Tämäkin onnistuu, jos teet muutoksen useassa askeleessa, esim:
-> * luo tietokantataulu tyyleille
-> * tee tauluun rivi jokaista _beers_-taulusta löytyvää erinimistä tyyliä kohti (tämä onnistuu konsolista käsin)
-> * uudelleennimeä _beers_-taulun sarake style esim. _old_style_:ksi (tämä siis migraation avulla)
-> * liitä konsolista käsin oluet _style_-olioihin käyttäen hyväksi oluilla vielä olevaa old_style-saraketta
->   * tyylikkäämpää on tehdä myös tämä askel migraatiossa
-> * tuhoa oluiden taulusta migraation avulla _old_style_
+>
+> - luo tietokantataulu tyyleille
+> - tee tauluun rivi jokaista _beers_-taulusta löytyvää erinimistä tyyliä kohti (tämä onnistuu konsolista käsin)
+> - uudelleennimeä _beers_-taulun sarake style esim. _old_style_:ksi (tämä siis migraation avulla)
+> - liitä konsolista käsin oluet _style_-olioihin käyttäen hyväksi oluilla vielä olevaa old_style-saraketta
+>   - tyylikkäämpää on tehdä myös tämä askel migraatiossa
+> - tuhoa oluiden taulusta migraation avulla _old_style_
 >
 > **Huomaa, että Heroku-instanssin ajantasaistaminen kannattaa tehdä samalla!**
 >
@@ -1332,13 +1335,13 @@ Olemme käyttäneet Railsin migraatioita jo ensimmäisestä viikosta alkaen. On 
 >
 > Tyylien sivulle kannattaa lisätä lista kaikista tyylin oluista.
 >
-> **HUOM1** Jos lisäät luokalle _Beer_ määreen <code>belongs_to :style</code> et enää pääse käsiksi _style_-nimiseen merkkijonomuotoiseen attribuuttiin pistenotaatiolla _beer.style_, vaan joudut käyttämään muotoa _beer['style']_
+> **HUOM1** Jos lisäät luokalle _Beer_ määreen <code>belongs*to :style</code> et enää pääse käsiksi \_style*-nimiseen merkkijonomuotoiseen attribuuttiin pistenotaatiolla _beer.style_, vaan joudut käyttämään muotoa _beer['style']_
 >
 > **HUOM2** varmista, että _uusien oluiden luominen toimii_ vielä laajennuksen jälkeen! Joudut muuttamaan muutamaakin kohtaa, näistä vaikein huomata lienee olutkontrollerin apumetodi <code>beer_params</code>.
 
 Tehtävän jälkeen oluttyylin sivu voi näyttää esim. seuraavalta
 
-![kuva](https://github.com/ollikehy/wepa22/raw/master/images/ratebeer-w5-6.png)
+![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/ratebeer-w5-6.png)
 
 Hyvä lista oluttyyleistä kuvauksineen löytyy osoitteesta http://beeradvocate.com/beer/style/
 
@@ -1348,8 +1351,7 @@ Hyvä lista oluttyyleistä kuvauksineen löytyy osoitteesta http://beeradvocate.
 >
 > Vaikka hajonneita testejä on suuri määrä, älä mene paniikkiin. Selvitä ongelmat testi testiltä, yksittäinen ongelma kertautuu monteen paikkaan ja testien ajantasaistaminen ei ole loppujenlopuksi kovin vaikeaa.
 >
-> *HUOM* voit poistaa railsin automaattisesti generoimat testit, esim. testin _spec/views/styles/index.html.erb_spec.rb_
-
+> _HUOM_ voit poistaa railsin automaattisesti generoimat testit, esim. testin _spec/views/styles/index.html.erb_spec.rb_
 
 ## Olutsää
 
@@ -1359,10 +1361,10 @@ Hyvä lista oluttyyleistä kuvauksineen löytyy osoitteesta http://beeradvocate.
 
 Tehtävän jälkeen olutpaikkojen sivu voi näyttää esim. seuraavalta
 
-![kuva](https://github.com/ollikehy/wepa22/raw/master/images/ratebeer-w5-7.png)
+![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/ratebeer-w5-7.png)
 
 ## Tehtävien palautus
 
-Commitoi kaikki tekemäsi muutokset ja pushaa koodi Githubiin. Deployaa myös uusin versio Herokuun. Muista myös testata rubocopilla, että koodisi noudattaa edelleen määriteltyjä tyylisääntöjä. 
+Commitoi kaikki tekemäsi muutokset ja pushaa koodi Githubiin. Deployaa myös uusin versio Herokuun. Muista myös testata rubocopilla, että koodisi noudattaa edelleen määriteltyjä tyylisääntöjä.
 
 Tehtävät kirjataan palautetuksi osoitteeseen https://studies.cs.helsinki.fi/courses/#/rails2018

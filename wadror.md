@@ -2,33 +2,33 @@
 
 ## Ajankohtaista
 
-* materiaali ja tehtävät 
-  * [viikko 1](https://github.com/ollikehy/wepa22/blob/master/web/viikko1.md) 
+- materiaali ja tehtävät
 
-  * [viikko 2](https://github.com/ollikehy/wepa22/blob/master/web/viikko2.md) 
-  
-  * [viikko 3](https://github.com/ollikehy/wepa22/blob/master/web/viikko3.md) 
-  
-  * [viikko 4](https://github.com/ollikehy/wepa22/blob/master/web/viikko4.md) 
-  
-  * [viikko 5](https://github.com/ollikehy/wepa22/blob/master/web/viikko5.md) 
-  
-  * [viikko 6](https://github.com/ollikehy/wepa22/blob/master/web/viikko6.md) 
-  
-  * [viikko 7](https://github.com/ollikehy/wepa22/blob/master/web/viikko7.md) 
-  
-* kurssin [telegram](https://telegram.org)-kanava <https://t.me/rorwepa>
-  *  **Huom:** kaikki epäasialliset, halventavat ja jotain ihmisryhmää syrjivät kommentit kanavalla ovat kiellettyjä ja tälläisten kommenttien esittäjät poistetaan kanavalta
-* Rubyn harjoitteluun tarkoitetun materiaalin [ensimmäinen osa](https://github.com/HY-TKTL/ruby-materiaali/blob/master/Perusteet.md) ja [toinen osa](https://github.com/HY-TKTL/ruby-materiaali/blob/master/LuokkiaJaOlioita.md)
+  - [viikko 1](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/viikko1.md)
 
+  - [viikko 2](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/viikko2.md)
+
+  - [viikko 3](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/viikko3.md)
+
+  - [viikko 4](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/viikko4.md)
+
+  - [viikko 5](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/viikko5.md)
+
+  - [viikko 6](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/viikko6.md)
+
+  - [viikko 7](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/viikko7.md)
+
+- kurssin [telegram](https://telegram.org)-kanava <https://t.me/rorwepa>
+  - **Huom:** kaikki epäasialliset, halventavat ja jotain ihmisryhmää syrjivät kommentit kanavalla ovat kiellettyjä ja tälläisten kommenttien esittäjät poistetaan kanavalta
+- Rubyn harjoitteluun tarkoitetun materiaalin [ensimmäinen osa](https://github.com/HY-TKTL/ruby-materiaali/blob/master/Perusteet.md) ja [toinen osa](https://github.com/HY-TKTL/ruby-materiaali/blob/master/LuokkiaJaOlioita.md)
 
 ## Yleistä
 
-Kurssilla tutustutaan  skaalautuvien ja virheenkestävien web-sovellusten toteuttamiseen, testaamiseen ja julkaisemiseen.
+Kurssilla tutustutaan skaalautuvien ja virheenkestävien web-sovellusten toteuttamiseen, testaamiseen ja julkaisemiseen.
 
-Kurssilla keskitytään palvelinpuolen toiminnallisuuden toteuttamiseen, kurssilla tuotettavat käyttöliittymät tulevat olemaan alkeellisia. Kurssi ei ole johdatuskurssi selainohjelmointiin ja käyttöliittymäsuunnitteluun, HTML:n, CSS:n ja Javasacriptin rooli kurssilla on hyvin vähäinen. 
+Kurssilla keskitytään palvelinpuolen toiminnallisuuden toteuttamiseen, kurssilla tuotettavat käyttöliittymät tulevat olemaan alkeellisia. Kurssi ei ole johdatuskurssi selainohjelmointiin ja käyttöliittymäsuunnitteluun, HTML:n, CSS:n ja Javasacriptin rooli kurssilla on hyvin vähäinen.
 
-Kurssin laajuus on 5 opintopistettä. 
+Kurssin laajuus on 5 opintopistettä.
 
 Vaikka kurssi on sisällöllisesti hyvin samankaltainen kuin [Web-palvelinohjelmointi Java](https://courses.helsinki.fi/fi/TKT21007/124962332), molempien kurssien suorittaminen on mahdollista.
 
@@ -36,7 +36,7 @@ Vaikka kurssi on sisällöllisesti hyvin samankaltainen kuin [Web-palvelinohjelm
 
 Ohjelmistotekniikan menetelmät/Ohjelmoinnin harjoitustyö ja Tietokantojen perusteet. HTML on hyvä tuntea siinä laajudessa kuin asiaa käsitellään kurssilla [Tietokone työvälineenä](https://courses.helsinki.fi/fi/TKT50003/125559484)
 
-Kurssille osallistuminen edellyttää hyvää ohjelmointirutiinia sekä valmiutta omatoimiseen opiskeluun. 
+Kurssille osallistuminen edellyttää hyvää ohjelmointirutiinia sekä valmiutta omatoimiseen opiskeluun.
 
 ## Suoritusmuoto
 
@@ -44,7 +44,7 @@ Kurssin rakenne poikkeaa jossain määrin osaston kurssistandardista. Kurssilla 
 
 Osa viikon tehtävistä on käytännössä pakollisia, muuten eteneminen pysähtyy viikon osalta. Osa tehtävistä taas on vapaaehtoisia, ei-kriittisten ominaisuuksien toteutuksia.
 
-Yksi kurssin tärkeimmistä oppimistavoitteista on itsenäiseen tiedonhakuun kannustaminen. Tämän takia kurssimateriaali ei ole kaikilta osin yksinään riittävä tehtävien ratkaisemiseen. Kurssilla ei esim. varsinaisesti opeteta Rubyä ollenkaan, jokaisen osallistujan on hankittava kurssin aikana omatoimisesti riittävät valmiudet Rubyn käyttöön, ks. [ruby-ohjeita](https://github.com/ollikehy/wepa22/blob/master/web/rubyn_perusteita.md)
+Yksi kurssin tärkeimmistä oppimistavoitteista on itsenäiseen tiedonhakuun kannustaminen. Tämän takia kurssimateriaali ei ole kaikilta osin yksinään riittävä tehtävien ratkaisemiseen. Kurssilla ei esim. varsinaisesti opeteta Rubyä ollenkaan, jokaisen osallistujan on hankittava kurssin aikana omatoimisesti riittävät valmiudet Rubyn käyttöön, ks. [ruby-ohjeita](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/rubyn_perusteita.md)
 
 ## Arvosteluperusteet
 
@@ -60,27 +60,27 @@ Kurssin arvosana perustuu palautettujen tehtävien määrään. Arvosanaan 1 vaa
 
 ## Materiaali ja laskarit
 
-  * [viikko 1](https://github.com/ollikehy/wepa22/blob/master/web/viikko1.md) 
+- [viikko 1](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/viikko1.md)
 
-  * [viikko 2](https://github.com/ollikehy/wepa22/blob/master/web/viikko2.md) 
-  
-  * [viikko 3](https://github.com/ollikehy/wepa22/blob/master/web/viikko3.md) 
-  
-  * [viikko 4](https://github.com/ollikehy/wepa22/blob/master/web/viikko4.md) 
-  
-  * [viikko 5](https://github.com/ollikehy/wepa22/blob/master/web/viikko5.md) 
-  
-  * [viikko 6](https://github.com/ollikehy/wepa22/blob/master/web/viikko6.md) 
-  
-  * [viikko 7](https://github.com/ollikehy/wepa22/blob/master/web/viikko7.md) 
+- [viikko 2](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/viikko2.md)
+
+- [viikko 3](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/viikko3.md)
+
+- [viikko 4](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/viikko4.md)
+
+- [viikko 5](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/viikko5.md)
+
+- [viikko 6](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/viikko6.md)
+
+- [viikko 7](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/viikko7.md)
 
 ## Linkkejä
 
-[Railsin asentaminen](https://github.com/ollikehy/wepa22/blob/master/web/railsin_asentaminen.md)
+[Railsin asentaminen](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/railsin_asentaminen.md)
 
-[git- ja githubohjeita](https://github.com/ollikehy/wepa22/blob/master/web/versiohallinta.md)
+[git- ja githubohjeita](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/versiohallinta.md)
 
-[Ruby-ohjeita](https://github.com/ollikehy/wepa22/blob/master/web/rubyn_perusteita.md)
+[Ruby-ohjeita](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/rubyn_perusteita.md)
 
 [tehtäväkirjanpito](https://studies.cs.helsinki.fi/courses/#/rails2018)
 

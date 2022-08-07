@@ -10,9 +10,9 @@ Tämä asetus muistetaan jatkossa, joten pelkkä `bundle install` riittää kun 
 
 ### Rubocop
 
-Muista testata rubocopilla, että kaikki tulevaisuudessa tekemäsi koodisi noudattaa määriteltyjä tyylisääntöjä. 
+Muista testata rubocopilla, että kaikki tulevaisuudessa tekemäsi koodisi noudattaa määriteltyjä tyylisääntöjä.
 
-Jos käytät Visual studio codea, kannattaa asentaa [rubocop-laajennus](https://github.com/ollikehy/wepa22/blob/master/web/viikko3.md#rubocop)
+Jos käytät Visual studio codea, kannattaa asentaa [rubocop-laajennus](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/viikko3.md#rubocop)
 
 ### Ongelmia lomakkeiden kanssa
 
@@ -42,9 +42,9 @@ end
 
 Näiden muutosten jälkeen oluen tietojen editointi ei yllättäen enää toimi. Seurauksena on virheilmoitus <code>undefined method `map' for nil:NilClass</code>, johon olet kenties jo kurssin aikana törmännyt:
 
-![kuva](https://github.com/ollikehy/wepa22/raw/master/images/ratebeer-w4-0.png)
+![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/ratebeer-w4-0.png)
 
-Syynä tälle on se, että uuden oluen luominen ja oluen tietojen editointi käyttävät molemmat samaa lomakkeen generoivaa näkymätemplatea (app/views/beers/_form.html.erb) ja muutosten jälkeen näkymän toiminta edellyttää, että muuttuja <code>@breweries</code> sisältää panimoiden listan ja muuttuja <code>@styles</code> sisältää oluiden tyylit. Oluen tietojen muutossivulle mennään kontrollerimetodin <code>edit</code> suorituksen jälkeen, ja joudummekin muuttamaan kontrolleria seuraavasti korjataksemme virheen:
+Syynä tälle on se, että uuden oluen luominen ja oluen tietojen editointi käyttävät molemmat samaa lomakkeen generoivaa näkymätemplatea (app/views/beers/\_form.html.erb) ja muutosten jälkeen näkymän toiminta edellyttää, että muuttuja <code>@breweries</code> sisältää panimoiden listan ja muuttuja <code>@styles</code> sisältää oluiden tyylit. Oluen tietojen muutossivulle mennään kontrollerimetodin <code>edit</code> suorituksen jälkeen, ja joudummekin muuttamaan kontrolleria seuraavasti korjataksemme virheen:
 
 ```ruby
 def edit
@@ -92,7 +92,7 @@ def new
 end
 ```
 
- tai ehkä vielä tyylikkäämpää on hoitaa asia <code>before_action</code> määreellä:
+tai ehkä vielä tyylikkäämpää on hoitaa asia <code>before_action</code> määreellä:
 
 ```ruby
 class BeersController < ApplicationController
@@ -144,6 +144,7 @@ lokia tarkasti lukemalla selviää että syynä on seuraava
 ```ruby
 ActiveRecord::StatementInvalid (PG::UndefinedTable: ERROR:  relation "users" does not exist
 ```
+
 eli migraatiot ovat jääneet suorittamatta. Korjaus on helppo:
 
     heroku run rails db:migrate
@@ -169,7 +170,7 @@ Seuraavassa loki eräästä toisesta hyvin tyypillisestä virhetilanteesta:
 2018-09-15T19:04:43.853276+00:00 app[web.1]:
 ```
 
-Virhe on aiheutunut tiedoston *app/controllers/ratings_controller.rb* rivillä 15 ja syynä on <code>NoMethodError (undefined method `ratings' for nil:NilClass)</code>.
+Virhe on aiheutunut tiedoston _app/controllers/ratings_controller.rb_ rivillä 15 ja syynä on <code>NoMethodError (undefined method `ratings' for nil:NilClass)</code>.
 
 Katsotaan ko. tiedostoa ja ongelman aiheuttanutta riviä:
 
@@ -195,9 +196,9 @@ def create
 
   if current_user.nil?
     redirect_to signin_path, notice: 'you should be signed in'
-  
+
   @rating.user = current_user
-  
+
   if @rating.save
     redirect_to current_user
   else
@@ -232,10 +233,9 @@ Tarkka silmä huomaa lokin seasta että ongelma on _ActionView::Template::Error 
 <li> <%= rating %> <%= link_to rating.user.username, rating.user %> </li>
 ```
 
-vaikuttaa siis siltä, että tietokannassa on <code>rating</code>-olio, johon liittyvä <code>user</code> on <code>nil</code>. Kyseessä on siis jo [viikolta 2 tuttu](https://github.com/ollikehy/wepa22/blob/master/web/viikko2.md#ongelmia-herokussa) ongelma.
+vaikuttaa siis siltä, että tietokannassa on <code>rating</code>-olio, johon liittyvä <code>user</code> on <code>nil</code>. Kyseessä on siis jo [viikolta 2 tuttu](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/viikko2.md#ongelmia-herokussa) ongelma.
 
 Ongelman perimmäinen syy on joko se, että jonkin ratingin <code>user_id</code>-kentän arvo on <code>nil</code>, tai että jonkin rating-olion <code>user_id</code>:n arvona on virheellinen id. Tilanteesta selvitään esim. tuhoamalla 'huonot' rating-oliot komennolla <code>heroku run console</code> käynnistyvän Herokun konsolin avulla:
-
 
 ```ruby
 > bad_ratings = Rating.all.select{ |r| r.user.nil? or r.beer.nil? }
@@ -271,7 +271,7 @@ Muuten kaikki allaoleva koodi ei toimi ilman muutoksia.
 
 Toistaiseksi olemme tehneet koodia, jonka toimintaa olemme testanneet ainoastaan selaimesta. Tämä on suuri virhe. Jokaisen eliniältään laajemmaksi tarkoitetun ohjelman on syytä sisältää riittävän kattavat automaattiset testit, muuten ajan mittaan käy niin että ohjelman laajentaminen tulee liian riskialttiiksi.
 
-Käytämme testaukseen Rspec:iä ks. http://rspec.info/,  https://github.com/rspec/rspec-rails ja http://betterspecs.org/
+Käytämme testaukseen Rspec:iä ks. http://rspec.info/, https://github.com/rspec/rspec-rails ja http://betterspecs.org/
 
 Otetaan käyttöön rspec-rails gem lisäämällä Gemfileen seuraava:
 
@@ -280,6 +280,7 @@ group :development, :test do
   gem 'rspec-rails', '~> 6.0.0.rc1'
 end
 ```
+
 > Materiaaleja kirjottaessa ainoa tarjolla oleva versio rspec-rails 6:sta on .rc1 päätteinen. Rspec-projektin repositorio ohjeistaa käyttämään 6.0.0 versiota, joka saattaa toimia jälleen kurssin aikana.
 
 Uusi gem otetaan käyttöön tutulla tavalla, eli antamalla komentoriviltä komento <code>bundle install</code>
@@ -292,7 +293,7 @@ Initialisointi luo sovellukselle hakemiston /spec jonka alihakemistoihin testit 
 
 Railsin oletusarvoinen, mutta nykyään vähemmän käytetty testausframework sijoittaa testit hakemistoon /test. Ko. hakemisto on tarpeeton rspecin käyttöönoton jälkeen ja se voidaan poistaa.
 
-Testejä (oikeastaan rspecin yhteydessä ei pitäisi puhua testeistä vaan speceistä tai spesifikaatioista, käytämme kuitenkin jatkossa sanaa testi) voidaan kirjoittaa usealla tasolla: yksikkötestejä modeleille tai kontrollereille, näkymätestejä, integraatiotestejä kontrollereille.  Näiden lisäksi sovellusta voidaan testata käyttäen simuloitua selainta capybara-gemin https://github.com/jnicklas/capybara avulla.
+Testejä (oikeastaan rspecin yhteydessä ei pitäisi puhua testeistä vaan speceistä tai spesifikaatioista, käytämme kuitenkin jatkossa sanaa testi) voidaan kirjoittaa usealla tasolla: yksikkötestejä modeleille tai kontrollereille, näkymätestejä, integraatiotestejä kontrollereille. Näiden lisäksi sovellusta voidaan testata käyttäen simuloitua selainta capybara-gemin https://github.com/jnicklas/capybara avulla.
 
 Kirjoitamme jatkossa lähinnä yksikkötestejä modeleille sekä capybaran avulla simuloituja selaintason testejä.
 
@@ -331,14 +332,14 @@ Finished in 0.00932 seconds (files took 3.31 seconds to load)
 1 example, 0 failures, 1 pending
 ```
 
-Komento  <code>rspec spec</code> määrittelee, että suoritetaan kaikki testit, jotka löytyvät hakemiston spec alihakemistoista. Jos testejä on paljon, on myös mahdollista ajaa suppeampi joukko testejä:
+Komento <code>rspec spec</code> määrittelee, että suoritetaan kaikki testit, jotka löytyvät hakemiston spec alihakemistoista. Jos testejä on paljon, on myös mahdollista ajaa suppeampi joukko testejä:
 
     rspec spec/models                # suoritetaan hakemiston model sisältävät testit
     rspec spec/models/user_spec.rb   # suoritetaan user_spec.rb:n määrittelemät testi
 
 Testien ajon voi myös automatisoida aina kun testi tai sitä koskeva koodi muuttuu. [guard](https://github.com/guard/guard) on tähän käytetty kirjasto ja siihen löytyy monia laajennoksia.
 
-Aloitetaan testien tekeminen. Kirjoitetaan (tiedostoon *user_spec.rb*) aluksi testi joka testaa, että konstruktori asettaa käyttäjätunnuksen oikein:
+Aloitetaan testien tekeminen. Kirjoitetaan (tiedostoon _user_spec.rb_) aluksi testi joka testaa, että konstruktori asettaa käyttäjätunnuksen oikein:
 
 ```ruby
 require 'rails_helper'
@@ -382,7 +383,7 @@ RSpec.describe User, type: :model do
     expect(user.valid?).to be(false)
     expect(User.count).to eq(0)
   end
-end  
+end
 ```
 
 Testi menee läpi.
@@ -406,6 +407,7 @@ Huomaamme, että käytämme testeissä kahta samuuden tarkastustapaa <code>be(fa
 ```ruby
 expect(user.username).to be("Pekka")
 ```
+
 nyt testi ei mene läpi:
 
 ```ruby
@@ -461,7 +463,7 @@ it "with a proper password and two ratings, has the correct average rating" do
 
   expect(user.ratings.count).to eq(2)
   expect(user.average_rating).to eq(15.0)
-end  
+end
 ```
 
 Kuten arvata saattaa, ei testin alustuksen (eli testattavan olion luomisen) toistaminen ole järkevää, ja yhteinen osa voidaan helposti eristää. Tämä tapahtuu esim. tekemällä samanlaisen alustuksen omaavalle osalle testeistä oma <code>describe</code>-lohko, jonka alkuun määritellään ennen jokaista testiä suoritettava <code>let</code>-komento, joka alustaa user-muuttujan uudelleen jokaista testiä ennen:
@@ -535,7 +537,7 @@ Finished in 0.12949 seconds (files took 1.95 seconds to load)
 
 Pyrkimyksenä onkin kirjoittaa testien nimet siten, että testit suorittamalla saadaan ohjelmasta mahdollisimman ihmisluettava "spesifikaatio".
 
-Voit myös lisätä rivin ```-fd``` tiedostoon ```.rspec```, jolloin projektin rspec-testit näytetään aina documentation formaatissa.
+Voit myös lisätä rivin `-fd` tiedostoon `.rspec`, jolloin projektin rspec-testit näytetään aina documentation formaatissa.
 
 > ## Tehtävä 1
 >
@@ -546,9 +548,10 @@ Muista aina nimetä testisi niin että ajamalla Rspec dokumentointiformaatissa, 
 > ## Tehtävä 2
 >
 > Luo Rspecin generaattorilla (tai käsin) testipohja luokalle <code>Beer</code> ja tee testit, jotka varmistavat, että
-> * oluen luonti onnistuu ja olut tallettuu kantaan jos oluella on nimi, tyyli ja panimo asetettuna
-> * oluen luonti ei onnistu (eli creatella ei synny validia oliota), jos sille ei anneta nimeä
-> * oluen luonti ei onnistu, jos sille ei määritellä tyyliä
+>
+> - oluen luonti onnistuu ja olut tallettuu kantaan jos oluella on nimi, tyyli ja panimo asetettuna
+> - oluen luonti ei onnistu (eli creatella ei synny validia oliota), jos sille ei anneta nimeä
+> - oluen luonti ei onnistu, jos sille ei määritellä tyyliä
 >
 > Jos jälkimmäinen testi ei mene läpi, laajenna koodiasi siten, että se läpäisee testin. Vinkki: oluelle täytyy asettaa panimon id, mutta entä jos panimoa ei ole olemassa?
 >
@@ -629,12 +632,12 @@ FactoryBot.define do
 
   factory :brewery do
     name { "anonymous" }
-    year { 1900 } 
+    year { 1900 }
   end
 
   factory :beer do
     name { "anonymous" }
-    style { "Lager" } 
+    style { "Lager" }
     brewery # olueeseen liittyvä panimo luodaan brewery-tehtaalla
   end
 
@@ -648,7 +651,7 @@ end
 
 Reittausten luovan oliotehtaan _:rating_ lisäksi tiedostossa määritellään panimoita ja oluita luovat fixturet.
 
-Tehdas <code>FactoryBot.create(:brewery)</code> luo panimon, jonka nimi on 'anonymous' ja perustamisvuosi 1900. 
+Tehdas <code>FactoryBot.create(:brewery)</code> luo panimon, jonka nimi on 'anonymous' ja perustamisvuosi 1900.
 
 Tehdas <code>FactoryBot.create(:beer)</code> luo oluen, jonka tyyli on 'Lager' ja nimi 'anonymous' ja oluelle luodaan panimo, johon olut liittyy. Vastaavasti tehdas <code>FactoryBot.create(:rating)</code> luo reittauksen, johon liittyy tehtaan luoma olut. Tehdas ei aseta oletuksena mitään arvoa reittauksen pisteytykselle eli kentälle _score_ tai reittauksen tehneelle käyttäjälle.
 
@@ -688,7 +691,7 @@ FactoryBot.create(:brewery)
 FactoryBot.create(:brewery)
 ```
 
-loisi kolme _eri_ panimo-olioa, jotka ovat kaikki samansisältöistä. 
+loisi kolme _eri_ panimo-olioa, jotka ovat kaikki samansisältöistä.
 
 Tehtaalla luotavien olioiden sisältöä voidaan muokata parametrien avulla, esim.
 
@@ -700,7 +703,7 @@ FactoryBot.create(:brewery, name: 'homebrew', year: 2011)
 
 loisi kolme panimoa, joista yksi saisi oletusarvoisen nimen _anonymous_ ja perustamisvuoden _1900_. Toinen panimo saisi oletusarvoisen perustamisvuoden mutta nimen _crapbrew_, kolmannen panimon nimi sekä perustusvuosi määrittyisi annettujen parametrien mukaan.
 
-Myös tehtaalta <code>user</code> voitaisiin pyytää kahta eri olioa. 
+Myös tehtaalta <code>user</code> voitaisiin pyytää kahta eri olioa.
 
 ```ruby
 FactoryBot.create(:user)
@@ -769,7 +772,7 @@ describe "favorite beer" do
 end
 ```
 
-Lisätään sitten testi, joka varmistaa että jos reittauksia on vain yksi, osaa metodi palauttaa reitatun oluen. 
+Lisätään sitten testi, joka varmistaa että jos reittauksia on vain yksi, osaa metodi palauttaa reitatun oluen.
 
 ```ruby
 it "is the only rated if only one rating" do
@@ -902,7 +905,7 @@ it "is the one with highest rating if several rated" do
   best = create_beer_with_rating({ user: user }, 25 )
 
   expect(user.favorite_beer).to eq(best)
-end    
+end
 ```
 
 Reittauksen tehneen käyttäjän välittäminen apumetodille tapahtuu nyt hieman erikoisella tavalla, ruby-hashin avaimen arvona. Olisimme voineet määritellä, että käyttäjä välitetään normaalina parametrina, samoin kuin reittauksen pistemäärä:
@@ -966,7 +969,7 @@ RSpec.describe User, type: :model do
 
     it "is the one with highest rating if several rated" do
       create_beers_with_many_ratings({user: user}, 10, 20, 15, 7, 9)
-      best = create_beer_with_rating({ user: user }, 25 )    
+      best = create_beer_with_rating({ user: user }, 25 )
 
       expect(user.favorite_beer).to eq(best)
     end
@@ -1017,7 +1020,7 @@ FactoryBot.define do
 end
 ```
 
-Tämä saattaa aiheuttaa yllättäviä tilanteita (mm. jos määrittelet itse saman nimisen tehtaan, käytetään sen sijaan oletusarvoista tehdasta!), eli kannattanee määritellä gemi ainoastaan testausympäristöön luvun https://github.com/ollikehy/wepa22/blob/master/web/viikko4.md#testiymp%C3%A4rist%C3%B6t-eli-fixturet ohjeen tapaan.
+Tämä saattaa aiheuttaa yllättäviä tilanteita (mm. jos määrittelet itse saman nimisen tehtaan, käytetään sen sijaan oletusarvoista tehdasta!), eli kannattanee määritellä gemi ainoastaan testausympäristöön luvun https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/viikko4.md#testiymp%C3%A4rist%C3%B6t-eli-fixturet ohjeen tapaan.
 
 #### testitietokantaan jäävät oliot
 
@@ -1041,7 +1044,7 @@ describe "when one beer exists" do
 end
 ```
 
-testin luoma <code>Beer</code>-olio menisi nyt pysyvästi testitietokantaan, sillä komento <code>FactoryBot.create(:beer)</code>  ei ole minkään testin sisällä, eikä sitä siis suoriteta peruttavan transaktion aikana!
+testin luoma <code>Beer</code>-olio menisi nyt pysyvästi testitietokantaan, sillä komento <code>FactoryBot.create(:beer)</code> ei ole minkään testin sisällä, eikä sitä siis suoriteta peruttavan transaktion aikana!
 
 Testien ulkopuolelle, ei siis tule sijoittaa olioita luovaa koodia (poislukien testeistä kutsuttavat metodit). Olioiden luomisen on tapahduttava testikontekstissa, eli joko metodin <code>it</code> sisällä:
 
@@ -1127,6 +1130,7 @@ describe "the application" do
   end
 end
 ```
+
 Toinen vaihtoehto olisi määritellä FactoryBotin käyttämät usernamet ns. sekvenssien avulla, ks.
 https://www.rubydoc.info/gems/factory_bot/file/GETTING_STARTED.md#sequences
 
@@ -1154,7 +1158,7 @@ Nyt jokainen peräkkäisten tehtaan <code>FactoryBot.create(:user)</code> kutsuj
 
 ## testit ja debuggeri
 
-Toivottavasti olet jo tässä vaiheessa kurssia rutinoitunut [debuggerin](https://github.com/ollikehy/wepa22/blob/master/web/viikko2.md#debuggeri) käyttäjä. Koska testitkin ovat normaalia ruby-koodia, ovat myös _binding.break_ ja _binding.pry_ käytettävissä sekä testikoodissa että testattavassa koodissa. Testausympäristön tietokannan tila saattaa joskus olla yllättävä, kuten edellä olevista esimerkeistä näimme. Ongelmatilanteissa kannattaa ehdottomasti pysäyttää testikoodi debuggerilla ja tutkia vastaako testattavien olioiden tila oletettua.
+Toivottavasti olet jo tässä vaiheessa kurssia rutinoitunut [debuggerin](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/viikko2.md#debuggeri) käyttäjä. Koska testitkin ovat normaalia ruby-koodia, ovat myös _binding.break_ ja _binding.pry_ käytettävissä sekä testikoodissa että testattavassa koodissa. Testausympäristön tietokannan tila saattaa joskus olla yllättävä, kuten edellä olevista esimerkeistä näimme. Ongelmatilanteissa kannattaa ehdottomasti pysäyttää testikoodi debuggerilla ja tutkia vastaako testattavien olioiden tila oletettua.
 
 ## yksittäisten testien suorittaminen
 
@@ -1165,6 +1169,7 @@ rspec spec/models/user_spec.rb:108
 ```
 
 Jos/kun törmäät testeissäsi ongelmatilanteita:
+
 - älä suorita kaikkia testejä, vaan rajaa suoritus ongelmallisiin testeihin
 - käytä debuggeria
 
@@ -1172,7 +1177,7 @@ Jos/kun törmäät testeissäsi ongelmatilanteita:
 >
 > ### Tämä ja seuraava tehtävä voivat olla jossain määrin haastavia. Tehtävien teko ei ole viikon jatkamisen kannalta välttämätöntä eli älä juutu tähän kohtaan. Voit tehdä tehtävät myös viikon muiden tehtävien jälkeen.
 >
-> Tee seuraavaksi TDD-tyylillä <code>User</code>-olioille metodi <code>favorite_style</code>, joka palauttaa tyylin, jonka oluet ovat saaneet käyttäjältä keskimäärin korkeimman reittauksen. 
+> Tee seuraavaksi TDD-tyylillä <code>User</code>-olioille metodi <code>favorite_style</code>, joka palauttaa tyylin, jonka oluet ovat saaneet käyttäjältä keskimäärin korkeimman reittauksen.
 >
 > Lisää käyttäjän sivulle tieto käyttäjän mielityylistä.
 >
@@ -1184,7 +1189,7 @@ Jos/kun törmäät testeissäsi ongelmatilanteita:
 
 > ## Tehtävä 4
 >
-> Tee vielä TDD-tyylillä <code>User</code>-olioille metodi <code>favorite_brewery</code>, joka palauttaa panimon, jonka oluet ovat saaneet käyttäjältä keskimäärin korkeimman reittauksen.  
+> Tee vielä TDD-tyylillä <code>User</code>-olioille metodi <code>favorite_brewery</code>, joka palauttaa panimon, jonka oluet ovat saaneet käyttäjältä keskimäärin korkeimman reittauksen.
 >
 > Lisää käyttäjän sivulle tieto käyttäjän mielipanimosta.
 
@@ -1208,7 +1213,7 @@ group :test do
 end
 ```
 
-Jotta gem saadaan käyttöön, suoritetaan tuttu komento <code>bundle install</code>. 
+Jotta gem saadaan käyttöön, suoritetaan tuttu komento <code>bundle install</code>.
 
 Nyt olemme valmiina ensimmäiseen selaintason testiin.
 
@@ -1232,7 +1237,7 @@ Testi aloittaa navigoimalla <code>visit</code>-metodia käyttäen panimoiden lis
 
 Testejä tehdessä tulee (erittäin) usein tilanteita, joissa olisi hyödyllistä nähdä <code>page</code>-muuttujan kuvaaman sivun html-muotoinen lähdekoodi. Tämä onnistuu lisäämällä testiin komento <code>puts page.html</code>
 
-Toinen vaihoehto on lisätä testiin komento <code>save_and_open_page</code>, joka tallettaa ja avaa kyseisen sivun oletusselaimessa. Linuxissa joudut määrittelemään selaimen oletusselaimeksi <code>BROWSER</code>-ympäristömuuttujan avulla.  Esim. osaston koneilla saat määriteltyä oletusselaimeksi chromiumin komennolla:
+Toinen vaihoehto on lisätä testiin komento <code>save_and_open_page</code>, joka tallettaa ja avaa kyseisen sivun oletusselaimessa. Linuxissa joudut määrittelemään selaimen oletusselaimeksi <code>BROWSER</code>-ympäristömuuttujan avulla. Esim. osaston koneilla saat määriteltyä oletusselaimeksi chromiumin komennolla:
 
     export BROWSER='/usr/bin/chromium-browser'
 
@@ -1331,7 +1336,7 @@ describe "Breweries page" do
 end
 ```
 
-Huomaa, että describe-lohkon sisällä oleva <code>before :each</code> suoritetaan kertaalleen ennen jokaista describen alla määriteltyä testiä ja **jokainen testi alkaa tilanteesta, missä tietokanta on tyhjä**. 
+Huomaa, että describe-lohkon sisällä oleva <code>before :each</code> suoritetaan kertaalleen ennen jokaista describen alla määriteltyä testiä ja **jokainen testi alkaa tilanteesta, missä tietokanta on tyhjä**.
 
 Kannattaa myös huomata, että jos <code>before :each</code> -lohkossa määriteltyihin muuttujiin on viitattava yksittäisistä testeistä, eli _it_-lohkoista, tulee muuttujien nimen alkaa @-merkillä.
 
@@ -1406,7 +1411,7 @@ it "when signed up with good credentials, is added to the system" do
 end
 ```
 
-Huomaa, että lomakkeen kentät määriteltiin <code>fill_in</code>-metodeissa hieman eri tavalla kuin kirjautumislomakkeessa. Kenttien id:t voi ja kannattaa aina tarkastaa katsomalla sivun lähdekoodia selaimen _view page source_ -toiminnolla.
+Huomaa, että lomakkeen kentät määriteltiin <code>fill*in</code>-metodeissa hieman eri tavalla kuin kirjautumislomakkeessa. Kenttien id:t voi ja kannattaa aina tarkastaa katsomalla sivun lähdekoodia selaimen \_view page source* -toiminnolla.
 
 Testi siis odottaa, että _Create user_ -painikkeen klikkaaminen muuttaa tietokantaan talletettujen käyttäjien määrää yhdellä. Syntaksi on hieno, mutta kestää hetki ennen kuin koko Rspecin ilmaisuvoimainen kieli alkaa tuntua tutulta.
 
@@ -1471,7 +1476,7 @@ end
 
 Metodi <code>sign_in</code> saa siis käyttäjätunnus/salasanaparin parametrikseen hashina.
 
-Lisätään tiedostoon *rails_helper.rb* heti muiden require-komentojen jälkeen rivi
+Lisätään tiedostoon _rails_helper.rb_ heti muiden require-komentojen jälkeen rivi
 
     require 'helpers'
 
@@ -1538,17 +1543,17 @@ end
 
 Kirjautumisen toteutuksen siirtäminen apumetodiin siis kasvattaa myös testien luettavuutta, ja jos kirjautumissivun toiminnallisuus myöhemmin muuttuu, on testien ylläpito helppoa, koska muutoksia ei tarvita kuin yhteen kohtaan.
 
-Saattaa olla järkevää siirtää myös aiemmin tiedostoon _user_sper.rb_ määrittelemämme apumetodit <code>create_beer_with_rating</code> ja <code>create_beers_with_many_ratings</code> moduuliin _Helpers_, erityisesti jos jatkossa tulee tilanteita, joissa samaa toiminnallisuutta tarvitaan muissakin testeissä.
+Saattaa olla järkevää siirtää myös aiemmin tiedostoon _user_sper.rb_ määrittelemämme apumetodit <code>create*beer_with_rating</code> ja <code>create_beers_with_many_ratings</code> moduuliin \_Helpers*, erityisesti jos jatkossa tulee tilanteita, joissa samaa toiminnallisuutta tarvitaan muissakin testeissä.
 
 > ## Tehtävä 5
 >
-> Tee testi, joka varmistaa, että järjestelmään voidaan lisätä www-sivun kautta olut, jos oluen nimikenttä saa validin arvon (eli se on epätyhjä). 
-> 
+> Tee testi, joka varmistaa, että järjestelmään voidaan lisätä www-sivun kautta olut, jos oluen nimikenttä saa validin arvon (eli se on epätyhjä).
+>
 > Tee myös testi, joka varmistaa, että selain näyttää asiaan kuuluvan virheilmoituksen jos oluen nimi ei ole validi, ja että tälläisessä tapauksessa tietokantaan ei talletu mitään.
 >
 > Huomaa, että testin on luotava sovellukseen ainakin yksi panimo, jotta oluiden luominen olisi mahdollista.
 >
-> **HUOM:** ohjelmassasi saattaa olla bugi tilanteessa, jossa yritetään luoda epävalidin nimen omaava olut. Kokeile toiminnallisuutta selaimesta. Syynä tälle on selitetty viikon alussa, kohdassa https://github.com/ollikehy/wepa22/blob/master/web/viikko4.md#muutama-huomio. Korjaa vika koodistasi.
+> **HUOM:** ohjelmassasi saattaa olla bugi tilanteessa, jossa yritetään luoda epävalidin nimen omaava olut. Kokeile toiminnallisuutta selaimesta. Syynä tälle on selitetty viikon alussa, kohdassa https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/viikko4.md#muutama-huomio. Korjaa vika koodistasi.
 >
 > Muista ongelmatilanteissa komento <code>save_and_open_page</code>!
 
@@ -1564,16 +1569,15 @@ Saattaa olla järkevää siirtää myös aiemmin tiedostoon _user_sper.rb_ mää
 >
 > Tee testi joka varmistaa, että käyttäjän reittaukset näytetään käyttäjän sivulla. Käyttäjän sivulla tulee siis näkyä kaikki käyttäjän omat muttei muiden käyttäjien tekemiä reittauksia.
 >
-> Huomaa, että navigoidessasi käyttäjän <code>user</code> sivulle, joudut antamaan metodille <code>visit</code> polun määritteleväksi parametriksi <code>user_path(user)</code>, eli yleensä käytetty lyhempi  muoto (olio itse) ei capybaran kanssa toimi.
+> Huomaa, että navigoidessasi käyttäjän <code>user</code> sivulle, joudut antamaan metodille <code>visit</code> polun määritteleväksi parametriksi <code>user_path(user)</code>, eli yleensä käytetty lyhempi muoto (olio itse) ei capybaran kanssa toimi.
 
 > ## Tehtävä 8
 >
->  Tee testi, joka varmistaa että käyttäjän poistaessa oma reittauksensa, se poistuu tietokannasta.
+> Tee testi, joka varmistaa että käyttäjän poistaessa oma reittauksensa, se poistuu tietokannasta.
 >
-> Jos sivulla on useita linkkejä joilla on sama nimi, ei <code>click_link</code> toimi. Joudut tälläisissä tilanteissa yksilöimään mikä linkeistä valitaan, ja se ei ole välttämättä ihan helppoa. Apua löytyy [capybaran dokumentaatiosta](http://rubydoc.info/github/jnicklas/capybara/master/Capybara/Node/Finders)  ja  [täältä](http://stackoverflow.com/questions/6733427/how-to-click-on-the-second-link-with-the-same-text-using-capybara-in-rails-3)
+> Jos sivulla on useita linkkejä joilla on sama nimi, ei <code>click_link</code> toimi. Joudut tälläisissä tilanteissa yksilöimään mikä linkeistä valitaan, ja se ei ole välttämättä ihan helppoa. Apua löytyy [capybaran dokumentaatiosta](http://rubydoc.info/github/jnicklas/capybara/master/Capybara/Node/Finders) ja [täältä](http://stackoverflow.com/questions/6733427/how-to-click-on-the-second-link-with-the-same-text-using-capybara-in-rails-3)
 >
 > Vaikka ratkaisu onkin lyhyt, ei tehtävä ole välttämättä helpoimmasta päästä. Jos jäät jumiin, kannattanee tehdä viikon muut tehtävät ensin tai/ja kysyä apua pajassa/Telegramissa.
-
 
 > ## Tehtävä 9
 >
@@ -1610,7 +1614,7 @@ Coverage report generated for RSpec to /Users/mluukkai/opetus/ratebeer/coverage.
 
 Testien rivikattavuus on siis 48.35 prosenttia. Tarkempi raportti on nähtävissä avaamalla selaimella tiedosto coverage/index.html. Kuten kuva paljastaa, on suuria osia ohjelmasta, erityisesti kontrollereista vielä erittäin huonosti testattu:
 
-![kuva](https://github.com/ollikehy/wepa22/raw/master/images/ratebeer-w4-1.png)
+![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/ratebeer-w4-1.png)
 
 Suurikaan rivikattavuus ei tietysti vielä takaa että testit testaavat järkeviä asioita. Helposti mitattavana metriikkana se on kuitenkin parempi kuin ei mitään ja näyttää ainakin ilmeisimmät puutteet testeissä.
 
@@ -1632,10 +1636,10 @@ Githubissa olevat projektit on helppo asettaa Github actionsin tarkkailtaviksi.
 >
 > Mene oman projektisi repositorioon ja paina yläpalkista Actions-painiketta. Jos sinulla ei ole olemassaolevia actioneja github vie sinut suoraan sivulle, jossa ehdotetaan valmiita pohjia valittavaksi.
 >
-> ![kuva](https://github.com/ollikehy/wepa22/raw/master/images/ratebeer-w4-2.png)
-> 
+> ![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/ratebeer-w4-2.png)
+>
 > Valitaan Ruby on Rails painamalla Configure-nappia. Tämän seurauksena github vie sivulle jossa muokataan <code>rubyonrails.yml</code> nimistä tiedostoa. Tämä workflow tiedosto kertoo Github actionsille mitä CI:n tulee tehdä.
-> 
+>
 > Tiedoston sisältö ei sellaisena kuitenkaan toimi, joten vaihdetaan sisällöksi aluksi seuraava:
 >
 > ```
@@ -1679,7 +1683,7 @@ Githubissa olevat projektit on helppo asettaa Github actionsin tarkkailtaviksi.
 > ```
 >
 > Erona defaultina tarjottavaan versioon tässä on se, että sekä ubuntusta ja rubyn setuppaavasta actionista käytetään uusimpia versiota, jotta rubyn 3.1.2. versio toimii.
-> 
+>
 > Vaihdettuasi sisällön valitse Start commit ja lisää tiedosto versionhallintaasi. Github actions lähteekin suoraan käyntiin ja suorittaa testit.
 >
 > Jos jokin testi ei toimi Github actionseissa korjaa se!
@@ -1690,7 +1694,7 @@ Githubissa olevat projektit on helppo asettaa Github actionsin tarkkailtaviksi.
 >
 > Lisää <code>rubyonrails.yml</code> tiedostoon seuraava sisältö:
 >
->```
+> ```
 >  lint:
 >    runs-on: ubuntu-22.04
 >    steps:
@@ -1704,12 +1708,11 @@ Githubissa olevat projektit on helppo asettaa Github actionsin tarkkailtaviksi.
 >        uses: andrewmcodes-archive/rubocop-linter-action@v3.3.0
 >        env:
 >          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
->```
+> ```
 >
 > GITHUB_TOKEN rivillä käytetään [Githubin tarjoamaa automaattista tokenia](https://docs.github.com/en/actions/security-guides/automatic-token-authentication), jolla pystytään autentikoimaan githubin sovellukset.
 >
 > Nyt Github Actionsin pitäisi ajaa sekä testit, että rubocop sovellukselle joka kerta kun githubiin pusketaan muutoksia.
-
 
 ## Continuous delivery
 
@@ -1719,13 +1722,13 @@ Eriyisesti Web-sovellusten yhteydessä jatkuva deployaaminen saattaa olla hyvink
 
 > ## Tehtävä 13
 >
-> ### Tämän ja seuraavan tehtävän tekeminen ei ole välttämätöntä viikon jatkamisen kannalta. Voit tehdä tämän tehtävän myös viikon muiden tehtävien jälkeen. 
+> ### Tämän ja seuraavan tehtävän tekeminen ei ole välttämätöntä viikon jatkamisen kannalta. Voit tehdä tämän tehtävän myös viikon muiden tehtävien jälkeen.
 >
 > Toteuta sovelluksellesi jatkuva automaattinen deployaaminen Herokuun
 >
 > Ks. ohjeita seuraavasta https://devcenter.heroku.com/articles/github-integration
 >
-> ***HUOM*** Muista valita "Wait for CI to pass before deploy" 
+> **_HUOM_** Muista valita "Wait for CI to pass before deploy"
 >
 > Voit testata toimiiko CI/CD putkesti tekemällä jonkin muutoksen sovellukseesi ja puskemalla muutoksen githubiin ja seuraamalla tuleeko muutos myös Herokussa olevaan sovellukseesi. Herokun Overview välilehdeltä näet "Latest Activity" syötteestä mitä putkessa tapahtuu.
 
@@ -1739,21 +1742,21 @@ Testauskattavuuden lisäksi myös koodin laatua kannattaa valvoa. SaaS-palveluna
 >
 > Codeclimate on ilmainen opensource-projekteille. Kirjaudu sovelukseen ositteessa https://codeclimate.com/login/github/join ja lisää projektisi "Open source"-osista.
 >
->Codeclimate valittelee todennäköisesti koodissa olevasta samanlaisuudesta. Kyseessä on kuitenkin Rails scaffoldingin luoma hieman ruma koodi, joten sen voi jättää paikalleen.
+> Codeclimate valittelee todennäköisesti koodissa olevasta samanlaisuudesta. Kyseessä on kuitenkin Rails scaffoldingin luoma hieman ruma koodi, joten sen voi jättää paikalleen.
 >
 > Linkitä myös laatumetriikkaraportti repositorion README-tiedostoon:
 >
 > Löydät linkin raporttiin seuraavasti
 >
-> ![kuva](https://github.com/ollikehy/wepa22/raw/master/images/ratebeer-w4-4c.png)
-> 
+> ![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/ratebeer-w4-4c.png)
+>
 > Nyt myös codeclimate aiheuttaa sovelluskehittäjälle sopivasti painetta pitää koodi koko ajan hyvälaatuisena!
 
 Sovelluskehittäjän elämää helpottavien pilvipalveluiden määrä kasvaa kovaa vauhtia. Simplecov:in sijaan tai lisäksi testauskattavuuden raportoinnin voi delegoida Coveralls https://coveralls.io/ -nimiselle pilvipalvelulle. Jätämme sen kuitenkin tälläkertaa tekemättä.
 
 ## Kirjautuneiden toiminnot
 
-Jätetään testien teko hetkeksi ja palataan muutamaan aiempaan teemaan. Viikolla 2 rajoitimme http basic -autentikaation avulla sovellustamme siten, että ainoastaan admin-salasanan syöttämällä oli mahdollista  poistaa panimoita. [Viikolla 3](https://github.com/ollikehy/wepa22/blob/master/web/viikko3.md#vain-omien-reittausten-poisto) rajoitimme sovelluksen toiminnallisuutta siten, että reittausten poistaminen ei ole mahdollista kuin reittauksen tehneelle käyttäjälle. Sen sijaan esim.  olutkerhojen ja oluiden luominen, poistaminen ja editointi on tällä hetkellä mahdollista jopa ilman kirjautumista.
+Jätetään testien teko hetkeksi ja palataan muutamaan aiempaan teemaan. Viikolla 2 rajoitimme http basic -autentikaation avulla sovellustamme siten, että ainoastaan admin-salasanan syöttämällä oli mahdollista poistaa panimoita. [Viikolla 3](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/viikko3.md#vain-omien-reittausten-poisto) rajoitimme sovelluksen toiminnallisuutta siten, että reittausten poistaminen ei ole mahdollista kuin reittauksen tehneelle käyttäjälle. Sen sijaan esim. olutkerhojen ja oluiden luominen, poistaminen ja editointi on tällä hetkellä mahdollista jopa ilman kirjautumista.
 
 Luovutaan http basic -autentikoinnin käytöstä ja muutetaan sovellusta siten, että oluita, panimoita ja olutkerhoja voivat luoda, muokata ja poistaa ainoastaan kirjautuneet käyttäjät.
 
@@ -1765,7 +1768,7 @@ sekä metodi <code>authenticate</code>. Nyt kuka tahansa voi jälleen poistaa pa
 
 Aloitetaan suojauksen lisääminen.
 
-Näkymistä on helppo poistaa oluiden, olutkerhojen ja panimoiden muokkaus -ja luontilinkit  siinä tapauksessa, jos käyttäjä ei ole kirjautunut järjestelmään.
+Näkymistä on helppo poistaa oluiden, olutkerhojen ja panimoiden muokkaus -ja luontilinkit siinä tapauksessa, jos käyttäjä ei ole kirjautunut järjestelmään.
 
 Esim. näkymästä views/beers/index.html.erb voidaan nyt poistaa kirjautumattomilta käyttäjiltä sivun lopussa oleva oluiden luomislinkki:
 
@@ -1787,7 +1790,7 @@ Nyt siis <code>link_to</code> metodi suoritetaan (eli linkin koodi renderöityy)
 <%= link_to('New Beer', new_beer_path) unless current_user.nil? %>
 ```
 
-Eli renderöidään linkki __ellei__ <code>current_user</code> ei ole <code>nil</code>.
+Eli renderöidään linkki **ellei** <code>current_user</code> ei ole <code>nil</code>.
 
 Oikeastaan <code>unless</code> on nyt tarpeeton, rubyssä nimittäin <code>nil</code> tulkitaan epätodeksi, eli kaikkien siistein muoto komennosta on
 
@@ -1801,7 +1804,7 @@ On siis vielä tehtävä kontrolleritasolle varmistus, että jos kirjautumaton k
 
 Päätetään ohjata rajoitettua toimenpidettä yrittävä kirjautumaton käyttäjä kirjautumissivulle.
 
-Määritellään luokkaan <code>ApplicationController</code>  seuraava metodi:
+Määritellään luokkaan <code>ApplicationController</code> seuraava metodi:
 
 ```ruby
 def ensure_that_signed_in
@@ -1811,7 +1814,7 @@ end
 
 Eli jos metodia kutsuttaessa käyttäjä ei ole kirjautunut, suoritetaan uudelleenohjaus kirjautumissivulle. Koska metodi on sijoitettu luokkaan <code>ApplicationController</code> jonka kaikki kontrollerit perivät, on se kaikkien kontrollereiden käytössä.
 
-Lisätään metodi esifiltteriksi (ks. http://guides.rubyonrails.org/action_controller_overview.html#filters ja https://github.com/ollikehy/wepa22/blob/master/web/viikko2.md#yksinkertainen-suojaus) olut- ja panimo- ja olutkerhokontrollerille kaikille metodeille paitsi index:ille ja show:lle:
+Lisätään metodi esifiltteriksi (ks. http://guides.rubyonrails.org/action_controller_overview.html#filters ja https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/viikko2.md#yksinkertainen-suojaus) olut- ja panimo- ja olutkerhokontrollerille kaikille metodeille paitsi index:ille ja show:lle:
 
 ```ruby
 class BeersController < ApplicationController
@@ -1841,6 +1844,6 @@ Voit halutessasi tehdä hienosäätöä sovelluksen näkymiin, esim. poistaa res
 
 ## Tehtävien palautus
 
-Commitoi kaikki tekemäsi muutokset ja pushaa koodi Githubiin. Deployaa myös uusin versio Herokuun. Muista myös testata rubocopilla, että koodisi noudattaa edelleen määriteltyjä tyylisääntöjä. 
+Commitoi kaikki tekemäsi muutokset ja pushaa koodi Githubiin. Deployaa myös uusin versio Herokuun. Muista myös testata rubocopilla, että koodisi noudattaa edelleen määriteltyjä tyylisääntöjä.
 
 Tehtävät kirjataan palautetuksi osoitteeseen https://studies.cs.helsinki.fi/courses/#/rails2018

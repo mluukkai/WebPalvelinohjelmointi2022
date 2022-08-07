@@ -2,7 +2,7 @@ Jatkamme sovelluksen rakentamista siitä, mihin jäimme viikon 6 lopussa. Allaol
 
 ## Muistutus debuggerista
 
-Viikolla 2 tutustuimme [debuggeriin](https://github.com/ollikehy/wepa22/blob/master/web/viikko2.md#debuggeri) ja [viime viikolla](https://github.com/ollikehy/wepa22/blob/master/web/viikko6.md#muistutus-debuggerista) oli muistutus debuggerin käytösä. Eli vielä kertauksena **kun kohtaat ongelman, turvaudu arvailun sijaan debuggeriin!**
+Viikolla 2 tutustuimme [debuggeriin](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/viikko2.md#debuggeri) ja [viime viikolla](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/viikko6.md#muistutus-debuggerista) oli muistutus debuggerin käytösä. Eli vielä kertauksena **kun kohtaat ongelman, turvaudu arvailun sijaan debuggeriin!**
 
 Rails-konsolin käytön tärkeyttä sovelluskehityksen välineenä on yritetty korostaa läpi kurssin. Eli **kun teet jotain vähänkin epätriviaalia, testaa asia ensin konsolissa.** Joissain tilanteissa voi olla jopa parempi tehdä kokeilut debuggerin avulla avautuvassa konsolissa, sillä tällöin on mahdollista avata konsolisessio juuri siihen kontekstiin, mihin koodia ollaan kirjoittamassa. Näin ollen päästään käsiksi esim. muuttujiin <code>params</code>, <code>sessions</code> ym. suorituskontekstista riippuvaan dataan.
 
@@ -12,7 +12,7 @@ Osa tämän viikon tehtävistä saattaa hajottaa jotain edellisinä viikkoina te
 
 ## Erilaiset järjestykset
 
-Päätetään toteuttaa oluiden listalle toiminnallisuus, jonka avulla oluet voidaan järjestää eri sarakkeiden perusteella. Välitetään tieto halutusta järjestyksestä kontrollerille HTTP-pyynnön parametrina. Muutetaan näkymässä ```app/views/beers/index.html.erb``` olevaa taulukkoa seuraavasti:
+Päätetään toteuttaa oluiden listalle toiminnallisuus, jonka avulla oluet voidaan järjestää eri sarakkeiden perusteella. Välitetään tieto halutusta järjestyksestä kontrollerille HTTP-pyynnön parametrina. Muutetaan näkymässä `app/views/beers/index.html.erb` olevaa taulukkoa seuraavasti:
 
 ```erb
 <table class="table table-hover">
@@ -95,9 +95,9 @@ Beer.includes(:style).order("style.name")
 
 > ## Tehtävä 1
 >
-> Muuta olutseurat listaavaa sivua siten, että seurat voidaan järjestää nimen mukaiseen aakkosjärjestykseen, perustamisvuoden mukaiseen järjestykseen tai kaupungin nimen mukaiseen aakkosjärjestykseen. Nimen mukainen järjestys on oletusarvoinen. 
+> Muuta olutseurat listaavaa sivua siten, että seurat voidaan järjestää nimen mukaiseen aakkosjärjestykseen, perustamisvuoden mukaiseen järjestykseen tai kaupungin nimen mukaiseen aakkosjärjestykseen. Nimen mukainen järjestys on oletusarvoinen.
 >
-> *HUOM* jos et ole toteuttanut sovellukseesi olutkerhoja, voit toteuttaa tämän tehtävän toiminnallisuuden panimoiden sivulle (ja olettaa että aktiiviset ja lopettaneet panimot järjestetään aina samalla tavalla).
+> _HUOM_ jos et ole toteuttanut sovellukseesi olutkerhoja, voit toteuttaa tämän tehtävän toiminnallisuuden panimoiden sivulle (ja olettaa että aktiiviset ja lopettaneet panimot järjestetään aina samalla tavalla).
 
 ## Selainpuolella toteutettu toiminnallisuus
 
@@ -143,37 +143,36 @@ Rails-sovelluksen tarvitsema javascript-koodi kannattaa sijoittaa hakemistoon ap
 
 ```javascript
 function hello() {
-  document.getElementById("beers").innerText = "hello from javascript"
-  console.log("hello console!");  
+  document.getElementById("beers").innerText = "hello from javascript";
+  console.log("hello console!");
 }
 
-export { hello }
+export { hello };
 ```
 
-Tämän lisäksi meidän pitää ottaa hello-funktio käyttöön sovelluksessa. Tehdään se lisäämällä app/javascript/application.js tiedostoon seuraavat rivit: 
+Tämän lisäksi meidän pitää ottaa hello-funktio käyttöön sovelluksessa. Tehdään se lisäämällä app/javascript/application.js tiedostoon seuraavat rivit:
 
 ```javascript
-import { hello } from "custom/utils"
+import { hello } from "custom/utils";
 
-hello()
+hello();
 ```
 
 Otetaan myös custom-hakemistossa sijaitseva javascript käyttöön sovelluksen importmapissä, eli lisätään <code>config/importmap.rb</code> tiedostoon rivi:
 
 ```rb
 pin_all_from "app/javascript/custom", under: "custom"
-``` 
+```
 
 Kun sivu nyt avataan uudelleen, haetaan ensin javascriptillä id:n <code>beers</code> omaavaan omaava elementti, jonka jälkeen sen tekstiksi asetetaan "hello form javascript". Seuraava komento kirjoittaa javascript-konsoliin tervehdyksen.
 
 Javascript-ohjelmoinnissa selaimessa oleva konsoli on **erittäin tärkeä** työväline. Konsolin saa avattua chromessa tools-valikosta tai painamalla ctrl, shift, j (linux) tai alt, cmd, i (mac):
 
-![kuva](https://github.com/ollikehy/wepa22/raw/master/images/ratebeer-w7-1.png)
+![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/ratebeer-w7-1.png)
 
 **Konsoli on syytä pitää koko ajan auki Javascriptillä ohjelmoitaessa!**
 
 Javascript näyttää aluksi melko kryptiseltä, mm. paljon käytettyjen anonyymifunktioiden takia. application.js tiedostossa oleva koodi määrittelee, että sivun latautuessa utils.js tiedostossa oleva hello-funktio suoritetaan.
-
 
 Jos kokeilemme selaimella osoitetta http://localhost:3000/beers.json huomaamme, että saamme vastaukseksi oluiden tiedot tekstuaalisessa json-muodossa (ks. http://en.wikipedia.org/wiki/JSON, http:www.json.org):
 
@@ -183,11 +182,11 @@ Jos kokeilemme selaimella osoitetta http://localhost:3000/beers.json huomaamme, 
 
 Json-muotoisen sivun saa hieman luettavampaan muotoon esim. kopioimalla sivun sisällön [jsonlint](http://jsonlint.com/) palveluun:
 
-![kuva](https://github.com/ollikehy/wepa22/raw/master/images/ratebeer-w7-3.png)
+![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/ratebeer-w7-3.png)
 
 Parempi ratkaisu on asentaa selaimeen jsonia ymmärtävä plugin, eräs suositeltava on chromen [jsonview](https://chrome.google.com/webstore/detail/jsonview/chklaanhfefbnpoihckbnefhakgolnmc), plugin muotoilee jsonin selaimeen todella siististi:
 
-![kuva](https://github.com/ollikehy/wepa22/raw/master/images/ratebeer-w7-4.png)
+![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/ratebeer-w7-4.png)
 
 Tarkemmin tarkasteltuna jokainen yksittäinen json-muotoinen olut muistuttaa hyvin paljon Rubyn hashiä:
 
@@ -211,7 +210,7 @@ Yritetään saada kaikkien reittausten lista jsonina, eli kokeillaan osoitetta h
 
 Seurauksena on virheilmoitus:
 
-![kuva](https://github.com/ollikehy/wepa22/raw/master/images/ratebeer-w7-4b.png)
+![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/ratebeer-w7-4b.png)
 
 Eli ihan automaattisesti jsonit eivät synny, loimme kaiken reittaukseen liittyvän koodin käsin, ja kuten virheilmoituksesta voimme päätellä, formaatille 'json' ei ole olemassa sopivaa templatea.
 
@@ -223,7 +222,7 @@ Ottamalla mallia templatesta app/views/beers/index.json.jbuilder teemme reittauk
 json.array! @ratings, partial: "ratings/rating", as: :rating
 ```
 
-Tämän lisäksi tarvitsemme reittauksille myös partial-tiedoston. Otamme myös tähän mallia oluiden templatesta app/views/beers/_beer.json.jbuilder (ja luomme tiedoston app/views/ratings/_rating.json.jsbuilder):
+Tämän lisäksi tarvitsemme reittauksille myös partial-tiedoston. Otamme myös tähän mallia oluiden templatesta app/views/beers/\_beer.json.jbuilder (ja luomme tiedoston app/views/ratings/\_rating.json.jsbuilder):
 
 ```ruby
 json.extract! rating, :id, :score
@@ -236,8 +235,8 @@ ja nyt saamme reittaukset jsonina osoitteesta http://localhost:3000/ratings.json
 [{"id":31,"score":34},{"id":30,"score":42},{"id":27,"score":40},{"id":25,"score":12},{"id":24,"score":10}]
 ```
 
-*HUOM:* jbuilder-templatessa käytettävän muuttujan <code>@ratings</code>
- tulee olla määritelty kontrollerin metodissa <code>index</code>!
+_HUOM:_ jbuilder-templatessa käytettävän muuttujan <code>@ratings</code>
+tulee olla määritelty kontrollerin metodissa <code>index</code>!
 
 Voisimme helposti määritellä json.jbuilder-templatessa, että reittausten json-esitykseen sisällytetään myös reittausta koskevan oluen tiedot:
 
@@ -269,23 +268,22 @@ Muokataan javascript-koodiamme seuraavasti:
 
 ```javascript
 const handleResponse = (request) => {
-  const beers = JSON.parse(request.target.response)
+  const beers = JSON.parse(request.target.response);
 
-  document.getElementById("beers").innerText = `oluita löytyi ${beers.length}`
-}
+  document.getElementById("beers").innerText = `oluita löytyi ${beers.length}`;
+};
 
 const beers = () => {
-  let request = new XMLHttpRequest()
+  let request = new XMLHttpRequest();
 
-  request.load = handleResponse
+  request.load = handleResponse;
 
-  request.open("get", "beers.json", true)
-  request.send()
-}
+  request.open("get", "beers.json", true);
+  request.send();
+};
 ```
 
 hello-funktio nimetään uudelleen beers nimiseksi (HUOM: muista vaihtaa funktion nimi myös exportissa, sekä application.js tiedoston importissa!). beers-funktion ensimmäinen rivi luo [XMLHttpRequest](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest). Oliolle asetetaan onload-muuttujaan ylempänä määritelty handleResponse-funktio joka käsittelee pyynnön. Tämän jälkeen requestille asetetaan tiedot siitä, mitä sen täytyy tehdä eli hakea ("get") osoitteesta beers.json. Tämän jälkeen kutsu lähetetään ja vastauksen saavuttua siirrytään handleResponse-funktioon. handleResponse-funktio saa parametrinään request-objektin, jonka vastauksesta pystymme saamaan oluet JSON.parse-funktion avulla. Tämän jälkeen sivulle lisätään oluiden lukumäärä. Javascriptissä pystytään yhdistämään tekstiä ja muuttujia rubyn tapaan, tosin javascriptissä käytetään dollarisymbolia sekä normaalien heittomerkkien sijaan `-merkkiä.
-
 
 Funktion pitäisi siis saatuaan oluet palvelimelta muodostaa ne listaava HTML-koodi ja lisätä se sivulle.
 
@@ -293,14 +291,14 @@ Muutetaan javascript-koodiamme siten, että se listaa aluksi ainoastaan oluiden 
 
 ```javascript
 const handleResponse = (request) => {
-  const beers = JSON.parse(request.target.response)
+  const beers = JSON.parse(request.target.response);
 
-  const beerList = beers.map((beer) => 
-    `<li>${beer.name}</li>`
-  )
+  const beerList = beers.map((beer) => `<li>${beer.name}</li>`);
 
-  document.getElementById("beers").innerHTML = `<ul> ${beerList.join('')} </ul>`
-}
+  document.getElementById("beers").innerHTML = `<ul> ${beerList.join(
+    ""
+  )} </ul>`;
+};
 ```
 
 Koodi määrittelee paikallisen taulukkomuuttujan <code>beerList</code> ja käy läpi parametrina saamansa oluiden listan <code>beers</code>. Käyttämällä map-funktiota voimme muodostaa uuden taulukon suoraan funktion palautusarvosta. Jokaista olutta kohti <code>beerList</code>:iin palautetaan HTML-elementti, joka on muotoa
@@ -316,24 +314,24 @@ Nyt siis saimme yksinkertaisen listan oluiden nimistä sivulle.
 Entä jos haluaisimme järjestää oluet? Jotta tämä onnistuu, refaktoroimme koodin ensin seuraavanlaiseksi:
 
 ```javascript
-const BEERS = {}
+const BEERS = {};
 
 BEERS.show = () => {
-  const beers = JSON.parse(request.target.response)
+  const beers = JSON.parse(request.target.response);
 
-  const beerList = BEERS.list.map((beer) => 
-    `<li>${beer.name}</li>`
-  )
+  const beerList = BEERS.list.map((beer) => `<li>${beer.name}</li>`);
 
-  document.getElementById("beers").innerHTML = `<ul> ${beerList.join('')} </ul>`
-}
+  document.getElementById("beers").innerHTML = `<ul> ${beerList.join(
+    ""
+  )} </ul>`;
+};
 
 const handleResponse = (request) => {
-    const beers = JSON.parse(request.target.response)
+  const beers = JSON.parse(request.target.response);
 
-    BEERS.list = beers
-    BEERS.show()
-}
+  BEERS.list = beers;
+  BEERS.show();
+};
 ```
 
 Määrittelimme nyt olion <code>BEERS</code>, jonka attribuuttiin <code>BEERS.list</code> palvelimelta saapuva oluiden lista sijoitetaan. Metodi <code>BEERS.show</code> muodostaa <code>BEERS.list</code>:in oluista HTML-listan ja sijoittaa sen näytölle.
@@ -351,26 +349,25 @@ Lisätään sitten javascriptillä linkille klikkauksenkäsittelijä, joka linkk
 
 ```javascript
 BEERS.reverse = () => {
-  BEERS.list.reverse()
-}
+  BEERS.list.reverse();
+};
 
 const beertable = () => {
-  document.getElementById("reverse").addEventListener("click", function(e) {
-    e.preventDefault()
-    BEERS.reverse()
-    BEERS.show()
-  })
+  document.getElementById("reverse").addEventListener("click", function (e) {
+    e.preventDefault();
+    BEERS.reverse();
+    BEERS.show();
+  });
   var request = new XMLHttpRequest();
 
   request.onload = handleResponse;
 
-  request.open("get", "beers.json", true)
+  request.open("get", "beers.json", true);
   request.send();
-}
-
+};
 ```
 
-Tekstin klikkauksen käsittelijä siis määritellään sivun beer-table funktiossa, eli kun dokumentti on latautunut, _rekisteröidään_ klikkausten käsittelijäfunktio id:n "reverse" omaavalle elementille.  
+Tekstin klikkauksen käsittelijä siis määritellään sivun beer-table funktiossa, eli kun dokumentti on latautunut, _rekisteröidään_ klikkausten käsittelijäfunktio id:n "reverse" omaavalle elementille.
 
 Kun linkkiä klikataan, tapahtumankäsittelijä kutsuu aluksi metodia <code>e.preventDefault</code>, joka estää klikkauksen "normaalin" toiminnallisuuden eli (nyt olemattoman) linkin seuraamisen. Tämän jälkeen kutsutaan metodeita _reverse_ ja _show_ piirtämään oluet ruudulle käänteisessä järjestysessä.
 
@@ -401,25 +398,24 @@ Muutetaan sitten javascriptissä määriteltyä metodia <code>show</code> siten,
 
 ```javascript
 const createTableRow = (beer) => {
-    let tr = document.createElement('tr')
-    let beername = tr.appendChild(document.createElement('td'))
-    beername.innerHTML = beer.name
+  let tr = document.createElement("tr");
+  let beername = tr.appendChild(document.createElement("td"));
+  beername.innerHTML = beer.name;
 
-    return tr
-}
+  return tr;
+};
 
 BEERS.show = () => {
-  const table = document.getElementById("beertable")
+  const table = document.getElementById("beertable");
 
   BEERS.list.forEach((beer) => {
-    const tr = createTableRow(beer)
-    table.appendChild(tr)
-  })
-}
+    const tr = createTableRow(beer);
+    table.appendChild(tr);
+  });
+};
 ```
 
 Eli ensin koodi tallettaa viitteen taulukkoon muuttujana <code>table</code>. Tämän jälkeen luodaan createTableRow-apufunktion avulla <code>tr</code>-elementtejä joiden sisälle tulee taulukon solut <code>td</code>. Rivi palautetaan takaisin forEach-looppiin jossa ne asetetaan taulukon "lapsiksi" käyttämällä appendChild-metodia.
-
 
 Laajennetaan sitten metodia näyttämään kaikki tiedot oluista. Huomaamme kuitenkin, että oluiden json-muotoisessa listassa <http://localhost:3000/beers.json> ei ole panimosta muuta tietoa kuin olioiden id:t, haluaisimme kuitenkin näyttää panimon nimen. Oluttyylin tiedot löytyvät kokonaisuudessaan jsonista jo nyt.
 
@@ -429,7 +425,7 @@ Ongelma on onneksi helppo ratkaista muokkaamalla oluiden listan tuottavaa json-j
 json.array! @beers, partial: 'beers/beer', as: :beer
 ```
 
-Template määrittelee, että jokaisesta oluesta muodostetaan json-esitys tiedoston *_beer.json.jbuilder* avulla, tiedoston sisältö on seuraava
+Template määrittelee, että jokaisesta oluesta muodostetaan json-esitys tiedoston _\_beer.json.jbuilder_ avulla, tiedoston sisältö on seuraava
 
 ```ruby
 json.extract! beer, :id, :name, :style, :brewery_id, :created_at, :updated_at
@@ -448,17 +444,17 @@ Nyt saamme taulukon generoitua lisäämällä seuraavat rivit createTableRow-fun
 
 ```javascript
 const createTableRow = (beer) => {
-    let tr = document.createElement('tr')
-    tr.classList.add('tablerow')
-    let beername = tr.appendChild(document.createElement('td'))
-    beername.innerHTML = beer.name
-    let style = tr.appendChild(document.createElement('td'))
-    style.innerHTML = beer.style.name
-    let brewery = tr.appendChild(document.createElement('td'))
-    brewery.innerHTML = beer.brewery.name
+  let tr = document.createElement("tr");
+  tr.classList.add("tablerow");
+  let beername = tr.appendChild(document.createElement("td"));
+  beername.innerHTML = beer.name;
+  let style = tr.appendChild(document.createElement("td"));
+  style.innerHTML = beer.style.name;
+  let brewery = tr.appendChild(document.createElement("td"));
+  brewery.innerHTML = beer.brewery.name;
 
-    return tr
-}
+  return tr;
+};
 ```
 
 Oluiden listan json-esityksen mukana tulee nyt paljon tarpeetontakin tietoa sillä mukaan renderöityvät jokaisen oluen panimon ja tyylin json-esitykset kokonaisuudessaan. Voisimme optimoida yksittäisen oluen json-esityksen generoivaa templatea siten, että oluen panimosta ja tyylistä tulee json-esitykseen mukaan ainoastaan nimi:
@@ -475,86 +471,88 @@ end
 
 Nyt palvelimen lähettämä oluiden jsonmuotoinen lista on huomattavasti inhimillisemmän kokoinen:
 
-![kuva](https://github.com/ollikehy/wepa22/raw/master/images/ratebeer-w7-5.png)
+![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/ratebeer-w7-5.png)
 
 Rekisteröimme vielä järjestämisen suorittavat tapahtumankuuntelijat linkeille (seuraavassa lopullinen javascript-koodi):
 
 ```javascript
-const BEERS = {}
+const BEERS = {};
 
 const createTableRow = (beer) => {
-  let tr = document.createElement('tr')
-  tr.classList.add('tablerow')
-  let beername = tr.appendChild(document.createElement('td'))
-  beername.innerHTML = beer.name
-  let style = tr.appendChild(document.createElement('td'))
-  style.innerHTML = beer.style.name
-  let brewery = tr.appendChild(document.createElement('td'))
-  brewery.innerHTML = beer.brewery.name
+  let tr = document.createElement("tr");
+  tr.classList.add("tablerow");
+  let beername = tr.appendChild(document.createElement("td"));
+  beername.innerHTML = beer.name;
+  let style = tr.appendChild(document.createElement("td"));
+  style.innerHTML = beer.style.name;
+  let brewery = tr.appendChild(document.createElement("td"));
+  brewery.innerHTML = beer.brewery.name;
 
-  return tr
-}
+  return tr;
+};
 
 BEERS.show = () => {
-  document.querySelectorAll('.tablerow').forEach((el) => el.remove())
-  const table = document.getElementById("beertable")
+  document.querySelectorAll(".tablerow").forEach((el) => el.remove());
+  const table = document.getElementById("beertable");
 
   BEERS.list.forEach((beer) => {
-      const tr = createTableRow(beer)
-      table.appendChild(tr)
-  })
-}
+    const tr = createTableRow(beer);
+    table.appendChild(tr);
+  });
+};
 
 BEERS.sortByName = () => {
-  BEERS.list.sort((a,b) => {
-      return a.name.toUpperCase().localeCompare(b.name.toUpperCase())
-  })
-}
+  BEERS.list.sort((a, b) => {
+    return a.name.toUpperCase().localeCompare(b.name.toUpperCase());
+  });
+};
 
 BEERS.sortByStyle = () => {
-  BEERS.list.sort((a,b) => {
-      return a.style.name.toUpperCase().localeCompare(b.style.name.toUpperCase())
-  })
-}
+  BEERS.list.sort((a, b) => {
+    return a.style.name.toUpperCase().localeCompare(b.style.name.toUpperCase());
+  });
+};
 
 BEERS.sortByBrewery = () => {
-  BEERS.list.sort((a,b) => {
-      return a.brewery.name.toUpperCase().localeCompare(b.brewery.name.toUpperCase())
-  })
-}
+  BEERS.list.sort((a, b) => {
+    return a.brewery.name
+      .toUpperCase()
+      .localeCompare(b.brewery.name.toUpperCase());
+  });
+};
 
 const handleResponse = (request) => {
-  const beers = JSON.parse(request.target.response)
-  BEERS.list = beers
-  BEERS.show()
-}
+  const beers = JSON.parse(request.target.response);
+  BEERS.list = beers;
+  BEERS.show();
+};
 
 const beertable = () => {
-  document.getElementById("name").addEventListener("click", function(e) {
-      e.preventDefault
-      BEERS.sortByName()
-      BEERS.show()
-  })
-  document.getElementById("style").addEventListener("click", function(e) {
-      e.preventDefault
-      BEERS.sortByStyle()
-      BEERS.show()
-  })
-  document.getElementById("brewery").addEventListener("click", function(e) {
-      e.preventDefault
-      BEERS.sortByBrewery()
-      BEERS.show()
-  })
+  document.getElementById("name").addEventListener("click", function (e) {
+    e.preventDefault;
+    BEERS.sortByName();
+    BEERS.show();
+  });
+  document.getElementById("style").addEventListener("click", function (e) {
+    e.preventDefault;
+    BEERS.sortByStyle();
+    BEERS.show();
+  });
+  document.getElementById("brewery").addEventListener("click", function (e) {
+    e.preventDefault;
+    BEERS.sortByBrewery();
+    BEERS.show();
+  });
 
   var request = new XMLHttpRequest();
 
   request.onload = handleResponse;
 
-  request.open("get", "beers.json", true)
+  request.open("get", "beers.json", true);
   request.send();
-}
+};
 
-export { beertable }
+export { beertable };
 ```
 
 Tapahtumakuuntelijoita kutsuessa lisätään uudessa järjestyksessä olevat BEERS.list alkiot taulukkoon olemassaolevien jatkoksi. Korjataan tämä lisäämällä BEERS.show-funktion alkuun rivi, jossa haetaan olemassaolevat <code>tablerow</code>-luokalla varustetut rivit ja poistetaan ne.
@@ -565,24 +563,24 @@ Viritellään javascript-koodia vielä siten, että <code>beertable</code>-funkt
 
 ```javascript
 const beertable = () => {
-  if (document.querySelectorAll("#beertable").length < 1) return
+  if (document.querySelectorAll("#beertable").length < 1) return;
 
   //...
-  
+
   var request = new XMLHttpRequest();
 
   request.onload = handleResponse;
 
-  request.open("get", "beers.json", true)
+  request.open("get", "beers.json", true);
   request.send();
-}
+};
 ```
 
 Jos sivulta ei löydy beertable-id:llä olevaa elementtiä ei funktion suoritusta jatketa. Sovellusta tehdessä kannattaakin pitää mielessä, että id:n on tarkoitus olla yksilöivä tieto eli niitä ei yhdessä sovelluksessa saa olla kahta samanlaista!
 
 Tällä hetkellä trendinä siirtää yhä suurempi osa web-sivujen toiminnallisuudesta selaimeen. Etuna mm. se että web-sovelluksien toiminta saadaan muistuttamaan yhä enenevissä määrin desktop-sovelluksia.
 
-## React 
+## React
 
 Äsken javascriptillä toteuttamamme oluet listaava sivu oli koodin rakenteen puolesta ihan kohtuullista, mutta Railsin sujuvuuteen ja vaivattomuuteen verrattuna koodi oli raskaahkoa ja paikoin ikävien, rutiininomaisten yksityiskohtien täyttämää. Jos sovelluksen selainpuolella toteutettavan koodin määrä alkaa kasvaa, on lopputuloksena helposti sekava koodi, jonka toiminnasta kukaan ei enää ota selvää ja jonka laajentaminen muuttuu erittäin haastavaksi.
 
@@ -604,7 +602,7 @@ Javascript-frontendsovelluskehykset tuovat asiaan helpotusta. Pitkään jo suosi
 
 > ## Tehtävä 3
 >
-> Laajenna panimoiden listaa siten, että panimot voi järjestää joko aakkos- tai perustamisvuoden mukaiseen järjestykseen tai panimon valmistamien oluiden lukumäärän perusteella. 
+> Laajenna panimoiden listaa siten, että panimot voi järjestää joko aakkos- tai perustamisvuoden mukaiseen järjestykseen tai panimon valmistamien oluiden lukumäärän perusteella.
 
 ## Selainpuolella toteutetun toiminnallisuuden testaaminen
 
@@ -652,11 +650,11 @@ Finished in 21.17 seconds (files took 5.33 seconds to load)
 ```
 
 Näyttää siis siltä että sivulla ei ole ollenkaan oluiden listaa. Varmistetaan tämä laittamalla testiin juuri ennen komentoa <code>expect</code> komento <code>save_and_open_page</code> jonka avulla saamme siis avattua selaimeen sivun jolle capybara on navigoinut
-(ks. https://github.com/ollikehy/wepa22/blob/master/web/viikko4.md#capybarav4#capybara).
+(ks. https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/viikko4.md#capybarav4#capybara).
 
 Ja aivan kuten arvelimme, sivulla näytettävä oluttaulukko on tyhjä:
 
-![kuva](https://github.com/ollikehy/wepa22/raw/master/images/ratebeer-w6-2.png)
+![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/ratebeer-w6-2.png)
 
 Syy ongelmalle löytyy capybaran dokumentaatiosta https://github.com/jnicklas/capybara#drivers
 
@@ -691,23 +689,22 @@ Kun suoritamme testit, törmäämme virheilmoitukseen
       ============================================================
 ```
 
-Virheen syy on siinä, että otimme viikolla 5 käyttöömme [WebMock-gemin](https://github.com/ollikehy/wepa22/blob/master/web/viikko5.md#olutpaikkojen-etsimistoiminnon-testaaminen) joka oletusarvoisesti kieltää testikoodin suorittamat HTTP-yhteydet. Javascriptilla toteutettu olutlistahan yrittää hakea oluiden listan json-muodossa palvelimelta. Pääsemme virheestä eroon sallimalla yhteydet, esim. muuttamalla testit alustavaan <code>before :all</code> -lohkoa seuraavasti:
+Virheen syy on siinä, että otimme viikolla 5 käyttöömme [WebMock-gemin](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/viikko5.md#olutpaikkojen-etsimistoiminnon-testaaminen) joka oletusarvoisesti kieltää testikoodin suorittamat HTTP-yhteydet. Javascriptilla toteutettu olutlistahan yrittää hakea oluiden listan json-muodossa palvelimelta. Pääsemme virheestä eroon sallimalla yhteydet, esim. muuttamalla testit alustavaan <code>before :all</code> -lohkoa seuraavasti:
 
 ```ruby
 before :all do
   Capybara.register_driver :selenium do |app|
     Capybara::Selenium::Driver.new(app, :browser => :chrome)
   end
-    WebMock.allow_net_connect! 
+    WebMock.allow_net_connect!
 end
 ```
 
 Testi toimii vihdoin.
 
-
 Kun sivuille luodaan sisältöä javascriptillä, ei sisältö ilmesty sivulle vielä samalla hetkellä kuin sivun html-pohja ladataan vaan vasta javascript takaisinkutsufunktion suorituksen jälkeen. Eli jos katsomme sivun sisältöä välittömästi sivulle navigoinnin jälkeen, ei javascript ole vielä ehtinyt muodostaa sivun lopullista sisältöä. Esim. seuraavassa <code>save_and_open_page</code> saattaa avata sivun, jossa ei vielä näy yhtään olutta:
 
-``` ruby
+```ruby
 it "shows a known beer", js:true do
   visit beerlist_path
   save_and_open_page
@@ -719,7 +716,7 @@ Kuten sivulla https://github.com/jnicklas/capybara#asynchronous-javascript-ajax-
 
 Tiedämme, että javascriptin pitäisi lisätä sivun taulukkoon rivejä. Saammekin sivun näkymään oikein, jos lisäämme alkuun komennon <code>find('table').find('tr:nth-child(2)')</code> joka etsii sivulta taulukon ja sen sisältä toisen rivin (taulukon ensimmäinen rivihän on jo sivupohjassa mukana oleva taulukon otsikkorivi):
 
-``` ruby
+```ruby
 it "shows a known beer", :js => true do
   visit beerlist_path
   find('table').find('tr:nth-child(2)')
@@ -730,7 +727,7 @@ end
 
 Nyt capybara odottaa taulukon valmistumista ja siirtyy sivun avaavaan komentoon vasta taulukon latauduttua (itseasiassa vain 2 riviä taulukkoa on varmuudella valmiina).
 
-Testien suorittaminen todellisessa selaimella on melko hidasta. Saat nopeutettua testejä käyttämällä Chromen Headless- moodia, eli "käyttöliittymätöntä versiota". Headless-selaimen käyttöönotto onnistuu muuttamalla <code>before :all</code> -lohko muotoon 
+Testien suorittaminen todellisessa selaimella on melko hidasta. Saat nopeutettua testejä käyttämällä Chromen Headless- moodia, eli "käyttöliittymätöntä versiota". Headless-selaimen käyttöönotto onnistuu muuttamalla <code>before :all</code> -lohko muotoon
 
 ```ruby
 before :all do
@@ -752,23 +749,24 @@ Konfiguraation muutoksen jälkeen suoritus normaalilla selaimella onnistuu tyhje
 >
 > Testaaminen kannattaa tehdä nyt siten, että etsitään taulukon rivit <code>find</code>-selektorin avulla ja varmistetaan, että jokaisella rivillä on oikea sisältö. Koska taulukon jokaisella rivillä on olemassa <code>tablerow</code>-luokka, löytyy ensimmäinen varsinainen rivi seuraavasti:
 >
-> ``` ruby
+> ```ruby
 > find('#beertable').first('.tablerow')
-> ``` 
+> ```
 >
 > Rivin sisältöä voi testata normaaliin tapaan expect ja have_content -metodeilla.
 
 > ## Tehtävä 5
 >
 > Tee testit seuraaville toiminnallisuuksille
-> * klikattaessa saraketta 'style' järjestyvät oluet tyylin nimen mukaiseen aakkosjärjestykseen
-> * klikattaessa saraketta 'brewery' järjestyvät oluet panimon nimen mukaiseen aakkosjärjestykseen
+>
+> - klikattaessa saraketta 'style' järjestyvät oluet tyylin nimen mukaiseen aakkosjärjestykseen
+> - klikattaessa saraketta 'brewery' järjestyvät oluet panimon nimen mukaiseen aakkosjärjestykseen
 
 ## Asset pipeline
 
 Rails-sovelluksiin liittyviä javascript- ja tyylitiedostoja (ja kuvia) hallitaan ns. Asset pipelinen avulla, ks. https://guides.rubyonrails.org/asset_pipeline.html
 
-Periaatteena on se, että sovelluskehittäjä sijoittaa sovellukseen liittyvät javascript-tiedostot hakemistoon _app/assets/javascripts_ ja tyylitiedostot hakemistoon _app/assets/stylesheets_.  Molempia voidaan sijoittaa useaan eri tiedostoon, ja tarvittaessa alihakemistoihin.
+Periaatteena on se, että sovelluskehittäjä sijoittaa sovellukseen liittyvät javascript-tiedostot hakemistoon _app/assets/javascripts_ ja tyylitiedostot hakemistoon _app/assets/stylesheets_. Molempia voidaan sijoittaa useaan eri tiedostoon, ja tarvittaessa alihakemistoihin.
 
 Sovellusta kehitettäessä (eli kun sovellus on ns. development-moodissa) Rails liittää kaikki (ns. manifest-tiedostossa) määritellyt javascript- ja tyylitiedostot mukaan sovellukseen. Huomaammekin tarkastellessamme sovellusta selaimen view source -ominaisuuden avulla, että mukaan on liitetty suuri joukko javascriptiä ja tyylitiedostoja.
 
@@ -778,22 +776,23 @@ Sovelluksen mukaan liitettävät javascript-tiedostot määritellään tiedostos
 //= require jquery3
 //= require popper
 //= require bootstrap-sprockets
-import "@hotwired/turbo-rails"
-import "controllers"
-import { beertable } from "custom/utils"
+import "@hotwired/turbo-rails";
+import "controllers";
+import { beertable } from "custom/utils";
 
-beertable()
+beertable();
 ```
 
 Vaikka tiedostossa olevat requiret näyttävät olevan kommenteissa, on kuitenkin kyse "oikeista", asset pipelinestä huolehtivan [sprockets-kääntäjän](https://github.com/sstephenson/sprockets) komennoista, joiden avulla määritellään sovellukseen mukaan otettavat javascript-tiedostot. Tiedosto määrittelee, että mukaan otetaan jquery3, popper, bootstrap-sprockets. Kaikki näistä on asennettu sovellukseen gemien avulla.
 
-Asset pipeline mahdollistaa myös [coffeescriptin](http://coffeescript.org/) käyttämisen, tällöin tiedostojen päätteeksi tulee <code>.js.coffee</code>. Sovellusta suoritettaessa scprockets kääntää coffeescriptin automaattisesti javascriptiksi. 
+Asset pipeline mahdollistaa myös [coffeescriptin](http://coffeescript.org/) käyttämisen, tällöin tiedostojen päätteeksi tulee <code>.js.coffee</code>. Sovellusta suoritettaessa scprockets kääntää coffeescriptin automaattisesti javascriptiksi.
 
 Tuotantokäytössä sovelluksella ei suorituskykysyistä yleensä kannata olla useampia javascript- tai tyylitiedostoja. Kun sovellusta aletaan suorittaa tuotantoympäristössä (eli production-moodissa), sprockets yhdistääkin kaikki sovelluksen javascript- ja tyylitiedostot yksittäisiksi, optimoiduiksi tiedostoiksi. Huomaamme tämän jos katsomme herokussa olevan sovelluksen html-lähdekoodia, esim: https://ratebeer22.herokuapp.com/ sisältää se nyt ainoastaan yhden js- ja yhden css-tiedoston joista varsinkin js-tiedoston luettavuus on ihmisen kannalta heikko.
 
 Lisää asset pipelinestä ja mm. javascriptin liittämisestä railssovelluksiin mm. seuraavissa:
-* http://railscasts.com/episodes/279-understanding-the-asset-pipeline
-* http://railsapps.github.io/rails-javascript-include-external.html
+
+- http://railscasts.com/episodes/279-understanding-the-asset-pipeline
+- http://railsapps.github.io/rails-javascript-include-external.html
 
 > ## Tehtävät 6-8 (kolmen tehtävän arvoinen)
 >
@@ -802,21 +801,22 @@ Lisää asset pipelinestä ja mm. javascriptin liittämisestä railssovelluksiin
 > Toistaiseksi kuka tahansa voi sovelluksessamme liittyä olutkerhon jäseneksi. Muutetaan nyt sovellusta siten, että jäsenyys ei tule voimaan ennenkuin joku jo jäsenenä oleva vahvistaa jäsenyyden.
 >
 > Muutamia huomioita
-> * jäsenyyden vahvistamattomuus kannattaa huomioida siten, että Membership-modeliin lisätään boolean-arvoinen kenttä _confirmed_
-> * Kun kerho luodaan, tee sen luoneesta käyttäjästä automaattisesti kerhon jäsen
-> * Näytä kerhon sivulla jäsenille lista vahvistamattomana olevista jäsenyyksistä (eli jäsenhakemuksista)
-> * Jäsenyyden statuksen muutos voidaan hoitaa esim. oman [custom-reitin](https://github.com/ollikehy/wepa22/blob/master/web/viikko6.md#reitti-panimon-statuksen-muuttamiselle) avulla.
+>
+> - jäsenyyden vahvistamattomuus kannattaa huomioida siten, että Membership-modeliin lisätään boolean-arvoinen kenttä _confirmed_
+> - Kun kerho luodaan, tee sen luoneesta käyttäjästä automaattisesti kerhon jäsen
+> - Näytä kerhon sivulla jäsenille lista vahvistamattomana olevista jäsenyyksistä (eli jäsenhakemuksista)
+> - Jäsenyyden statuksen muutos voidaan hoitaa esim. oman [custom-reitin](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/viikko6.md#reitti-panimon-statuksen-muuttamiselle) avulla.
 >
 > Tehtävä saattaa olla hieman haastava. [Active Record Associations -guiden](http://guides.rubyonrails.org/association_basics.html) luku **4.3.3 Scopes for has_many** tarjoaa erään hyvän työvälineen tehtävään. Tehtävän voi toki tehdä monella muullakin tavalla.
 > Myös luku **4.3.2.3 :class_name** voi olla hyödyksi.
 
 Tehtävän jälkeen sovelluksesi voi näyttää esim. seuraavalta. Olutseuran sivulla näytetään lista jäsenyyttä hakeneista, jos kirjautuneena on olutseurassa jo jäsenenä oleva käyttäjä:
 
-![kuva](https://github.com/ollikehy/wepa22/raw/master/images/ratebeer-w6-6.png)
+![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/ratebeer-w6-6.png)
 
 Käyttäjän omalla sivulta näytetään toistaiseksi käsittelemättömät hakemukset:
 
-![kuva](https://github.com/ollikehy/wepa22/raw/master/images/ratebeer-w6-5.png)
+![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/ratebeer-w6-5.png)
 
 ## Indeksi tietokantaan
 
@@ -888,7 +888,6 @@ Template listaa oluet taulukkona:
 
 Yksinkertaista ja tyylikästä... mutta ei kovin tehokasta.
 
-
 Voisimme katsoa lokitiedostosta log/development.log mitä kaikkea oluiden sivulle mentäessä tapahtuu. Pääsemme samaan tietoon hieman mukavammassa muodossa käsiksi _miniprofiler_ gemin (ks. https://github.com/MiniProfiler/rack-mini-profiler ja http://samsaffron.com/archive/2012/07/12/miniprofiler-ruby-edition)
 
 Miniprofilerin käyttöönotto on helppoa, riittää että Gemfileen lisätään rivi
@@ -897,22 +896,23 @@ Miniprofilerin käyttöönotto on helppoa, riittää että Gemfileen lisätään
 
 Suorita <code>bundle install</code> ja käynnistä rails server uudelleen. Kun menet tämän jälkeen osoitteeseen http://localhost:3000/beers huomaat, että sivun yläkulmaan ilmestyy aikalukema joka kuvaa HTTP-pyynnön suoritukseen käytettyä aikaa. Numeroa klikkaamalla avautuu tarkempi erittely ajankäytöstä:
 
-![kuva](https://github.com/ollikehy/wepa22/raw/master/images/ratebeer-w6-7.png)
+![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/ratebeer-w6-7.png)
 
-Raportti kertoo että <code>Executing action: index</code> eli kontrollerimetodin suoritus aiheuttaa yhden SQL-kyselyn <code>SELECT "beers".* FROM "beers"</code>. Sen sijaan
- <code>Rendering: beers/index</code> eli näkymätemplaten suoritus aiheuttaa huomattavasti enemmän SQL-kyselyjä!
+Raportti kertoo että <code>Executing action: index</code> eli kontrollerimetodin suoritus aiheuttaa yhden SQL-kyselyn <code>SELECT "beers".\* FROM "beers"</code>. Sen sijaan
+<code>Rendering: beers/index</code> eli näkymätemplaten suoritus aiheuttaa huomattavasti enemmän SQL-kyselyjä!
 
 Kyselyjä klikkaamalla päästään tarkastelemaan syytä:
 
-![kuva](https://github.com/ollikehy/wepa22/raw/master/images/ratebeer-w6-8.png)
+![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/ratebeer-w6-8.png)
 
 Näkymätemplaten renderöinti siis suorittaa useaan kertaan seuraavat kyselyt:
 
 ```ruby
 SELECT  "styles".* FROM "styles" WHERE "styles"."id" = ? LIMIT ?;
 
-SELECT  "breweries".* FROM "breweries" WHERE "breweries"."id" = ? LIMIT ?; 
+SELECT  "breweries".* FROM "breweries" WHERE "breweries"."id" = ? LIMIT ?;
 ```
+
 Käytännössä jokaista erillistä olutta kohti tehdään oma kysely sekä <code>styles</code>- että <code>breweries</code> tauluun.
 
 Syynä tälle on se, että activerecordissa on oletusarvoisesti käytössä ns. _lazy loading_, eli kun haemme olion tietokannasta, olioon liittyvät kentät haetaan tietokannasta vasta jos niihin viitataan. Joskus tämä käyttäytyminen on toivottavaa, olioonhan voi liittyä suuri määrä olioita, joita ei välttämättä tarvita olion itsensä käsittelyn yhteydessä. Kaikkien oluiden sivulle mentäessä lazy loading ei kuitenkaan ole hyvä idea, sillä tiedämme varmuudella että jokaisen oluen yhteydessä näytetään myös oluen panimon sekä tyylin nimet ja nämä tiedot löytyvät ainoastaan panimoiden ja tyylien tietokantatauluista.
@@ -929,7 +929,7 @@ end
 Miniprofilerin avulla näemme. että kontrollerin suoritus aiheuttaa nyt kaksi kyselyä:
 
 ```ruby
-SELECT "beers".* FROM "beers"; 
+SELECT "beers".* FROM "beers";
 SELECT "breweries".* FROM "breweries" WHERE "breweries"."id" IN (?, ?, ?, ?);
 ```
 
@@ -937,7 +937,7 @@ Näyttötemplaten suoritus aiheuttaa kyselyjä, jotka ovat esimerkiksi muotoa:
 
 ```ruby
 SELECT "ratings".* FROM "ratings" WHERE "ratings"."beer_id" = ?;
-SELECT  "styles".* FROM "styles" WHERE "styles"."id" = ? LIMIT ?; 
+SELECT  "styles".* FROM "styles" WHERE "styles"."id" = ? LIMIT ?;
 ```
 
 Näytön renderöinnin yhteydessä enää on haettava oluisiin liittyvät tyylit tietokannasta, kukin omalla SQL-kyselyllä.
@@ -963,6 +963,7 @@ ja syynä sille on
 ```ruby
 app/controllers/application_controller.rb:7:in `current_user'
 ```
+
 eli näytön muuttujan <code>current_user</code> avulla tekemä viittaus kirjautuneena olevaan käyttäjään. Tämä ei kuitenkaan ole hirveän vakavaa.
 
 Saimme helposti optimoitua SQL-kutsujen määrää ja sitä myöden sivun lautausaikaa! SQL-kutsujen määrän väheneminen on sikäli hyvä, että se on vakio ja ei riipu järjestelmässä olevien oluiden määrästä.
@@ -1021,7 +1022,7 @@ Saattaakin olla, että metodista olisi tietyissä tilanteissa suorituskykyä opt
 
 ## Cachays eli palvelinpuolen välimuistitoiminnallisuudet
 
-Luodaan tietokantaamme hiukan lisää dataa. 
+Luodaan tietokantaamme hiukan lisää dataa.
 
 Korvaa tiedoston _db/seeds.db_ sisältö seuraavalla:
 
@@ -1101,9 +1102,9 @@ Datamäärän ollessa suuri, ei pelkkä kyselyjen optimointi riitä, vaan on ets
 
 Vaihtoehdoksi nousee tällöin **cachaus eli välimuistien käyttö**.
 
-Web-sovelluksessa cachaystä voidaan suorittaa sekä selaimen, että palvelimen puolella (sekä selaimen ja palvelimen välissä olevissa proxyissä). Tarkastellaan nyt palvelimen puolella tapahtuvaa cachaystä. Toteutimme jo [toissa viikolla](https://github.com/ollikehy/wepa22/blob/master/web/viikko5.md#suorituskyvyn-optimointi) "käsin" beermapping-apista haettujen tietojen cachaystä Rails.cachen avulla. Tutkitaan nyt railsin tarjoamaa hieman automaattisempaa cachaysmekanismia.
+Web-sovelluksessa cachaystä voidaan suorittaa sekä selaimen, että palvelimen puolella (sekä selaimen ja palvelimen välissä olevissa proxyissä). Tarkastellaan nyt palvelimen puolella tapahtuvaa cachaystä. Toteutimme jo [toissa viikolla](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/viikko5.md#suorituskyvyn-optimointi) "käsin" beermapping-apista haettujen tietojen cachaystä Rails.cachen avulla. Tutkitaan nyt railsin tarjoamaa hieman automaattisempaa cachaysmekanismia.
 
-Cachays ei ole oletusarvoisesti päällä kun sovellusta suoritetaan development-moodissa. Kytkit ehkä cachen päälle viikolla 5. 
+Cachays ei ole oletusarvoisesti päällä kun sovellusta suoritetaan development-moodissa. Kytkit ehkä cachen päälle viikolla 5.
 
 Jos cache on päällä, on projektissa olemassa tiedosto _tmp/caching-dev.txt_. Jos tiedostoa ei ole, saat cachen päälle suorittamalla komentoriviltä komennon <code>rails dev:cache</code>. Komennon pitäisi tulostaa
 
@@ -1116,6 +1117,7 @@ Jos komento tulostaa
 ```
 Development mode is no longer being cached.
 ```
+
 suorita se uudelleen.
 
 **Käynnistä nyt sovellus uudelleen.**
@@ -1130,7 +1132,7 @@ Cachays tapahtuu sisällyttämällä näkymätemplaten cachattavan osa, eli _siv
 <% end %>
 ```
 
-Kuten arvata saattaa, <code>avain</code> on avain, jolla cachattava näkymäfragmentti talletetaan. Avaimena voi olla merkkijono tai olio. <code>skip_digest: true</code> liittyy [näyttötemplatejen versiointiin](http://blog.remarkablelabs.com/2012/12/russian-doll-caching-cache-digests-rails-4-countdown-to-2013) jonka haluamme nyt jättää huomioimatta. Tämä kuitenkin tarkoittaa, että välimuisti on syytä tyhjentää (komennolla <code>Rails.cache.clear</code>) _jos_ näkymätemplaten koodia muutetaan.
+Kuten arvata saattaa, <code>avain</code> on avain, jolla cachattava näkymäfragmentti talletetaan. Avaimena voi olla merkkijono tai olio. <code>skip*digest: true</code> liittyy [näyttötemplatejen versiointiin](http://blog.remarkablelabs.com/2012/12/russian-doll-caching-cache-digests-rails-4-countdown-to-2013) jonka haluamme nyt jättää huomioimatta. Tämä kuitenkin tarkoittaa, että välimuisti on syytä tyhjentää (komennolla <code>Rails.cache.clear</code>) \_jos* näkymätemplaten koodia muutetaan.
 
 Fragmentticachayksen lisääminen oluiden listalle views/beers/index.html on helppoa, cachataan sivulta sen dynaaminen osa eli oluiden taulukko:
 
@@ -1161,13 +1163,13 @@ Fragmentticachayksen lisääminen oluiden listalle views/beers/index.html on hel
 
 Kun nyt menemme sivulle, ei sivufragmenttia ole vielä talletettu välimuistin ja sivun lataaminen kestää yhtä kauan kuin ennen cachayksen lisäämistä:
 
-![kuva](https://github.com/ollikehy/wepa22/raw/master/images/ratebeer-w6-9.png)
+![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/ratebeer-w6-9.png)
 
 Sivun latausaika on 234564ms, mistä itse sivun renderöimiseen kulunut aika <code>Rendering: beers/index</code> on siis 5041.2 millisekuntia.
 
 Sivulla käytyämme sivun osa tallettuu välimuistiin ja seuraava sivun avaaminen on huomattavasti nopeampi:
 
-![kuva](https://github.com/ollikehy/wepa22/raw/master/images/ratebeer-w6-10.png)
+![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/ratebeer-w6-10.png)
 
 Koko sivun latausaika on 299 millisekuntia, josta ainoastaan 6.3 millisekuntia kuluu näkymätemplaten lataamiseen.
 
@@ -1224,7 +1226,7 @@ Ehdossa oleva <code>request.format.html?</code> varmistaa sen, että suoritamme 
 
 Sivu nopeutuu entisestään:
 
-![kuva](https://github.com/ollikehy/wepa22/raw/master/images/ratebeer-w6-11.png)
+![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/ratebeer-w6-11.png)
 
 Huomaamme kuitenkin että sivulla on pieni ongelma. Oluet sai järjestettyä sarakkeita klikkaamalla vaihtoehtoisiin järjestyksiin. Cachays on kuitenkin rikkonut toiminnon!
 
@@ -1274,7 +1276,7 @@ Exist fragment? views/beerlist-name (0.1ms)
 
 > ## Tehtävä 10
 >
-> Toteuta panimot listaavalle sivulle fragmentticachays. Varmista, että sivun sisältöön vaikuttava muutos ekspiroi cachen. 
+> Toteuta panimot listaavalle sivulle fragmentticachays. Varmista, että sivun sisältöön vaikuttava muutos ekspiroi cachen.
 
 ## yksittäisen oluen sivun cashays
 
@@ -1298,7 +1300,7 @@ Jos haluaisimme cachata yksittäisen oluen sivun, kannattaa fragmentin avaimeksi
     <% if @beer.ratings.empty? %>
       beer has not yet been rated
     <% else %>
-      Beer has <%= pluralize(@beer.ratings.count, "rating") %> 
+      Beer has <%= pluralize(@beer.ratings.count, "rating") %>
       with an average of <%= @beer.average_rating %>
   <% end %>
   </p>
@@ -1308,13 +1310,13 @@ Jos haluaisimme cachata yksittäisen oluen sivun, kannattaa fragmentin avaimeksi
 
 <% if current_user %>
   <h4>give a rating:<h4>
-  
+
   <%= form_with(model: @rating) do |form| %>
     <%= form.hidden_field :beer_id %>
     score: <%= form.number_field :score %>
     <%= form.submit "Create rating", class:"btn btn-primary" %>
   <% end %>
-  
+
   <% if current_user && current_user.admin %>
     <div>
       <%= link_to("Edit this beer", edit_beer_path(@beer), class:"btn btn-primary") %>
@@ -1326,7 +1328,7 @@ Jos haluaisimme cachata yksittäisen oluen sivun, kannattaa fragmentin avaimeksi
 <%= link_to "Back to beers", beers_path %>
 ```
 
-Nyt fragmentin avaimeksi tulee merkkijono, jonka Rails generoi kutsumalla olion metodia <code>cache_key_with_version</code>. Metodi generoi avaimen joka yksilöi olion _ja_ sisältää aikaleiman, joka edustaa hetkeä, jolloin olio on viimeksi muuttunut. Jos olion kenttiin tulee muutos, muuttuu fragmentin avaimen arvo eli vanha fragmentti ekspiroituu automaattisesti. Seuraavassa esimerkki automaattisesti generoituvasta cache-avaimesta:
+Nyt fragmentin avaimeksi tulee merkkijono, jonka Rails generoi kutsumalla olion metodia <code>cache*key_with_version</code>. Metodi generoi avaimen joka yksilöi olion \_ja* sisältää aikaleiman, joka edustaa hetkeä, jolloin olio on viimeksi muuttunut. Jos olion kenttiin tulee muutos, muuttuu fragmentin avaimen arvo eli vanha fragmentti ekspiroituu automaattisesti. Seuraavassa esimerkki automaattisesti generoituvasta cache-avaimesta:
 
 ```ruby
 > b = Beer.first
@@ -1356,11 +1358,11 @@ Käytännössä <code>belongs_to</code>-yhteyteen liitetty <code>touch: true</co
 Välimuistin eksplisiittinen ekspiroiminen, kuten kaikkien oluiden sivun suhteen joudumme tekemään, on hieman ikävää sillä on aina pieni riski, että koodissa ei muisteta ekspiroida fragmenttia kaikissa tarpeellisissa kohdissa.
 
 Käyttäessämme suoraan olioa (kuten yksittäisen oluen sivulla tehtiin) fragmentin avaimena, ekspiroitui cache automaattisesti olion päivittyessä. Myös kaikkien oluiden sivulle olisi mahdollista tehdä automaattisesti ekspiroituva cache generoimalla fragmentin avain tarkoitukseen sopivan metodin avulla, katso
-[Caching with Rails: An overview](http://guides.rubyonrails.org/caching_with_rails.html#fragment-caching) 
+[Caching with Rails: An overview](http://guides.rubyonrails.org/caching_with_rails.html#fragment-caching)
 
 ## Selainpuolen cachays
 
-Cachaysta harjoitetaan monilla tasoilla, myös selainpuolella. Lisää tietoa Railsin tuesta selainpuolen cachaykseen [täällä](https://guides.rubyonrails.org/caching_with_rails.html#conditional-get-support) 
+Cachaysta harjoitetaan monilla tasoilla, myös selainpuolella. Lisää tietoa Railsin tuesta selainpuolen cachaykseen [täällä](https://guides.rubyonrails.org/caching_with_rails.html#conditional-get-support)
 
 ## Eventual consistency
 
@@ -1435,7 +1437,7 @@ end
 
 Ylläesitellyn kaltainen taustaprosessointitapa on siinä mielessä yksinkertainen, että sovelluksen ja taustaprosessointia suorittavan säikeen/prosessin ei tarvitse synkronoida toimintojaan. Toisinaan taas taustaprosessoinnin tarpeen laukaisee jokin sovellukselle tuleva pyyntö. Tällöin sovelluksen ja taustaprosessoijien välisen synkronoinnin voi hoitaa esim. viestijonojen avulla.
 
-Viestijonoilla ja erillisillä prosesseilla tai säikeillä hoidetun taustaprosessoinnin toteuttamiseen Railsissa on paljon erilaisia vaihtoehtoja, yksi ratkaisu näistä on [Sidekiq](http://railscasts.com/episodes/366-sidekiq). 
+Viestijonoilla ja erillisillä prosesseilla tai säikeillä hoidetun taustaprosessoinnin toteuttamiseen Railsissa on paljon erilaisia vaihtoehtoja, yksi ratkaisu näistä on [Sidekiq](http://railscasts.com/episodes/366-sidekiq).
 
 Jos sovellus tarvitsee ainoastaan jonkin yksinkertaisen, tasaisin aikavälein suoritettavan taustaoperaation, saattaa [Heroku scheduler](https://devcenter.heroku.com/articles/scheduler) olla yksinkertaisin vaihtoehto. Tällöin taustaoperaatio määritellään [Rake-taskina](http://railscasts.com/episodes/66-custom-rake-tasks), jonka Heroku suorittaa joko kerran vuorokaudessa, tunnissa tai kymmenessä minuutissa.
 
@@ -1447,12 +1449,11 @@ Ilmaisten Heroku-palveluiden yhteydessä on mahdollista käyttää [Sucker Punch
 
 > Sucker Punch is a single-process Ruby asynchronous processing library. This reduces costs of hosting on a service like Heroku along with the memory footprint of having to maintain additional jobs if hosting on a dedicated server. All queues can run within a single application (eg. Rails, Sinatra, etc.) process.
 
-Eli Sucker Punch suorittaa asynkroniset työt samassa prosessissa, missä itse Rails-sovellustakin suoritetaan. 
+Eli Sucker Punch suorittaa asynkroniset työt samassa prosessissa, missä itse Rails-sovellustakin suoritetaan.
 
-Sucker Punchin käyttö on melko helppoa. 
+Sucker Punchin käyttö on melko helppoa.
 
 Lisää gemfileen <code>gem 'sucker_punch', '~> 2.0'</code> ja suorita bundle install.
-
 
 eli määritellään Rails lataamaan automaattisesti luomaamme hakemistoon määritelty koodi.
 
@@ -1499,7 +1500,7 @@ Voit suorittaa operaation myös _synkronisesti_ antamalla komennon <code>TestJob
 
 Voit myös suorittaa operaatioita ajastetusti, esim. jos annat komennon <code>TestJob.perform_in(10.seconds)</code> suoritetaan operaatio asynkronisesti 10 sekunnin kuluttua.
 
-Asynkroninen operaatio voi käynnistää itse itsensä, eli jos muutat koodin muotoon 
+Asynkroninen operaatio voi käynnistää itse itsensä, eli jos muutat koodin muotoon
 
 ```ruby
 class TestJob
@@ -1519,19 +1520,19 @@ ja annat komennon <code>TestJob.perform_async</code> operaatio suoritetaan toist
 
 > ## Tehtävä 12
 >
-> Nopeuta ratings-sivun toimintaa haluamallasi tekniikalla. Voit olettaa, että käyttäjät ovat tyytyväisiä eventual consistency -mallin mukaiseen tiedon ajantasaisuuteen.  
+> Nopeuta ratings-sivun toimintaa haluamallasi tekniikalla. Voit olettaa, että käyttäjät ovat tyytyväisiä eventual consistency -mallin mukaiseen tiedon ajantasaisuuteen.
 >
->Kirjoita ratings-kontrollerin <code>index</code>-metodiin pieni selitys nopeutusstrategiastasi jos se ei ole koodin perusteella muuten ilmeistä.
+> Kirjoita ratings-kontrollerin <code>index</code>-metodiin pieni selitys nopeutusstrategiastasi jos se ei ole koodin perusteella muuten ilmeistä.
 >
 > Jos päädyt käyttämään asynkronisia workereita, ei koodia ole välttämättä ihan helppoa saada toimimaan täysin oikein.
 
 ## Sovelluksen koostaminen palveluista
 
-Sovelluksen suorituskyvyn skaalaaminen onnistuu vain tiettyyn pisteeseen asti, jos sovellus on monoliittinen, kokonaan yhden tietokannan varassa, yhdellä palvelimella suoritettava kokonaisuus. Sovellusta voidaan toki optimoida ja sitä voidaan skaalata __horisontaalisesti__ eli palvelimen fyysisiä resursseja kasvattamalla.
+Sovelluksen suorituskyvyn skaalaaminen onnistuu vain tiettyyn pisteeseen asti, jos sovellus on monoliittinen, kokonaan yhden tietokannan varassa, yhdellä palvelimella suoritettava kokonaisuus. Sovellusta voidaan toki optimoida ja sitä voidaan skaalata **horisontaalisesti** eli palvelimen fyysisiä resursseja kasvattamalla.
 
-Parempaan skaalautuvuuteen päästään kuitenkin __vertikaalisella__ skaalautuvuudella, eli sen sijaan että palvelimen fyysisiä resursseja yritettäisiin kasvattaa, otetaankin sovelluksen käyttöön useita palvelimia, jotka suorittavat sovelluksen toimintoja rinnakkain. Vertikaalinen skaalaaminen ei välttämättä onnistu triviaalisti, sovelluksen arkkitehtuuria on mukautettava. Jos sovellusta palvelee edelleen ainoastaan yksi tietokanta, voi siitä tulla pullonkaula vertikaalisesta skaalaamisesta huolimatta, erityisesti jos kyseessä on relaatiotietokanta, joiden hajauttaminen ja näin ollen vertikaalinen skaalaaminen ei ole helppoa.
+Parempaan skaalautuvuuteen päästään kuitenkin **vertikaalisella** skaalautuvuudella, eli sen sijaan että palvelimen fyysisiä resursseja yritettäisiin kasvattaa, otetaankin sovelluksen käyttöön useita palvelimia, jotka suorittavat sovelluksen toimintoja rinnakkain. Vertikaalinen skaalaaminen ei välttämättä onnistu triviaalisti, sovelluksen arkkitehtuuria on mukautettava. Jos sovellusta palvelee edelleen ainoastaan yksi tietokanta, voi siitä tulla pullonkaula vertikaalisesta skaalaamisesta huolimatta, erityisesti jos kyseessä on relaatiotietokanta, joiden hajauttaminen ja näin ollen vertikaalinen skaalaaminen ei ole helppoa.
 
-Sovelluksen skaalaaminen (ja joissain tapauksissa myös sen ylläpitäminen ja laajentaminen) on helpompaa, jos sovellus on koostettu useammista erillisistä itsenäisenä toimivista keskenään esim. HTTP-protokollan välityksellä kommunikoivista __palveluista__. Sovelluksemme itseasiassa hyödyntää jo toista palvelua eli BeermappingAPI:a. Vastaavasti sovelluksen toiminnallisuutta voitaisiin laajentaa integroimalla siihen uusia palveluja.
+Sovelluksen skaalaaminen (ja joissain tapauksissa myös sen ylläpitäminen ja laajentaminen) on helpompaa, jos sovellus on koostettu useammista erillisistä itsenäisenä toimivista keskenään esim. HTTP-protokollan välityksellä kommunikoivista **palveluista**. Sovelluksemme itseasiassa hyödyntää jo toista palvelua eli BeermappingAPI:a. Vastaavasti sovelluksen toiminnallisuutta voitaisiin laajentaa integroimalla siihen uusia palveluja.
 
 Jos haluaisimme esim. että sovelluksemme tekisi käyttäjälle suosikkioluttyyleihin ja sijaintiin (joka saadaan selvitettyä esim. käyttäjän tekemien HTTP-kutsujen IP-osotteen perusteella, ks http://www.iplocation.net/) perustuvia ruokareseptisuosituksia, kannattaisi suosittelijasta tehdä kokonaan oma palvelunsa. Sovelluksemme keskustelisi sitten palvelun kanssa HTTP-protokollaa käyttäen.
 
@@ -1546,20 +1547,20 @@ Relaatiotietokannat ovat dominoineet tiedon tallennusta jo vuosikymmenten ajan. 
 Yhtenä motivaationa NoSQL-tietokannoilla on ollut se, että relaatiotietokantoja on vaikea skaalata massiivisten internetsovellusten vaatimaan suorituskykyyn. Toisaalta myös tiettyjen NoSQL-tietokantojen skeemattomuus tarjoaa sovellukselle joustavuutta verrattuna SQL-tietokantojen tarkastimääriteltyihin tietokantaskeemoihin.
 
 NoSQL-tietokantoja on useita, keskenään aivan erilaisilla toimintaperiaatteilla toimivia, mm.
-* avain/arvotietokannat (key-value databases)
-* dokumenttitietokannat (document databases)
-* saraketietokannat (columnar databases)
-* verkkotietokannat (graph databases)
+
+- avain/arvotietokannat (key-value databases)
+- dokumenttitietokannat (document databases)
+- saraketietokannat (columnar databases)
+- verkkotietokannat (graph databases)
 
 Jo meille tutuksi tullut <code>Rails.cache</code> on oikeastaan yksinkertainen avain-arvotietokanta, joka mahdollistaa mielivaltaisten olioiden tallettamisen avaimeen perustuen. Tietokannasta haku on rajoittunut hakuun avaimien perusteella ja tietokanta ei tue kannassa olevien olioiden välisiä liitoksia ollenkaan.
 
 Uusien tietokantatyyppien noususta huolimatta relaatiotietokannat tulevat kuitenkin säilymään ja on todennäköistä että isommissa sovelluksissa on käytössä rinnakkain erilaisia tietokantoja, ja kuhunkin talletustarkoitukseen pyritään valitsemaan tilanteeseen parhaiten sopiva tietokantatyyppi, ks.
 http://www.martinfowler.com/bliki/PolyglotPersistence.html
 
+## Refaktorointi: luokka metodit
 
-## Refaktorointi: luokka metodit 
-
-Viikon 6 tehtävässä [6-7](https://github.com/ollikehy/wepa22/blob/master/web/viikko6.md#teht%C3%A4v%C3%A4-6-7-kahden-teht%C3%A4v%C3%A4n-arvoinen) kehoitettiin tekemään luokille _Beer_, _Brewery_ ja _Style_ luokkametodit, joiden avulla kontrollerin on helppo selvittää saa reittausten perusteella parhaat panimot, oluet ja oluttyylit.
+Viikon 6 tehtävässä [6-7](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/viikko6.md#teht%C3%A4v%C3%A4-6-7-kahden-teht%C3%A4v%C3%A4n-arvoinen) kehoitettiin tekemään luokille _Beer_, _Brewery_ ja _Style_ luokkametodit, joiden avulla kontrollerin on helppo selvittää saa reittausten perusteella parhaat panimot, oluet ja oluttyylit.
 
 Metodit ovat kaikissa luokissa täsmälleen samat:
 
@@ -1574,14 +1575,13 @@ class Beer < ApplicationRecord
 end
 ```
 
-Viikolla 2 siirrettiin luokkien määrittelemiä samanlaisia _oliometodeita_ [yhteiseen moduuliin](https://github.com/ollikehy/wepa22/blob/master/web/viikko2.md#yhteisen-koodin-siirto-moduuliin). 
+Viikolla 2 siirrettiin luokkien määrittelemiä samanlaisia _oliometodeita_ [yhteiseen moduuliin](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/viikko2.md#yhteisen-koodin-siirto-moduuliin).
 
 Myös luokkametodeja voidaan siirtää yhteiseen moduuliin, tekniikka ei kuitenkaan ole täysin sama kuin oliometodeja käytettävissä
 
 > ## Tehtävä 13
 >
-> Refaktoroi koodisi siten, että luokkien _Beer_, _Brewery_ ja _Style_ metodi _def self.top(how_many)_ määritellään moduulissa. Saat vihjeitä toteutukseen esim. googlaamalla _ruby module static method_ 
-
+> Refaktoroi koodisi siten, että luokkien _Beer_, _Brewery_ ja _Style_ metodi _def self.top(how_many)_ määritellään moduulissa. Saat vihjeitä toteutukseen esim. googlaamalla _ruby module static method_
 
 > ## Tehtävä 14
 >
@@ -1595,7 +1595,7 @@ Myös luokkametodeja voidaan siirtää yhteiseen moduuliin, tekniikka ei kuitenk
 
 ## Tehtävien palautus
 
-Commitoi kaikki tekemäsi muutokset ja pushaa koodi Githubiin. Deployaa myös uusin versio Herokuun. Muista myös testata rubocopilla, että koodisi noudattaa edelleen määriteltyjä tyylisääntöjä. 
+Commitoi kaikki tekemäsi muutokset ja pushaa koodi Githubiin. Deployaa myös uusin versio Herokuun. Muista myös testata rubocopilla, että koodisi noudattaa edelleen määriteltyjä tyylisääntöjä.
 
 Tehtävät kirjataan palautetuksi osoitteeseen https://studies.cs.helsinki.fi/courses/#/rails2018
 
@@ -1603,8 +1603,8 @@ Tehtävät kirjataan palautetuksi osoitteeseen https://studies.cs.helsinki.fi/co
 
 Jos Rails kiinnostaa, kannattaa tutustumista jatkaa esim. seuraaviin suuntiin
 
-* http://guides.rubyonrails.org/ Paljon hyvää asiaa...
-* http://railscasts.com/ erinomaisia yhteen teemaan keskittyviä videoita. Uusia videoita ei valitettavasti ole tullut yli vuoteen, toivottavasti sivu aktivoituu vielä. Useimmat maksulliset pro-episodit näköjään löytyvät youtubesta...
-* https://www.ruby-toolbox.com/ apua gemien etsimiseen
-* [Eloquent Ruby](http://www.amazon.com/Eloquent-Ruby-Addison-Wesley-Professional-Series/dp/0321584104) erinomainen kirja Rubystä.
-* [Turbo](https://turbo.hotwired.dev/): moderni tapa kehittää railsia tekemällä rails sovelluksista single page sovelluksia.
+- http://guides.rubyonrails.org/ Paljon hyvää asiaa...
+- http://railscasts.com/ erinomaisia yhteen teemaan keskittyviä videoita. Uusia videoita ei valitettavasti ole tullut yli vuoteen, toivottavasti sivu aktivoituu vielä. Useimmat maksulliset pro-episodit näköjään löytyvät youtubesta...
+- https://www.ruby-toolbox.com/ apua gemien etsimiseen
+- [Eloquent Ruby](http://www.amazon.com/Eloquent-Ruby-Addison-Wesley-Professional-Series/dp/0321584104) erinomainen kirja Rubystä.
+- [Turbo](https://turbo.hotwired.dev/): moderni tapa kehittää railsia tekemällä rails sovelluksista single page sovelluksia.
