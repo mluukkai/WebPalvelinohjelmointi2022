@@ -13,15 +13,15 @@ http://en.wikipedia.org/wiki/List_of_HTTP_header_fields), joiden avulla tarkenne
 
 Web-palvelinohjelmoinnilla tarkoitetaan juuri niitä toimia, miten web-palvelin muodostaa selaimelle näytettäviä web-sivuja ja käsittelee selaimen lomakkeen avulla lähettämää, käyttäjän syöttämää dataa.
 
-Web-sivut eivät ole pelkkää html:ää. Html:nä pyritään kuvaamaan sivujen rakenne ja tietosisältö. Sivujen muotoilu on tapana hoitaa CSS-tyylitiedostojen avulla, ks. http://en.wikipedia.org/wiki/Cascading_Style_Sheets. Nykyisenä trendinä on myös sisällyttää www-sivuille yhä suurempi määrä **selaimessa** suoritettavaa ohjelmakoodia, joka taas on javascriptiä. On hieman veteen piirretty viiva, mitä toiminnallisuuksia kannattaa toteuttaa selaimen päässä ja mitä palvelimella.
+Web-sivut eivät ole pelkkää html:ää. Html:nä pyritään kuvaamaan sivujen rakenne ja tietosisältö. Sivujen muotoilu on tapana hoitaa CSS-tyylitiedostojen avulla, ks. http://en.wikipedia.org/wiki/Cascading_Style_Sheets. Nykyisenä trendinä on myös sisällyttää www-sivuille yhä suurempi määrä **selaimessa** suoritettavaa ohjelmakoodia, joka taas on JavaScriptiä. On hieman veteen piirretty viiva, mitä toiminnallisuuksia kannattaa toteuttaa selaimen päässä ja mitä palvelimella.
 
-Esim. jos www-sivu sisältää lomakkeen, jonka avulla suoritetaan sivustolle kirjautuminen, on selvää että salasanan ja käyttäjätunnuksen tarkastamisen täytyy tapahtua palvelimella. Sen sijaan selaimen päässä voidaan javascriptillä tehdä tarkistus onko käyttäjän salasanakenttä tyhjä kun käyttäjä yrittää kirjautua sivulle. Tälläisessä tilanteissa on turha vaivata palvelinta ollenkaan, sillä kirjautuminen ei tulisi kuitenkaan onnistumaan.
+Esim. jos www-sivu sisältää lomakkeen, jonka avulla suoritetaan sivustolle kirjautuminen, on selvää että salasanan ja käyttäjätunnuksen tarkastamisen täytyy tapahtua palvelimella. Sen sijaan selaimen päässä voidaan JavaScriptillä tehdä tarkistus onko käyttäjän salasanakenttä tyhjä kun käyttäjä yrittää kirjautua sivulle. Tälläisessä tilanteissa on turha vaivata palvelinta ollenkaan, sillä kirjautuminen ei tulisi kuitenkaan onnistumaan.
 
 Viimeaikaisena trendinä on ollut pyrkiä saamaan web-sovellusten toiminta muistuttamaan mahdollisimman suuressa määrin normaalien työpöytäsovellusten toimintaa. Hyvänä esimerkkinä tälläisestä sovelluksesta on Google docs joka "matkii" mahdollisimman tarkasti wordin/openofficen toiminnallisuutta. Tälläisissä sovelluksissa sovelluslogiikasta suurin osa on toteutettu selaimessa. Palvelimessa toteutettua toiminnallisuutta tarvitaan kuitenkin aina, muutenhan tietoa ei voi jakaa sovellusta eri paikoissa käyttävien kesken.
 
-Kun moderneissa sovelluksissa palvelimelta haetaan dataa, ei palvelin välttämättä palautakaan valmista HTML-sivua, vaan ainoastaan raakamuotoista dataa (yleensä json-muotoista), jonka selaimessa suoritettava javascript-koodi sitten sijoittaa käyttäjälle näytettävälle sivulle. Näin sivuista päivittyy ainoastaan tarpeellinen osa.
+Kun moderneissa sovelluksissa palvelimelta haetaan dataa, ei palvelin välttämättä palautakaan valmista HTML-sivua, vaan ainoastaan raakamuotoista dataa (yleensä json-muotoista), jonka selaimessa suoritettava JavaScript-koodi sitten sijoittaa käyttäjälle näytettävälle sivulle. Näin sivuista päivittyy ainoastaan tarpeellinen osa.
 
-Tällä kurssilla keskitymme lähes yksinomaan web-sovellusten palvelinpuolen toiminnallisuuden toteuttamiseen. Viikoilla 6 ja 7 näemme muutaman esimerkin selaimen päässä javascriptillä toteutettavasta toiminnallisuudesta sekä sovelluksen ulkoasun muotoilusta CSS:n avulla.
+Tällä kurssilla keskitymme lähes yksinomaan web-sovellusten palvelinpuolen toiminnallisuuden toteuttamiseen. Viikoilla 6 ja 7 näemme muutaman esimerkin selaimen päässä JavaScriptillä toteutettavasta toiminnallisuudesta sekä sovelluksen ulkoasun muotoilusta CSS:n avulla.
 
 Kurssilla [Full stack -websovellushehitys](https://fullstackopen.com/) taas keskitytään pääosin selaimen puolella toteutettavaan toiminnallisuuteen.
 
@@ -38,7 +38,7 @@ Kurssilla kaikki tehtävät ovat upotettu tähän materiaaliin. Seuraavaa tehtä
 > Copypastea selaimen osoiteriville https://fullstack-exampleapp.herokuapp.com/notes ja paina enter.
 > Ylimpänä näet sivun lataamisen aiheuttaneen GET-pyynnön. Avaa se (klikkaamalla kutsua) ja tutki mitä kaikkea pyynnön mukana menee. Tutki erityisesti headereja ja response-osaa. Developer tools näyttää erikseen pyyntöön liittyvät (request headers) ja vastaukseen liittyvät (response headers) headerit.
 >
-> Pyyntö palauttaa siis välilehdellä response näytettävän HTML-koodin. Koodi sisältää viitteitä css-tyylitiedostoihin, javascript-tiedostoihin sekä kuviin. Sivua renderöitäessä selain hakee kunkin näistä omalla GET-pyynnöllä.
+> Pyyntö palauttaa siis välilehdellä response näytettävän HTML-koodin. Koodi sisältää viitteitä css-tyylitiedostoihin, JavaScript-tiedostoihin sekä kuviin. Sivua renderöitäessä selain hakee kunkin näistä omalla GET-pyynnöllä.
 >
 > Pidä edelleen sama networking-välilehti auki. Tyhjennä developer toolsin välilehti painamalla vasemman reunan halkaistu pallo -symbolia (:no*entry_sign:). Kirjoita jotain tekstikenttään ja paina "Save". Tekstikenttä on toteutettu \_html:n lomakkeena* (engl. form). Lomakkeen tietojen lähetys palvelimelle tapahtuu HTTP-protokollan POST-metodin sisältävän pyynnön avulla.
 >
@@ -163,7 +163,7 @@ Saman asian ajaa lyhennetty muoto _rails s_
 
 Komento käynnistää oletusarvoisesti Puma HTTP-palvelimen (ks. https://github.com/puma/puma), joka alkaa suorittamaan hakemistossa olevaa Rails-sovellusta paikallisen koneen (eli localhost:in) portissa 3000.
 
-Huom: saatat törmätä tässä vaiheessa virheeseen joka johtuu siitä että koneellasi ei ole javascript-suoritusympäristöä. Yksi tapa kiertää ongelma on lisätä tiedostoon Gemfile seuraava rivi (tai riittää poistaa # tiedostossa jo valmiina olevan rivin edestä):
+Huom: saatat törmätä tässä vaiheessa virheeseen joka johtuu siitä että koneellasi ei ole JavaScript-suoritusympäristöä. Yksi tapa kiertää ongelma on lisätä tiedostoon Gemfile seuraava rivi (tai riittää poistaa # tiedostossa jo valmiina olevan rivin edestä):
 
     gem 'mini_racer', platforms: :ruby
 
@@ -181,7 +181,7 @@ HUOM: **Tarkoituksena on, että tätä dokumenttia lukiessasi teet koko ajan sam
 >
 > Luo sovellusta varten repositorio Githubiin ja liitä se etärepositorioksi sovelluksesi hakemiston repositorioon
 >
-> Ohjeita gitin ja Githubin käyttöön https://github.com/mluukkai/WebPalvelinohjelmointi2017/wiki/versionhallinta
+> Ohjeita gitin ja Githubin käyttöön esim. kurssin Tietokone työvälineenä materiaalissa https://tkt-lapio.github.io/
 >
 > Tämän dokumentin lopussa on ohje varsinaisen palautuksen tekemiseksi
 
@@ -232,15 +232,15 @@ Syynä virheelle on se, että panimot tallettavan tietokantataulun luomisesta hu
 
 Scaffoldin suorittaminen luo hieman erikoisella tavalla nimetyn tiedoston
 
-    db/migrate/20180901092214_create_breweries.rb
+    db/migrate/20220808075536_create_breweries.rb
 
 Kyseessä on ns. migraatiotiedosto, joka sisältää ohjeen breweries-tietokantataulun luomiseksi. Tietokantataulu saadaan luotua suorittamalla migraatio antamalla komentoriviltä (eli terminaalista) komento <code>rails db:migrate</code>:
 
 ```ruby
-== 20180901092214 CreateBreweries: migrating ==================================
+== 20220808075536 CreateBreweries: migrating ==================================
 -- create_table(:breweries)
-   -> 0.0017s
-== 20180901092214 CreateBreweries: migrated (0.0018s) =========================
+   -> 0.0216s
+== 20220808075536 CreateBreweries: migrated (0.0220s) =========================
 ```
 
 Panimot tallettava tietokantataulu on nyt luotu ja sovelluksen pitäisi toimia.
