@@ -31,18 +31,18 @@ Kurssilla kaikki tehtävät ovat upotettu tähän materiaaliin. Seuraavaa tehtä
 
 > ## Tehtävä 1: HTTP in action
 >
-> Erityisesti selainpuolen toiminnallisuuden toteuttamisessa selaimien developer-työkalut ovat erittäin tärkeä työskentelyväline. Selaimista kehittäjäystävällisin on chrome, ja oletamme tässä että käytät chromea. Vastaava toiminnallisuus löytyy muistakin selaimista.
+> Erityisesti selainpuolen toiminnallisuuden toteuttamisessa selaimien developer-työkalut ovat erittäin tärkeä työskentelyväline. Selaimista kehittäjäystävällisin on Chrome, ja oletamme tässä että käytät Chromea. Vastaava toiminnallisuus löytyy muistakin selaimista.
 >
-> Avaa chromen developer tool painamalla yhtä aikaa Shift, Control ja i (tai F12). Pääset developer tooliin myös valikon Tools-kautta. Avaa välilehti Network. Välilehti näyttää selaimen lähettämät HTTP-pyynnöt ja palvelimen niihin lähettämät vastaukset.
+> Avaa Chromen developer tool painamalla yhtä aikaa Shift, Control ja i (tai F12). Pääset developer tooliin myös valikon Tools-kautta. Avaa välilehti Network. Välilehti näyttää selaimen lähettämät HTTP-pyynnöt ja palvelimen niihin lähettämät vastaukset.
 >
 > Copypastea selaimen osoiteriville https://fullstack-exampleapp.herokuapp.com/notes ja paina enter.
 > Ylimpänä näet sivun lataamisen aiheuttaneen GET-pyynnön. Avaa se (klikkaamalla kutsua) ja tutki mitä kaikkea pyynnön mukana menee. Tutki erityisesti headereja ja response-osaa. Developer tools näyttää erikseen pyyntöön liittyvät (request headers) ja vastaukseen liittyvät (response headers) headerit.
 >
 > Pyyntö palauttaa siis välilehdellä response näytettävän HTML-koodin. Koodi sisältää viitteitä css-tyylitiedostoihin, JavaScript-tiedostoihin sekä kuviin. Sivua renderöitäessä selain hakee kunkin näistä omalla GET-pyynnöllä.
 >
-> Pidä edelleen sama networking-välilehti auki. Tyhjennä developer toolsin välilehti painamalla vasemman reunan halkaistu pallo -symbolia (:no*entry_sign:). Kirjoita jotain tekstikenttään ja paina "Save". Tekstikenttä on toteutettu html:n \_lomakkeena* (engl. form). Lomakkeen tietojen lähetys palvelimelle tapahtuu HTTP-protokollan POST-metodin sisältävän pyynnön avulla.
+> Pidä edelleen sama networking-välilehti auki. Tyhjennä developer toolsin välilehti painamalla vasemman reunan halkaistu pallo -symbolia (:no_entry_sign:). Kirjoita jotain tekstikenttään ja paina "Save". Tekstikenttä on toteutettu html:n *lomakkeena* (engl. form). Lomakkeen tietojen lähetys palvelimelle tapahtuu HTTP-protokollan POST-metodin sisältävän pyynnön avulla.
 >
-> Tutki POST-pyynnön sisältöä (pyynnön nimi on new*note). Välilehdeltä *Payload\* löytyy _Form data_, eli lomakkeen mukana lähtetety tieto. Huomaat, että pyyntöön vastattiin statuskoodilla 302, joka taas tarkoittaa sitä, että palvelin tekee selaimelle **uudelleenohjauksen**, eli pyytää selainta menemään vastauksen headereissa ilmoittamaan osoitteeseen. POST-pyynnön vastaus ei siis sisällä ollenkaan HTML-koodia jonka selain voisi renderöidä käyttäjälle. Heti POST-kutsun perään selain tekeekin automaattisesti GET-kutsun POST:in vastauksen headerissa **Location** olevaan osoitteeseen. Vasta tämän uudelleenohjauksen aiheuttaman pyynnön vastauksena tullut sivu renderöidään käyttäjälle.
+> Tutki POST-pyynnön sisältöä (pyynnön nimi on new\_note). Välilehdeltä *Payload* löytyy *Form data*, eli lomakkeen mukana lähtetety tieto. Huomaat, että pyyntöön vastattiin statuskoodilla 302, joka taas tarkoittaa sitä, että palvelin tekee selaimelle **uudelleenohjauksen**, eli pyytää selainta menemään vastauksen headereissa ilmoittamaan osoitteeseen. POST-pyynnön vastaus ei siis sisällä ollenkaan HTML-koodia jonka selain voisi renderöidä käyttäjälle. Heti POST-kutsun perään selain tekeekin automaattisesti GET-kutsun POST:in vastauksen headerissa **Location** olevaan osoitteeseen. Vasta tämän uudelleenohjauksen aiheuttaman pyynnön vastauksena tullut sivu renderöidään käyttäjälle.
 >
 > Tutki vielä joillekin muille www-sivuille tekemisesi pyyntöjen aiheuttamaa HTTP-protokollan viestintää.
 
