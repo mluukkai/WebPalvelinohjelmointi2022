@@ -52,21 +52,21 @@ Tällä kurssilla käytämme Web-sovellusten toteuttamiseen Ruby on Rails -sovel
 
 Rails-sovellukset noudattavat [MVC-mallia](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller) (tai WebMVC:tä, joka poikkeaa hiukan alkuperäisestä MVC:stä), jossa ideana on jakaa sovelluksen data- ja sovelluslogiikka (Model), näyttöjen muodostaminen (View) ja toiminnan koordinointi (Controller) selkeästi eriytettyihin osiin. Valtaosa web-palvelinpuolen sovelluskehityksestä tapahtuu nykyään MVC-periaatetta noudattaen.
 
-Tutkitaan mitä tapahtuu kun käyttäjä menee Railsilla toteutetulle web-sivulle, olkoon sivun URL esim. <http://ratebeer22.herokuapp.com/breweries>, eli kurssin aikana tekemämme esimerkkisovelluksen sivu, joka listaa kaikki esimerkkisovelluksen tuntemat panimot.
+Tutkitaan mitä tapahtuu kun käyttäjä menee Railsilla toteutetulle web-sivulle, olkoon sivun URL esim. <https://ratebeer22.herokuapp.com/breweries>, eli kurssin aikana tekemämme esimerkkisovelluksen sivu, joka listaa kaikki esimerkkisovelluksen tuntemat panimot.
 
 ![mvc-kuva](http://www.cs.helsinki.fi/u/mluukkai/rails_mvc.png)
 
 1. Käyttäjän kirjoitettua URL:n selaimen osoiteriville, tekee selain HTTP GET-pyynnön palvelimelle ratebeer22.herokuapp.com
 
-2. Usein palvelimella ajetaan web-palvelinohjelmistoa (esim. Apache tai Nginx), joka toimii välityspalvelimena ohjaten pyynnön osoitteeseen rekisteröityyn Rails-sovellukseen. Sovellus selvittää mikä sovelluksen _kontrolleri_ on rekisteröity huolehtimaan resurssiin breweries kohdistuvia GET-kutsuja. Tätä vaihetta sanotaan Rails-sovelluksen sisäiseksi reititykseksi (routing), eli etsitään "reitti minkä varrella pyyntö käsitellään". On täysin sallittua myös ohittaa välityspalvelin, jolloin Rails-sovellus on ensimmäinen pyynnön vastaanottaja. Useasti kuitenkin välityspalvelinta käytetään kevyenä kerroksena mm. nopeuttamaan suorituskykyä ja jakelemaan pyyntöjä useammalle palvelimelle, joilla varsinainen Rails-sovellus on.
+2. Usein palvelimella suoritetaan web-palvelinohjelmistoa (esim. Apache tai Nginx), joka toimii välityspalvelimena ohjaten pyynnön osoitteeseen rekisteröityyn Rails-sovellukseen. Sovellus selvittää mikä sovelluksen _kontrolleri_ on rekisteröity huolehtimaan resurssiin breweries kohdistuvista GET-kutsista. Tätä vaihetta sanotaan Rails-sovelluksen sisäiseksi reititykseksi (routing), eli etsitään "reitti minkä varrella pyyntö käsitellään". On myös mahdollista ohittaa välityspalvelin, jolloin Rails-sovellus on ensimmäinen pyynnön vastaanottaja. Useasti kuitenkin välityspalvelinta käytetään kevyenä kerroksena mm. nopeuttamaan suorituskykyä ja jakelemaan pyyntöjä useammalle palvelimelle, joilla varsinainen Rails-sovellus on.
 
-3. Kun oikea kontrolleri (esimerkissämme panimoista huolehtiva kontrolleri) ja sen metodi selviää, kutsuu sovellus metodia ja antaa sille parametriksi HTTP-pyynnön mukana mahdollisesti tulleen datan. kontrolleri hoitaa sitten operaatioon liittyvät toimenpiteet, yleensä toimenpiteiden suorittaminen edellyttää joihinkin sovelluksen dataa ja sovelluslogiikkaa sisältäviin _modeleihin_ tapahtuvaa metodikutsua.
+3. Kun oikea kontrolleri (esimerkissämme panimoista huolehtiva kontrolleri) ja sen pyynnöstä huolehtiva metodi selviää, kutsuu sovellus metodia ja antaa sille parametriksi HTTP-pyynnön mukana mahdollisesti tulleen datan. Kontrolleri hoitaa sitten operaatioon liittyvät toimenpiteet, yleensä toimenpiteiden suorittaminen edellyttää joihinkin sovelluksen dataa ja sovelluslogiikkaa sisältäviin _modeleihin_ tapahtuvaa metodikutsua.
 
 4. Esimerkissämme kontrolleri pyytää panimoista huolehtivaa model-luokkaa lataamaan kaikkien panimoiden listan tietokannasta.
 
-5. Saatuaan kaikkien oluiden listan, kontrolleri pyytää oluiden listan muodostavaa _näkymää_ renderöimään itsensä.
+5. Saatuaan kaikkien panimoiden listan, kontrolleri pyytää panimoidem listan muodostavaa _näkymää_ renderöimään itsensä.
 
-6. Näkymä renderöityy eli kontrolleri saa kaikki oluet listaavan HTML-sivun
+6. Näkymä renderöityy eli kontrolleri saa kaikki panimot listaavan HTML-sivun
 
 7. Kontrolleri palauttaa HTML-sivun web-palvelimelle
 
@@ -93,9 +93,11 @@ Railsilla tapahtuvassa sovelluskehityksessä komentorivin käyttön hallinta on 
 
 ## Kurssin suoritusmuoto
 
-Kurssin rakenne poikkeaa jossain määrin osaston kurssistandardista. Kurssilla tehdään ainoastaan yksi sovellus, samaa sovellusta tehdään sekä kurssimateriaalissa että materiaalin sekaan upotetuissa tehtävissä. Kurssin materiaalia ei pystykään pelkästään lukemaan. Materiaalia seuratessa tulee itse rakentaa matkan varrella täydentyvää sovellusta, sillä muuten tehtävien tekeminen on mahdotonta. Toisin sanoen **kurssia on seurattava tasaisesti koko kurssin ajan**.
+Kurssin rakenne poikkeaa jossain määrin osaston kurssistandardista. Kurssilla tehdään ainoastaan yksi sovellus, samaa sovellusta tehdään sekä kurssimateriaalissa että materiaalin sekaan upotetuissa tehtävissä. Kurssin materiaalia ei pystykään pelkästään lukemaan. Materiaalia seuratessa tulee itse rakentaa matkan varrella täydentyvää sovellusta, sillä muuten tehtävien tekeminen on mahdotonta. 
 
-Jokaisen viikon deadlinen (sunnuntai klo 23.59) jälkeen pääset näkemääm edellisen viikon esimerkkivastauksen. Seuraavalla viikolla on mahdollista jatkaa joko oman sovelluksen rakentamista tai ottaa pohjaksi edellisen viikon esimerkkivastaus.
+Kurssi jakautuu seitsemään "viikkoon", eli osaan jotka tehtiin kurssin aiemmissa versiossa yhden viikon aikana. Tällä kurssilla on kuitenkin ainoastaan yksi deadline, 31.12.2022 klo 23.59.
+
+Jokainen viikko kuitenkin palateaan erikseen kurssin palautussovellukseen. Palautettuasi yhden viikon tehtävät, pääset näkemään viikon esimerkkivastauksen. Seuraavalla viikolla on mahdollista jatkaa joko oman sovelluksen rakentamista tai ottaa pohjaksi edellisen viikon esimerkkivastaus.
 
 Osa viikon tehtävistä on käytännössä pakollisia, muuten eteneminen pysähtyy viikon osalta. Osa tehtävistä taas on vapaaehtoisia, ei-kriittisten ominaisuuksien toteutuksia. Osa näistä ominaisuuksista oletetaan olevan ohjelmistossa seuraavalla viikolla, joten jos et ole tehnyt kaikkia viikon tehtäviä, kannattaa aloittaa esimerkkivastauksesta tai vaihtoehtoisesti copypasteta sieltä tarvittavat asiat koodiisi.
 
