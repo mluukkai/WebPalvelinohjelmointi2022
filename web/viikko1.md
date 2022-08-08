@@ -786,7 +786,7 @@ Tutkitaan yksittäisen panimon näyttämistä. Url panimon sivulle on muotoa "br
 
 ```ruby
 class BreweriesController < ApplicationController
-  before_action :set_brewery, only: [:show, :edit, :update, :destroy]
+  before_action :set_brewery, only: %i[ show, edit, update, destroy ]
 
   # muita metodeja...
 
@@ -804,7 +804,7 @@ Tämä taas saa aikaan sen, että ennen jokaista lueteltua metodia (show, edit, 
 
 ```ruby
 class BreweriesController < ApplicationController
-  before_action :set_brewery, only: [:show, :edit, :update, :destroy]
+  before_action :set_brewery, only: %i[ show, edit, update, destroy ]
 
   # ...
 
