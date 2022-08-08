@@ -723,7 +723,9 @@ end
 
 Metodi sisältää ainoastaan komennon
 
-    @breweries = Brewery.all
+```ruby
+@breweries = Brewery.all
+```
 
 eli sijoittaa kaikkien panimoiden listan <code>@breweries</code>-nimiseen muuttujaan, jonka avulla se välittää panimoiden listan näkymälle. Tämän jälkeen metodi index renderöi näkymätemplatessa app/views/breweries/index.html.erb määritellyn html-sivun. Metodi ei missään vaiheessa viittaa näkymätemplateen tai sisällä käskyä sen renderöintiin. Kyse on jälleen Railsin convention over configuration -periaatteesta, eli jos ei muuta sanota, renderöidään kontrollerin index-metodin lopussa index.html.erb-näkymätemplate.
 
@@ -740,7 +742,7 @@ Näkymätemplatet, eli erb-tiedostot ovat html:ää, joihin on upotettu Ruby-koo
 
 Tarkastellaan valmiiksigeneroitua näkymätemplatea eli tiedostoa app/views/breweries/index.html.erb
 
-```
+```html
 <p style="color: green"><%= notice %></p>
 
 <h1>Breweries</h1>
@@ -763,7 +765,7 @@ Näkymätemplateen upotettu Ruby-koodi tulee <% %> merkkien sisälle. <%= %> taa
 
 Tutustumme listan generointiin kohta hieman tarkemmin. Lisätään ensin sivulle (eli erb-templateen) tieto panimoiden yhteenlasketusta määrästä. Eli lisää johonkin kohtaan sivua, esim. heti h1-tagien sisällä olevan otsikon jälkeen seuraava rivi
 
-```
+```html
 <p> Number of breweries: <%= @breweries.count %> </p>
 ```
 
@@ -771,7 +773,7 @@ Mene nyt selaimella [panimot listaavalle sivulle](http://localhost:3000/brewerie
 
 Palataan sitten tarkemmin HTML-taulukon muodostavaan koodiin. Jokainen panimo tulostuu omalle rivilleen listaan Rubyn <code>each</code>-iteraattoria käyttäen:
 
-```
+```html
   <% @breweries.each do |brewery| %>
     <%= render brewery %>
     <p>
@@ -828,7 +830,9 @@ end
 
 Metodi ei sisällä mitään koodia! Huomaamme kuitenkin, että luokan määrittelyn alussa on rivi
 
-      before_action :set_brewery, only: %i[ show edit update destroy ]
+```ruby
+before_action :set_brewery, only: %i[ show edit update destroy ]
+```
 
 Tämä taas saa aikaan sen, että ennen jokaista lueteltua metodia (show, edit, update ja destroy) suoritetaan metodin <code>set_brewery</code> koodi. Metodin määrittely löytyy luokan loppupuolelta:
 
@@ -853,7 +857,9 @@ end
 
 Ennen metodin <code>show</code> suoritusta siis suoritetaan komento
 
-    @brewery = Brewery.find(params[:id])
+```ruby
+@brewery = Brewery.find(params[:id])
+```
 
 joka viittaa muuttujaan `params`, joka taas sisältää suorituksen alla olevaan HTTP-kutsuun liittyvät tiedot. Muuttuja <code>params</code> on tyypiltään assosiatiivinen taulukko eli hash. Erityisesti muuttujan arvo avaimella <code>:id</code> eli `params[:id]` kertoo tässä tapauksessa tarkasteltavana olevan panimon id:n, eli polun breweries/#{id}, kenoviivan jälkeisen osan.
 
