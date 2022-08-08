@@ -52,7 +52,7 @@ Tällä kurssilla käytämme Web-sovellusten toteuttamiseen Ruby on Rails -sovel
 
 Rails-sovellukset noudattavat [MVC-mallia](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller) (tai WebMVC:tä, joka poikkeaa hiukan alkuperäisestä MVC:stä), jossa ideana on jakaa sovelluksen data- ja sovelluslogiikka (Model), näyttöjen muodostaminen (View) ja toiminnan koordinointi (Controller) selkeästi eriytettyihin osiin. Valtaosa web-palvelinpuolen sovelluskehityksestä tapahtuu nykyään MVC-periaatetta noudattaen.
 
-Tutkitaan mitä tapahtuu kun käyttäjä menee Railsilla toteutetulle web-sivulle, olkoon sivun URL esim. [http://wad-ratebeer.herokuapp.com/breweries](http://wad-ratebeer.herokuapp.com/breweries), eli kurssin aikana tekemämme esimerkkisovelluksen sivu, joka listaa kaikki esimerkkisovelluksen tuntemat panimot.
+Tutkitaan mitä tapahtuu kun käyttäjä menee Railsilla toteutetulle web-sivulle, olkoon sivun URL esim. <http://ratebeer22.herokuapp.com/breweries>, eli kurssin aikana tekemämme esimerkkisovelluksen sivu, joka listaa kaikki esimerkkisovelluksen tuntemat panimot.
 
 ![mvc-kuva](http://www.cs.helsinki.fi/u/mluukkai/rails_mvc.png)
 
