@@ -226,7 +226,7 @@ Alussa saattaa olla hieman sekavaa milloin ja missä käytetään yksikkö- ja m
 
 Jos sovellus ei ole jo käynnissä, käynnistetään se uudelleen antamalla komentoriviltä komento <code>rails s</code>. Huom: sovelluksen uudelleenkäynnistys on Railsissa tarpeen melko harvoin. Esim. koodin muuttelu ja lisääminen ei aiheuta uudelleenkäynnistystarvetta.
 
-Railsin konventioiden mukaan kaikkien oluiden lista näkyy osoitteessa breweries, eli mennään sivulle [localhost:3000/breweries](localhost:3000/breweries).
+Railsin konventioiden mukaan kaikkien oluiden lista näkyy osoitteessa breweries, eli mennään sivulle <http://localhost:3000/breweries>.
 
 Tästä aiheutuu kuitenkin virheilmoitus:
 
