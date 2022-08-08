@@ -952,24 +952,32 @@ Kyse on oikeastaan klassisesta nullpointer-poikkeuksesta, tai sen Ruby-versiosta
 
 Voit poistaa ongelman aiheuttavat oluet käsin tai konsolin avulla. Saat haettua orvot oluet konsolista komennolla:
 
-    orvot_oluet = Beer.all.select{ |b| b.brewery.nil? }
+```ruby
+orvot_oluet = Beer.all.select{ |b| b.brewery.nil? }
+```
 
 ja niiden poistaminen onnistuu sitten each-iteraattorin avulla
 
-    orvot_oluet.each{ |orpo| orpo.delete }
+```ruby
+orvot_oluet.each{ |orpo| orpo.delete }
+```
 
 koska jokaiselle iteroitavalla oliolle kutsutaan ainoastaan metodia, onnistuu edellinen myös seuraavalla, hieman erikoisen näköisellä syntaksilla:
 
-    orvot_oluet.each(&:delete)
-
+```ruby
+orvot_oluet.each(&:delete)
+```
+    
 ## Kertausta: polkujen ja kontrollerien nimentäkonventiot
 
 Loimme siis sovellukseemme tietokantataulut panimoille ja oluille sekä molempien hallinnointiin tarkoitetut kontrollerit ja näkymät. Kerrataan vielä Railsin nimentäkonventioita, joihin tottumiseen saattaa aloittelijalla mennä hetki.
 
 Panimo ja siihen liittyvät kontrollerit ja näkymät luotiin Railsin scaffold-generaattorilla seuraavasti:
 
-    rails g scaffold Brewery name:string year:integer
-
+```bash
+rails g scaffold Brewery name:string year:integer
+```
+    
 Tästä seurauksena syntyi
 
 - tietokantataulu <code>breweries</code>
