@@ -1,6 +1,6 @@
 ## Web-sovellusten toimintaperiaatteita
 
-Web-sovellusten toimintaperiaate on periaatteessa yksinkertainen. Käyttäjä avaa selaimen ja kirjoittaa osoiteriville haluamansa sivun URL:in, esim. https://www.cs.helsinki.fi/u/mluukkai/. URL:in ensimmäinen osa, eli esimerkissämme www.cs.helsinki.fi on yleensä DNS-nimi, jonka avulla pystytään selvittämään www-sivua hallinnoivan palvelimen ip-osoite. Selain lähettää web-palvelimelle pyynnön sivusta käyttäen HTTP-protokollan GET-metodia. Jos osoite on oikea, ja sivupyynnön lähettäjällä on oikeus URL:n polun määrittelemään resurssiin (esimerkissämme opiskelu/index.html), palvelin palauttaa selaimelle _statuskoodin_ 200 ja sivun sisällön HTML-muodossa. Selain renderöi sitten sivun käyttäjälle. Jos sivua ei ole olemassa, palvelin palauttaa selaimelle virheestä kertovan statuskoodin 404.
+Web-sovellusten toimintaperiaate on periaatteessa yksinkertainen. Käyttäjä avaa selaimen ja kirjoittaa osoiteriville haluamansa sivun URL:in, esim. https://www.cs.helsinki.fi/u/mluukkai/. URL:in ensimmäinen osa, eli esimerkissämme www.cs.helsinki.fi on yleensä DNS-nimi, jonka avulla pystytään selvittämään www-sivua hallinnoivan palvelimen ip-osoite. Selain lähettää web-palvelimelle pyynnön sivusta käyttäen HTTP-protokollan GET-metodia. Jos osoite on oikea, ja sivupyynnön lähettäjällä on oikeus URL:n polun määrittelemään resurssiin (esimerkissämme mluukkai/index.html), palvelin palauttaa selaimelle _statuskoodin_ 200 ja sivun sisällön HTML-muodossa. Selain renderöi sitten sivun käyttäjälle. Jos sivua ei ole olemassa, palvelin palauttaa selaimelle virheestä kertovan statuskoodin 404.
 
 Palvelimen palauttama www-sivu voi olla **staattinen**, eli "käsin" palvelimella sijaitsevaan html-tiedostoon kirjoitettu tai **dynaaminen**, eli esim. palvelimen tietokannassa olevan datan perusteella pyynnön yhteydessä generoitu. Esim. [opintotarjonnan sivulla](https://studies.helsinki.fi/opintotarjonta?organisation=hy-org-116716376&page=0&period=hy-university-root-id%2F2022%2F0%2F1&searchText=&studyYear=2022) oleva kurssien lista luetaan tietokannasta ja sivun renderöivä html-koodi muodostetaan aina uudelleen sivulle mentäessä, senhetkisen tietokannassa olevan kurssien listan perusteella.
 
@@ -748,11 +748,8 @@ Tarkastellaan valmiiksigeneroitua näkymätemplatea eli tiedostoa app/views/brew
 <h1>Breweries</h1>
 
 <div id="breweries">
-  <% @breweries.each do |brewery| %>
-    <%= render brewery %>
-    <p>
-      <%= link_to "Show this brewery", brewery %>
-    </p>
+  <% @breweries.each do |brewery| %> <%= render brewery %>
+  <p><%= link_to "Show this brewery", brewery %></p>
   <% end %>
 </div>
 
@@ -766,7 +763,7 @@ Näkymätemplateen upotettu Ruby-koodi tulee <% %> merkkien sisälle. <%= %> taa
 Tutustumme listan generointiin kohta hieman tarkemmin. Lisätään ensin sivulle (eli erb-templateen) tieto panimoiden yhteenlasketusta määrästä. Eli lisää johonkin kohtaan sivua, esim. heti h1-tagien sisällä olevan otsikon jälkeen seuraava rivi
 
 ```html
-<p> Number of breweries: <%= @breweries.count %> </p>
+<p>Number of breweries: <%= @breweries.count %></p>
 ```
 
 Mene nyt selaimella [panimot listaavalle sivulle](http://localhost:3000/breweries) ja varmista, että lisäys toimii.
@@ -774,12 +771,9 @@ Mene nyt selaimella [panimot listaavalle sivulle](http://localhost:3000/brewerie
 Palataan sitten tarkemmin HTML-taulukon muodostavaan koodiin. Jokainen panimo tulostuu omalle rivilleen listaan Rubyn <code>each</code>-iteraattoria käyttäen:
 
 ```html
-  <% @breweries.each do |brewery| %>
-    <%= render brewery %>
-    <p>
-      <%= link_to "Show this brewery", brewery %>
-    </p>
-  <% end %>
+<% @breweries.each do |brewery| %> <%= render brewery %>
+<p><%= link_to "Show this brewery", brewery %></p>
+<% end %>
 ```
 
 Muuttujaan `@breweries` talletettu panimoiden lista käydään läpi `each`-iteraattorin avulla. (lisää eachista ks. https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/rubyn_perusteita.md#each). Jokaista yksittäistä panimoa (joihin viitataan iteraattorin toistettavassa koodilohkossa nimellä <code>brewery</code>) kohti luodaan listaan div-tagien sisällä olevat rivit. Ensimmäiselle riville tulee panimon nimi ja toiselle perustamisvuosi. Rails luo rivit käyttäen <code>render</code> metodia jokaista panimoa kohden. <code>render</code> metodi käyttää hyväkseen [Partial templateja](https://guides.rubyonrails.org/layouts_and_rendering.html#using-partials) eli tutummin "partialseja". Rails on luonut yksittäiselle panimolle automaattisesti partials-tiedoston (app/views/breweries/\_brewery.html.erb). Partials-tiedostot nimetään käyttäen tiedoston alussa alaviivaa, jotta ne pystytänä jo silmäyksellä erottamaan normaaleista näkymistä. Kolmannelle riville luodaan linkki panimon tiedot näyttävälle sivulle. Linkin generoiva Ruby-koodi on `<%= link_to "Show this brewery", brewery %>` .
@@ -967,7 +961,7 @@ koska jokaiselle iteroitavalla oliolle kutsutaan ainoastaan metodia, onnistuu ed
 ```ruby
 orvot_oluet.each(&:delete)
 ```
-    
+
 ## Kertausta: polkujen ja kontrollerien nimentäkonventiot
 
 Loimme siis sovellukseemme tietokantataulut panimoille ja oluille sekä molempien hallinnointiin tarkoitetut kontrollerit ja näkymät. Kerrataan vielä Railsin nimentäkonventioita, joihin tottumiseen saattaa aloittelijalla mennä hetki.
@@ -977,7 +971,7 @@ Panimo ja siihen liittyvät kontrollerit ja näkymät luotiin Railsin scaffold-g
 ```bash
 rails g scaffold Brewery name:string year:integer
 ```
-    
+
 Tästä seurauksena syntyi
 
 - tietokantataulu <code>breweries</code>
