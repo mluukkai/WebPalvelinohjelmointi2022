@@ -6,33 +6,7 @@ Ruby on Rails on reilut 15 vuotta sitten suureen suosioon noussut MVC-websovellu
 
 Kokeile miltä tuntuu ohjelmoida kielellä, jonka vallitseva suunnitteluparadigma on sovelluskehittäjän tyytyväisyys, ja sovelluskehyksellä joka on ratkaissut triviaalit, mutta hankalasti päätettävissä olevat asiat (mm. tiedostojen nimentä ja hakemistorakenteet) puolestasi! Huomaat myös, että toisin kuin uuden liiton sovelluksehittäjät ajattelevat, ei kakkien sovelluksien tarvitse olla SPA- eli yhden sivun sovelluksia...
 
-## Ajankohtaista
-
-- materiaali ja tehtävät
-
-  - [viikko 1](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/viikko1.md)
-
-  - [viikko 2](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/viikko2.md)
-
-  - [viikko 3](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/viikko3.md)
-
-  - [viikko 4](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/viikko4.md)
-
-  - [viikko 5](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/viikko5.md)
-
-  - [viikko 6](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/viikko6.md)
-
-  - [viikko 7](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/viikko7.md)
-
-- kurssin [telegram](https://telegram.org)-kanava <https://t.me/rorwepa>
-  - **Huom:** kaikki epäasialliset, halventavat ja jotain ihmisryhmää syrjivät kommentit kanavalla ovat kiellettyjä ja tälläisten kommenttien esittäjät poistetaan kanavalta
-- Rubyn harjoitteluun tarkoitetun materiaalin [ensimmäinen osa](https://github.com/HY-TKTL/ruby-materiaali/blob/master/Perusteet.md) ja [toinen osa](https://github.com/HY-TKTL/ruby-materiaali/blob/master/LuokkiaJaOlioita.md)
-
-## Yleistä
-
-Kurssilla tutustutaan skaalautuvien ja virheenkestävien web-sovellusten toteuttamiseen, testaamiseen ja julkaisemiseen.
-
-Kurssilla keskitytään palvelinpuolen toiminnallisuuden toteuttamiseen, kurssilla tuotettavat käyttöliittymät tulevat olemaan alkeellisia. Kurssi ei ole johdatuskurssi selainohjelmointiin ja käyttöliittymäsuunnitteluun, HTML:n, CSS:n ja Javasacriptin rooli kurssilla on hyvin vähäinen.
+Kurssilla keskitytään palvelinpuolen toiminnallisuuden toteuttamiseen, kurssilla tuotettavat käyttöliittymät tulevat olemaan alkeellisia. Kurssi ei ole johdatuskurssi selainohjelmointiin ja käyttöliittymäsuunnitteluun, HTML:n, CSS:n ja JavaSacriptin rooli kurssilla on hyvin vähäinen.
 
 Kurssin laajuus on 5 opintopistettä.
 
@@ -40,31 +14,39 @@ Vaikka kurssi on sisällöllisesti hyvin samankaltainen kuin [Web-palvelinohjelm
 
 ## Esitietovaatimukset
 
-Ohjelmistotekniikan menetelmät/Ohjelmoinnin harjoitustyö ja Tietokantojen perusteet. HTML on hyvä tuntea siinä laajudessa kuin asiaa käsitellään kurssilla [Tietokone työvälineenä](https://courses.helsinki.fi/fi/TKT50003/125559484)
+Ohjelmistotekniikan menetelmät/Ohjelmoinnin harjoitustyö ja Tietokantojen perusteet. HTML on hyvä tuntea siinä laajudessa kuin asiaa käsitellään kurssilla [Tietokone työvälineenä](https://tkt-lapio.github.io/)
 
 Kurssille osallistuminen edellyttää hyvää ohjelmointirutiinia sekä valmiutta omatoimiseen opiskeluun.
 
 ## Suoritusmuoto
 
-Kurssin rakenne poikkeaa jossain määrin osaston kurssistandardista. Kurssilla tehdään ainoastaan yksi sovellus (joka tulee viikon 7 jälkeen näyttämään suunilleen [tällaiselta](http://ratebeer22.herokuapp.com/)), samaa sovellusta tehdään sekä teoriamateriaalissa että teorian sekaan upotetuissa laskareissa. **Kurssin teoriamateriaalia ei pystykään pelkästään lukemaan; Materiaalia seuratessa tulee itse rakentaa matkan varrella täydentyvää sovellusta, sillä muuten tehtävien tekeminen on mahdotonta. Toisin sanoen kurssia on seurattava tasaisesti koko seitsemän viikon ajan.**
+Kurssin rakenne poikkeaa jossain määrin osaston kurssistandardista. Kurssilla tehdään ainoastaan yksi sovellus (joka tulee kurssin lopussa näyttämään suunilleen [tällaiselta](http://ratebeer22.herokuapp.com/)), samaa sovellusta tehdään sekä teoriamateriaalissa että teorian sekaan upotetuissa laskareissa. **Kurssin teoriamateriaalia ei pystykään pelkästään lukemaan; Materiaalia seuratessa tulee itse rakentaa matkan varrella täydentyvää sovellusta, sillä muuten tehtävien tekeminen on mahdotonta. Toisin sanoen kurssia on seurattava tasaisesti koko seitsemän viikon ajan.**
+
+Kurssi jakautuu seitsemään "viikkoon", eli osaan jotka tehtiin kurssin aiemmissa versiossa yhden viikon aikana. Tällä kurssilla on kuitenkin ainoastaan yksi deadline, 31.12.2022 klo 23.59.
+
+Jokainen "viikko" palateaan erikseen kurssin palautussovellukseen. Palautettuasi yhden viikon tehtävät, pääset näkemään viikon esimerkkivastauksen. Seuraavalla viikolla on mahdollista jatkaa joko oman sovelluksen rakentamista tai ottaa pohjaksi edellisen viikon esimerkkivastaus.
 
 Osa viikon tehtävistä on käytännössä pakollisia, muuten eteneminen pysähtyy viikon osalta. Osa tehtävistä taas on vapaaehtoisia, ei-kriittisten ominaisuuksien toteutuksia.
 
-Yksi kurssin tärkeimmistä oppimistavoitteista on itsenäiseen tiedonhakuun kannustaminen. Tämän takia kurssimateriaali ei ole kaikilta osin yksinään riittävä tehtävien ratkaisemiseen. Kurssilla ei esim. varsinaisesti opeteta Rubyä ollenkaan, jokaisen osallistujan on hankittava kurssin aikana omatoimisesti riittävät valmiudet Rubyn käyttöön, ks. [ruby-ohjeita](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/rubyn_perusteita.md)
+Yksi kurssin tärkeimmistä oppimistavoitteista on itsenäiseen tiedonhakuun kannustaminen. Tämän takia kurssimateriaali ei ole kaikilta osin yksinään riittävä tehtävien ratkaisemiseen. Kurssilla ei esim. varsinaisesti opeteta Rubyä ollenkaan, jokaisen osallistujan on hankittava kurssin aikana omatoimisesti riittävät valmiudet Rubyn käyttöön, ks. [Ruby-ohjeita](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/rubyn_perusteita.md)
 
 ## Arvosteluperusteet
 
-Kurssin arvosana perustuu palautettujen tehtävien määrään. Arvosanaan 1 vaaditaan 50% tehtävistä ja arvosanaan 5 noin 90% tehtävistä. Hyväksytty suoritus edellyttää myös kurssikokeen hyväksyttyä suorittamista. Koe ei kuitenkaan vaikuta kurssin arvosanaan.
+Kurssin arvosana perustuu palautettujen tehtävien määrään. Arvosanaan 1 vaaditaan 50% tehtävistä ja arvosanaan 5 noin 90% tehtävistä. Kurssilla ei ole koetta.
 
 ## Opetus
 
-????
+### Discord
+
+- kurssin [telegram](https://telegram.org)-kanava <https://t.me/rorwepa>
+  - **Huom:** kaikki epäasialliset, halventavat ja jotain ihmisryhmää syrjivät kommentit kanavalla ovat kiellettyjä ja tälläisten kommenttien esittäjät poistetaan kanavalta
+- Rubyn harjoitteluun tarkoitetun materiaalin [ensimmäinen osa](https://github.com/HY-TKTL/ruby-materiaali/blob/master/Perusteet.md) ja [toinen osa](https://github.com/HY-TKTL/ruby-materiaali/blob/master/LuokkiaJaOlioita.md)
 
 ### Paja
 
 ????
 
-## Materiaali ja laskarit
+## Materiaali ja tehtävät
 
 - [viikko 1](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/viikko1.md)
 
@@ -80,12 +62,12 @@ Kurssin arvosana perustuu palautettujen tehtävien määrään. Arvosanaan 1 vaa
 
 - [viikko 7](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/viikko7.md)
 
-  - [Materiaalista](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/materiaalista.md)
+- [Materiaalista](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/materiaalista.md)
 ## Linkkejä
 
 [Railsin asentaminen](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/railsin_asentaminen.md)
 
-[git- ja githubohjeita](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/versiohallinta.md)
+[git- ja GitHubohjeita](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/versiohallinta.md)
 
 [Ruby-ohjeita](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/rubyn_perusteita.md)
 

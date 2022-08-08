@@ -107,7 +107,7 @@ Asennusohje osoitteessa https://github.com/mluukkai/WebPalvelinohjelmointi2022/b
 
 ## Sovelluksen luominen
 
-Teemme kurssilla olutharrastajille tarkoitetun palvelun, jonka avulla olutharrastajat voivat selata olemassa olevia panimoja, oluita, oluttyylejä sekä "reitata" juomiaan oluita (eli antaa oluille oman mieltymyksensä mukaisen pistemäärän). Viikon 7 jälkeen sovellus näyttää suunnilleen seuraavalta <http://ratebeer22.herokuapp.com>
+Teemme kurssilla olutharrastajille tarkoitetun palvelun, jonka avulla olutharrastajat voivat selata olemassa olevia panimoja, oluita, oluttyylejä sekä "reitata" juomiaan oluita (eli antaa oluille oman mieltymyksensä mukaisen pistemäärän). Viikon 7 jälkeen sovellus näyttää suunnilleen seuraavalta <https://ratebeer22.herokuapp.com>
 
 Rails tarjoaa sovelluskehittäjän avuksi useita generattoreita (ks. [http://guides.rubyonrails.org/generators.html](http://guides.rubyonrails.org/generators.html)), joiden avulla on helppo generoida hieman valmista toiminnallisuutta sisältäviä tiedostopohjia.
 
