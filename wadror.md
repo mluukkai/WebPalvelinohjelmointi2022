@@ -34,6 +34,8 @@ Yksi kurssin tärkeimmistä oppimistavoitteista on itsenäiseen tiedonhakuun kan
 
 Kurssin arvosana perustuu palautettujen tehtävien määrään. Arvosanaan 1 vaaditaan 50% tehtävistä ja arvosanaan 5 noin 90% tehtävistä. Kurssilla ei ole koetta.
 
+Kurssin tehtävien deadline on 31.12.2022 klo 23.59.
+
 ## Opetus
 
 ### Discord

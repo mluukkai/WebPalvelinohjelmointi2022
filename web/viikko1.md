@@ -107,7 +107,7 @@ Asennusohje osoitteessa https://github.com/mluukkai/WebPalvelinohjelmointi2022/b
 
 ## Sovelluksen luominen
 
-Teemme kurssilla olutharrastajille tarkoitetun palvelun, jonka avulla olutharrastajat voivat selata olemassa olevia panimoja, oluita, oluttyylejä sekä "reitata" juomiaan oluita (eli antaa oluille oman mieltymyksensä mukaisen pistemäärän). Viikon 7 jälkeen sovellus näyttää suunnilleen seuraavalta <https://ratebeer22.herokuapp.com>
+Teemme kurssilla olutharrastajille tarkoitetun palvelun, jonka avulla olutharrastajat voivat selata olemassa olevia panimoja, oluita, oluttyylejä sekä "reitata" juomiaan oluita (eli antaa oluille oman mieltymyksensä mukaisen pistemäärän). Kurssin lopussa sovellus näyttää suunnilleen seuraavalta <https://ratebeer22.herokuapp.com>
 
 Rails tarjoaa sovelluskehittäjän avuksi useita generattoreita (ks. [http://guides.rubyonrails.org/generators.html](http://guides.rubyonrails.org/generators.html)), joiden avulla on helppo generoida hieman valmista toiminnallisuutta sisältäviä tiedostopohjia.
 
@@ -169,17 +169,9 @@ Saman asian ajaa lyhennetty muoto _rails s_
 
 Komento käynnistää oletusarvoisesti Puma HTTP-palvelimen (ks. https://github.com/puma/puma), joka alkaa suorittamaan hakemistossa olevaa Rails-sovellusta paikallisen koneen (eli localhost:in) portissa 3000.
 
-Huom: saatat törmätä tässä vaiheessa virheeseen joka johtuu siitä että koneellasi ei ole JavaScript-suoritusympäristöä. Yksi tapa kiertää ongelma on lisätä tiedostoon Gemfile seuraava rivi (tai riittää poistaa # tiedostossa jo valmiina olevan rivin edestä):
-
-```
-gem 'mini_racer', platforms: :ruby
-```
-
-ja suorittaa komentoriviltä komento <code>bundle install</code>
-
 Kokeile selaimella osoitteessa [http://localhost:3000](http://localhost:3000) että sovellus on käynnissä.
 
-HUOM: **Tarkoituksena on, että tätä dokumenttia lukiessasi teet koko ajan samat asiat itse omaan sovellukseesi kuin mitä tässä dokumentissa esimerkkisovellukselle tehdään**. Osa toteutettavista asioista on muotoiltu tehtäviksi, kuten seuraava kohta, ja osa askelista taas tulee tehdä, jotta materiaalissa eteneminen on ylipäätään mahdollista.
+HUOM: **Tarkoituksena on, että materiaalia lukiessasi teet koko ajan samat asiat itse omaan sovellukseesi kuin mitä materiaalissa esimerkkisovellukselle tehdään**. Osa toteutettavista asioista on muotoiltu tehtäviksi, kuten seuraava kohta, ja osa askelista taas tulee tehdä, jotta materiaalissa eteneminen on ylipäätään mahdollista.
 
 > ## Tehtävä 3
 >
@@ -187,9 +179,9 @@ HUOM: **Tarkoituksena on, että tätä dokumenttia lukiessasi teet koko ajan sam
 >
 > Tee sovelluksesi hakemistosta (eli siitä hakemistosta jonka komento _rails new_ luo) git-repositorio suorittamalla hakemistossa komento <code>git init</code>
 >
-> Luo sovellusta varten repositorio Githubiin ja liitä se etärepositorioksi sovelluksesi hakemiston repositorioon
+> Luo sovellusta varten repositorio GitHubiin ja liitä se etärepositorioksi sovelluksesi hakemiston repositorioon
 >
-> Ohjeita gitin ja Githubin käyttöön esim. kurssin Tietokone työvälineenä materiaalissa https://tkt-lapio.github.io/
+> Ohjeita gitin ja Githubin käyttöön esim. kurssin Tietokone työvälineenä materiaalissa https://tkt-lapio.github.io/ sekä Ohjelmistotekniikka-kurssin [viikon 1 tehtävissä](https://ohjelmistotekniikka-hy.github.io/python/viikko1)
 >
 > Tämän dokumentin lopussa on ohje varsinaisen palautuksen tekemiseksi
 
@@ -210,7 +202,7 @@ rails g scaffold brewery name:string year:integer
 
 Syntyy joukko tiedostoja. Tärkeimmät näistä ovat
 
-- app/models/Brewery.rb
+- app/models/brewery.rb
 - app/controllers/breweries_controller.rb
 - app/views/breweries/index.html.erb
 - app/views/breweries/show.html.erb
@@ -222,7 +214,7 @@ Loimme koodin generaattorilla <code>rails g scaffold brewery name:string year:in
 
 - tietokantataulu nimeltään breweries
 - kontrolleri nimeltään BreweriesController (tiedosto breweries_controller.rb)
-- model eli yhtä olutpanimoa edustava luokka Brewery (tiedosto Brewery.rb)
+- model eli yhtä olutpanimoa edustava luokka Brewery (tiedosto brewery.rb)
 
 Alussa saattaa olla hieman sekavaa milloin ja missä käytetään yksikkö- ja milloin monikkomuotoa, miten tiedostot on nimetty ja mikä niiden sijainti on. Pikkuhiljaa kuitenkin käytänteet juurtuvat selkärankaan ja alkavat vaikuttamaan loogisilta.
 
@@ -283,8 +275,28 @@ Tee kaikki seuraavat komennot myös itse (komentoa on merkin > jälkeen oleva me
 
 ```ruby
 irb(main):001:0> Brewery.all
-  Brewery Load (0.6ms)  SELECT  "breweries".* FROM "breweries" LIMIT ?  [["LIMIT", 11]]
-=> #<ActiveRecord::Relation [#<Brewery id: 1, name: "Koff", year: 1897, created_at: "2018-09-01 09:28:27", updated_at: "2018-09-01 09:28:27">, #<Brewery id: 2, name: "Malmgård", year: 1999, created_at: "2018-09-01 09:29:15", updated_at: "2018-09-01 09:29:15">, #<Brewery id: 3, name: "Weihenstephan", year: 1040, created_at: "2018-09-01 09:29:30", updated_at: "2018-09-01 09:29:30">]>
+   (4.2ms)  SELECT sqlite_version(*)
+  Brewery Load (2.7ms)  SELECT "breweries".* FROM "breweries"
+=>
+[#<Brewery:0x00007f4b628be9a8
+  id: 1,
+  name: "Weihenstephan",
+  year: 1040,
+  created_at: Mon, 08 Aug 2022 14:39:47.235924000 UTC +00:00,
+  updated_at: Mon, 08 Aug 2022 14:39:47.235924000 UTC +00:00>,
+ #<Brewery:0x00007f4b62775d80
+  id: 2,
+  name: "Schlenkerla",
+  year: 1682,
+  created_at: Mon, 08 Aug 2022 14:40:11.159471000 UTC +00:00,
+  updated_at: Mon, 08 Aug 2022 14:40:11.159471000 UTC +00:00>,
+ #<Brewery:0x00007f4b62775b00
+  id: 3,
+  name: "Sinebrychoff",
+  year: 1879,
+  created_at: Mon, 08 Aug 2022 14:40:35.385354000 UTC +00:00,
+  updated_at: Mon, 08 Aug 2022 14:40:35.385354000 UTC +00:00>]
+irb(main):002:0> Brewery.count
 irb(main):002:0> Brewery.count
    (0.2ms)  SELECT COUNT(*) FROM "breweries"
 => 3
