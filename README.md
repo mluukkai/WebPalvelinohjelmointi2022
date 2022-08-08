@@ -1,4 +1,4 @@
-## Web-palvelinohjelmointi syksy 2022, Tietojenkäsittelytieteen osasto, Helsingin Yliopisto
+# Web-palvelinohjelmointi syksy 2022, Tietojenkäsittelytieteen osasto, Helsingin Yliopisto
 
 Web-palvelinohjelmointi Ruby on Rails palaa toiveuusintana opetusohjelmaan vielä kerran!
 
@@ -6,7 +6,9 @@ Ruby on Rails on reilut 15 vuotta sitten suureen suosioon noussut MVC-websovellu
 
 Kokeile miltä tuntuu ohjelmoida kielellä, jonka vallitseva suunnitteluparadigma on sovelluskehittäjän tyytyväisyys, ja sovelluskehyksellä joka on ratkaissut triviaalit, mutta hankalasti päätettävissä olevat asiat (mm. tiedostojen nimentä ja hakemistorakenteet) puolestasi! Huomaat myös, että toisin kuin uuden liiton sovelluksehittäjät ajattelevat, ei kakkien sovelluksien tarvitse olla SPA- eli yhden sivun sovelluksia...
 
-materiaali ja tehtävät [1](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/viikko1.md)
+## Materiaali ja tehtävät 
+
+[Viikko 1](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/viikko1.md)
 
 [viikko 2](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/viikko2.md)
 
