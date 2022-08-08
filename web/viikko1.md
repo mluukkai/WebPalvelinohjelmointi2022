@@ -52,7 +52,7 @@ Tällä kurssilla käytämme Web-sovellusten toteuttamiseen Ruby on Rails -sovel
 
 Rails-sovellukset noudattavat [MVC-mallia](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller) (tai WebMVC:tä, joka poikkeaa hiukan alkuperäisestä MVC:stä), jossa ideana on jakaa sovelluksen data- ja sovelluslogiikka (Model), näyttöjen muodostaminen (View) ja toiminnan koordinointi (Controller) selkeästi eriytettyihin osiin. Valtaosa web-palvelinpuolen sovelluskehityksestä tapahtuu nykyään MVC-periaatetta noudattaen.
 
-Tutkitaan mitä tapahtuu kun käyttäjä menee Railsilla toteutetulle web-sivulle, olkoon sivun URL esim. [http://ratebeer22.herokuapp.com/breweries](http://ratebeer22.herokuapp.com/breweries), eli kurssin aikana tekemämme esimerkkisovelluksen sivu, joka listaa kaikki esimerkkisovelluksen tuntemat panimot.
+Tutkitaan mitä tapahtuu kun käyttäjä menee Railsilla toteutetulle web-sivulle, olkoon sivun URL esim. <http://ratebeer22.herokuapp.com/breweries>, eli kurssin aikana tekemämme esimerkkisovelluksen sivu, joka listaa kaikki esimerkkisovelluksen tuntemat panimot.
 
 ![mvc-kuva](http://www.cs.helsinki.fi/u/mluukkai/rails_mvc.png)
 
@@ -105,13 +105,15 @@ Asennusohje osoitteessa https://github.com/mluukkai/WebPalvelinohjelmointi2022/b
 
 ## Sovelluksen luominen
 
-Teemme kurssilla olutharrastajille tarkoitetun palvelun, jonka avulla olutharrastajat voivat selata olemassa olevia panimoja, oluita, oluttyylejä sekä "reitata" juomiaan oluita (eli antaa oluille oman mieltymyksensä mukaisen pistemäärän). Viikon 7 jälkeen sovellus näyttää suunnilleen seuraavalta [http://ratebeer22.herokuapp.com/](http://ratebeer22.herokuapp.com/)
+Teemme kurssilla olutharrastajille tarkoitetun palvelun, jonka avulla olutharrastajat voivat selata olemassa olevia panimoja, oluita, oluttyylejä sekä "reitata" juomiaan oluita (eli antaa oluille oman mieltymyksensä mukaisen pistemäärän). Viikon 7 jälkeen sovellus näyttää suunnilleen seuraavalta <http://ratebeer22.herokuapp.com>
 
 Rails tarjoaa sovelluskehittäjän avuksi useita generattoreita (ks. [http://guides.rubyonrails.org/generators.html](http://guides.rubyonrails.org/generators.html)), joiden avulla on helppo generoida hieman valmista toiminnallisuutta sisältäviä tiedostopohjia.
 
 Uusi Rails-sovellus luodaan generaattorilla new. Mene sopivaan hakemistoon ja luo sinne sovellus nimeltään ratebeer antamalla komentoriviltä komento
 
-    rails new ratebeer
+```bash
+rails new ratebeer
+```
 
 Komennon suoritus luo sovelluksen sisältämän hakemiston _ratebeer_.
 
@@ -157,7 +159,9 @@ Hakemistorakenne on tärkeä osa Railsin Convention over Configuration -periaate
 
 Käynnistä sovellus antamalla komentoriviltä komento
 
-    rails server
+```bash
+rails server
+```
 
 Saman asian ajaa lyhennetty muoto _rails s_
 
@@ -165,7 +169,9 @@ Komento käynnistää oletusarvoisesti Puma HTTP-palvelimen (ks. https://github.
 
 Huom: saatat törmätä tässä vaiheessa virheeseen joka johtuu siitä että koneellasi ei ole JavaScript-suoritusympäristöä. Yksi tapa kiertää ongelma on lisätä tiedostoon Gemfile seuraava rivi (tai riittää poistaa # tiedostossa jo valmiina olevan rivin edestä):
 
-    gem 'mini_racer', platforms: :ruby
+```
+gem 'mini_racer', platforms: :ruby
+```
 
 ja suorittaa komentoriviltä komento <code>bundle install</code>
 
@@ -196,7 +202,9 @@ Railsissa konventiona on, että (melkein) jokaista tietokantaan talletettavaa 'a
 
 Luodaan kaikki nämä Railsin valmista scaffold-generaattoria käyttäen. Panimolla on nimi (merkkijono) ja perustusvuosi (kokonaisluku). Annetaan komentoriviltä (sovelluksen sisältävästä hakemistosta) seuraava komento:
 
-    rails g scaffold brewery name:string year:integer
+```bash
+rails g scaffold brewery name:string year:integer
+```
 
 Syntyy joukko tiedostoja. Tärkeimmät näistä ovat
 
@@ -218,9 +226,7 @@ Alussa saattaa olla hieman sekavaa milloin ja missä käytetään yksikkö- ja m
 
 Jos sovellus ei ole jo käynnissä, käynnistetään se uudelleen antamalla komentoriviltä komento <code>rails s</code>. Huom: sovelluksen uudelleenkäynnistys on Railsissa tarpeen melko harvoin. Esim. koodin muuttelu ja lisääminen ei aiheuta uudelleenkäynnistystarvetta.
 
-Railsin konventioiden mukaan kaikkien oluiden lista näkyy osoitteessa breweries, eli mennään sivulle:
-
-    localhost:3000/breweries
+Railsin konventioiden mukaan kaikkien oluiden lista näkyy osoitteessa breweries, eli mennään sivulle <http://localhost:3000/breweries>.
 
 Tästä aiheutuu kuitenkin virheilmoitus:
 
@@ -251,11 +257,15 @@ Kuten huomaamme, on railsin scaffoldingilla saatu jo melko paljon valmista toimi
 
 **Huom:** railsin generaattorin luomat tiedostot on mahdollista poistaa komennolla _destroy_:
 
-    rails destroy scaffold brewery
+```bash
+rails destroy scaffold brewery
+```
 
 Jos olet suorittanut jo migraation ja huomaat että generaattorin luoma koodi onkin tuhottava, on **erittäin tärkeää** ensin perua migraatio komennolla
 
-    rails db:rollback
+```bash
+rails db:rollback
+```
 
 ## Konsoli
 
@@ -263,7 +273,9 @@ Rails-sovelluskehittäjän yksi tärkeimmistä työkaluista on Rails-konsoli. Ko
 
 Avaa konsoli antamalla komentoriviltä (sovelluksen sisältävästä hakemistosta) komento
 
-    rails c
+```bash
+rails c
+```
 
 Tee kaikki seuraavat komennot myös itse (komentoa on merkin > jälkeen oleva merkkijono):
 
@@ -304,24 +316,32 @@ ActiveRecordissa luokilla on siis kaksoisrooli, luokkametodien (joita Rubyssä k
 
 Jatketaan konsolista tapahtuvia kokeiluja. Luodaan uusi panimo:
 
-    Brewery.new(name: "Stadin Panimo", year: 1997)
+```ruby
+Brewery.new(name: "Stadin Panimo", year: 1997)
+```
 
 Railsissa siis konstruktoria kutsutaan hieman eri tyyliin kuin esim. Javassa. Huomaa, että sulkujen käyttö konstruktori- tai metodikutsussa ei ole välttämätöntä, edellinen oltaisiinkin voitu antaa muodossa
 
-    Brewery.new name: "Stadin Panimo", year: 1997
+```ruby
+Brewery.new name: "Stadin Panimo", year: 1997
+```
 
 Listaa nyt panimot ja tarkista niiden lukumäärä metodeilla <code>Brewery.all</code> ja <code>Brewery.count</code>. Huomaat, että vaikka loimme uuden olion, ei se mene kuitenkaan tietokantaan!
 
 Olio saadaan talletettua tietokantaan seuraavasti:
 
-    b = Brewery.new name: "Stadin Panimo", year: 1997
-    b.save
+```ruby
+b = Brewery.new name: "Stadin Panimo", year: 1997
+b.save
+```
 
 Eli otettiin luotu olio talteen muuttujaan <code>b</code> ja kutsuttiin oliolle metodia <code>save</code>. Save on ActiveRecordilta peritty oliometodi, joka kuten arvata saattaa, tallettaa olion tietokantaan. Huomaa, että muuttujan tyyppiä ei tarvitse (eikä voi) määritellä sillä Ruby on dynaamisesti tyypitetty kieli.
 
 Olion voi myös luoda ja tallettaa suoraan kantaan käyttämällä new:n sijaan luokan metodia create:
 
-    Brewery.create name: "Weihenstephan", year: 1040
+```ruby
+Brewery.create name: "Weihenstephan", year: 1040
+```
 
 Kun olio luodaan komennolla <code>new</code>, huomaamme, että olio sisältää kenttiä joiden arvoa ei ole asetettu:
 
@@ -344,31 +364,39 @@ Katso tilannetta taas [selaimesta](http://localhost:3000/breweries). Luotujen pa
 
 Metodien <code>new</code> ja <code>create</code> kutsu näytti hieman erikoiselta
 
-    Brewery.new name: "Stadin Panimo", year: 1997
+```ruby
+Brewery.new name: "Stadin Panimo", year: 1997
+```
 
 Olemme tässä hyödyntäneet Rubyn vapaamielistä suhtautumista sulkujen käyttöön. Eli sulkujen kanssa kutsu näyttää seuraavalta:
 
-    Brewery.new( name: "Stadin Panimo", year: 1997 )
+```ruby
+Brewery.new( name: "Stadin Panimo", year: 1997 )
+```
 
 Myös parametri on hieman erikoisessa formaatissa. Kyseessä on symboleilla indeksöity assosiatiivinen taulukko eli _hash_, ks. https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/rubyn_perusteita.md#hash-ja-symbolit
 
 Kuten yo. linkistä selviää, hashit määritellään aaltosuluissa:
 
-    { name: "Stadin Panimo", year: 1997 }
+```ruby
+{ name: "Stadin Panimo", year: 1997 }
+```
 
 Metodikutsun voisi siis kirjoittaa myös muodossa
 
-    Brewery.new( { name: "Stadin Panimo", year: 1997 } )
+```ruby
+Brewery.new( { name: "Stadin Panimo", year: 1997 } )
+```
 
 Metodin parametrina olevassa hashissa ei ole kuitankaan pakko käyttää aaltosulkuja kaikissa tapauksissa, joten usein ne jätetäänkin pois. Jos metodilla on useita parametreja, ovat aaltosulkeet joissain tilanteissa tarpeen.
 
 Huom: Rubyssä on myös vaihtoehtoinen syntaksi hashien määrittelyyn, sitä käyttäen edellinen tulisi muodossa
 
-    Brewery.new :name => "Stadin Panimo", :year => 1997
+```ruby
+Brewery.new :name => "Stadin Panimo", :year => 1997
+```
 
-Jos haluat luoda tietueita tai muuten harjoitella Railsin käyttöä konsolista käsin ilman pysyviä muutoksia tietokantaan, voit ajaa konsolin hiekkalaatikko-tilassa komennolla:
-
-`rails console --sandbox` tai lyhyemmin `rails c -s`
+Jos haluat luoda tietueita tai muuten harjoitella Railsin käyttöä konsolista käsin ilman pysyviä muutoksia tietokantaan, voit ajaa konsolin hiekkalaatikko-tilassa komennolla `rails console --sandbox` tai lyhyemmin `rails c -s`.
 
 ## ActiveRecordin hakurajapinta
 
@@ -376,25 +404,27 @@ ActiveRecord tarjoaa monipuoliset mahdollisuudet tietokantahakujen tekemiseen oh
 
 Seuraavassa muutamia esimerkkejä, kokeile kaikkia konsolista:
 
-    Brewery.find 1                 # palauttaa olion, jonka id on 1
+```ruby
+Brewery.find 1                 # palauttaa olion, jonka id on 1
 
-    b = Brewery.find 2             # palauttaa olion, jonka id on 2 ja sijoittaa sen muuttujaan b
-    b.year                         # muuttujaan b talletetun olion kentän year arvo
-    b.name                         # muuttujaan b talletetun olion kentän name arvo
+b = Brewery.find 2             # palauttaa olion, jonka id on 2 ja sijoittaa sen muuttujaan b
+b.year                         # muuttujaan b talletetun olion kentän year arvo
+b.name                         # muuttujaan b talletetun olion kentän name arvo
 
-    Brewery.find_by name:"Koff"    # palauttaa olion, jonka nimi on Koff
+Brewery.find_by name:"Koff"    # palauttaa olion, jonka nimi on Koff
 
-    Brewery.where name:"Koff"      # palauttaa taulukon, johon on sijoitettu kaikki Koff-nimiset panimot
+Brewery.where name:"Koff"      # palauttaa taulukon, johon on sijoitettu kaikki Koff-nimiset panimot
 
-    Brewery.where year:1900..2000  # palauttaa taulukon, jossa vuosina 1900-2000 perustetut panimot
+Brewery.where year:1900..2000  # palauttaa taulukon, jossa vuosina 1900-2000 perustetut panimot
 
-    Brewery.where "year<1900"      # palauttaa taulukon, jossa ennen vuotta 1900 perustetut panimot
+Brewery.where "year<1900"      # palauttaa taulukon, jossa ennen vuotta 1900 perustetut panimot
 
-    b = Brewery.where name:"Koff"
-    b.year                         # operaatio ei toimi, sillä where palauttaa taulukon, jossa Koff sijaitsee
+b = Brewery.where name:"Koff"
+b.year                         # operaatio ei toimi, sillä where palauttaa taulukon, jossa Koff sijaitsee
 
-    t = Brewery.where name:"Koff"
-    t.first.year                   # t.first tarkoittaa kuin t[0] eli taulukon 1. alkiota
+t = Brewery.where name:"Koff"
+t.first.year                   # t.first tarkoittaa kuin t[0] eli taulukon 1. alkiota
+```
 
 Lisää Rubyn taulukosta ks. https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/rubyn_perusteita.md#taulukko
 
@@ -693,7 +723,9 @@ end
 
 Metodi sisältää ainoastaan komennon
 
-    @breweries = Brewery.all
+```ruby
+@breweries = Brewery.all
+```
 
 eli sijoittaa kaikkien panimoiden listan <code>@breweries</code>-nimiseen muuttujaan, jonka avulla se välittää panimoiden listan näkymälle. Tämän jälkeen metodi index renderöi näkymätemplatessa app/views/breweries/index.html.erb määritellyn html-sivun. Metodi ei missään vaiheessa viittaa näkymätemplateen tai sisällä käskyä sen renderöintiin. Kyse on jälleen Railsin convention over configuration -periaatteesta, eli jos ei muuta sanota, renderöidään kontrollerin index-metodin lopussa index.html.erb-näkymätemplate.
 
@@ -710,7 +742,7 @@ Näkymätemplatet, eli erb-tiedostot ovat html:ää, joihin on upotettu Ruby-koo
 
 Tarkastellaan valmiiksigeneroitua näkymätemplatea eli tiedostoa app/views/breweries/index.html.erb
 
-```
+```html
 <p style="color: green"><%= notice %></p>
 
 <h1>Breweries</h1>
@@ -733,7 +765,7 @@ Näkymätemplateen upotettu Ruby-koodi tulee <% %> merkkien sisälle. <%= %> taa
 
 Tutustumme listan generointiin kohta hieman tarkemmin. Lisätään ensin sivulle (eli erb-templateen) tieto panimoiden yhteenlasketusta määrästä. Eli lisää johonkin kohtaan sivua, esim. heti h1-tagien sisällä olevan otsikon jälkeen seuraava rivi
 
-```
+```html
 <p> Number of breweries: <%= @breweries.count %> </p>
 ```
 
@@ -741,7 +773,7 @@ Mene nyt selaimella [panimot listaavalle sivulle](http://localhost:3000/brewerie
 
 Palataan sitten tarkemmin HTML-taulukon muodostavaan koodiin. Jokainen panimo tulostuu omalle rivilleen listaan Rubyn <code>each</code>-iteraattoria käyttäen:
 
-```
+```html
   <% @breweries.each do |brewery| %>
     <%= render brewery %>
     <p>
@@ -798,7 +830,9 @@ end
 
 Metodi ei sisällä mitään koodia! Huomaamme kuitenkin, että luokan määrittelyn alussa on rivi
 
-      before_action :set_brewery, only: %i[ show edit update destroy ]
+```ruby
+before_action :set_brewery, only: %i[ show edit update destroy ]
+```
 
 Tämä taas saa aikaan sen, että ennen jokaista lueteltua metodia (show, edit, update ja destroy) suoritetaan metodin <code>set_brewery</code> koodi. Metodin määrittely löytyy luokan loppupuolelta:
 
@@ -823,7 +857,9 @@ end
 
 Ennen metodin <code>show</code> suoritusta siis suoritetaan komento
 
-    @brewery = Brewery.find(params[:id])
+```ruby
+@brewery = Brewery.find(params[:id])
+```
 
 joka viittaa muuttujaan `params`, joka taas sisältää suorituksen alla olevaan HTTP-kutsuun liittyvät tiedot. Muuttuja <code>params</code> on tyypiltään assosiatiivinen taulukko eli hash. Erityisesti muuttujan arvo avaimella <code>:id</code> eli `params[:id]` kertoo tässä tapauksessa tarkasteltavana olevan panimon id:n, eli polun breweries/#{id}, kenoviivan jälkeisen osan.
 
@@ -916,24 +952,32 @@ Kyse on oikeastaan klassisesta nullpointer-poikkeuksesta, tai sen Ruby-versiosta
 
 Voit poistaa ongelman aiheuttavat oluet käsin tai konsolin avulla. Saat haettua orvot oluet konsolista komennolla:
 
-    orvot_oluet = Beer.all.select{ |b| b.brewery.nil? }
+```ruby
+orvot_oluet = Beer.all.select{ |b| b.brewery.nil? }
+```
 
 ja niiden poistaminen onnistuu sitten each-iteraattorin avulla
 
-    orvot_oluet.each{ |orpo| orpo.delete }
+```ruby
+orvot_oluet.each{ |orpo| orpo.delete }
+```
 
 koska jokaiselle iteroitavalla oliolle kutsutaan ainoastaan metodia, onnistuu edellinen myös seuraavalla, hieman erikoisen näköisellä syntaksilla:
 
-    orvot_oluet.each(&:delete)
-
+```ruby
+orvot_oluet.each(&:delete)
+```
+    
 ## Kertausta: polkujen ja kontrollerien nimentäkonventiot
 
 Loimme siis sovellukseemme tietokantataulut panimoille ja oluille sekä molempien hallinnointiin tarkoitetut kontrollerit ja näkymät. Kerrataan vielä Railsin nimentäkonventioita, joihin tottumiseen saattaa aloittelijalla mennä hetki.
 
 Panimo ja siihen liittyvät kontrollerit ja näkymät luotiin Railsin scaffold-generaattorilla seuraavasti:
 
-    rails g scaffold Brewery name:string year:integer
-
+```bash
+rails g scaffold Brewery name:string year:integer
+```
+    
 Tästä seurauksena syntyi
 
 - tietokantataulu <code>breweries</code>
