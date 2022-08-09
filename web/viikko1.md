@@ -808,8 +808,9 @@ Tarkastellaan valmiiksigeneroitua näkymätemplatea eli tiedostoa app/views/brew
 <h1>Breweries</h1>
 
 <div id="breweries">
-  <% @breweries.each do |brewery| %> <%= render brewery %>
-  <p><%= link_to "Show this brewery", brewery %></p>
+  <% @breweries.each do |brewery| %> 
+    <%= render brewery %>
+    <p><%= link_to "Show this brewery", brewery %></p>
   <% end %>
 </div>
 
@@ -1003,13 +1004,45 @@ Näkymätemplaten views/breweries/show.html.erb koodi on seuraavassa:
 
 Sivun yläosassa oleva id:llä **notice** varustettu osa on tarkoitettu näyttämään panimon luomiseen tai muutokseen liittyviä viestejä, asiasta lisää myöhemmin.
 
-Sivulla käytetään samaa partialsia render-metodissa, kuin etusivulla. Aiemman muutoksen seurauksena sivun otsikko on nyt linkki sivuun itseensä.
+Sivulla käytetään samaa partialsia render-metodissa, kuin kaikkien painimoiden sivulla. Aiemman muutoksen seurauksena sivun otsikko on nyt linkki sivuun itseensä.
+
+Koska muutamme pian yksittäisen panimoin näkymää mutta emme halua samaa templatea käyttävän kaikkien panimoiden näkyvän muuttuvan, luovutaan paritalin käytöstä kaikkien panimoiden sivulla ja muutetaan tiedosto app/views/breweries/index.html.erb seuraavaan muotoon:
+
+```html
+<p style="color: green"><%= notice %></p>
+
+<h1>Breweries</h1>
+
+<p>Number of breweries: <%= @breweries.count %></p>
+
+<div id="breweries">
+  <% @breweries.each do |brewery| %>
+    <div id="<%= dom_id brewery %>">
+      <p>
+        <%= link_to brewery.name, brewery %>
+      </p>
+    
+      <p>
+        <strong>Year:</strong>
+        <%= brewery.year %>
+      </p>
+    
+    </div>
+  <% end %>
+</div>
+
+<%= link_to "New brewery", new_brewery_path %>
+```
+
+Partialin \_brewery.html.erb koodi on siis copypasteuttu suoraan kaikkien panimoiden templaten sisään.
 
 > ## Tehtävä 7: Panimon sivun hiominen
 >
 > Lisätään sivulle tieto panimoon liittyvien oluiden määrästä eli renderöi sivun sisällä <code>@brewery.beers.count</code>
 >
 > Muokkaa valmista sivua siten, että panimon nimestä tulee h2-tason otsikko ja vuosi ilmoitetaan kursivoituna tyyliin "_Established_ _in_ _1897_". Tämän tehdäksesi on otettava partialsin renderöinti pois käytöstä ja tehtävä renderöinti ilman sen apua.
+>
+> Nämä, ja seuraavan tehtävän muutokset siis tehdään ykisttäisen panimon tietojen näyttämisestä huolehtivaan partialiin \_brewery.html.erb
 
 Jatketaan muutosten tekemistä.
 
