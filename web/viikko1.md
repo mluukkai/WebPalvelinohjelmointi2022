@@ -1206,6 +1206,71 @@ class BreweriesController < ApplicationController
 
 Eksplisiittinen <code>render</code>-metodin kutsuminen on siis tarpeen vain silloin kun kontrolleri renderöi jonkin muun kuin oletusnäkymän.
 
+## Kertausta: näkymät ja näkymäpartiaalit
+
+Kerrataan vielä muutamaa asiaa näkymätemplateista. Tarkastellaan tilannetta, missä käyttäjä navigoi yksittäisen oluen sivulle esim. osoitteeseen beers/1. Sovellus suorittaa olutkontrollerin metodin show, joka renderöi oletusarvoisen templaten views/beers/show.html.erb. Kontrolleri asettaa tarkasteltavan oluen muuttujaan @beer kiitos before\_action määrittelyn:
+
+```ruby
+class BeersController < ApplicationController
+  before_action :set_beer, only: %i[ show edit update destroy ]
+
+  # GET /beers/1 or /beers/1.json
+  def show
+  end
+
+  private
+    # Use callbacks to share common setup or constraints between actions.
+    def set_beer
+      @beer = Beer.find(params[:id])
+    end
+
+end
+```
+
+Näkymätemplate siis näkee käsiteltävän oluen muutujan @beer kautta: 
+
+```html
+<p style="color: green"><%= notice %></p>
+
+<%= render @beer %>
+
+<div>
+  <%= link_to "Edit this beer", edit_beer_path(@beer) %> |
+  <%= link_to "Back to beers", beers_path %>
+
+  <%= button_to "Destroy this beer", @beer, method: :delete %>
+</div>
+```
+
+Näkymätemplate ei hoida kaikkea renderöintiä itse, se hoitaa oluen tietojen renderöinnin partiaalin views/beers/\_beer.html.erb avulla. Partialia kutsutaan metodin render avulla:
+
+```html
+<%= render @beer %>
+```
+
+Koska metodikutsun parametrin tyyppi on Beer, tietää Rails, että on tarkoitus renderöidä nimenomaan partiaali _beer.html.erb. Partiaali näkee parametrin muuttujana beer, muuttujan nimi on Rails-magian avulla automaattisesti partialin nimen perusteella määrittyvä.
+
+```html
+<div id="<%= dom_id beer %>">
+  <p>
+    <%= link_to beer.name, beer %>
+  </p>
+
+  <p>
+    <strong>Style:</strong>
+    <%= beer.style %>
+  </p>
+
+  <p>
+    <strong>Brewery:</strong>
+    <%= link_to beer.brewery.name, beer.brewery %>
+  </p>
+
+</div>
+
+```
+
+
 > ## Tehtävä 11
 >
 > Muuta tilapäisesti panimokontrollerin <code>index</code>-metodia seuraavasti
