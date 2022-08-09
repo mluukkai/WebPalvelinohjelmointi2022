@@ -841,7 +841,13 @@ Palataan sitten tarkemmin panimot listaavaan koodiin. Jokainen panimo tulostuu o
 
 Muuttujaan `@breweries` talletettu panimoiden lista käydään läpi `each`-iteraattorin avulla. (lisää eachista ks. https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/rubyn_perusteita.md#each). 
 
-Rails luo rivit käyttäen <code>render</code> metodia jota se kutsuu jokaiselle panimolle. <code>render</code> metodi käyttää hyväkseen [Partial templateja](https://guides.rubyonrails.org/layouts_and_rendering.html#using-partials) eli tutummin "partialseja". 
+Rails luo rivit käyttäen <code>render</code> metodia jota se kutsuu jokaiselle panimolle: 
+
+```html
+  <%= render brewery %>
+```
+
+<code>render</code> metodi käyttää hyväkseen [Partial templateja](https://guides.rubyonrails.org/layouts_and_rendering.html#using-partials) eli tutummin "partialseja". 
 
 Rails on luonut yksittäiselle panimolle automaattisesti partials-tiedoston (app/views/breweries/\_brewery.html.erb). Partiaali näyttää seuraavalta
 
@@ -863,6 +869,31 @@ Rails on luonut yksittäiselle panimolle automaattisesti partials-tiedoston (app
 Jokaista yksittäistä panimoa kohti siis luodaan listaan div-tagien sisällä olevat rivit. Ensimmäiselle riville tulee panimon nimi ja toiselle perustamisvuosi.
 
 Partials-tiedostot nimetään käyttäen tiedoston alussa alaviivaa, jotta ne pystytänä jo silmäyksellä erottamaan normaaleista näkymistä.
+
+Partialin määrittelyssä ja käytössä on hieman Rails-magiaa. Partialia siis kutsutaan seuraavasti:
+
+```html
+  <% @breweries.each do |brewery| %>
+    <%= render brewery %>
+    ...
+  <% end %>
+```
+
+Render-metodi saa parametrikseen muuttujaan brewery tallennetun panimo-olion. Olion tyypistä Rails osaa päätellä, että sen tulee käyttää tiedostoon \_brewery.html.erb talletettua partialia...
+
+Partialin koodissa panimo-olioon viitataan muuttujan brewery kautta:
+
+```html
+<div id="<%= dom_id brewery %>">
+  <p>
+    <strong>Name:</strong>
+    <%= brewery.name %>
+  </p>
+
+  ...
+
+</div>
+```
 
 Kolmannelle riville luodaan linkki panimon tiedot näyttävälle sivulle. Linkin generoiva Ruby-koodi on `<%= link_to "Show this brewery", brewery %>` .
 

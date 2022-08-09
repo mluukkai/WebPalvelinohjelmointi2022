@@ -2,7 +2,7 @@
 
 Web-palvelinohjelmointi Ruby on Rails palaa toiveuusintana opetusohjelmaan vielä kerran!
 
-Ruby on Rails on reilut 15 vuotta sitten suureen suosioon noussut MVC-websovelluskehys, hipsterien ykköskieli vuonna 2006. Monet isot ja tunnetut sovellukset kuten Twitter, Heroku, AirBnB ja GitHub olivat aluksi Railsilla ohjelmoituja, osa näistä luottaa Railsiin edelleen. JavaScriptiin pohjautuvat teknologiat söivät Railsin suosion pikkuhiljaa vuoden 2015 jälkeen, työmarkkinoilla on kuitenkin edelleen olemassa jatkuva tarve Rails-kehittäjille, Raisia hallitsevia kehittäjiä on kuitenkin tarjolla kovin vähän.
+Ruby on Rails on reilut 15 vuotta sitten suureen suosioon noussut MVC-websovelluskehys, hipsterien ykköskieli vuonna 2006. Monet isot ja tunnetut sovellukset kuten Twitter, Heroku, AirBnB ja GitHub olivat aluksi Railsilla ohjelmoituja, osa näistä luottaa Railsiin edelleen. JavaScriptiin pohjautuvat teknologiat söivät Railsin suosion pikkuhiljaa vuoden 2015 jälkeen, työmarkkinoilla on kuitenkin edelleen olemassa jatkuva tarve Rails-kehittäjille, Railsia hallitsevia kehittäjiä on kuitenkin tarjolla kovin vähän.
 
 Kokeile miltä tuntuu ohjelmoida kielellä, jonka vallitseva suunnitteluparadigma on sovelluskehittäjän tyytyväisyys, ja sovelluskehyksellä joka on ratkaissut triviaalit, mutta hankalasti päätettävissä olevat asiat (mm. tiedostojen nimentä ja hakemistorakenteet) puolestasi! Huomaat myös, että toisin kuin uuden liiton sovelluksehittäjät ajattelevat, ei kakkien sovelluksien tarvitse olla SPA- eli yhden sivun sovelluksia...
 
@@ -24,7 +24,7 @@ Kurssin rakenne poikkeaa jossain määrin osaston kurssistandardista. Kurssilla 
 
 Kurssi jakautuu seitsemään "viikkoon", eli osaan jotka tehtiin kurssin aiemmissa versiossa yhden viikon aikana. Tällä kurssilla on kuitenkin ainoastaan yksi deadline, 31.12.2022 klo 23.59.
 
-Jokainen "viikko" palateaan erikseen kurssin palautussovellukseen. Palautettuasi yhden viikon tehtävät, pääset näkemään viikon esimerkkivastauksen. Seuraavalla viikolla on mahdollista jatkaa joko oman sovelluksen rakentamista tai ottaa pohjaksi edellisen viikon esimerkkivastaus.
+Jokainen "viikko" palataan erikseen kurssin palautussovellukseen. Palautettuasi yhden viikon tehtävät, pääset näkemään viikon esimerkkivastauksen. Seuraavalla viikolla on mahdollista jatkaa joko oman sovelluksen rakentamista tai ottaa pohjaksi edellisen viikon esimerkkivastaus.
 
 Osa viikon tehtävistä on käytännössä pakollisia, muuten eteneminen pysähtyy viikon osalta. Osa tehtävistä taas on vapaaehtoisia, ei-kriittisten ominaisuuksien toteutuksia.
 
