@@ -847,7 +847,7 @@ Rails luo rivit käyttäen <code>render</code> metodia jota se kutsuu jokaiselle
   <%= render brewery %>
 ```
 
-<code>render</code> metodi käyttää hyväkseen [Partial templateja](https://guides.rubyonrails.org/layouts_and_rendering.html#using-partials) eli tutummin "partialseja". 
+<code>render</code> metodi käyttää hyväkseen [Partial templateja](https://guides.rubyonrails.org/layouts_and_rendering.html#using-partials) eli tutummin "partialeja". 
 
 Rails on luonut yksittäiselle panimolle automaattisesti partials-tiedoston (app/views/breweries/\_brewery.html.erb). Partiaali näyttää seuraavalta
 
@@ -879,7 +879,7 @@ Partialin määrittelyssä ja käytössä on hieman Rails-magiaa. Partialia siis
   <% end %>
 ```
 
-Render-metodi saa parametrikseen muuttujaan brewery tallennetun panimo-olion. Olion tyypistä Rails osaa päätellä, että sen tulee käyttää tiedostoon \_brewery.html.erb talletettua partialia...
+Render-metodi saa parametrikseen muuttujaan brewery tallennetun panimo-olion. Olion tyypistä Rails osaa päätellä, että sen tulee käyttää tiedostoon \_brewery.html.erb talletettua partialia.
 
 Partialin koodissa panimo-olioon viitataan muuttujan brewery kautta:
 
@@ -895,7 +895,7 @@ Partialin koodissa panimo-olioon viitataan muuttujan brewery kautta:
 </div>
 ```
 
-Kolmannelle riville luodaan linkki panimon tiedot näyttävälle sivulle. Linkin generoiva Ruby-koodi on `<%= link_to "Show this brewery", brewery %>` .
+Panimon tietojen kolmannelle riville luodaan linkki panimon tiedot näyttävälle sivulle. Linkin generoiva Ruby-koodi on `<%= link_to "Show this brewery", brewery %>` .
 
 Kyseessä on oikeastaan lyhennysmerkintä seuraavasta:
 
@@ -1031,7 +1031,7 @@ Jatketaan muutosten tekemistä.
 
 Sivusi tulisi näyttää tehtävän jälkeen seuraavalta
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/brewery-w1-1.png)
+![kuva](https://raw.githubusercontent.com/mluukkai/WebPalvelinohjelmointi2022/main/images/brewery-w1-1.png)
 
 Parannellaan vielä hieman sovelluksemme navigaatiota.
 
@@ -1053,13 +1053,13 @@ Viritellään lopuksi kaikkien oluiden listaa.
 
 Lopputuloksen pitäisi näyttää seuraavalta:
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/brewery-w1-2.png)
+![kuva](https://raw.githubusercontent.com/mluukkai/WebPalvelinohjelmointi2022/main/images/brewery-w1-2.png)
 
 ## nil
 
 Saatat törmätä seuraavanlaiseen virheilmoitukseen
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/brewery-w1-3.png)
+![kuva](https://raw.githubusercontent.com/mluukkai/WebPalvelinohjelmointi2022/main/images/brewery-w1-3.png)
 
 Kyse on oikeastaan klassisesta nullpointer-poikkeuksesta, tai sen Ruby-versiosta nilpointer-poikkeuksesta. Rails vihjaa, että olet yrittänyt kutsua nil:ille (joka on Rubyssä olio!) metodia name, ja että sellaista ei ole. Syynä tälle on todennäköisesti se, että tietokannassasi on oluita joihin ei liity panimoa tai että niihin liittyvä panimo on poistettu.
 
