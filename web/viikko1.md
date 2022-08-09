@@ -1004,9 +1004,34 @@ Näkymätemplaten views/breweries/show.html.erb koodi on seuraavassa:
 
 Sivun yläosassa oleva id:llä **notice** varustettu osa on tarkoitettu näyttämään panimon luomiseen tai muutokseen liittyviä viestejä, asiasta lisää myöhemmin.
 
-Sivulla käytetään samaa partialsia render-metodissa, kuin kaikkien painimoiden sivulla. Aiemman muutoksen seurauksena sivun otsikko on nyt linkki sivuun itseensä.
+Sivulla käytetään samaa partialia render-metodissa, kuin kaikkien painimoiden sivulla. Aiemman muutoksen seurauksena sivun otsikko on nyt linkki sivuun itseensä.
 
-Koska muutamme pian yksittäisen panimoin näkymää mutta emme halua samaa templatea käyttävän kaikkien panimoiden näkyvän muuttuvan, luovutaan paritalin käytöstä kaikkien panimoiden sivulla ja muutetaan tiedosto app/views/breweries/index.html.erb seuraavaan muotoon:
+Muutama tarkentava huomio partialiin liittyen. Panimon tiedot näyttävä partial siis on seuraava:
+
+```html
+<div id="<%= dom_id brewery %>">
+  <p>
+    <strong>Name:</strong>
+    <%= brewery.name %>
+  </p>
+
+  <p>
+    <strong>Year:</strong>
+    <%= brewery.year %>
+  </p>
+
+</div>
+```
+
+Partialin parametriksi saama panimo on muuttujassa brewery. Partialia siis kutsuttaan seuraavasti
+
+```html
+<%= render @brewery %>
+```
+
+Partialille voitaisiin antaa enemmänkin parametreja, mutta nyt annettiin ainoastaan yksi. Koska parametri on tyypiltään panimo eli Brewery, renderöidään _brewery.html.erb partiaali ja välitetään sille parametri muuttujan nimeltään brewery kautta. Parametrin välittävä muuttuja saa nimensä automaattisesti partialin nimen perusteella.
+
+Koska muutamme pian yksittäisen panimoin näkymää, mutta emme halua samaa templatea käyttävän kaikkien panimoiden näkyvän muuttuvan, luovutaan paritalin käytöstä kaikkien panimoiden sivulla ja muutetaan tiedosto app/views/breweries/index.html.erb seuraavaan muotoon:
 
 ```html
 <p style="color: green"><%= notice %></p>
@@ -1048,13 +1073,13 @@ Jatketaan muutosten tekemistä.
 
 > ## Tehtävä 8: Oluet panimon sivulle
 >
-> Lisätään nyt panimon sivulle lista panimoon liittyvistä oluista. Lisää aluksi sivulle seuraava <code><%= @brewery.beers.to_a %></code> ja katso aikaansannosta.
+> Lisätään nyt panimon sivulle lista panimoon liittyvistä oluista. Lisää aluksi sivulle seuraava <code><%= brewery.beers.to_a %></code> ja katso aikaansannosta.
 >
 > Listaa seuraavaksi ainoastaan oluiden nimet käyttäen each-toistoa:
 >
 > ```ruby
 > <p>
->  <% @brewery.beers.each do |beer| %>
+>  <% brewery.beers.each do |beer| %>
 >    <%= beer.name %>
 >  <% end %>
 > </p>
