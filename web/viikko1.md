@@ -271,7 +271,7 @@ Avaa konsoli antamalla komentoriviltä (sovelluksen sisältävästä hakemistost
 rails c
 ```
 
-Tee kaikki seuraavat komennot myös itse (komentoa on merkin > jälkeen oleva merkkijono):
+Tee kaikki seuraavat komennot myös itse (komento on merkin > jälkeen oleva merkkijono):
 
 ```ruby
 irb(main):001:0> Brewery.all
@@ -326,7 +326,7 @@ Active Record is the M in MVC - the model - which is the layer of the system res
 
 Periaatteena ActiveRecordissa on lyhyesti sanottuna se, että jokaista tietokannan taulua (esim. breweries) vastaa koodissa oma luokka (Brewery). Luokka tarjoaa **luokkametodeina** metodit, joiden avulla tietokantaa käsitellään. Kun tietokannasta haetaan rivillinen dataa (yhden panimon tiedot), luodaan siitä luokan instanssi (eli Brewery-olio).
 
-ActiveRecordissa luokilla on siis kaksoisrooli, luokkametodien (joita Rubyssä kutsutaan luokan nimen kautta tyyliin <code>Brewery.all</code>) avulla hoidetaan suurin osa tietokantaoperaatioista, esim. tietokantakyselyt. Tietokantaan talletettu data taas mäppäytyy ActiveRecord-luokkien instansseiksi.
+ActiveRecordissa luokilla on siis kaksoisrooli, luokkametodien (joita Rubyssä kutsutaan luokan nimen kautta tyyliin <code>Brewery.all</code>) avulla hoidetaan suurin osa tietokantaoperaatioista, esim. tietokantakyselyt. Tietokantaan talletetut rivit taas mäppäytyvät ActiveRecord-luokkien instansseiksi.
 
 Jatketaan konsolista tapahtuvia kokeiluja. Luodaan uusi panimo:
 
@@ -369,14 +369,14 @@ Kun olio sitten talletetaan, tulee näillekin kentille arvo:
 ```ruby
 irb(main):008 > b.save
 irb(main):009 > b
- => #<Brewery id: 4, name: "Stadin Panimo", year: 1997, created_at: "2018-01-09 13:21:37", updated_at: "2018-01-09 13:21:37">
+ => #<Brewery id: 4, name: "Stadin Panimo", year: 1997, created_at: "2022-08-09 13:21:37", updated_at: "2022-08-09 13:21:37">
 ```
 
 Kuten arvata saattaa, oliomuuttujat eli olion kentät vastaavat tietokantataulun sarakkeita. Kun olio tallettuu tietokantaan, generoi kanta automaattisesti oliolle pääavaimena (engl. primary key) toimivan id:n sekä pari aikaleimaa. Id on siis juuri luodun oluen yksikäsitteinen tunnus.
 
 Katso tilannetta taas [selaimesta](http://localhost:3000/breweries). Luotujen panimoiden pitäisi nyt olla näkyvissä sivulla.
 
-Metodien <code>new</code> ja <code>create</code> kutsu näytti hieman erikoiselta
+Konstruktorin <code>new</code> ja metodien <code>create</code> kutsut näyttivät hieman erikoiselta
 
 ```ruby
 Brewery.new name: "Stadin Panimo", year: 1997
@@ -396,13 +396,13 @@ Kuten yo. linkistä selviää, hashit määritellään aaltosuluissa:
 { name: "Stadin Panimo", year: 1997 }
 ```
 
-Metodikutsun voisi siis kirjoittaa myös muodossa
+Konstruktorin kutsun voisi siis kirjoittaa myös muodossa
 
 ```ruby
 Brewery.new( { name: "Stadin Panimo", year: 1997 } )
 ```
 
-Metodin parametrina olevassa hashissa ei ole kuitankaan pakko käyttää aaltosulkuja kaikissa tapauksissa, joten usein ne jätetäänkin pois. Jos metodilla on useita parametreja, ovat aaltosulkeet joissain tilanteissa tarpeen.
+Metodin/konstruktorin parametrina olevassa hashissa ei ole kuitankaan pakko käyttää aaltosulkuja kaikissa tapauksissa, joten usein ne jätetäänkin pois. Jos metodilla on useita parametreja, ovat aaltosulkeet joissain tilanteissa tarpeen.
 
 Huom: Rubyssä on myös vaihtoehtoinen syntaksi hashien määrittelyyn, sitä käyttäen edellinen tulisi muodossa
 
@@ -410,7 +410,7 @@ Huom: Rubyssä on myös vaihtoehtoinen syntaksi hashien määrittelyyn, sitä k�
 Brewery.new :name => "Stadin Panimo", :year => 1997
 ```
 
-Jos haluat luoda tietueita tai muuten harjoitella Railsin käyttöä konsolista käsin ilman pysyviä muutoksia tietokantaan, voit ajaa konsolin hiekkalaatikko-tilassa komennolla `rails console --sandbox` tai lyhyemmin `rails c -s`.
+Jos haluat luoda tietueita tai muuten harjoitella Railsin käyttöä konsolista käsin ilman pysyviä muutoksia tietokantaan, voit suorittaa konsolin hiekkalaatikko-tilassa komennolla `rails console --sandbox` tai lyhyemmin `rails c -s`.
 
 ## ActiveRecordin hakurajapinta
 
@@ -425,18 +425,18 @@ b = Brewery.find 2             # palauttaa olion, jonka id on 2 ja sijoittaa sen
 b.year                         # muuttujaan b talletetun olion kentän year arvo
 b.name                         # muuttujaan b talletetun olion kentän name arvo
 
-Brewery.find_by name:"Koff"    # palauttaa olion, jonka nimi on Koff
+Brewery.find_by name: "Koff"    # palauttaa olion, jonka nimi on Koff
 
-Brewery.where name:"Koff"      # palauttaa taulukon, johon on sijoitettu kaikki Koff-nimiset panimot
+Brewery.where name: "Koff"      # palauttaa taulukon, johon on sijoitettu kaikki Koff-nimiset panimot
 
-Brewery.where year:1900..2000  # palauttaa taulukon, jossa vuosina 1900-2000 perustetut panimot
+Brewery.where year: 1900..2000  # palauttaa taulukon, jossa vuosina 1900-2000 perustetut panimot
 
 Brewery.where "year<1900"      # palauttaa taulukon, jossa ennen vuotta 1900 perustetut panimot
 
-b = Brewery.where name:"Koff"
+b = Brewery.where name: "Koff"
 b.year                         # operaatio ei toimi, sillä where palauttaa taulukon, jossa Koff sijaitsee
 
-t = Brewery.where name:"Koff"
+t = Brewery.where name: "Koff"
 t.first.year                   # t.first tarkoittaa kuin t[0] eli taulukon 1. alkiota
 ```
 
@@ -458,8 +458,14 @@ tuloksen tallettaminen muuttujaan unohtui... käytetään alaviivaa
 irb(main):014 > vanhat = _
 irb(main):015 > vanhat.count
  => 3
-irb(main):016 > vanhat.first
- => #<Brewery id: 1, name: "Schlenkerla", year: 1687, created_at: "2018-01-09 13:17:06", updated_at: "2018-01-09 13:17:06">
+irb(main):016:0> vanhat.first
+=>
+#<Brewery:0x00007f4b622e1008
+ id: 1,
+ name: "Weihenstephan",
+ year: 1040,
+ created_at: Mon, 08 Aug 2022 14:39:47.235924000 UTC +00:00,
+ updated_at: Mon, 08 Aug 2022 14:39:47.235924000 UTC +00:00>
 irb(main):017 >
 ```
 
@@ -524,7 +530,7 @@ irb(main):035:0> Beer
 => Beer(id: integer, name: string, style: string, brewery_id: integer, created_at: datetime, updated_at: datetime)
 ```
 
-Jos et ole vielä hakenut oluita kannasta, edellinen komento ei välttämättä toimi halutusti. Suorita ensin esim. komento <code>Beer.count</code> ja tämän jälkeen myös pelkkä <code>Beer</code> toimii.
+Jos et ole vielä hakenut oluita kannasta, edellinen komento ei välttämättä toimi. Suorita ensin esim. komento <code>Beer.count</code> ja tämän jälkeen myös pelkkä <code>Beer</code> toimii.
 
 Oluella on siis luonnollisesti myös kaikille ActiveRecord-olioille automaattisesti lisättävät kentät eli <code>id</code>, <code>created_at</code> ja <code>updated_at</code>.
 
@@ -532,10 +538,10 @@ Luodaan konsolista käsin muutama olut ja liitetään ne panimoon vierasavaimen 
 
 ```ruby
 irb(main):043 > koff = Brewery.first
-irb(main):044 > Beer.create name:"iso 3", style:"Lager", brewery_id:koff.id
- => #<Beer id: 1, name: "iso 3", style: "Lager", brewery_id: 8, created_at: "2018-01-09 13:54:09", updated_at: "2018-01-09 13:54:09">
-irb(main):045 > Beer.create name:"Karhu", style:"Lager", brewery_id:koff.id
- => #<Beer id: 2, name: "Karhu", style: "Lager", brewery_id: 8, created_at: "2018-01-09 13:54:20", updated_at: "2018-01-09 13:54:20">
+irb(main):044 > Beer.create name: "iso 3", style: "Lager", brewery_id: koff.id
+ => #<Beer id: 1, name: "iso 3", style: "Lager", brewery_id: 8, created_at: "2022-08-09 13:54:09", updated_at: "2022-08-09 13:54:09">
+irb(main):045 > Beer.create name: "Karhu", style: "Lager", brewery_id: koff.id
+ => #<Beer id: 2, name: "Karhu", style: "Lager", brewery_id: 8, created_at: "2022-08-09 13:54:20", updated_at: "2022-08-09 13:54:20">
 irb(main):046 >
 ```
 
@@ -560,31 +566,43 @@ Mennään taas konsoliin. Jos konsoli oli auki kun teit muutokset koodiin, anna 
 Kokeillaan ensin miten pääsemme käsiksi panimon oluisiin:
 
 ```ruby
-irb(main):047 > koff = Brewery.find_by name:"Koff"
+irb(main):047 > koff = Brewery.find_by name: "Koff"
 irb(main):048 > koff.beers.count
  => 2
-irb(main):049 > koff.beers
- => #<ActiveRecord::Associations::CollectionProxy [#<Beer id: 1, name: "iso 3", style: "Lager", brewery_id: 8, created_at: "2018-01-09 13:54:09", updated_at: "2018-01-09 13:54:09">, #<Beer id: 2, name: "Karhu", style: "Lager", brewery_id: 8, created_at: "2018-01-09 13:54:20", updated_at: "2018-01-09 13:54:20">]>
+irb(main):049> koff.beers
+  Beer Load (2.0ms)  SELECT "beers".* FROM "beers" WHERE "beers"."brewery_id" = ?  [["brewery_id", 1]]
+=>
+[#<Beer:0x00007efe39e64ec8
+  id: 1,
+  name: "Iso 3",
+  style: "Lager",
+  brewery_id: 1,
+  created_at: Mon, 08 Aug 2022 17:13:09.108046000 UTC +00:00,
+  updated_at: Mon, 08 Aug 2022 17:13:09.108046000 UTC +00:00>,
+ #<Beer:0x00007efe39e41180
+  id: 2,
+  name: "Karhu",
+  style: "Lager",
+  brewery_id: 1,
+  created_at: Mon, 08 Aug 2022 17:13:09.139694000 UTC +00:00,
+  updated_at: Mon, 08 Aug 2022 17:13:09.139694000 UTC +00:00>]
 ```
 
-<code>Brewery</code>-olioille on siis ilmestynyt metodi <code>beers</code>, joka palauttaa panimoon liittyvät <code>Beer</code>-oliot. Rails generoi automaattisesti tämän metodin nähtyään <code>Brewery</code>-luokassa rivin <code>has_many :beers</code>. Oikeastaan metodi <code>beers</code> ei palauta panimoon liittyviä olioita suoraan, vaan oluiden kokoelmaa edustavan <code>ActiveRecord::Associations::CollectionProxy</code>-tyyppisen olion, jonka kautta oluiden kokoelmaan pääsee käsiksi. Proxy-olio toimii Rubyn kokoelmien kaltaisesti, eli yksittäisiin panimoon liittyviin oluisiin pääsee käsiksi seuraavasti:
+<code>Brewery</code>-olioille on siis ilmestynyt metodi <code>beers</code>, joka palauttaa panimoon liittyvät <code>Beer</code>-oliot. Rails generoi automaattisesti tämän metodin nähtyään <code>Brewery</code>-luokassa rivin <code>has_many :beers</code>. 
+
+Yksittäisiin panimoon liittyviin oluisiin pääsee käsiksi seuraavasti:
 
 ```ruby
-irb(main):050 > koff = Brewery.find_by name:"Koff"
+irb(main):050 > koff = Brewery.find_by name: "Koff"
 irb(main):051 > koff.beers.first
- => #<Beer id: 1, name: "iso 3", style: "Lager", brewery_id: 8, created_at: "2018-01-09 13:54:09", updated_at: "2018-01-09 13:54:09">
+ => #<Beer id: 1, name: "iso 3", style: "Lager", brewery_id: 8, created_at: "2022-08-09 13:54:09", updated_at: "2022-08-09 13:54:09">
 irb(main):052 > koff.beers.last
- => #<Beer id: 2, name: "Karhu", style: "Lager", brewery_id: 8, created_at: "2018-01-09 13:54:20", updated_at: "2018-01-09 13:54:20">
+ => #<Beer id: 2, name: "Karhu", style: "Lager", brewery_id: 8, created_at: "2022-08-09 13:54:20", updated_at: "2022-08-09 13:54:20">
 irb(main):053 > koff.beers[1]
- => #<Beer id: 2, name: "Karhu", style: "Lager", brewery_id: 8, created_at: "2018-01-09 13:54:20", updated_at: "2018-01-09 13:54:20">
-irb(main):054 > koff.beers.to_a
- => [#<Beer id: 1, name: "iso 3", style: "Lager", brewery_id: 8, created_at: "2018-01-09 13:54:09", updated_at: "2018-01-09 13:54:09">, #<Beer id: 2, name: "Karhu", style: "Lager", brewery_id: 8, created_at: "2018-01-09 13:54:20", updated_at: "2018-01-09 13:54:20">]
-irb(main):055 >
+ => #<Beer id: 2, name: "Karhu", style: "Lager", brewery_id: 8, created_at: "2022-08-09 13:54:20", updated_at: "2022-08-09 13:54:20">
 ```
 
-Kokoelmaproxyä voi siis käyttää normaalin taulukon tai kokoelman tyyliin yksittäisiä kokoelman jäseniä aksessoitaessa. Kuten viimeisestä kohdasta huomaamme, proxyyn liittyvät oluet saa taulukkona seuraavasti <code>koff.beers.to_a</code>.
-
-Kokoelmaproxyn alkioiden läpikäynti esim. <code>each</code>-iteraattorilla tapahtuu samoin kuin esim. normaalin taulukon läpikäynti eachilla:
+Panimoon liittyvän olutkokoelman läpikäynti onnistuu esim. <code>each</code>-iteraattorilla:
 
 ```ruby
 irb(main):055 > koff.beers.each { |beer| puts beer.name }
@@ -596,9 +614,9 @@ Myös olueeseen liittyvään panimoon pääsee käsiksi helposti kooditasolla:
 
 ```ruby
 irb(main):056 > bisse = Beer.first
- => #<Beer id: 1, name: "iso 3", style: "Lager", brewery_id: 8, created_at: "2018-01-09 13:54:09", updated_at: "2018-01-09 13:54:09">
+ => #<Beer id: 1, name: "iso 3", style: "Lager", brewery_id: 8, created_at: "2022-08-09 13:54:09", updated_at: "2022-08-09 13:54:09">
 irb(main):057 > bisse.brewery
- => #<Brewery id: 8, name: "Koff", year: 1897, created_at: "2018-01-09 13:51:26", updated_at: "2018-01-09 13:51:26">
+ => #<Brewery id: 8, name: "Koff", year: 1897, created_at: "2022-08-09 13:51:26", updated_at: "2022-08-09 13:51:26">
 irb(main):058 >
 ```
 
@@ -611,17 +629,17 @@ Ohjelmiston kehitysvaiheessa saattaa joskus olla hyödyksi generoida tietokantaa
 Kopioi seuraava sisältö sovelluksesi seeds.rb-tiedostoon:
 
 ```ruby
-b1 = Brewery.create name:"Koff", year:1897
-b2 = Brewery.create name:"Malmgard", year:2001
-b3 = Brewery.create name:"Weihenstephaner", year:1040
+b1 = Brewery.create name: "Koff", year: 1897
+b2 = Brewery.create name: "Malmgard", year: 2001
+b3 = Brewery.create name: "Weihenstephaner", year :1040
 
-b1.beers.create name:"Iso 3", style:"Lager"
-b1.beers.create name:"Karhu", style:"Lager"
-b1.beers.create name:"Tuplahumala", style:"Lager"
-b2.beers.create name:"Huvila Pale Ale", style:"Pale Ale"
-b2.beers.create name:"X Porter", style:"Porter"
-b3.beers.create name:"Hefeweizen", style:"Weizen"
-b3.beers.create name:"Helles", style:"Lager"
+b1.beers.create name: "Iso 3", style: "Lager"
+b1.beers.create name: "Karhu", style: "Lager"
+b1.beers.create name: "Tuplahumala", style: "Lager"
+b2.beers.create name: "Huvila Pale Ale", style: "Pale Ale"
+b2.beers.create name: "X Porter", style: "Porter"
+b3.beers.create name: "Hefeweizen", style: "Weizen"
+b3.beers.create name: "Helles", style: "Lager"
 ```
 
 Poistetaan kaikki vanha data tietokannasta antamalla komentoriviltä komento:
@@ -639,34 +657,62 @@ Komento "seedaa" kannan automaattisesti eli vanhan datan poistamisen lisäksi su
 Tutkitaan uutta dataa konsolista käsin:
 
 ```ruby
-irb(main):058:0> koff = Brewery.first
- => #<Brewery id: 8, name: "Koff", year: 1897, created_at: "2018-01-09 13:51:26", updated_at: "2018-01-09 13:51:26">
-irb(main):059:0> koff.beers
- => #<ActiveRecord::Associations::CollectionProxy [#<Beer id: 1, name: "iso 3", style: "Lager", brewery_id: 8, created_at: "2018-01-09 13:54:09", updated_at: "2018-01-09 13:54:09">, #<Beer id: 2, name: "Karhu", style: "Lager", brewery_id: 8, created_at: "2018-01-09 13:54:20", updated_at: "2018-01-09 13:54:20">]>
-irb(main):060:0>
+irb(main):003:0> koff = Brewery.first
+  Brewery Load (2.9ms)  SELECT "breweries".* FROM "breweries" ORDER BY "breweries"."id" ASC LIMIT ?  [["LIMIT", 1]]
+=>
+#<Brewery:0x00007efe3abb1ea0
+...
+irb(main):004:0> koff.beers
+  Beer Load (3.2ms)  SELECT "beers".* FROM "beers" WHERE "beers"."brewery_id" = ?  [["brewery_id", 1]]
+=>
+[#<Beer:0x00007efe3ab2d1a0
+  id: 1,
+  name: "Iso 3",
+  style: "Lager",
+  brewery_id: 1,
+  created_at: Mon, 08 Aug 2022 17:13:09.108046000 UTC +00:00,
+  updated_at: Mon, 08 Aug 2022 17:13:09.108046000 UTC +00:00>,
+ #<Beer:0x00007efe3ab2d010
+  id: 2,
+  name: "Karhu",
+  style: "Lager",
+  brewery_id: 1,
+  created_at: Mon, 08 Aug 2022 17:13:09.139694000 UTC +00:00,
+  updated_at: Mon, 08 Aug 2022 17:13:09.139694000 UTC +00:00>,
+ #<Beer:0x00007efe3ab2ce80
+  id: 3,
+  name: "Tuplahumala",
+  style: "Lager",
+  brewery_id: 1,
+  created_at: Mon, 08 Aug 2022 17:13:09.171706000 UTC +00:00,
+  updated_at: Mon, 08 Aug 2022 17:13:09.171706000 UTC +00:00>]
+irb(main):005:0>
 ```
 
 Luodaan uusi olut-olio. Käytetään tällä kertaa new-metodia, jolloin olio ei vielä talletu tietokantaan:
 
 ```ruby
-irb(main):050:0> b = Beer.new name:"Lite", style:"Lager"
-=> #<Beer id: nil, name: "Lite", style: "Lager", brewery_id: nil, created_at: nil, updated_at: nil>
+irb(main):005:0> b = Beer.new name: "Lite", style: "Lager"
+=> #<Beer:0x00007efe396c2aa8 id: nil, name: "Lite", style: "Lager", brewery_id: nil, created_at: nil, updated_at: nil>
+irb(main):006:0>
 ```
 
 Olut ei ole tietokannassa, eikä myöskään liity vielä mihinkään panimoon:
 
 ```ruby
-irb(main):061:0> b.brewery
- => nil
+irb(main):006:0> b.brewery
+=> nil
 ```
 
 Oluen voi liittää panimoon muutamallakin tavalla. Voimme asettaa oluen panimokentän arvon käsin:
 
 ```ruby
-irb(main):062:0> b.brewery = koff
-irb(main):063:0> b
- => #<Beer id: nil, name: "Lite", style: "Lager", brewery_id: 8, created_at: nil, updated_at: nil>
-irb(main):064 >
+irb(main):008:0> b.brewery = koff
+=>
+#<Brewery:0x00007efe3abb1ea0
+...
+irb(main):009:0> b
+=> #<Beer:0x00007efe396c2aa8 id: nil, name: "Lite", style: "Lager", brewery_id: 1, created_at: nil, updated_at: nil>
 ```
 
 Kuten huomaamme, tulee oluen brewery_id-vierasavaimeksi panimon id. Olut ei ole vielä tietokannassa, eikä panimokaan vielä tästä syystä tiedä, että luotu olut liittyy siihen:
@@ -692,7 +738,7 @@ irb(main):068:0> koff.beers.include? b
 Hieman kätevämpi tapa on liittää olut panimon oluiden joukkoon <code><<</code> operaattorilla:
 
 ```ruby
-irb(main):069:0> b = Beer.new name:"IVB", style:"Lager"
+irb(main):069:0> b = Beer.new name: "IVB", style: "Lager"
  => #<Beer id: nil, name: "IVB", style: "Lager", brewery_id: nil, created_at: nil, updated_at: nil>
 irb(main):070:0 > koff.beers << b
    (0.1ms)  begin transaction
@@ -704,7 +750,7 @@ Vaikka luotua olutta ei tässä eksplisiittisesti talletettu <code>save</code>-m
 Kolmas tapa on tiedostossa <code>seeds.rb</code> käytetty tyyli, jossa metodia <code>create</code> kutsutaan suoraan panimon beers-kokoelmalle:
 
 ```ruby
-irb(main):071:0> koff.beers.create name:"Extra Light Triple Brewed", style:"Lager"
+irb(main):071:0> koff.beers.create name: "Extra Light Triple Brewed", style: "Lager"
 ```
 
 > ## Tehtävä 5: Panimoja ja oluita
@@ -785,12 +831,40 @@ Mene nyt selaimella [panimot listaavalle sivulle](http://localhost:3000/brewerie
 Palataan sitten tarkemmin HTML-taulukon muodostavaan koodiin. Jokainen panimo tulostuu omalle rivilleen listaan Rubyn <code>each</code>-iteraattoria käyttäen:
 
 ```html
-<% @breweries.each do |brewery| %> <%= render brewery %>
-<p><%= link_to "Show this brewery", brewery %></p>
-<% end %>
+  <% @breweries.each do |brewery| %>
+    <%= render brewery %>
+    <p>
+      <%= link_to "Show this brewery", brewery %>
+    </p>
+  <% end %>
 ```
 
-Muuttujaan `@breweries` talletettu panimoiden lista käydään läpi `each`-iteraattorin avulla. (lisää eachista ks. https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/rubyn_perusteita.md#each). Jokaista yksittäistä panimoa (joihin viitataan iteraattorin toistettavassa koodilohkossa nimellä <code>brewery</code>) kohti luodaan listaan div-tagien sisällä olevat rivit. Ensimmäiselle riville tulee panimon nimi ja toiselle perustamisvuosi. Rails luo rivit käyttäen <code>render</code> metodia jokaista panimoa kohden. <code>render</code> metodi käyttää hyväkseen [Partial templateja](https://guides.rubyonrails.org/layouts_and_rendering.html#using-partials) eli tutummin "partialseja". Rails on luonut yksittäiselle panimolle automaattisesti partials-tiedoston (app/views/breweries/\_brewery.html.erb). Partials-tiedostot nimetään käyttäen tiedoston alussa alaviivaa, jotta ne pystytänä jo silmäyksellä erottamaan normaaleista näkymistä. Kolmannelle riville luodaan linkki panimon tiedot näyttävälle sivulle. Linkin generoiva Ruby-koodi on `<%= link_to "Show this brewery", brewery %>` .
+Muuttujaan `@breweries` talletettu panimoiden lista käydään läpi `each`-iteraattorin avulla. (lisää eachista ks. https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/rubyn_perusteita.md#each). 
+
+Rails luo rivit käyttäen <code>render</code> metodia jota se kutsuu jokaiselle panimolle. <code>render</code> metodi käyttää hyväkseen [Partial templateja](https://guides.rubyonrails.org/layouts_and_rendering.html#using-partials) eli tutummin "partialseja". 
+
+Rails on luonut yksittäiselle panimolle automaattisesti partials-tiedoston (app/views/breweries/\_brewery.html.erb). Partiaali näyttää seuraavalta
+
+```html
+<div id="<%= dom_id brewery %>">
+  <p>
+    <strong>Name:</strong>
+    <%= brewery.name %>
+  </p>
+
+  <p>
+    <strong>Year:</strong>
+    <%= brewery.year %>
+  </p>
+
+</div>
+```
+
+Jokaista yksittäistä panimoa kohti siis luodaan listaan div-tagien sisällä olevat rivit. Ensimmäiselle riville tulee panimon nimi ja toiselle perustamisvuosi.
+
+Partials-tiedostot nimetään käyttäen tiedoston alussa alaviivaa, jotta ne pystytänä jo silmäyksellä erottamaan normaaleista näkymistä.
+
+Kolmannelle riville luodaan linkki panimon tiedot näyttävälle sivulle. Linkin generoiva Ruby-koodi on `<%= link_to "Show this brewery", brewery %>` .
 
 Kyseessä on oikeastaan lyhennysmerkintä seuraavasta:
 
@@ -798,7 +872,7 @@ Kyseessä on oikeastaan lyhennysmerkintä seuraavasta:
 <%= link_to "Show this brewery", brewery_path(brewery.id) %>
 ```
 
-joka generoi sivulle seuraavanlaisen HTML-koodin (seuraavassa oleva numero riippuu taulukon rivillä olevan olion id-kentän arvosta):
+joka generoi sivulle seuraavanlaisen HTML-koodin (seuraavassa oleva numero riippuu olion id-kentän arvosta):
 
 ```
 <a href="/breweries/1">Show this brewery</a>
@@ -1207,7 +1281,7 @@ Voimme myös avata Rails-konsolin Herokussa sijaitsevalle sovellukselle komennol
 ```ruby
 $ heroku run console
 irb(main):001:0> Brewery.all
-=> #<ActiveRecord::Relation [#<Brewery id: 1, name: "Koff", year: 1897, created_at: "2018-01-09 14:57:30", updated_at: "2018-01-09 14:57:30">, #<Brewery id: 2, name: "Malmgard", year: 2001, created_at: "2018-01-09 14:57:30", updated_at: "2018-01-09 14:57:30">, #<Brewery id: 3, name: "Weihenstephaner", year: 1040, created_at: "2018-01-09
+=> #<ActiveRecord::Relation [#<Brewery id: 1, name: "Koff", year: 1897, created_at: "2022-08-09 14:57:30", updated_at: "2022-08-09 14:57:30">, #<Brewery id: 2, name: "Malmgard", year: 2001, created_at: "2022-08-09 14:57:30", updated_at: "2022-08-09 14:57:30">, #<Brewery id: 3, name: "Weihenstephaner", year: 1040, created_at: "2022-08-09
 ```
 
 Kyseessä on normaali Rails-konsolisessio, eli voit esim. tutkia Herokuun deployatun sovelluksen tietokannan tilaa session avulla.
