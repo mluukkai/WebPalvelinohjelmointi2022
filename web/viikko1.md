@@ -828,7 +828,7 @@ Tutustumme listan generointiin kohta hieman tarkemmin. Lisätään ensin sivulle
 
 Mene nyt selaimella [panimot listaavalle sivulle](http://localhost:3000/breweries) ja varmista, että lisäys toimii.
 
-Palataan sitten tarkemmin HTML-taulukon muodostavaan koodiin. Jokainen panimo tulostuu omalle rivilleen listaan Rubyn <code>each</code>-iteraattoria käyttäen:
+Palataan sitten tarkemmin panimot listaavaan koodiin. Jokainen panimo tulostuu omalle rivilleen listaan Rubyn <code>each</code>-iteraattoria käyttäen:
 
 ```html
   <% @breweries.each do |brewery| %>
@@ -892,7 +892,7 @@ Mitä tarkoittaa `"breweries/#{brewery.id}"`? Kyseinen merkkijonon alussa on ens
 
 Tehtävän jälkeen sovelluksesi panimot näyttävien sivujen tulisi näyttää seuraavalta
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/brewery-w1-0a.png)
+![kuva](https://raw.githubusercontent.com/mluukkai/WebPalvelinohjelmointi2022/main/images/brewery-w1-0a.png)
 
 ## Oluiden listaaminen panimon sivulla
 
