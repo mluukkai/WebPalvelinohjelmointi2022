@@ -1214,12 +1214,12 @@ Kerrataan vielä muutamaa asiaa näkymätemplateista. Tarkastellaan tilannetta, 
 class BeersController < ApplicationController
   before_action :set_beer, only: %i[ show edit update destroy ]
 
-  # GET /beers/1 or /beers/1.json
+  # suoritetaan mentäessä yksittäisen oluen sivulle /beers/1
   def show
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
+    # tämä suoritetaan metodin show suoritusta ennen
     def set_beer
       @beer = Beer.find(params[:id])
     end
@@ -1230,8 +1230,6 @@ end
 Näkymätemplate siis näkee käsiteltävän oluen muutujan @beer kautta: 
 
 ```html
-<p style="color: green"><%= notice %></p>
-
 <%= render @beer %>
 
 <div>
@@ -1242,7 +1240,7 @@ Näkymätemplate siis näkee käsiteltävän oluen muutujan @beer kautta:
 </div>
 ```
 
-Näkymätemplate ei hoida kaikkea renderöintiä itse, se hoitaa oluen tietojen renderöinnin partiaalin views/beers/\_beer.html.erb avulla. Partialia kutsutaan metodin render avulla:
+Näkymätemplate ei hoida kaikkea renderöintiä itse, se hoitaa oluen tietojen renderöinnin partiaalin views/beers/\_beer.html.erb avulla. Partial renderöidään metodin render avulla:
 
 ```html
 <%= render @beer %>
@@ -1517,4 +1515,4 @@ sqlite3 gem on siis käytössä ainoastaan development- ja test-ympäristöissä
 
 Commitoi kaikki tekemäsi muutokset ja pushaa koodi Githubiin. Lisää Githubin readme-tiedostoon linkki sovelluksen Heroku-instanssiin. Oletusarvoisesti Rails-sovelluksen readme-tiedostoon generoituvan sisältö kannattanee poistaa. _Sovelluksen vieminen Herokuun ei ole edellytys palautuksen tekeminen, se on kuitenkin ehdottoman suositeltavaa ja hyödyllistä._
 
-Tehtävät kirjataan palautetuksi osoitteeseen https://studies.cs.helsinki.fi/courses/#/rails2022
+Tehtävät kirjataan palautetuksi osoitteeseen https://studies.cs.helsinki.fi/stats/courses/rails2022

@@ -1202,4 +1202,4 @@ Commitoi kaikki tekemäsi muutokset ja pushaa koodi Githubiin. Deployaa myös uu
 
 Jos Herokun kanssa on ongelmia niin muista käyttää tarkastelussa apuna <code>heroku logs</code>, jonka avulla pääset tarkastelemaan Herokun logeja.
 
-Tehtävät kirjataan palautetuksi osoitteeseen https://studies.cs.helsinki.fi/courses/#/rails2018
+Tehtävät kirjataan palautetuksi osoitteeseen https://studies.cs.helsinki.fi/stats/courses/rails2022/

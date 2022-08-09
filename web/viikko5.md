@@ -1367,4 +1367,4 @@ Tehtävän jälkeen olutpaikkojen sivu voi näyttää esim. seuraavalta
 
 Commitoi kaikki tekemäsi muutokset ja pushaa koodi Githubiin. Deployaa myös uusin versio Herokuun. Muista myös testata rubocopilla, että koodisi noudattaa edelleen määriteltyjä tyylisääntöjä.
 
-Tehtävät kirjataan palautetuksi osoitteeseen https://studies.cs.helsinki.fi/courses/#/rails2018
+Tehtävät kirjataan palautetuksi osoitteeseen https://studies.cs.helsinki.fi/stats/courses/rails2022/

@@ -1516,4 +1516,4 @@ Jos käytät Visual Studio Codea, voit asentaa [ruby-rubocop](https://marketplac
 
 Commitoi kaikki tekemäsi muutokset ja pushaa koodi Githubiin. Deployaa myös uusin versio Herokuun.
 
-Tehtävät kirjataan palautetuksi osoitteeseen https://studies.cs.helsinki.fi/courses/#/rails2022
+Tehtävät kirjataan palautetuksi osoitteeseen https://studies.cs.helsinki.fi/stats/courses/rails2022/
