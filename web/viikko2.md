@@ -680,9 +680,9 @@ Eli kuten yllä näemme, ei pelkkä koodin uudelleenlataaminen vielä riitä, si
 
 > ## Tehtävä 4
 >
-> Lisää luokalle <code>Beer</code> metodi <code>average_rating</code>, joka laskee oluen ratingien keskiarvon. Lisää keskiarvo yksittäisen oluen sivulle **jos** oluella on ratingeja
+> Lisää luokalle <code>Beer</code> metodi <code>average_rating</code>, joka laskee oluen ratingien keskiarvon. Lisää keskiarvo yksittäisen oluen sivulle **jos** oluella on ratingeja. Vinkki: esimerkiksi [average](https://apidock.com/rails/ActiveRecord/Calculations/average)-metodista saattaa olla hyötyä.
 >
-> Näkymätemplatessa voi tehdä tuotettavasta sisällöstä ehdollisen seuraavasti
+> Näkymätemplatessa voi tehdä tuotettavasta sisällöstä ehdollisen seuraavasti:
 >
 > ```erb
 > <% if @beer.ratings.empty? %>
@@ -692,7 +692,7 @@ Eli kuten yllä näemme, ei pelkkä koodin uudelleenlataaminen vielä riitä, si
 > <% end %>
 > ```
 >
-> Muista palauttaa keskiarvo liukulukuna, tässä voi käyttää apuna to_f metodia
+> Muista palauttaa keskiarvo liukulukuna, tässä voi käyttää apuna `to_f`-metodia.
 
 Tehtävän jälkeen oluen sivun tulisi näyttää suunnilleen seuraavalta (huom: edellisen viikon jäljiltä sivullasi saattaa näkyä panimon nimen sijaan panimon id. Jos näin on, muuta näkymäsi vastaamaan kuvaa):
 
