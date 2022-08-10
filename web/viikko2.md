@@ -874,7 +874,9 @@ kun koodirivi suoritetaan, suoritus pysähtyy ja Pry-sessio aukeaa koodirivin ko
 
 Kontrollerin sisällä <code>params[:rating]</code> siis sisältää kaiken tiedon, joka uuden reittauksen luomiseen tarvitaan. Ja koska kyseessä on hash, joka on muotoa <code>{"beer_id"=>"1", "score"=>"30"}</code>, voi sen antaa suoraan metodin <code>create</code> parametriksi, eli reittauksen luonnin pitäisi periaatteessa onnistua komennolla:
 
-    Rating.create params[:rating]  # joka siis tarkoittaa samaa kuin Rating.create beer_id:"1", score:"30"
+```ruby
+Rating.create params[:rating]  # joka siis tarkoittaa samaa kuin Rating.create beer_id:"1", score:"30"
+```
 
 Muuta siis kontrollerisi koodi seuraavanlaiseksi:
 
@@ -886,25 +888,33 @@ end
 
 Kokeile nyt luoda reittaus. Vastoin kaikkia odotuksia, luomisoperaatio epäonnistuu ja seurauksena on virheilmoitus
 
-    ActiveModel::ForbiddenAttributesError
+```
+ActiveModel::ForbiddenAttributesError
+```
 
 Mistä on kyse?
 
-Jos olisimme tehneet reittauksen luovan komennon muodossa
+Jos olisimme tehneet reittauksen luovan komennon muodossa:
 
-    Rating.create beer_id: params[:rating][:beer_id], score: params[:rating][:score]
+```ruby
+Rating.create beer_id: params[:rating][:beer_id], score: params[:rating][:score]
+```
 
-joka siis periaatteessa tarkoittaa täysin samaa kuin ylläoleva muoto (sillä <code>params[:rating]</code> on sisällöltään **täysin sama** hash kuin <code>beer_id:params[:rating][:beer_id], score:params[:rating][:score]</code>), ei virheilmoitusta olisi tullut. [Tietoturvasyistä](http://en.wikipedia.org/wiki/Mass_assignment_vulnerability) Rails ei kuitenkaan salli mielivaltaista <code>params</code>-muuttujasta tapahtuvaa "massasijoitusta" (engl. mass assignment eli kaikkien parametrien antamista hashina) olion luomisen yhteydessä.
+Joka siis periaatteessa tarkoittaa täysin samaa kuin ylläoleva muoto (sillä <code>params[:rating]</code> on sisällöltään **täysin sama** hash kuin <code>beer_id:params[:rating][:beer_id], score:params[:rating][:score]</code>), ei virheilmoitusta olisi tullut. [Tietoturvasyistä](http://en.wikipedia.org/wiki/Mass_assignment_vulnerability) Rails ei kuitenkaan salli mielivaltaista <code>params</code>-muuttujasta tapahtuvaa "massasijoitusta" (engl. mass assignment eli kaikkien parametrien antamista hashina) olion luomisen yhteydessä.
 
 Rails 4:stä lähtien kontrollerin on lueteltava eksplisiittisesti mitä hashin <code>params</code> sisällöstä voidaan massasijoittaa olioiden luonnin yhteydessä. Tähän kontrolleri käyttää <code>params</code>:in metodeja <code>require</code> ja <code>permit</code>.
 
 Periaatteena on, että ensin requirella otetaan paramsin sisältä luotavan olion tiedot sisältävä hash:
 
-    params.require(:rating)
+```ruby
+params.require(:rating)
+```
 
-tämän jälkeen luetellaan permitillä ne kentät, joiden arvon massasijoitus sallitaan:
+Tämän jälkeen luetellaan permitillä ne kentät, joiden arvojen massasijoitus sallitaan:
 
-    params.require(:rating).permit(:score, :beer_id)
+```ruby
+params.require(:rating).permit(:score, :beer_id)
+```
 
 Kontrollerimme on siis seuraava:
 
@@ -914,7 +924,7 @@ def create
 end
 ```
 
-Lisää tietoa lomakkeiden parametrien käsittelystä seuraavassa https://edgeguides.rubyonrails.org/action_controller_overview.html#strong-parameters
+Lisää tietoa lomakkeiden parametrien käsittelystä seuraavassa https://edgeguides.rubyonrails.org/action_controller_overview.html#strong-parameters.
 
 Kokeile nyt reittauksen luomista. HUOM: kun luot lomakkeella reittausta, tarkista, että lomakkeelle syöttämä oluen id vastaa jonkun tietokannassa olevan oluen id:tä!
 
