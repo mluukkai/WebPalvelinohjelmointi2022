@@ -680,7 +680,7 @@ Eli kuten yllä näemme, ei pelkkä koodin uudelleenlataaminen vielä riitä, si
 
 > ## Tehtävä 4
 >
-> Lisää luokalle <code>Beer</code> metodi <code>average_rating</code>, joka laskee oluen ratingien keskiarvon. Lisää keskiarvo yksittäisen oluen sivulle **jos** oluella on ratingeja. Vinkki: esimerkiksi [average](https://apidock.com/rails/ActiveRecord/Calculations/average)-metodista saattaa olla hyötyä.
+> Lisää luokalle <code>Beer</code> metodi <code>average_rating</code>, joka laskee oluen ratingien keskiarvon. Lisää keskiarvo yksittäisen oluen sivulle **jos** oluella on ratingeja.
 >
 > Näkymätemplatessa voi tehdä tuotettavasta sisällöstä ehdollisen seuraavasti:
 >
