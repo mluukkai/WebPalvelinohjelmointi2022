@@ -20,7 +20,7 @@ Käytimme viime viikolla rubyn oletusarvoista konsolia _irbiä_. On myös olemas
 
 Lisää tiedostoon _Gemfile_ rivi <code>gem 'pry-rails'</code> seuraavaan kohtaan:
 
-```
+```ruby
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
@@ -28,9 +28,9 @@ group :development, :test do
 end
 ```
 
-Suorita komentoriviltä komento <code>bundle install</code>
+Suorita komentoriviltä komento <code>bundle install</code>.
 
-Kun nyt avaat rails konsolin, eli suoritat komentoriviltä komennon <code>rails c</code> avautuu viime viikolla käyttämme irbin sijaan Pry. Perustoiminnoiltaan Pry on täsmälleen samanlainen kuin irb. Tulostusasu on hieman ihmisystävällisempi:
+Kun nyt avaat rails-konsolin, eli suoritat komentoriviltä komennon <code>rails c</code> avautuu viime viikolla käyttämme irbin sijaan Pry. Perustoiminnoiltaan Pry on täsmälleen samanlainen kuin irb. Tulostusasu on hieman ihmisystävällisempi:
 
 ```
 [59] pry(main)> Beer.first
@@ -45,7 +45,7 @@ Kun nyt avaat rails konsolin, eli suoritat komentoriviltä komennon <code>rails 
 [60] pry(main)>
 ```
 
-Jos operaation tulos on pidempi kuin ruudulle mahtuu, kontrolli ei palaa konsoliin, vaan alimpana rivinä on kaksoispiste
+Jos operaation tulos on pidempi kuin ruudulle mahtuu, kontrolli ei palaa konsoliin, vaan alimpana rivinä on kaksoispiste:
 
 ```
 [61] pry(main)> Beer.all
@@ -111,8 +111,7 @@ Tarkkasilmäisimmät saattoivat jo viime viikolla huomata, että näkymätemplat
 
 Jos katsomme yksittäisen oluen sivun HTML-koodia selaimen _view source code_ -toiminnolla, huomaamme, että sivulla on paljon muutakin kuin templatessa määritelty HTML (osa headin sisällöstä on poistettu):
 
-```erb
-
+```html
 <!DOCTYPE html>
 <html>
 <head>
