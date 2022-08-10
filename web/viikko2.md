@@ -119,7 +119,7 @@ Jos katsomme yksittäisen oluen sivun HTML-koodia selaimen _view source code_ -t
   <link data-turbolinks-track="true" href="/assets/application.css?body=1" media="all" rel="stylesheet" />
   <script data-turbolinks-track="true" src="/assets/jquery.js?body=1"></script>
   <meta content="authenticity_token" name="csrf-param" />
-<meta content="hZaC8o95xUbekA3PTsVZ+JmkVj9CCn5a4Kw8tF96WOU=" name="csrf-token" />
+  <meta content="hZaC8o95xUbekA3PTsVZ+JmkVj9CCn5a4Kw8tF96WOU=" name="csrf-token" />
 </head>
 <body>
 
@@ -192,10 +192,10 @@ Navigointipalkki on laitettu luokan _navibar_ sisältävän div-elementin sisäl
 
 Lisää tiedostoon app/assets/stylesheets/application.css seuraava:
 
-```erb
+```css
 .navibar {
-    padding: 10px;
-    background: #EFEFEF;
+  padding: 10px;
+  background: #EFEFEF;
 }
 ```
 
@@ -217,39 +217,51 @@ end
 
 Tutustumme myöhemmin <code>resources</code>-metodin lisäämiin reitteihin.
 
-Aloitetaan sillä, että tehdään panimoiden listasta sovelluksen oletusarvoinen kotisivu. Tämä tapahtuu lisäämällä routes-tiedostoon rivi
+Aloitetaan sillä, että tehdään panimoiden listasta sovelluksen oletusarvoinen kotisivu. Tämä tapahtuu lisäämällä routes-tiedostoon rivi:
 
-    root 'breweries#index'
+```ruby
+root 'breweries#index'
+```
 
 Nyt osoite http://localhost:3000/ ohjautuu kaikki panimot näyttävälle sivulle.
 
 Edellinen on oikeastaan hieman tyylikkäämpi tapa sanoa:
 
-    get '/', to: 'breweries#index'
+```ruby
+get '/', to: 'breweries#index'
+```
 
 eli reititä polulle '/' tuleva HTTP GET -pyyntö käsiteltäväksi luokan <code>BreweriesController</code> metodille <code>index</code>.
 
 Englanninkielistä kirjallisuutta lukiessa kannattaa huomata, että Railsin terminologiassa kontrollereiden metodeja nimitetään usein _actioneiksi_. Käytämme kuitenkin kurssilla nimitystä kontrollerimetodi tai kontrollerin metodi.
 
-Voisimme vastaavasti lisätä routes.rb:hen rivin
+Voisimme vastaavasti lisätä routes.rb:hen rivin:
 
-    get 'kaikki_bisset', to: 'beers#index'
+```ruby
+get 'kaikki_bisset', to: 'beers#index'
+```
 
 jolloin URLiin http://localhost:3000/kaikki_bisset tulevat GET-pyynnöt vievät kaikkien oluiden sivulle. Kokeile että tämä toimii.
 
-Mielenkiintoinen yksityiskohta routes.rb-tiedostossa on se, että vaikka tiedosto näyttää tekstimuotoiselta konfiguraatiotiedostolta, on koko tiedoston sisältö Rubya. Tiedoston rivit ovat metodikutsuja. Esim. rivi
+Mielenkiintoinen yksityiskohta routes.rb-tiedostossa on se, että vaikka tiedosto näyttää tekstimuotoiselta konfiguraatiotiedostolta, on koko tiedoston sisältö Rubya. Tiedoston rivit ovat metodikutsuja. Esim. rivi:
 
-    get 'kaikki_bisset', to: 'beers#index'
+```ruby
+get 'kaikki_bisset', to: 'beers#index'
+```
 
 kutsuu get-metodia parametreinaan merkkijono '/kaikki_bisset' ja hash <code>to: 'beers#index'</code>. Hashin yhteydessä on käytetty uudempaa syntaksia, eli vanhaa syntaksia käyttäen reitityksen kohteen määrittelevä hash kirjoitettaisiin <code>:to => 'beers#index'</code>, ja routes.rb:n rivi olisi:
 
-    get 'kaikki_bisset', :to => 'beers#index'
+```ruby
+get 'kaikki_bisset', :to => 'beers#index'
+```
 
 voisimme käyttää metodikutsussa myös sulkuja, ja määritellä hashin käyttäen aaltosulkuja, eli kömpelöimmässä muodossa reitti voitaisiin määritellä seuraavasti:
 
-    get( 'kaikki_bisset', { :to => 'beers#index' } )
+```ruby
+get( 'kaikki_bisset', { :to => 'beers#index' } )
+```
 
-Rubyn joustava syntaksi (yhdessä kielen muutamien muiden piirteiden kanssa) mahdollistaakin luonnollisen kielen sujuvuutta tavoittelevan ilmaisutavan sovelluksen konfigurointiin ja ohjelmointiin. Tyyli tunnetaan englanninkielisellä termillä _Internal DSL_ ks. http://martinfowler.com/bliki/InternalDslStyle.html
+Rubyn joustava syntaksi (yhdessä kielen muutamien muiden piirteiden kanssa) mahdollistaakin luonnollisen kielen sujuvuutta tavoittelevan ilmaisutavan sovelluksen konfigurointiin ja ohjelmointiin. Tyyli tunnetaan englanninkielisellä termillä _Internal DSL_ ks. http://martinfowler.com/bliki/InternalDslStyle.html.
 
 ## Oluiden pisteytys
 
@@ -261,7 +273,9 @@ Seurauksena on virheilmoitus <code>No route matches [GET] "/ratings"</code> eli 
 
 Lisätään reitti kirjoittamalla routes-tiedostoon seuraava:
 
-    get 'ratings', to: 'ratings#index'
+```ruby
+get 'ratings', to: 'ratings#index'
+```
 
 Määrittelemme siis Rails-konventiota mukaillen, että kaikkien reittausten sivun 'ratings' hoitaa RatingsController-luokan metodi index.
 
@@ -284,11 +298,13 @@ Huomioi nimeämiskäytännöt ja tiedoston sijainti, Rails etsii kontrolleria ni
 
 Kokeile nyt sivua selaimella vielä kerran.
 
-Seurauksena on uusi virheilmoitus
+Seurauksena on uusi virheilmoitus:
 
-    Missing template ratings/index, application/index with {:locale=>[:en], :formats=>[:html], :handlers=>[:erb, :builder, :raw, :ruby, :jbuilder, :coffee]}. Searched in: * "/Users/mluukkai/kurssirepot/wadror/ratebeer/app/views"
+```
+RatingsController#index is missing a template for request formats: text/html
+```
 
-joka taas johtuu siitä, että Rails yrittää renderöidä kontrollerin metodia vastaavan oletusarvoisen, hakemistossa /app/views/ratings/index.html.erb olevan näkymätemplaten, mutta sellaista ei löydy.
+Joka taas johtuu siitä, että Rails yrittää renderöidä kontrollerin metodia vastaavan oletusarvoisen, hakemistossa /app/views/ratings/index.html.erb olevan näkymätemplaten, mutta sellaista ei löydy.
 
 Luodaan tiedosto /app/views/ratings/index.html.erb jolla on seuraava sisältö (joudut myös luomaan hakemiston _/app/views/ratings_):
 
@@ -298,7 +314,7 @@ Luodaan tiedosto /app/views/ratings/index.html.erb jolla on seuraava sisältö (
 <p>To be completed...</p>
 ```
 
-ja nyt sivu toimii!
+Ja nyt sivu toimii!
 
 Huomaa taas Railsin konventiot, tiedoston sijainti on tarkasti määritelty, eli koska kyseessä on näkymätemplate jota kutsutaan ratings-kontrollerista (joka siis on täydelliseltä nimeltään RatingsController), sijoitetaan se hakemistoon /views/ratings.
 
