@@ -472,9 +472,9 @@ Nyt tietokannassamme on reittauksia, ja haluamme saada ne listattua kaikkien rei
 >
 > Lisää sivulle myös tieto reittausten yhteenlasketusta lukumäärästä
 
-Tässä vaiheessa sivun pitäisi näyttää suunnilleen seuraavalta
+Tässä vaiheessa sivun pitäisi näyttää suunnilleen seuraavalta:
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/ratebeer-w2-1.png)
+![kuva](../images/ratebeer-w2-1.png)
 
 Reittaus renderöityy hiukan ikävässä muodossa. Tämä johtuu siitä, että li-elementin sisällä on pelkkä olion nimi, ja koska emme ole määritelleet Ratingille olion merkkijonomuotoa määrittelevää <code>to_s</code>-metodia, käytössä on kaikkien luokkien yliluokalta Objectilta peritty oletusarvoinen <code>to_s</code>.
 
