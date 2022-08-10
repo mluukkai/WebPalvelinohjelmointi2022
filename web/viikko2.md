@@ -726,9 +726,11 @@ Tehdään nyt sovellukseen mahdollisuus reittausten luomiseen www-sivulta käsin
 
 Railsin konventioiden mukaan Rating-olion luontiin tarkoitetun lomakkeen tulee löytyä osoitteesta ratings/new, ja lomakkeeseen pääsyn hoitaa ratings-kontrollerin metodi <code>new</code>.
 
-Luodaan vastaava reitti routes.rb:hen
+Luodaan vastaava reitti routes.rb-tiedostoon:
 
-    get 'ratings/new', to:'ratings#new'
+```ruby
+get 'ratings/new', to:'ratings#new'
+```
 
 Lisäämme siis ratings-kontrolleriin (joka siis täydelliseltä nimeltään on RatingsController) metodin <code>new</code>, joka huolehtii lomakkeen renderöinnistä. Metodi on yksinkertainen:
 
@@ -752,7 +754,7 @@ Luodaan nyt seuraava näkymä eli tiedosto /app/views/ratings/new.html.erb:
 <% end %>
 ```
 
-Mene nyt lomakkeen sisältävälle sivulle eli osoitteeseen http://localhost:3000/ratings/new
+Mene nyt lomakkeen sisältävälle sivulle eli osoitteeseen http://localhost:3000/ratings/new.
 
 Näkymän avulla muodostuva HTML-koodi näyttää (suunnilleen) seuraavalta (näet koodin menemällä sivulle ja valitsemalla selaimesta _view page source_):
 
@@ -775,7 +777,9 @@ http://guides.rubyonrails.org/form_helpers.html#dealing-with-model-objects
 
 Jos yritämme luoda reittauksen aiheutuu virheilmoitus <code>No route matches [POST] "/ratings"</code> eli joudumme luomaan tiedostoon config/routes.rb reitin:
 
-    post 'ratings', to: 'ratings#create'
+```ruby
+post 'ratings', to: 'ratings#create'
+```
 
 Uuden olion luonnista vastaava metodi on Railsin konvention mukaan nimeltään <code>create</code>, luodaan sen pohja:
 
