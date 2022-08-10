@@ -630,7 +630,7 @@ Panimon sisällä <code>year</code> siis on ActiveRecordin tietokantaan tallenta
 
 Tehtävän jälkeen reittausten sivujen tulisi näyttää suunnilleen seuraavalta:
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/ratebeer-w2-2.png)
+![kuva](../images/ratebeer-w2-2.png)
 
 Huom: kun kirjoitat sovelluksellesi uutta koodia, useimmiten on järkevämpää tehdä kokeiluja konsolista käsin. Seuraavassa kokeillaan reittauksen oletusarvoista <code>to_s</code>-metodin palauttamaa arvoa:
 
@@ -696,7 +696,7 @@ Eli kuten yllä näemme, ei pelkkä koodin uudelleenlataaminen vielä riitä, si
 
 Tehtävän jälkeen oluen sivun tulisi näyttää suunnilleen seuraavalta (huom: edellisen viikon jäljiltä sivullasi saattaa näkyä panimon nimen sijaan panimon id. Jos näin on, muuta näkymäsi vastaamaan kuvaa):
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/ratebeer-w2-3.png)
+![kuva](../images/ratebeer-w2-3.png)
 
 > ## Tehtävä 5
 >
@@ -710,7 +710,7 @@ Tehtävän jälkeen oluen sivun tulisi näyttää suunnilleen seuraavalta (huom:
 
 Lisätään konsolista jollekin vielä reittaamattomalle oluelle yksi reittaus. Oluen sivu näyttää nyt seuraavalta:
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/ratebeer-w2-4.png)
+![kuva](../images/ratebeer-w2-4.png)
 
 Sivulla on pieni, mutta ikävä kielioppivirhe:
 
@@ -1025,7 +1025,7 @@ end
 
 Kun nyt luot reittauksen, renderöityy tuttu virhesivu. Virhesivun alalaidassa olevassa konsolinäkymässä voi nyt suorittaa ruby-komentoja täsmälleen samalla tavalla kuin debuggeria käytettäessä:
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/ratebeer-w2-9.png)
+![kuva](../images/ratebeer-w2-9.png)
 
 Aivan kuten debuggeria käytettäessä, web-konsolin näkymä avautuu siihen kontekstiin, jossa virhe tapahtuu, eli esim. muuttuja <code>params</code> on viitattavissa, samoin voidaan suorittaa kaikkia komentoja, joita konrollerimetodista käsin voitaisiin suorittaa, esim. hakea reittauksia tietokannasta modelin <code>Rating</code> avulla.
 
@@ -1080,7 +1080,7 @@ Esim alimmat 3 reittiä kertovat seuraavaa:
 
 Kuten olemme jo huomanneet komennon <code>rails routes</code> informaatio tulee myös virhetilanteissa renderöityvälle web-sivulle. Sivu jopa tarjoaa interaktiivisen työkalun, jonka avulla voi kokeilla miten sovellus reitittää syötetyn esimerkkipolun:
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/ratebeer-w2-6.png)
+![kuva](../images/ratebeer-w2-6.png)
 
 > ## Tehtävä 7
 >
@@ -1308,7 +1308,7 @@ Lisää yhteys koodiisi ja kokeile seuraavaa konsolista (muista ensin <code>relo
 
 Panimon sivun tulisi näyttää muutoksen jälkeen suunnilleen seuraavalta:
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/ratebeer-w2-8.png)
+![kuva](../images/ratebeer-w2-8.png)
 
 ## Yhteisen koodin siirto moduuliin
 
@@ -1481,7 +1481,7 @@ Viikon lopuksi on taas aika deployata sovellus herokuun.
 
 Navigoitaessa reittausten sivulle syntyy pahaenteinen virheilmoitus:
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2017/raw/master/images/ratebeer-w2-12.png)
+![kuva](../images/ratebeer-w2-12.png)
 
 Tuotantomoodissa pyörivän sovelluksen virheiden jäljittäminen on aina hiukan vaikeampaa kuin kehitysmoodissa, jossa Rails tarjoaa sovellusohjelmoijalle monia mahdollisuuksia virheiden selvittämiseen.
 
