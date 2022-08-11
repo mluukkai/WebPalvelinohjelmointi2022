@@ -40,7 +40,7 @@ Kurssin tehtävien deadline on 31.12.2022 klo 23.59.
 
 ### Discord
 
-- kurssin Discord-kanava (linkki tulossa)
+- kurssin Discord-kanava <https://study.cs.helsinki.fi/discord/join/ror-wepa>
   - **Huom:** kaikki epäasialliset, halventavat ja jotain ihmisryhmää syrjivät kommentit kanavalla ovat kiellettyjä ja tälläisten kommenttien esittäjät poistetaan kanavalta
 
 ### Paja
