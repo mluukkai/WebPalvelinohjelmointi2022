@@ -1515,7 +1515,9 @@ Tälläkin kertaa virheen syy paljastuu:
 
 Tietokantataulua _ratings_ siis ei ole olemassa. Ongelma korjaantuu suorittamalla migratiot:
 
-    heroku run rails db:migrate
+```bash
+heroku run rails db:migrate
+```
 
 Generoidaan seuraavaksi tilanne, jossa tietokanta joutuu hieman epäkonsistenttiin tilaan.
 
@@ -1554,13 +1556,17 @@ Kun menet nyt kaikkien oluiden sivulle on seurauksena jälleen ikävä ilmoitus 
 
 Syy löytyy:
 
-    undefined method `name' for nil:NilClass
+```
+undefined method `name' for nil:NilClass
+```
 
-virheen aiheuttanut rivi on
+Virheen aiheuttanut rivi on:
 
-    <td><%= link_to beer.brewery.name, beer.brewery %></td>
+```erb
+<td><%= link_to beer.brewery.name, beer.brewery %></td>
+```
 
-eli on olemassa olut, jonka kentässä <code>brewery</code> on arvona <code>nil</code>. Tämä voi johtua joko siitä, että oluen <code>brewery_id</code> on <code>nil</code> tai <code>brewery_id</code>:n arvona on virheellinen (esim. poistetun panimon) id.
+Eli on olemassa olut, jonka kentässä <code>brewery</code> on arvona <code>nil</code>. Tämä voi johtua joko siitä, että oluen <code>brewery_id</code> on <code>nil</code> tai <code>brewery_id</code>:n arvona on virheellinen (esim. poistetun panimon) id.
 
 Kun virheen syy paljastuu, on etsittävä syylliset. Eli avataan heroku-konsoli komennolla <code>heroku run console</code> ja haetaan panimottomat oluet:
 
