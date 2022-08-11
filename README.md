@@ -10,4 +10,4 @@ Kurssisivu https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/main/wadr
 - [viikko 4](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/viikko4.md)
 - [viikko 5](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/viikko5.md)
 - [viikko 6](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/viikko6.md)
-- [viikko 7](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/viikko7.md)s
+- [viikko 7](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/viikko7.md)
