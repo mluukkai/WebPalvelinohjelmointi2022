@@ -14,7 +14,7 @@ Vaikka kurssi on sisällöllisesti hyvin samankaltainen kuin [Web-palvelinohjelm
 
 ## Esitietovaatimukset
 
-Ohjelmistotekniikan menetelmät/Ohjelmoinnin harjoitustyö ja Tietokantojen perusteet. HTML on hyvä tuntea siinä laajudessa kuin asiaa käsitellään kurssilla [Tietokone työvälineenä](https://tkt-lapio.github.io/)
+Ohjelmoinnin jatkukurssi ja Tietokantojen perusteet. HTML on hyvä tuntea siinä laajudessa kuin asiaa käsitellään kurssilla [Tietokone työvälineenä](https://tkt-lapio.github.io/)
 
 Kurssille osallistuminen edellyttää hyvää ohjelmointirutiinia sekä valmiutta omatoimiseen opiskeluun.
 
