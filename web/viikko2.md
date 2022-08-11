@@ -235,7 +235,7 @@ eli reititä polulle '/' tuleva HTTP GET -pyyntö käsiteltäväksi luokan <code
 
 Englanninkielistä kirjallisuutta lukiessa kannattaa huomata, että Railsin terminologiassa kontrollereiden metodeja nimitetään usein _actioneiksi_. Käytämme kuitenkin kurssilla nimitystä kontrollerimetodi tai kontrollerin metodi.
 
-Voisimme vastaavasti lisätä routes.rb:hen rivin:
+Voisimme vastaavasti lisätä routes.rb-tiedostoon rivin:
 
 ```ruby
 get 'kaikki_bisset', to: 'beers#index'
@@ -249,7 +249,7 @@ Mielenkiintoinen yksityiskohta routes.rb-tiedostossa on se, että vaikka tiedost
 get 'kaikki_bisset', to: 'beers#index'
 ```
 
-kutsuu get-metodia parametreinaan merkkijono '/kaikki_bisset' ja hash <code>to: 'beers#index'</code>. Hashin yhteydessä on käytetty uudempaa syntaksia, eli vanhaa syntaksia käyttäen reitityksen kohteen määrittelevä hash kirjoitettaisiin <code>:to => 'beers#index'</code>, ja routes.rb:n rivi olisi:
+kutsuu get-metodia parametreinaan merkkijono '/kaikki_bisset' ja hash <code>to: 'beers#index'</code>. Hashin yhteydessä on käytetty uudempaa syntaksia, eli vanhaa syntaksia käyttäen reitityksen kohteen määrittelevä hash kirjoitettaisiin <code>:to => 'beers#index'</code>, ja routes.rb-tiedoston rivi olisi:
 
 ```ruby
 get 'kaikki_bisset', :to => 'beers#index'
@@ -279,7 +279,7 @@ get 'ratings', to: 'ratings#index'
 
 Määrittelemme siis Rails-konventiota mukaillen, että kaikkien reittausten sivun 'ratings' hoitaa RatingsController-luokan metodi index.
 
-Huom: suunnilleen samaa tarkoittaisi myös <code>match 'ratings' => 'ratings#index'</code>. Kuten niin tyypillistä Railsille, voi routes.rb:ssäkin käyttää saman asian määrittelemiseen monia erilaisia tapoja.
+Huom: suunnilleen samaa tarkoittaisi myös <code>match 'ratings' => 'ratings#index'</code>. Kuten niin tyypillistä Railsille, voi routes.rb-tiedostossakin käyttää saman asian määrittelemiseen monia erilaisia tapoja.
 
 Kokeile nyt sivua uudelleen selaimella.
 
@@ -1202,9 +1202,11 @@ Korvaa vielä templatessa app/views/ratings/index.erb.html käytetty vanha polku
 
 ## Ratingin poisto
 
-Lisätään ohjelmaan vielä mahdollisuus poistaa reittauksia. Lisätään ensin vastaava reitti muokkaamalla routes.rb:tä:
+Lisätään ohjelmaan vielä mahdollisuus poistaa reittauksia. Lisätään ensin vastaava reitti muokkaamalla routes.rb-tiedostoa:
 
+```ruby
 resources :ratings, only: [:index, :new, :create, :destroy]
+```
 
 Lisätään sitten reittauksien listalle linkki, jonka avulla kunkin reittauksen voi poistaa, eli muutetaan reittauksin listaa seuraavasti
 
