@@ -1248,7 +1248,7 @@ Lopussa suoritetaan uudelleenohjaus takaisin kaikkien reittausten sivulle. Uudel
 >
 > Reittauksen poisto on nyt siinä mielessä ikävä, että herkkäsorminen sivuston käyttäjä saattaa vahinkoklikkauksella tuhota reittauksia.
 >
-> Katso esim. kaikki oluet listaavan sivun templatesta /app/views/beers/show.html.erb mallia ja tee ratingin tuhoamisesta sellainen, että käyttäjältä kysytään varmistus reittauksen tuhoamisen yhteydessä.
+> Katso esim. [täältä](https://stackoverflow.com/a/70994323) mallia ja tee ratingin tuhoamisesta sellainen, että käyttäjältä kysytään varmistus reittauksen tuhoamisen yhteydessä.
 
 ## Orvot oliot
 
