@@ -1389,7 +1389,7 @@ Rajoitetaan sitten filtterimetodin suoritus koskemaan ainoastaan panimon poistoa
 ```ruby
 class BreweriesController < ApplicationController
   before_action :set_brewery, only: [:show, :edit, :update, :destroy]
-  before_filter :authenticate, only: [:destroy]
+  before_action :authenticate, only: [:destroy]
 
   # ...
 
@@ -1410,7 +1410,7 @@ Kovakoodataan käyttäjätunnukseksi "admin" ja salasanaksi "secret":
 ```ruby
 class BreweriesController < ApplicationController
   before_action :set_brewery, only: [:show, :edit, :update, :destroy]
-  before_filter :authenticate, only: [:destroy]
+  before_action :authenticate, only: [:destroy]
 
   # ...
 
@@ -1419,13 +1419,10 @@ class BreweriesController < ApplicationController
   def authenticate
     authenticate_or_request_with_http_basic do |username, password|
       if username == "admin" and password == "secret"
-        login_ok = true
+        return true
       else
-        login_ok = false  # käyttäjätunnus/salasana oli väärä
+        raise RuntimeError.new("Invalid username or password") # käyttäjätunnus/salasana oli väärä
       end
-
-      # koodilohkon arvo on sen viimeisen komennon arvo eli true/false riippuen kirjautumisen onnistumisesta
-      login_ok
     end
   end
 end
@@ -1442,7 +1439,9 @@ Koska koodilohko saa saman arvon kuin if:n ehto, voidaan se yksinkertaistaa seur
 ```ruby
 def authenticate
   authenticate_or_request_with_http_basic do |username, password|
-    username == "admin" and password == "secret"
+    raise RuntimeError.new("Invalid username or password") unless username == "admin" and password == "secret"
+    
+    return true
   end
 end
 ```
