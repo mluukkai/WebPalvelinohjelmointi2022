@@ -40,9 +40,8 @@ Kurssin tehtävien deadline on 31.12.2022 klo 23.59.
 
 ### Discord
 
-- kurssin [telegram](https://telegram.org)-kanava <https://t.me/rorwepa>
+- kurssin Discord-kanava (linkki tulossa)
   - **Huom:** kaikki epäasialliset, halventavat ja jotain ihmisryhmää syrjivät kommentit kanavalla ovat kiellettyjä ja tälläisten kommenttien esittäjät poistetaan kanavalta
-- Rubyn harjoitteluun tarkoitetun materiaalin [ensimmäinen osa](https://github.com/HY-TKTL/ruby-materiaali/blob/master/Perusteet.md) ja [toinen osa](https://github.com/HY-TKTL/ruby-materiaali/blob/master/LuokkiaJaOlioita.md)
 
 ### Paja
 
@@ -65,6 +64,7 @@ Kurssin tehtävien deadline on 31.12.2022 klo 23.59.
 - [viikko 7](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/viikko7.md)
 
 - [Materiaalista](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/materiaalista.md)
+- 
 ## Linkkejä
 
 [Railsin asentaminen](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/railsin_asentaminen.md)
@@ -73,7 +73,9 @@ Kurssin tehtävien deadline on 31.12.2022 klo 23.59.
 
 [Ruby-ohjeita](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/rubyn_perusteita.md)
 
-[tehtäväkirjanpito](https://studies.cs.helsinki.fi/courses/#/rails2018)
+Rubyn harjoitteluun tarkoitetun materiaalin [ensimmäinen osa](https://github.com/HY-TKTL/ruby-materiaali/blob/master/Perusteet.md) ja [toinen osa](https://github.com/HY-TKTL/ruby-materiaali/blob/master/LuokkiaJaOlioita.md)
+
+[[tehtäväkirjanpito](https://studies.cs.helsinki.fi/stats/courses/rails2022)](https://studies.cs.helsinki.fi/courses/#/rails2018)
 
 [Kurssin Tietokone työvälineenä HTML:ää koskeva osuus](https://tkt-lapio.github.io/verkkosivut/)
 
