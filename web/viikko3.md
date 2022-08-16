@@ -390,6 +390,14 @@ app/models/rating.rb:7:1: C: Layout/TrailingWhitespace: Trailing whitespace dete
 >
 > Löydät ohjeita säännön määrittelyyn [dokumentaation](https://docs.rubocop.org/rubocop/cops_metrics.html) Metrics-osuudesta.
 
+Rubocop saattaa mainitaa raportissaan, että osa virheistä on automaattisesti korjattavissa:
+
+```bash
+31 files inspected, 19 offenses detected, 19 offenses autocorrectable
+```
+
+Näiden virheiden automaattinen korjaaminen onnistuu komennolla `rubocop -A`. 
+
 Tästä lähtien kannattaa pitää huoli, että kaikki koodi mitä teet säilyy rubocopin sääntöjen mukaisena. Voit halutessasi muokata konfiguroituja sääntöjä mielesi mukaiseksi.
 
 ## Käyttäjä ja sessio
