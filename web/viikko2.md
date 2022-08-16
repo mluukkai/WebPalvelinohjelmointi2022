@@ -1421,7 +1421,7 @@ class BreweriesController < ApplicationController
       if username == "admin" and password == "secret"
         return true
       else
-        raise RuntimeError.new("Invalid username or password") # käyttäjätunnus/salasana oli väärä
+        raise "Wrong username or password" # käyttäjätunnus/salasana oli väärä
       end
     end
   end
@@ -1439,7 +1439,7 @@ Koska koodilohko saa saman arvon kuin if:n ehto, voidaan se yksinkertaistaa seur
 ```ruby
 def authenticate
   authenticate_or_request_with_http_basic do |username, password|
-    raise RuntimeError.new("Invalid username or password") unless username == "admin" and password == "secret"
+    raise "Wrong username or password" unless username == "admin" and password == "secret"
     
     return true
   end
