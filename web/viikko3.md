@@ -2,7 +2,9 @@ Jatkamme sovelluksen rakentamista siitä, mihin jäimme viikon 2 lopussa. Allaol
 
 **Huom:** Jos sinulla on ollut ongelmia Herokun tarvitseman pg-gemin kanssa lue tämä. Paikallisesti gemiä ei tarvita ja se määriteltiinkin asennettavaksi ainoastaan tuotantoympäristöön. Jos ongelmia ilmenee, voit asentaa gemit antamalla <code>bundle install</code>-komentoon seuraavan lisämääreen:
 
-    bundle install --without production
+```
+bundle install --without production
+```
 
 Tämä asetus muistetaan jatkossa, joten pelkkä `bundle install` riittää kun haluat asentaa uusia riippuvuuksia.
 
@@ -413,7 +415,9 @@ Luodaan käyttäjää varten model, näkymä ja kontrolleri komennolla <code>rai
 
 Uuden käyttäjän luominen tapahtuu Rails-konvention mukaan osoitteessa <code>users/new</code> olevalla lomakkeella. Olisi kuitenkin luontevampaa jos osoite olisi <code>signup</code>. Lisätään routes.rb:hen vaihtoehtoinen reitti
 
-    get 'signup', to: 'users#new'
+```ruby
+get 'signup', to: 'users#new'
+```
 
 eli myös osoitteeseen signup tuleva HTTP GET -pyyntö käsitellään Users-kontrollerin metodin <code>new</code> avulla.
 
