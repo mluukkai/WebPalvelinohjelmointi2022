@@ -1094,7 +1094,7 @@ Vaikuttaa ihan toimivalta, mutta tuntuu hieman kömpeltä viitata oluen reitanne
 has_many :raters, through: :ratings, source: :user
 ```
 
-Oletusarvoisesti <code>has*many</code> etsii liitettävää taulun nimeä ensimmäisen parametrinsa nimen perusteella. Koska <code>raters</code> ei ole nyt yhteyden kohteen nimi, on se määritelty erikseen \_source*-option avulla.
+Oletusarvoisesti `has_many` etsii liitettävää taulun nimeä ensimmäisen parametrinsa nimen perusteella. Koska <code>raters</code> ei ole nyt yhteyden kohteen nimi, on se määritelty erikseen \_source*-option avulla.
 
 Yhteytemme uusi nimi toimii:
 
