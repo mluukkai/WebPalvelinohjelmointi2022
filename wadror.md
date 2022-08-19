@@ -36,7 +36,7 @@ Kurssin arvosana perustuu palautettujen tehtävien määrään. Arvosanaan 1 vaa
 
 Kurssin tehtävien deadline on 31.12.2022 klo 23.59.
 
-Suoritettuasi kurssin [ilmoittaudu](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/main/web/ilmoittautuminen.md) avoimen yliopiston kurssitoteutukseen ja [pyydä suoritusmerkintää]() palautussovelluksessa.
+Suoritettuasi kurssin [ilmoittaudu](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/main/web/ilmoittautuminen.md) avoimen yliopiston kurssitoteutukseen ja [pyydä suoritusmerkintää](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/main/web/ilmoittautuminen.md#suoritusmerkinn%C3%A4n-pyyt%C3%A4minen) palautussovelluksessa.
 
 ## Opetus
 
