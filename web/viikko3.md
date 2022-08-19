@@ -1,13 +1,5 @@
 Jatkamme sovelluksen rakentamista siitä, mihin jäimme viikon 2 lopussa. Allaoleva materiaali olettaa, että olet tehnyt kaikki edellisen viikon tehtävät. Jos et tehnyt kaikkia tehtäviä, voit täydentää ratkaisusi tehtävien palautusjärjestelmän kautta näkyvän esimerkivastauksen avulla.
 
-**Huom:** Jos sinulla on ollut ongelmia Herokun tarvitseman pg-gemin kanssa lue tämä. Paikallisesti gemiä ei tarvita ja se määriteltiinkin asennettavaksi ainoastaan tuotantoympäristöön. Jos ongelmia ilmenee, voit asentaa gemit antamalla <code>bundle install</code>-komentoon seuraavan lisämääreen:
-
-```
-bundle install --without production
-```
-
-Tämä asetus muistetaan jatkossa, joten pelkkä `bundle install` riittää kun haluat asentaa uusia riippuvuuksia.
-
 ## Rails-ohjelmoijan workflow
 
 Railsia tehtäessä optimaalinen työskentelytapa poikkeaa merkittävästi esim. Java-ohjelmoinnista. Railsia _ei_ yleensä kannata ohjelmoida siten, että editoriin yritetään kirjoittaa paljon valmista koodia, jonka toimivuus sitten testataan menemällä koodin suorittavalle sivulle. Osittain syy tähän on kielen dynaaminen tyypitys ja tulkattavuus, joka tekee parhaillekin IDE:ille ohjelman syntaksin tarkastuksen mahdottomaksi. Toisaalta kielen tulkattavuus ja konsolityökalut (konsoli ja debuggeri) mahdollistavat pienempien koodinpätkien toiminnallisuuden testaamisen ennen niiden siirtämistä editoitavaan kooditiedostoon.

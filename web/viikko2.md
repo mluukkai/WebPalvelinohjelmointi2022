@@ -1,11 +1,5 @@
 Jatkamme sovelluksen rakentamista siitä, mihin jäimme viikon 1 lopussa. Allaoleva materiaali olettaa, että olet tehnyt kaikki edellisen viikon tehtävät. Jos et tehnyt kaikkia tehtäviä, voit täydentää ratkaisusi tehtävien palautusjärjestelmän kautta näkyvän esimerkivastauksen avulla.
 
-**Huom:** muutamilla Macin käyttäjillä oli ongelmia Herokun tarvitseman pg-gemin kanssa. Paikallisesti gemiä ei tarvita ja se määriteltiinkin asennettavaksi ainoastaan tuotantoympäristöön. Jos ongelmia ilmenee, voit asentaa gemit antamalla <code>bundle install</code>-komentoon seuraavan lisämääreen:
-
-    bundle install --without production
-
-Tämä asetus muistetaan jatkossa, joten pelkkä `bundle install` riittää kun haluat asentaa uusia riippuvuuksia.
-
 ## Järkevä editori
 
 Käytäthän jo järkevää editoria, eli jotain muuta kun nanoa, geditiä tai notepadia? Suositeltavia editoreja ovat esim. RubyMine, Visual Studio Code ks lisää [täältä](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/wadror.md#editoriide)
@@ -13,66 +7,6 @@ Käytäthän jo järkevää editoria, eli jotain muuta kun nanoa, geditiä tai n
 Nykyään hyvin yleisesti käytössä on [Visual Studio Codea](https://code.visualstudio.com). Jos käytät VSC:tä, kannattaa ehdottamasti asentaa [Ruby-plugin](https://code.visualstudio.com/docs/languages/overview)
 
 Tärkeintä editorin valinnassa on kuitenkin loppuviimeeksi se, että käyttäjälle sen käyttäminen on mieluisaa.
-
-## Parempi konsoli
-
-Käytimme viime viikolla rubyn oletusarvoista konsolia _irbiä_. On myös olemassa hieman kehittyneempi konsoli [Pry](https://github.com/pry/pry), otetaan se käyttöön.
-
-Lisää tiedostoon _Gemfile_ rivi <code>gem 'pry-rails'</code> seuraavaan kohtaan:
-
-```ruby
-group :development, :test do
-  # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
-  gem "debug", platforms: %i[ mri mingw x64_mingw ]
-  gem 'pry-rails' # lisää siis tämä rivi
-end
-```
-
-Suorita komentoriviltä komento <code>bundle install</code>.
-
-Kun nyt avaat rails-konsolin, eli suoritat komentoriviltä komennon <code>rails c</code> avautuu viime viikolla käyttämme irbin sijaan Pry. Perustoiminnoiltaan Pry on täsmälleen samanlainen kuin irb. Tulostusasu on hieman ihmisystävällisempi:
-
-```
-[59] pry(main)> Beer.first
-  Beer Load (0.4ms)  SELECT  "beers".* FROM "beers"  ORDER BY "beers"."id" ASC LIMIT 1
-=> #<Beer:0x00007fc430b910f8
- id: 1,
- name: "Iso 3",
- style: "Lager",
- brewery_id: 1,
- created_at: Sat, 01 Sep 2018 16:41:53 UTC +00:00,
- updated_at: Sat, 01 Sep 2018 16:41:53 UTC +00:00>
-[60] pry(main)>
-```
-
-Jos operaation tulos on pidempi kuin ruudulle mahtuu, kontrolli ei palaa konsoliin, vaan alimpana rivinä on kaksoispiste:
-
-```
-[61] pry(main)> Beer.all
-  Beer Load (0.3ms)  SELECT "beers".* FROM "beers"
-=> [#<Beer:0x00007fc4318bee10
-  id: 1,
-  name: "Iso 3",
-  style: "Lager",
-  brewery_id: 1,
-  created_at: Sat, 01 Sep 2018 16:41:53 UTC +00:00,
-  updated_at: Sat, 01 Sep 2018 16:41:53 UTC +00:00>,
- #<Beer:0x00007fc4318beaa0
-  id: 2,
-  name: "Tuplahumala",
-  style: "Lager",
-  brewery_id: 1,
-  created_at: Sat, 01 Sep 2018 16:41:53 UTC +00:00,
-  updated_at: Sat, 01 Sep 2018 16:41:53 UTC +00:00>,
- #<Beer:0x00007fc4318be910
-  id: 4,
-  name: "Huvila Pale Ale",
-:
-```
-
-Voit selata tulosta nuolinäppäimillä ja pääset takaisin konsoliin painamalla q:ta.
-
-Jos haluat oppia käyttämään Pryn edistyneempiä ominaisuuksia kannattaa katsoa aiheesta kertova [Rails cast](https://www.youtube.com/watch?v=A494WFSi6HU)
 
 ## Sovelluksen layout
 
@@ -88,25 +22,16 @@ Navigointipalkki saadaan generoitua helposti metodin <code>link_to</code> ja pol
 Tarkkasilmäisimmät saattoivat jo viime viikolla huomata, että näkymätemplatet eivät sisällä kaikkea sivulle tulevaa HTML-koodia. Esim. yksittäisen oluen näkymätemplate /app/views/beers/show.html.erb on seuraava:
 
 ```erb
-<p id="notice"><%= notice %></p>
+<p style="color: green"><%= notice %></p>
 
-<p>
-  <strong>Name:</strong>
-  <%= @beer.name %>
-</p>
+<%= render @beer %>
 
-<p>
-  <strong>Style:</strong>
-  <%= @beer.style %>
-</p>
+<div>
+  <%= link_to "Edit this beer", edit_beer_path(@beer) %> |
+  <%= link_to "Back to beers", beers_path %>
 
-<p>
-  <strong>Brewery:</strong>
-  <%= @beer.brewery_id %>
-</p>
-
-<%= link_to 'Edit', edit_beer_path(@beer) %> |
-<%= link_to 'Back', beers_path %>
+  <%= button_to "Destroy this beer", @beer, method: :delete %>
+</div>
 ```
 
 Jos katsomme yksittäisen oluen sivun HTML-koodia selaimen _view source code_ -toiminnolla, huomaamme, että sivulla on paljon muutakin kuin templatessa määritelty HTML (osa headin sisällöstä on poistettu):
@@ -157,22 +82,23 @@ On tyypillistä, että sovelluksen kaikki sivut ovat body-elementin sisältöä 
 ```erb
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Ratebeer</title>
-  <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
-  <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
+  <head>
+    <title>Ratebeer</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
 
-<%= yield %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
 
-</body>
+  <body>
+    <%= yield %>
+  </body>
 </html>
 ```
 
-Head-elementin sisällä olevat apumetodit määrittelevät sovelluksen käyttämät tyyli- ja javascript-tiedostot, apumetodi <code>csrf_meta_tags</code> lisää sivulle CSRF-hyökkäykset eliminoivan logiikan
-(ks. tarkemmin esim. [täältä](http://stackoverflow.com/questions/9996665/rails-how-does-csrf-meta-tag-work)). Kuten arvata saattaa, body-elementin sisällä olevan komennon <code>yield</code>-kohdalle renderöityy kunkin sivun oman näkymätemplaten määrittelemä sisältö.
+Head-elementin sisällä olevat apumetodit määrittelevät sovelluksen käyttämät tyyli- ja JavaScript-tiedostot, apumetodi <code>csrf_meta_tags</code> lisää sivulle CSRF-hyökkäykset eliminoivan logiikan (ks. tarkemmin esim. [täältä](http://stackoverflow.com/questions/9996665/rails-how-does-csrf-meta-tag-work)). Kuten arvata saattaa, body-elementin sisällä olevan komennon <code>yield</code>-kohdalle renderöityy kunkin sivun oman näkymätemplaten määrittelemä sisältö.
 
 Saamme navigointipalkin näkyville kaikille sivuille muuttamalla sovelluksen layoutin body-elementtiä seuraavasti:
 
@@ -404,9 +330,9 @@ b.ratings << Rating.create(score:15)
 Yritetään luoda olut ilman panimoa:
 
 ```ruby
-pry(main)> b = Beer.create name:"anonymous", style: "watery"
+irb(main)> b = Beer.create name:"anonymous", style: "watery"
 => #<Beer:0x00007f4444abc8b0 id: nil, name: "anonymous", style: "watery", brewery_id: nil, created_at: nil, updated_at: nil>
-pry(main)>
+irb(main)>
 ```
 
 _id_ ja aikaleimakentät eivät saa arvoja ollenkaan, näyttääkin siltä että olut ei talletu ollenkaan tietokantaan.
@@ -414,7 +340,7 @@ _id_ ja aikaleimakentät eivät saa arvoja ollenkaan, näyttääkin siltä että
 Jos kutsumme oluen metodia _errors_, kertoo olut syyn tallettumisen epäonnistumiselle
 
 ```ruby
-pry(main)> b.errors
+irb(main)> b.errors
 => #<ActiveModel::Errors [#<ActiveModel::Error attribute=brewery, type=blank, options={:message=>:required}>]>
 ```
 
@@ -424,7 +350,7 @@ eli olut ei suostu tallettumaan kantaan ilman tietoa panimosta. Voimme korjata t
 > b.brewery = Brewery.find_by(name: 'Koff')
 > b.save
    (0.1ms)  begin transaction
-  Beer Create (1.9ms)  INSERT INTO "beers" ("name", "style", "brewery_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)  [["name", "anonymous"], ["style", "watery"], ["brewery_id", 1], ["created_at", "2018-09-11 18:21:40.830949"], ["updated_at", "2018-09-11 18:21:40.830949"]]
+  Beer Create (1.9ms)  INSERT INTO "beers" ("name", "style", "brewery_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)  [["name", "anonymous"], ["style", "watery"], ["brewery_id", 1], ["created_at", "2022-09-11 18:21:40.830949"], ["updated_at", "2022-09-11 18:21:40.830949"]]
    (0.8ms)  commit transaction
 ```
 
@@ -563,7 +489,7 @@ Tehdään sitten panimolle metodi, jonka avulla panimon voi 'uudelleenkäynnist�
 
 ```ruby
 def restart
-  year = 2018
+  year = 2022
   puts "changed year to #{year}"
 end
 ```
@@ -575,13 +501,13 @@ kokeillaan
 > b.year
 => 1897
 > b.restart
-changed year to 2018
+changed year to 2022
 > b.year
 => 1897
 >
 ```
 
-eli huomaamme, että vuoden muuttaminen ei toimikaan odotetulla tavalla! Syynä tähän on se, että <code>year = 2018</code> metodin <code>restart</code> sisällä ei kutsukaan metodia
+eli huomaamme, että vuoden muuttaminen ei toimikaan odotetulla tavalla! Syynä tähän on se, että <code>year = 2022</code> metodin <code>restart</code> sisällä ei kutsukaan metodia
 
     def year=(value)
 
@@ -591,7 +517,7 @@ Jotta sijoitus onnistuu, on metodia kutsuttava <code>self</code>-viitteen kautta
 
 ```ruby
 def restart
-  self.year = 2018
+  self.year = 2022
   puts "changed year to #{year}"
 end
 ```
@@ -603,9 +529,9 @@ ja nyt toiminnallisuus on odotetun kaltainen:
 > b.year
 => 1897
 > b.restart
-changed year to 2018
+changed year to 2022
 > b.year
-=> 2018
+=> 2022
 >
 ```
 
@@ -613,7 +539,7 @@ changed year to 2018
 
 ```ruby
 def restart
-  @year = 2018
+  @year = 2022
   puts "changed year to #{@year}"
 end
 ```
@@ -622,7 +548,7 @@ Panimon sisällä <code>year</code> siis on ActiveRecordin tietokantaan tallenta
 
 > ## Tehtävä 3
 >
-> Tee sitten luokalle Rating partials-tiedosto, jossa arvostelu oliosta tehdään parempi mmerkkijonoesitys muodossa "karhu 35", eli ensin reitatun oluen nimi ja sen jälkeen reittauksen pistemäärä.
+> Tee sitten luokalle Rating partials-tiedosto, jossa arvostelu oliosta tehdään parempi merkkijonoesitys muodossa "karhu 35", eli ensin reitatun oluen nimi ja sen jälkeen reittauksen pistemäärä.
 >
 > Merkkijonon muodostamisessa myös seuraavasta voi olla apua https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/rubyn_perusteita.md#merkkijonot
 >
@@ -685,7 +611,7 @@ Eli kuten yllä näemme, ei pelkkä koodin uudelleenlataaminen vielä riitä, si
 > Näkymätemplatessa voi tehdä tuotettavasta sisällöstä ehdollisen seuraavasti:
 >
 > ```erb
-> <% if @beer.ratings.empty? %>
+> <% if beer.ratings.empty? %>
 >  beer has not yet been rated!
 > <% else %>
 >  beer has some ratings
@@ -775,7 +701,11 @@ Railsin metodi <code>form_for</code> siis muodostaa automaattisesti oikeaan osoi
 Lisää lomakkeiden muodostamisesta <code>form_for</code>-metodilla osoitteessa
 http://guides.rubyonrails.org/form_helpers.html#dealing-with-model-objects
 
-Jos yritämme luoda reittauksen aiheutuu virheilmoitus <code>No route matches [POST] "/ratings"</code> eli joudumme luomaan tiedostoon config/routes.rb reitin:
+Jos yritämme luoda reittauksen, ei mitään näytä tapahtuvan. Selaimen developer-konsoli paljastaa kuitenkin, että selain on tehnyt POST-pyynnön osoitteeseen http://localhost:3000/ratings mutta palvelin on vastannut siihen 404
+
+![kuva](https://raw.githubusercontent.com/mluukkai/WebPalvelinohjelmointi2022/main/images/w2-post.png)
+
+Joudumme siis luomaan tiedostoon config/routes.rb reitin lomakkeen lähetyksen käsittelyyn:
 
 ```ruby
 post 'ratings', to: 'ratings#create'
@@ -857,18 +787,6 @@ Debuggerin konsolissa voi tarpeen vaatiessa suorittaa mitä tahansa koodia Rails
 Debuggerin tärkeimmät komennot lienevät _step, next, continue_ ja _help_. Step suorittaa koodista seuraavan askeleen, edeten mahdollisiin metodikutsuihin. Next suorittaa seuraavan rivin kokonaisuudessaan. Continue jatkaa ohjelman suorittamista normaaliin tapaan.
 
 Lisätietoa debuggerista seuraavassa https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
-
-## debuggas Pry:n avulla
-
-Jos lisäät koodiin komennon <code>binding.pry</code> voit käyttää Pry:tä debuggerina:
-
-```ruby
-def create
-  binding.pry
-end
-```
-
-kun koodirivi suoritetaan, suoritus pysähtyy ja Pry-sessio aukeaa koodirivin kohdalle. Voit jatkaa suoritusta komennolla <code>exit</code>. On makuasia kumpaa käytät debuggaukseen _debuggeria_ vai _Prytä_.
 
 ## Reittauksen talletus
 

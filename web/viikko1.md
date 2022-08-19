@@ -1265,9 +1265,7 @@ Koska metodikutsun parametrin tyyppi on Beer, tietää Rails, että on tarkoitus
   </p>
 
 </div>
-
 ```
-
 
 > ## Tehtävä 11
 >
@@ -1299,7 +1297,7 @@ Tällä hetkellä käytännöllisin tapa sovellusten hostaamiseen on PaaS (eli P
 
 Sovelluksen deployaaminen Herokuun onnistuu helpoiten jos sovelluksen hakemisto on oma git-repositorionsa.
 
-Jos et ole käyttänyt aiemmin herokua
+Jos et ole käyttänyt aiemmin Herokua
 
 - luo Herokuun tunnus.
 - luo ssh-avain ja lisää se herokuun sivulla https://dashboard.heroku.com/account

@@ -1,11 +1,5 @@
 Jatkamme sovelluksen rakentamista siitä, mihin jäimme viikon 3 lopussa. Allaoleva materiaali olettaa, että olet tehnyt kaikki edellisen viikon tehtävät. Jos et tehnyt kaikkia tehtäviä, voit täydentää ratkaisusi tehtävien palautusjärjestelmän kautta näkyvän esimerkivastauksen avulla.
 
-**Huom:** Jos sinulla on ollut ongelmia Herokun tarvitseman pg-gemin kanssa lue tämä. Paikallisesti gemiä ei tarvita ja se määriteltiinkin asennettavaksi ainoastaan tuotantoympäristöön. Jos ongelmia ilmenee, voit asentaa gemit antamalla <code>bundle install</code>-komentoon seuraavan lisämääreen:
-
-    bundle install --without production
-
-Tämä asetus muistetaan jatkossa, joten pelkkä `bundle install` riittää kun haluat asentaa uusia riippuvuuksia.
-
 ## Muutama huomio
 
 ### Rubocop
