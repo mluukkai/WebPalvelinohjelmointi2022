@@ -168,7 +168,7 @@ Kun sivu nyt avataan uudelleen, haetaan ensin javascriptillä id:n <code>beers</
 
 Javascript-ohjelmoinnissa selaimessa oleva konsoli on **erittäin tärkeä** työväline. Konsolin saa avattua chromessa tools-valikosta tai painamalla ctrl, shift, j (linux) tai alt, cmd, i (mac):
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/ratebeer-w7-1.png)
+![kuva](https://raw.githubusercontent.com/mluukkai/WebPalvelinohjelmointi2022/main/images/ratebeer-w7-1.png)
 
 **Konsoli on syytä pitää koko ajan auki Javascriptillä ohjelmoitaessa!**
 
@@ -182,11 +182,11 @@ Jos kokeilemme selaimella osoitetta http://localhost:3000/beers.json huomaamme, 
 
 Json-muotoisen sivun saa hieman luettavampaan muotoon esim. kopioimalla sivun sisällön [jsonlint](http://jsonlint.com/) palveluun:
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/ratebeer-w7-3.png)
+![kuva](https://raw.githubusercontent.com/mluukkai/WebPalvelinohjelmointi2022/main/images/ratebeer-w7-3.png)
 
 Parempi ratkaisu on asentaa selaimeen jsonia ymmärtävä plugin, eräs suositeltava on chromen [jsonview](https://chrome.google.com/webstore/detail/jsonview/chklaanhfefbnpoihckbnefhakgolnmc), plugin muotoilee jsonin selaimeen todella siististi:
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/ratebeer-w7-4.png)
+![kuva](https://raw.githubusercontent.com/mluukkai/WebPalvelinohjelmointi2022/main/images/ratebeer-w7-4.png)
 
 Tarkemmin tarkasteltuna jokainen yksittäinen json-muotoinen olut muistuttaa hyvin paljon Rubyn hashiä:
 
@@ -210,7 +210,7 @@ Yritetään saada kaikkien reittausten lista jsonina, eli kokeillaan osoitetta h
 
 Seurauksena on virheilmoitus:
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/ratebeer-w7-4b.png)
+![kuva](https://raw.githubusercontent.com/mluukkai/WebPalvelinohjelmointi2022/main/images/ratebeer-w7-4b.png)
 
 Eli ihan automaattisesti jsonit eivät synny, loimme kaiken reittaukseen liittyvän koodin käsin, ja kuten virheilmoituksesta voimme päätellä, formaatille 'json' ei ole olemassa sopivaa templatea.
 
@@ -471,7 +471,7 @@ end
 
 Nyt palvelimen lähettämä oluiden jsonmuotoinen lista on huomattavasti inhimillisemmän kokoinen:
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/ratebeer-w7-5.png)
+![kuva](https://raw.githubusercontent.com/mluukkai/WebPalvelinohjelmointi2022/main/images/ratebeer-w7-5.png)
 
 Rekisteröimme vielä järjestämisen suorittavat tapahtumankuuntelijat linkeille (seuraavassa lopullinen javascript-koodi):
 
@@ -654,7 +654,7 @@ Näyttää siis siltä että sivulla ei ole ollenkaan oluiden listaa. Varmisteta
 
 Ja aivan kuten arvelimme, sivulla näytettävä oluttaulukko on tyhjä:
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/ratebeer-w6-2.png)
+![kuva](https://raw.githubusercontent.com/mluukkai/WebPalvelinohjelmointi2022/main/images/ratebeer-w6-2.png)
 
 Syy ongelmalle löytyy capybaran dokumentaatiosta https://github.com/jnicklas/capybara#drivers
 
@@ -812,11 +812,11 @@ Lisää asset pipelinestä ja mm. javascriptin liittämisestä railssovelluksiin
 
 Tehtävän jälkeen sovelluksesi voi näyttää esim. seuraavalta. Olutseuran sivulla näytetään lista jäsenyyttä hakeneista, jos kirjautuneena on olutseurassa jo jäsenenä oleva käyttäjä:
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/ratebeer-w6-6.png)
+![kuva](https://raw.githubusercontent.com/mluukkai/WebPalvelinohjelmointi2022/main/images/ratebeer-w6-6.png)
 
 Käyttäjän omalla sivulta näytetään toistaiseksi käsittelemättömät hakemukset:
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/ratebeer-w6-5.png)
+![kuva](https://raw.githubusercontent.com/mluukkai/WebPalvelinohjelmointi2022/main/images/ratebeer-w6-5.png)
 
 ## Indeksi tietokantaan
 
@@ -896,14 +896,14 @@ Miniprofilerin käyttöönotto on helppoa, riittää että Gemfileen lisätään
 
 Suorita <code>bundle install</code> ja käynnistä rails server uudelleen. Kun menet tämän jälkeen osoitteeseen http://localhost:3000/beers huomaat, että sivun yläkulmaan ilmestyy aikalukema joka kuvaa HTTP-pyynnön suoritukseen käytettyä aikaa. Numeroa klikkaamalla avautuu tarkempi erittely ajankäytöstä:
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/ratebeer-w6-7.png)
+![kuva](https://raw.githubusercontent.com/mluukkai/WebPalvelinohjelmointi2022/main/images/ratebeer-w6-7.png)
 
 Raportti kertoo että <code>Executing action: index</code> eli kontrollerimetodin suoritus aiheuttaa yhden SQL-kyselyn <code>SELECT "beers".\* FROM "beers"</code>. Sen sijaan
 <code>Rendering: beers/index</code> eli näkymätemplaten suoritus aiheuttaa huomattavasti enemmän SQL-kyselyjä!
 
 Kyselyjä klikkaamalla päästään tarkastelemaan syytä:
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/ratebeer-w6-8.png)
+![kuva](https://raw.githubusercontent.com/mluukkai/WebPalvelinohjelmointi2022/main/images/ratebeer-w6-8.png)
 
 Näkymätemplaten renderöinti siis suorittaa useaan kertaan seuraavat kyselyt:
 
@@ -1163,13 +1163,13 @@ Fragmentticachayksen lisääminen oluiden listalle views/beers/index.html on hel
 
 Kun nyt menemme sivulle, ei sivufragmenttia ole vielä talletettu välimuistin ja sivun lataaminen kestää yhtä kauan kuin ennen cachayksen lisäämistä:
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/ratebeer-w6-9.png)
+![kuva](https://raw.githubusercontent.com/mluukkai/WebPalvelinohjelmointi2022/main/images/ratebeer-w6-9.png)
 
 Sivun latausaika on 234564ms, mistä itse sivun renderöimiseen kulunut aika <code>Rendering: beers/index</code> on siis 5041.2 millisekuntia.
 
 Sivulla käytyämme sivun osa tallettuu välimuistiin ja seuraava sivun avaaminen on huomattavasti nopeampi:
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/ratebeer-w6-10.png)
+![kuva](https://raw.githubusercontent.com/mluukkai/WebPalvelinohjelmointi2022/main/images/ratebeer-w6-10.png)
 
 Koko sivun latausaika on 299 millisekuntia, josta ainoastaan 6.3 millisekuntia kuluu näkymätemplaten lataamiseen.
 
@@ -1226,7 +1226,7 @@ Ehdossa oleva <code>request.format.html?</code> varmistaa sen, että suoritamme 
 
 Sivu nopeutuu entisestään:
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/ratebeer-w6-11.png)
+![kuva](https://raw.githubusercontent.com/mluukkai/WebPalvelinohjelmointi2022/main/images/ratebeer-w6-11.png)
 
 Huomaamme kuitenkin että sivulla on pieni ongelma. Oluet sai järjestettyä sarakkeita klikkaamalla vaihtoehtoisiin järjestyksiin. Cachays on kuitenkin rikkonut toiminnon!
 
@@ -1558,7 +1558,7 @@ Jo meille tutuksi tullut <code>Rails.cache</code> on oikeastaan yksinkertainen a
 Uusien tietokantatyyppien noususta huolimatta relaatiotietokannat tulevat kuitenkin säilymään ja on todennäköistä että isommissa sovelluksissa on käytössä rinnakkain erilaisia tietokantoja, ja kuhunkin talletustarkoitukseen pyritään valitsemaan tilanteeseen parhaiten sopiva tietokantatyyppi, ks.
 http://www.martinfowler.com/bliki/PolyglotPersistence.html
 
-## Refaktorointi: luokka metodit
+## Refaktorointi: luokkametodit
 
 Viikon 6 tehtävässä [6-7](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/viikko6.md#teht%C3%A4v%C3%A4-6-7-kahden-teht%C3%A4v%C3%A4n-arvoinen) kehoitettiin tekemään luokille _Beer_, _Brewery_ ja _Style_ luokkametodit, joiden avulla kontrollerin on helppo selvittää saa reittausten perusteella parhaat panimot, oluet ja oluttyylit.
 

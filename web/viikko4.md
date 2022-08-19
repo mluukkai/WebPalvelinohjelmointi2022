@@ -42,7 +42,7 @@ end
 
 Näiden muutosten jälkeen oluen tietojen editointi ei yllättäen enää toimi. Seurauksena on virheilmoitus <code>undefined method `map' for nil:NilClass</code>, johon olet kenties jo kurssin aikana törmännyt:
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/ratebeer-w4-0.png)
+![kuva](https://raw.githubusercontent.com/mluukkai/WebPalvelinohjelmointi2022/main/images/ratebeer-w4-0.png)
 
 Syynä tälle on se, että uuden oluen luominen ja oluen tietojen editointi käyttävät molemmat samaa lomakkeen generoivaa näkymätemplatea (app/views/beers/\_form.html.erb) ja muutosten jälkeen näkymän toiminta edellyttää, että muuttuja <code>@breweries</code> sisältää panimoiden listan ja muuttuja <code>@styles</code> sisältää oluiden tyylit. Oluen tietojen muutossivulle mennään kontrollerimetodin <code>edit</code> suorituksen jälkeen, ja joudummekin muuttamaan kontrolleria seuraavasti korjataksemme virheen:
 
@@ -1614,7 +1614,7 @@ Coverage report generated for RSpec to /Users/mluukkai/opetus/ratebeer/coverage.
 
 Testien rivikattavuus on siis 48.35 prosenttia. Tarkempi raportti on nähtävissä avaamalla selaimella tiedosto coverage/index.html. Kuten kuva paljastaa, on suuria osia ohjelmasta, erityisesti kontrollereista vielä erittäin huonosti testattu:
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/ratebeer-w4-1.png)
+![kuva](https://raw.githubusercontent.com/mluukkai/WebPalvelinohjelmointi2022/main/images/ratebeer-w4-1.png)
 
 Suurikaan rivikattavuus ei tietysti vielä takaa että testit testaavat järkeviä asioita. Helposti mitattavana metriikkana se on kuitenkin parempi kuin ei mitään ja näyttää ainakin ilmeisimmät puutteet testeissä.
 
@@ -1636,7 +1636,7 @@ Githubissa olevat projektit on helppo asettaa Github actionsin tarkkailtaviksi.
 >
 > Mene oman projektisi repositorioon ja paina yläpalkista Actions-painiketta. Jos sinulla ei ole olemassaolevia actioneja github vie sinut suoraan sivulle, jossa ehdotetaan valmiita pohjia valittavaksi.
 >
-> ![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/ratebeer-w4-2.png)
+> ![kuva](https://raw.githubusercontent.com/mluukkai/WebPalvelinohjelmointi2022/main/images/ratebeer-w4-2.png)
 >
 > Valitaan Ruby on Rails painamalla Configure-nappia. Tämän seurauksena github vie sivulle jossa muokataan <code>rubyonrails.yml</code> nimistä tiedostoa. Tämä workflow tiedosto kertoo Github actionsille mitä CI:n tulee tehdä.
 >
@@ -1748,7 +1748,7 @@ Testauskattavuuden lisäksi myös koodin laatua kannattaa valvoa. SaaS-palveluna
 >
 > Löydät linkin raporttiin seuraavasti
 >
-> ![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/ratebeer-w4-4c.png)
+> ![kuva](https://raw.githubusercontent.com/mluukkai/WebPalvelinohjelmointi2022/main/images/ratebeer-w4-4c.png)
 >
 > Nyt myös codeclimate aiheuttaa sovelluskehittäjälle sopivasti painetta pitää koodi koko ajan hyvälaatuisena!
 

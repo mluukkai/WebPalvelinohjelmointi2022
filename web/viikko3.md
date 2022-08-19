@@ -626,11 +626,11 @@ eli mahdollistaa uloskirjautuminen HTTP GET:in avulla. Ei kuitenkaan pidetä hyv
 
 Tehtävän jälkeen sovelluksesi näyttää suunnilleen seuraavalta jos käyttäjä on kirjautuneena:
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/ratebeer-w3-1.png)
+![kuva](https://raw.githubusercontent.com/mluukkai/WebPalvelinohjelmointi2022/main/images/ratebeer-w3-1.png)
 
 ja seuraavalta jos käyttäjä ei ole kirjautuneena (huomaa, että nyt näkyvillä on myös uuden käyttäjän rekisteröitymiseen tarkoitettu signup-linkki):
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/ratebeer-w3-2.png)
+![kuva](https://raw.githubusercontent.com/mluukkai/WebPalvelinohjelmointi2022/main/images/ratebeer-w3-2.png)
 
 ## Reittaukset käyttäjälle
 
@@ -723,7 +723,7 @@ Päätetään että laitetaan kaikkien olemassaolevien reittausten käyttäjäks
 
 Käyttäjän sivu siis näyttää suunilleen seuraavalta:
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/ratebeer-w3-3.png)
+![kuva](https://raw.githubusercontent.com/mluukkai/WebPalvelinohjelmointi2022/main/images/ratebeer-w3-3.png)
 
 Uusien reittausten luominen www-sivulta ei siis tällä hetkellä toimi, koska reittaukseen ei tällä hetkellä liitetä kirjautuneena olevaa käyttäjää. Muokataan siis reittauskontrolleria siten, että kirjautuneena oleva käyttäjä linkitetään luotavaan reittaukseen:
 
@@ -750,7 +750,7 @@ Reittauksen luomisen jälkeen kontrolleri on laitettu uudelleenohjaamaan selain 
 
 Kaikkien reittausten sivun tulisi siis näyttää edellisen tehtävän jälkeen seuraavalta:
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/ratebeer-w3-4.png)
+![kuva](https://raw.githubusercontent.com/mluukkai/WebPalvelinohjelmointi2022/main/images/ratebeer-w3-4.png)
 
 ## Kirjautumisen hienosäätöä
 
@@ -992,7 +992,7 @@ http://guides.rubyonrails.org/active_record_validations.html ja https://apidock.
 
 Jos yrität luoda oluen tyhjällä nimellä, seurauksena on virheilmoitus:
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/ratebeer-w3-9.png)
+![kuva](https://raw.githubusercontent.com/mluukkai/WebPalvelinohjelmointi2022/main/images/ratebeer-w3-9.png)
 
 Mistä tämä johtuu? Jos oluen luonti epäonnistuu validoinnissa tapahtuneen virheen takia, olutkontrollerin metodi <code>create</code> suorittaa else-haaran, eli renderöi uudelleen oluiden luomiseen käytettävän lomakkeen. Oluiden luomiseen käytettävä lomake käyttää muuttujaan <code>@styles</code> talletettua oluttyylien listaa lomakkeen generointiin. Virheilmoituksen syynä onkin se, että muuttujaa ei ole nyt alustettu (toisin kuin jos lomakkeeseen mennään kontrollerimetodin <code>new</code> kautta). Lomake olettaa myös, että muuttujaan <code>@breweries</code> on talletettu kaikkien panimoiden lista. Eli ongelma korjautuu jos alustamme muuttujat else-haarassa:
 
@@ -1167,9 +1167,9 @@ Trendinä kuitenkin on, että metodin has_and_belongs_to_many sijaan käytetää
 
 Seuraavat kaksi kuvaa antavat suuntaviivoja sille miltä sovelluksesi voi näyttää tehtävien 9-11 jälkeen.
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/ratebeer-w3-5.png)
+![kuva](https://raw.githubusercontent.com/mluukkai/WebPalvelinohjelmointi2022/main/images/ratebeer-w3-5.png)
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/ratebeer-w3-6.png)
+![kuva](https://raw.githubusercontent.com/mluukkai/WebPalvelinohjelmointi2022/main/images/ratebeer-w3-6.png)
 
 ## Salasana
 
@@ -1450,13 +1450,13 @@ end
 
 Muutosten jälkeen käyttäjän tietojen muuttamislomake näyttää seuraavalta:
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/ratebeer-w3-7.png)
+![kuva](https://raw.githubusercontent.com/mluukkai/WebPalvelinohjelmointi2022/main/images/ratebeer-w3-7.png)
 
 > ## Tehtävä 16
 >
 > Ainoa käyttäjään liittyvä tieto on nyt salasana, joten muuta käyttäjän tietojen muuttamiseen tarkoitettua lomaketta siten, että se näyttää allaolevassa kuvassa olevalta. Huomaa, että uuden käyttäjän rekisteröitymisen (signup) on edelleen näytettävä samalta kuin ennen.
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/ratebeer-w3-8.png)
+![kuva](https://raw.githubusercontent.com/mluukkai/WebPalvelinohjelmointi2022/main/images/ratebeer-w3-8.png)
 
 ## Ongelmia herokussa
 
@@ -1522,7 +1522,7 @@ Muista testata rubocopilla, että koodisi noudattaa edelleen määriteltyjä tyy
 
 Jos käytät Visual Studio Codea, voit asentaa [ruby-rubocop](https://marketplace.visualstudio.com/items?itemName=misogi.ruby-rubocop) laajennuksen, jolloin editori huomauttaa heti jos teet koodiin tyylivirheen:
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/ratebeer-w3-10.png)
+![kuva](https://raw.githubusercontent.com/mluukkai/WebPalvelinohjelmointi2022/main/images/ratebeer-w3-10.png)
 
 ## Tehtävien palautus
 

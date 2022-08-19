@@ -34,7 +34,7 @@ Kuten huomaamme, vastaus tulee XML-muodossa. Käytänne on hieman vanhahtava, si
 
 Selaimella näemme palautetun XML:n hieman ihmisluettavammassa muodossa:
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/ratebeer-w5-1.png)
+![kuva](https://raw.githubusercontent.com/mluukkai/WebPalvelinohjelmointi2022/main/images/ratebeer-w5-1.png)
 
 **HUOM: älä käytä tässä näytettyä API-avainta vaan rekisteröi itsellesi oma avain.**
 
@@ -1147,7 +1147,7 @@ eli tällä kertaa routeissa määriteltiin, että panimon id:hen viitataan <cod
 
 Tehtävän jälkeen sovelluksesi voi näyttää esim. seuraavalta:
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/ratebeer-w5-2.png)
+![kuva](https://raw.githubusercontent.com/mluukkai/WebPalvelinohjelmointi2022/main/images/ratebeer-w5-2.png)
 
 ## Oluen reittaus suoraan oluen sivulta
 
@@ -1195,11 +1195,11 @@ Koska lomake on luotu <code>form_with</code>-helperillä, tapahtuu sen lähettä
 
 Ratkaisussa on pieni ongelma. Jos reittauksessa yritetään antaa epävalidi pistemäärä:
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/ratebeer-w5-4.png)
+![kuva](https://raw.githubusercontent.com/mluukkai/WebPalvelinohjelmointi2022/main/images/ratebeer-w5-4.png)
 
 renderöi kontrolleri (eli reittauskontrollerin metodi <code>create</code>) oluen näkymän sijaan uuden reittauksen luomislomakkeen:
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/ratebeer-w5-3.png)
+![kuva](https://raw.githubusercontent.com/mluukkai/WebPalvelinohjelmointi2022/main/images/ratebeer-w5-3.png)
 
 Ongelman voisi kiertää katsomalla mistä osoitteesta create-metodiin on tultu ja renderöidä sitten oikea sivu riippuen tulo-osoitteesta. Emme kuitenkaan tee nyt tätä muutosta.
 
@@ -1258,7 +1258,7 @@ Hienosäädetään olutseuraan liittymistä
 >
 > Muokkaa koodiasi siten (membership-kontrollerin sopivaa metodia), että olutseuraan liittymisen jälkeen selain ohjautuu olutseuran sivulle ja sivu näyttää allaolevan kuvan mukaisen ilmoituksen uuden käyttäjän liittymisestä.
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/ratebeer-w5-5.png)
+![kuva](https://raw.githubusercontent.com/mluukkai/WebPalvelinohjelmointi2022/main/images/ratebeer-w5-5.png)
 
 > ## Tehtävä 9
 >
@@ -1289,11 +1289,11 @@ Hienosäädetään olutseuraan liittymistä
 
 Jos käyttäjä on seuran jäsen, näytetään seuran sivulla eroamisen mahdollistava painike:
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/ratebeer-w5-5a.png)
+![kuva](https://raw.githubusercontent.com/mluukkai/WebPalvelinohjelmointi2022/main/images/ratebeer-w5-5a.png)
 
 Erottaessa seurasta tehdään uudelleenohjaus käyttäjän sivulle ja näytetään asianmukainen ilmoitus:
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/ratebeer-w5-5b.png)
+![kuva](https://raw.githubusercontent.com/mluukkai/WebPalvelinohjelmointi2022/main/images/ratebeer-w5-5b.png)
 
 ## Migraatioista
 
@@ -1341,7 +1341,7 @@ Olemme käyttäneet Railsin migraatioita jo ensimmäisestä viikosta alkaen. On 
 
 Tehtävän jälkeen oluttyylin sivu voi näyttää esim. seuraavalta
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/ratebeer-w5-6.png)
+![kuva](https://raw.githubusercontent.com/mluukkai/WebPalvelinohjelmointi2022/main/images/ratebeer-w5-6.png)
 
 Hyvä lista oluttyyleistä kuvauksineen löytyy osoitteesta http://beeradvocate.com/beer/style/
 
@@ -1361,7 +1361,7 @@ Hyvä lista oluttyyleistä kuvauksineen löytyy osoitteesta http://beeradvocate.
 
 Tehtävän jälkeen olutpaikkojen sivu voi näyttää esim. seuraavalta
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/ratebeer-w5-7.png)
+![kuva](https://raw.githubusercontent.com/mluukkai/WebPalvelinohjelmointi2022/main/images/ratebeer-w5-7.png)
 
 ## Tehtävien palautus
 

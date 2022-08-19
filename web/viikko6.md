@@ -257,11 +257,11 @@ Bootstrapin dokumentaatio ei ole ihan selkein mahdollinen, mutta pienellä ihmet
 
 Vaikka bootstrapilla muotoiltu navigaatiopalkki on koodina pidempi ja sotkuisempikin kuin aiempi navigaatiopalkkimme, on sillä kuitenkin eräs merkittävä etu. Jos sovellusta tarkastellaan "isolta" näytöltä, näkyy navigaatiopalkki normaalisti:
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/ratebeer-w6-0a.png)
+![kuva](https://raw.githubusercontent.com/mluukkai/WebPalvelinohjelmointi2022/main/images/ratebeer-w6-0a.png)
 
 Jos taas sovellusta tarkastellaan pienemmältä näytöltä, esim. mobiililaitteelta, näytetään navigaatiopalkin sijaan symboli, jota klikkaamalla navigaatiopalkki aukeaa alaspäin:
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/ratebeer-w6-0b.png)
+![kuva](https://raw.githubusercontent.com/mluukkai/WebPalvelinohjelmointi2022/main/images/ratebeer-w6-0b.png)
 
 Bootstrapilla muotoiltu navigaatiopalkki on _responsiivinen_, se mukautuu sovellusta käyttävän selaimen kokoon.
 
@@ -392,7 +392,7 @@ Luokka voidaan lisätä myös niihin linkkeihin, jotka halutaan napin painikkeen
 >
 > Saat päättää lomakkeen tarkan tyylin itse. Eräs tapa muotoilla lomake on seuraava
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/ratebeer-w6-3a.png)
+![kuva](https://raw.githubusercontent.com/mluukkai/WebPalvelinohjelmointi2022/main/images/ratebeer-w6-3a.png)
 
 > ## Tehtävä 4
 >
@@ -406,7 +406,7 @@ Luokka voidaan lisätä myös niihin linkkeihin, jotka halutaan napin painikkeen
 > <%= link_to 'signout', signout_path, { class: "dropdown-item", method: :delete } %>
 > ```
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/ratebeer-w6-3c.png)
+![kuva](https://raw.githubusercontent.com/mluukkai/WebPalvelinohjelmointi2022/main/images/ratebeer-w6-3c.png)
 
 > Jos dropdownit eivät tunnu toimivan varmista, että <code>application.js</code> tiedoston requiret ja importit ovat oikein päin, eli requiret ennen importteja
 
@@ -667,7 +667,7 @@ Brewery.active.where("year>2000")
 
 Reittausten sivu voi näyttää tehtävävien jälkeen esim. seuraavalta:
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/ratebeer-w6-4.png)
+![kuva](https://raw.githubusercontent.com/mluukkai/WebPalvelinohjelmointi2022/main/images/ratebeer-w6-4.png)
 
 Sivun muotoiluun voi olla apua seuraavasta: https://getbootstrap.com/docs/5.2/layout/grid/#nesting
 
@@ -828,19 +828,19 @@ http://guides.rubyonrails.org/routing.html#adding-more-restful-actions
 
 Administraattori voi sulkea käyttäjätunnuksen käyttäjän sivulta
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/ratebeer-w6-1c.png)
+![kuva](https://raw.githubusercontent.com/mluukkai/WebPalvelinohjelmointi2022/main/images/ratebeer-w6-1c.png)
 
 Administraattori näkee käyttäjien näkymästä suljetut käyttäjätunnukset
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/ratebeer-w6-1b.png)
+![kuva](https://raw.githubusercontent.com/mluukkai/WebPalvelinohjelmointi2022/main/images/ratebeer-w6-1b.png)
 
 Jos käyttjätunnus on suljettu, kirjautuminen ei onnistu
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/ratebeer-w6-1x.png)
+![kuva](https://raw.githubusercontent.com/mluukkai/WebPalvelinohjelmointi2022/main/images/ratebeer-w6-1x.png)
 
 Administraattori voi uudelleenaktivoida suljetun käyttäjätunnuksen käyttäjän sivulta
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/ratebeer-w6-1d.png)
+![kuva](https://raw.githubusercontent.com/mluukkai/WebPalvelinohjelmointi2022/main/images/ratebeer-w6-1d.png)
 
 ## Monimutkaisempi pääsynhallinta
 
@@ -873,7 +873,7 @@ Emme ole vielä toistaiseksi puhuneet mitään Rails-sovellusten tietoturvasta. 
 
 Ylläolevasta dokumentista ei käy täysin selväksi se, että Rails _sanitoi_ (eli escapettaa kaikki script- ja html-tagit yms) oletusarvoisesti sivuilla renderöitävän syötteen, eli esim. jos yrittäisimme syöttää javascript-pätkän <code> &lt;script&gt;alert(&#39;Evil XSS attack&#39;);&lt;/script&gt;</code> oluttyylin kuvaukseen, koodia ei suoriteta, vaan koodi renderöityy sivulle 'tekstinä':
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/ratebeer-w5-7.png)
+![kuva](https://raw.githubusercontent.com/mluukkai/WebPalvelinohjelmointi2022/main/images/ratebeer-w5-7.png)
 
 Jos katsomme sivun lähdekoodia, huomaamme, että Rails on korvannut HTML-tägit aloittavat ja sulkevat < -ja > -merkit niitä vastaavilla tulostuvilla merkeillä, jolloin syöte muuttuu selaimen kannalta normaaliksi tekstiksi:
 
@@ -891,7 +891,7 @@ Oletusarvoisen sanitoinnin saa 'kytkettyä pois' pyytämällä eksplisiittisesti
 
 suoritetaan javascript-koodi sivun renderöinnion yhteydessä:
 
-![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2022/raw/master/images/ratebeer-w5-8.png)
+![kuva](https://raw.githubusercontent.com/mluukkai/WebPalvelinohjelmointi2022/main/images/ratebeer-w5-8.png)
 
 Lisätietoa http://www.railsdispatch.com/posts/security ja http://railscasts.com/episodes/204-xss-protection-in-rails-3
 
