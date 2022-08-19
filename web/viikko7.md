@@ -2,7 +2,7 @@ Jatkamme sovelluksen rakentamista siitä, mihin jäimme viikon 6 lopussa. Allaol
 
 ## Muistutus debuggerista
 
-Viikolla 2 tutustuimme [debuggeriin](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/viikko2.md#debuggeri) ja [viime viikolla](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/viikko6.md#muistutus-debuggerista) oli muistutus debuggerin käytösä. Eli vielä kertauksena **kun kohtaat ongelman, turvaudu arvailun sijaan debuggeriin!**
+Viikolla 2 tutustuimme [debuggeriin](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/main/web/viikko2.md#debuggeri) ja [viime viikolla](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/main/web/viikko6.md#muistutus-debuggerista) oli muistutus debuggerin käytösä. Eli vielä kertauksena **kun kohtaat ongelman, turvaudu arvailun sijaan debuggeriin!**
 
 Rails-konsolin käytön tärkeyttä sovelluskehityksen välineenä on yritetty korostaa läpi kurssin. Eli **kun teet jotain vähänkin epätriviaalia, testaa asia ensin konsolissa.** Joissain tilanteissa voi olla jopa parempi tehdä kokeilut debuggerin avulla avautuvassa konsolissa, sillä tällöin on mahdollista avata konsolisessio juuri siihen kontekstiin, mihin koodia ollaan kirjoittamassa. Näin ollen päästään käsiksi esim. muuttujiin <code>params</code>, <code>sessions</code> ym. suorituskontekstista riippuvaan dataan.
 
@@ -650,7 +650,7 @@ Finished in 21.17 seconds (files took 5.33 seconds to load)
 ```
 
 Näyttää siis siltä että sivulla ei ole ollenkaan oluiden listaa. Varmistetaan tämä laittamalla testiin juuri ennen komentoa <code>expect</code> komento <code>save_and_open_page</code> jonka avulla saamme siis avattua selaimeen sivun jolle capybara on navigoinut
-(ks. https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/viikko4.md#capybarav4#capybara).
+(ks. https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/main/web/viikko4.md#capybarav4#capybara).
 
 Ja aivan kuten arvelimme, sivulla näytettävä oluttaulukko on tyhjä:
 
@@ -689,7 +689,7 @@ Kun suoritamme testit, törmäämme virheilmoitukseen
       ============================================================
 ```
 
-Virheen syy on siinä, että otimme viikolla 5 käyttöömme [WebMock-gemin](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/viikko5.md#olutpaikkojen-etsimistoiminnon-testaaminen) joka oletusarvoisesti kieltää testikoodin suorittamat HTTP-yhteydet. Javascriptilla toteutettu olutlistahan yrittää hakea oluiden listan json-muodossa palvelimelta. Pääsemme virheestä eroon sallimalla yhteydet, esim. muuttamalla testit alustavaan <code>before :all</code> -lohkoa seuraavasti:
+Virheen syy on siinä, että otimme viikolla 5 käyttöömme [WebMock-gemin](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/main/web/viikko5.md#olutpaikkojen-etsimistoiminnon-testaaminen) joka oletusarvoisesti kieltää testikoodin suorittamat HTTP-yhteydet. Javascriptilla toteutettu olutlistahan yrittää hakea oluiden listan json-muodossa palvelimelta. Pääsemme virheestä eroon sallimalla yhteydet, esim. muuttamalla testit alustavaan <code>before :all</code> -lohkoa seuraavasti:
 
 ```ruby
 before :all do
@@ -805,7 +805,7 @@ Lisää asset pipelinestä ja mm. javascriptin liittämisestä railssovelluksiin
 > - jäsenyyden vahvistamattomuus kannattaa huomioida siten, että Membership-modeliin lisätään boolean-arvoinen kenttä _confirmed_
 > - Kun kerho luodaan, tee sen luoneesta käyttäjästä automaattisesti kerhon jäsen
 > - Näytä kerhon sivulla jäsenille lista vahvistamattomana olevista jäsenyyksistä (eli jäsenhakemuksista)
-> - Jäsenyyden statuksen muutos voidaan hoitaa esim. oman [custom-reitin](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/viikko6.md#reitti-panimon-statuksen-muuttamiselle) avulla.
+> - Jäsenyyden statuksen muutos voidaan hoitaa esim. oman [custom-reitin](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/main/web/viikko6.md#reitti-panimon-statuksen-muuttamiselle) avulla.
 >
 > Tehtävä saattaa olla hieman haastava. [Active Record Associations -guiden](http://guides.rubyonrails.org/association_basics.html) luku **4.3.3 Scopes for has_many** tarjoaa erään hyvän työvälineen tehtävään. Tehtävän voi toki tehdä monella muullakin tavalla.
 > Myös luku **4.3.2.3 :class_name** voi olla hyödyksi.
@@ -1102,7 +1102,7 @@ Datamäärän ollessa suuri, ei pelkkä kyselyjen optimointi riitä, vaan on ets
 
 Vaihtoehdoksi nousee tällöin **cachaus eli välimuistien käyttö**.
 
-Web-sovelluksessa cachaystä voidaan suorittaa sekä selaimen, että palvelimen puolella (sekä selaimen ja palvelimen välissä olevissa proxyissä). Tarkastellaan nyt palvelimen puolella tapahtuvaa cachaystä. Toteutimme jo [toissa viikolla](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/viikko5.md#suorituskyvyn-optimointi) "käsin" beermapping-apista haettujen tietojen cachaystä Rails.cachen avulla. Tutkitaan nyt railsin tarjoamaa hieman automaattisempaa cachaysmekanismia.
+Web-sovelluksessa cachaystä voidaan suorittaa sekä selaimen, että palvelimen puolella (sekä selaimen ja palvelimen välissä olevissa proxyissä). Tarkastellaan nyt palvelimen puolella tapahtuvaa cachaystä. Toteutimme jo [toissa viikolla](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/main/web/viikko5.md#suorituskyvyn-optimointi) "käsin" beermapping-apista haettujen tietojen cachaystä Rails.cachen avulla. Tutkitaan nyt railsin tarjoamaa hieman automaattisempaa cachaysmekanismia.
 
 Cachays ei ole oletusarvoisesti päällä kun sovellusta suoritetaan development-moodissa. Kytkit ehkä cachen päälle viikolla 5.
 
@@ -1560,7 +1560,7 @@ http://www.martinfowler.com/bliki/PolyglotPersistence.html
 
 ## Refaktorointi: luokkametodit
 
-Viikon 6 tehtävässä [6-7](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/viikko6.md#teht%C3%A4v%C3%A4-6-7-kahden-teht%C3%A4v%C3%A4n-arvoinen) kehoitettiin tekemään luokille _Beer_, _Brewery_ ja _Style_ luokkametodit, joiden avulla kontrollerin on helppo selvittää saa reittausten perusteella parhaat panimot, oluet ja oluttyylit.
+Viikon 6 tehtävässä [6-7](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/main/web/viikko6.md#teht%C3%A4v%C3%A4-6-7-kahden-teht%C3%A4v%C3%A4n-arvoinen) kehoitettiin tekemään luokille _Beer_, _Brewery_ ja _Style_ luokkametodit, joiden avulla kontrollerin on helppo selvittää saa reittausten perusteella parhaat panimot, oluet ja oluttyylit.
 
 Metodit ovat kaikissa luokissa täsmälleen samat:
 
@@ -1575,7 +1575,7 @@ class Beer < ApplicationRecord
 end
 ```
 
-Viikolla 2 siirrettiin luokkien määrittelemiä samanlaisia _oliometodeita_ [yhteiseen moduuliin](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/viikko2.md#yhteisen-koodin-siirto-moduuliin).
+Viikolla 2 siirrettiin luokkien määrittelemiä samanlaisia _oliometodeita_ [yhteiseen moduuliin](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/main/web/viikko2.md#yhteisen-koodin-siirto-moduuliin).
 
 Myös luokkametodeja voidaan siirtää yhteiseen moduuliin, tekniikka ei kuitenkaan ole täysin sama kuin oliometodeja käytettävissä
 

@@ -6,7 +6,7 @@ Osa tämän viikon tehtävistä saattaa hajottaa jotain edellisinä viikkoina te
 
 ## Muistutus debuggerista
 
-Viikolla 2 tutustuimme [debuggeriin](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/viikko2.md#debuggeri). Jos debuggeri ei ole vielä löytänyt tietänsä sinun työkaluvalikoimaan niin tässä vielä nopea kertaus käytöstä.
+Viikolla 2 tutustuimme [debuggeriin](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/main/web/viikko2.md#debuggeri). Jos debuggeri ei ole vielä löytänyt tietänsä sinun työkaluvalikoimaan niin tässä vielä nopea kertaus käytöstä.
 
 Debuggerin käyttö on erittäin helppoa. Riittää kirjoittaa komento <code>binding.pry</code> (tai <code>binding.break</code>) _mihin tahansa_ kohtaan sovelluksen koodia. Seuraavassa esimerkki:
 
@@ -506,7 +506,7 @@ def brewery_params
 end
 ```
 
-Kuten [viikolla 2 totesimme](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/viikko2.md#reittauksen-talletus) on jokainen massasijoitettavaksi tarkoitettu attribuutti eksplisiittisesti sallittava <code>permit</code> metodin avulla. Muutetaan metodia <code>brewery_params</code> seuraavasti:
+Kuten [viikolla 2 totesimme](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/main/web/viikko2.md#reittauksen-talletus) on jokainen massasijoitettavaksi tarkoitettu attribuutti eksplisiittisesti sallittava <code>permit</code> metodin avulla. Muutetaan metodia <code>brewery_params</code> seuraavasti:
 
 ```ruby
 def brewery_params
@@ -818,7 +818,7 @@ http://guides.rubyonrails.org/routing.html#adding-more-restful-actions
 >
 > Validointien suorittamisen voi ohittaa myös tallentamalla olion komennolla <code>u.save(validate: false)</code>
 >
-> **HUOM:** toteutuksessa kannattanee hyödyntää [esifiltteriä](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/viikko4.md#kirjautuneiden-toiminnot)
+> **HUOM:** toteutuksessa kannattanee hyödyntää [esifiltteriä](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/main/web/viikko4.md#kirjautuneiden-toiminnot)
 
 > ## Tehtävät 11-12 (kahden tehtävän arvoinen)
 >
@@ -899,7 +899,7 @@ Lisätietoa http://www.railsdispatch.com/posts/security ja http://railscasts.com
 
 Tällä viikolla ei ole enää enempää tehtäviä. Riittää että luet tästä eteenpäin olevan materiaalin. Seuraavan viikon materiaali ei riipu millään tavalla tämän viikon päättävästä refaktoroinnista.
 
-Viikon 4 [tehtävissä 3 ja 4](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/viikko4.md#teht%C3%A4v%C3%A4-3) toteutettiin metodit henkilön suosikkipanimon ja oluttyylin selvittämiseen. Seuraavassa on eräs melko suoraviivainen ratkaisu metodien <code>favorite_style</code> ja <code>favorite_brewery</code> toteuttamiseen:
+Viikon 4 [tehtävissä 3 ja 4](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/main/web/viikko4.md#teht%C3%A4v%C3%A4-3) toteutettiin metodit henkilön suosikkipanimon ja oluttyylin selvittämiseen. Seuraavassa on eräs melko suoraviivainen ratkaisu metodien <code>favorite_style</code> ja <code>favorite_brewery</code> toteuttamiseen:
 
 ```ruby
 class User
@@ -1039,7 +1039,7 @@ grouped_ratings = ratings.group_by{ |r| r.beer.style }
 grouped_ratings = ratings.group_by{ |r| r.beer.brewery }
 ```
 
-Saamme nämäkin rivin täsmälleen samanlaisiksi kutsumalla metodia epäsuoraan viime viikolta tuttua [send](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/viikko5.md#olion-metodien-kutsuminen-send-metodin-avulla)-metodia hyödyntäen:
+Saamme nämäkin rivin täsmälleen samanlaisiksi kutsumalla metodia epäsuoraan viime viikolta tuttua [send](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/main/web/viikko5.md#olion-metodien-kutsuminen-send-metodin-avulla)-metodia hyödyntäen:
 
 ```ruby
 def favorite_style

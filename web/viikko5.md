@@ -626,7 +626,7 @@ Kun nyt testissä tehdään HTTP-pyyntö places-kontrollerille, ja kontrolleri k
 > - jos API palauttaa useita olutpaikkoja, kaikki näistä näytetään sivulla
 > - jos API ei löydä paikkakunnalta yhtään olutpaikkaa (eli paluuarvo on tyhjä taulukko), sivulla näytetään ilmoitus "No locations in _etsitty paikka_"
 >
-> Viikon 3 luku [kirjautumisen hienosäätöä](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/viikko3.md#kirjautumisen-hienos%C3%A4%C3%A4t%C3%B6%C3%A4) antaa vihjeitä toista kohtaa varte.
+> Viikon 3 luku [kirjautumisen hienosäätöä](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/main/web/viikko3.md#kirjautumisen-hienos%C3%A4%C3%A4t%C3%B6%C3%A4) antaa vihjeitä toista kohtaa varte.
 
 Siirrytään sitten luokan <code>BeermappingApi</code> testaamiseen. Luokka siis tekee HTTP GET -pyynnön HTTParty-kirjaston avulla Beermapping-palveluun. Voisimme edellisen esimerkin tapaan stubata HTTPartyn get-metodin. Tämän on kuitenkin hieman ikävää, sillä metodi palauttaa <code>HTTPartyResponse</code>-olion ja sellaisen muodostaminen stubauksen yhteydessä käsin ei välttämättä ole kovin mukavaa.
 
@@ -1102,7 +1102,7 @@ eli tällä kertaa routeissa määriteltiin, että panimon id:hen viitataan <cod
 > post 'places', to:'places#search'
 > ```
 >
-> - HUOM: ravintolan tiedot löytyvät hieman epäsuorasti cachesta siinä vaiheessa kun ravintolan sivulle ollaan menossa. Jotta pääset tietoihin käsiksi on ravintolan id:n lisäksi "muistettava" kaupunki, josta ravintolaa etsittiin, tai edelliseksi tehdyn search-operaation tulos. Yksi tapa muistamiseen on käyttää sessiota, ks. https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/viikko3.md#k%C3%A4ytt%C3%A4j%C3%A4-ja-sessio
+> - HUOM: ravintolan tiedot löytyvät hieman epäsuorasti cachesta siinä vaiheessa kun ravintolan sivulle ollaan menossa. Jotta pääset tietoihin käsiksi on ravintolan id:n lisäksi "muistettava" kaupunki, josta ravintolaa etsittiin, tai edelliseksi tehdyn search-operaation tulos. Yksi tapa muistamiseen on käyttää sessiota, ks. https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/main/web/viikko3.md#k%C3%A4ytt%C3%A4j%C3%A4-ja-sessio
 >
 > Toinen tapa toiminnallisuuden toteuttamiseen on sivulla http://beermapping.com/api/reference/ oleva "Locquery Service"
 >

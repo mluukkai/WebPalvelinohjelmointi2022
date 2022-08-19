@@ -28,7 +28,7 @@ Jokainen "viikko" palataan erikseen kurssin [palautussovellukseen](https://studi
 
 Osa viikon tehtävistä on käytännössä pakollisia, muuten eteneminen pysähtyy viikon osalta. Osa tehtävistä taas on vapaaehtoisia, ei-kriittisten ominaisuuksien toteutuksia.
 
-Yksi kurssin tärkeimmistä oppimistavoitteista on itsenäiseen tiedonhakuun kannustaminen. Tämän takia kurssimateriaali ei ole kaikilta osin yksinään riittävä tehtävien ratkaisemiseen. Kurssilla ei esim. varsinaisesti opeteta Rubyä ollenkaan, jokaisen osallistujan on hankittava kurssin aikana omatoimisesti riittävät valmiudet Rubyn käyttöön, ks. [Ruby-ohjeita](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/rubyn_perusteita.md)
+Yksi kurssin tärkeimmistä oppimistavoitteista on itsenäiseen tiedonhakuun kannustaminen. Tämän takia kurssimateriaali ei ole kaikilta osin yksinään riittävä tehtävien ratkaisemiseen. Kurssilla ei esim. varsinaisesti opeteta Rubyä ollenkaan, jokaisen osallistujan on hankittava kurssin aikana omatoimisesti riittävät valmiudet Rubyn käyttöön, ks. [Ruby-ohjeita](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/main/web/rubyn_perusteita.md)
 
 ## Arvosteluperusteet
 
@@ -51,29 +51,29 @@ Suoritettuasi kurssin [ilmoittaudu](https://github.com/mluukkai/WebPalvelinohjel
 
 ## Materiaali ja tehtävät
 
-- [viikko 1](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/viikko1.md)
+- [viikko 1](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/main/web/viikko1.md)
 
-- [viikko 2](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/viikko2.md)
+- [viikko 2](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/main/web/viikko2.md)
 
-- [viikko 3](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/viikko3.md)
+- [viikko 3](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/main/web/viikko3.md)
 
-- [viikko 4](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/viikko4.md)
+- [viikko 4](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/main/web/viikko4.md)
 
-- [viikko 5](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/viikko5.md)
+- [viikko 5](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/main/web/viikko5.md)
 
-- [viikko 6](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/viikko6.md)
+- [viikko 6](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/main/web/viikko6.md)
 
-- [viikko 7](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/viikko7.md)
+- [viikko 7](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/main/web/viikko7.md)
 
-- [Materiaalista](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/materiaalista.md)
+- [Materiaalista](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/main/web/materiaalista.md)
 - 
 ## Linkkejä
 
-[Railsin asentaminen](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/railsin_asentaminen.md)
+[Railsin asentaminen](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/main/web/railsin_asentaminen.md)
 
-[git- ja GitHubohjeita](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/versiohallinta.md)
+[git- ja GitHubohjeita](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/main/web/versiohallinta.md)
 
-[Ruby-ohjeita](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/rubyn_perusteita.md)
+[Ruby-ohjeita](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/main/web/rubyn_perusteita.md)
 
 Rubyn harjoitteluun tarkoitetun materiaalin [ensimmäinen osa](https://github.com/HY-TKTL/ruby-materiaali/blob/master/Perusteet.md) ja [toinen osa](https://github.com/HY-TKTL/ruby-materiaali/blob/master/LuokkiaJaOlioita.md)
 
