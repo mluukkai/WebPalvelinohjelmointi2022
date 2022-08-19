@@ -310,7 +310,7 @@ Jos et ole jo rutinoitunut debuggerin käyttöön, kannattaa ehdottomasti kerrat
 
 ## binding.break vai binding.pry deguggaukseen?
 
-Jos käytössäsi on [Pry](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/viikko2.md#parempi-konsoli) komento `binding.break` ei (välttämättä) käyttäydy kaikissa tilanteissa hyvin, kannattaakin käyttää oikeastaan aina komentoa `binding.pry`
+Jos käytössäsi on [Pry](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/main/web/viikko2.md#parempi-konsoli) komento `binding.break` ei (välttämättä) käyttäydy kaikissa tilanteissa hyvin, kannattaakin käyttää oikeastaan aina komentoa `binding.pry`
 
 ## Rubocop: tyyli ratkaisee
 
@@ -322,7 +322,7 @@ Rubocop asennetaan antamalla komentoriviltä komento
 
     gem install rubocop
 
-Rubocopin tarkastama säännöstö määritellään projektin juureen sijoitettavassa tiedostossa _.rubocop.yml_. Luo tiedosto projektiisi (huomaa, että tiedoston nimen alussa on piste) ja kopioi sille sisältö [täältä](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/misc/.rubocop.yml)
+Rubocopin tarkastama säännöstö määritellään projektin juureen sijoitettavassa tiedostossa _.rubocop.yml_. Luo tiedosto projektiisi (huomaa, että tiedoston nimen alussa on piste) ja kopioi sille sisältö [täältä](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/main/misc/.rubocop.yml)
 
 Tiedoston määrittelemä säännöstö perustuu [Relaxed Ruby](https://relaxed.ruby.style/) -tyyliin, jota se tiukentaa muutamien sääntöjen osalta. Tiedostossa myös jätetään osa projektin tiedostoista tyylitarkastuksen ulkopuolelle.
 
@@ -507,11 +507,11 @@ Kirjautumissivun app/views/sessions/new.html.erb koodi on seuraavassa:
 <% end %>
 ```
 
-Toisin kuin reittauksille tekemämme formi (kertaa asia [viime viikolta](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/viikko2.md#lomake-ja-post)), nyt tekemämme lomake ei perustu olioon ja lomake luodaan <code>form_with</code>-metodilla, ks. http://guides.rubyonrails.org/form_helpers.html#dealing-with-basic-forms
+Toisin kuin reittauksille tekemämme formi (kertaa asia [viime viikolta](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/main/web/viikko2.md#lomake-ja-post)), nyt tekemämme lomake ei perustu olioon ja lomake luodaan <code>form_with</code>-metodilla, ks. http://guides.rubyonrails.org/form_helpers.html#dealing-with-basic-forms
 
 Lomakkeen lähettäminen siis aiheuttaa HTTP POST -pyynnön session_pathiin (huomaa yksikkömuoto!) eli osoitteeseen **session**.
 
-Pyynnön käsittelevä metodi ottaa <code>params</code>-olioon talletetun käyttäjätunnuksen ja hakee sitä vastaavan käyttäjäolion kannasta ja tallettaa olion id:n sessioon jos käyttäjä on olemassa. Lopuksi käyttäjä _uudelleenohjataan_ (kertaa [viime viikolta](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/viikko2.md#uudelleenohjaus) mitä uudelleenohjauksella tarkoitetaan) omalle sivulleen. Kontrollerin koodi vielä uudelleen seuraavassa:
+Pyynnön käsittelevä metodi ottaa <code>params</code>-olioon talletetun käyttäjätunnuksen ja hakee sitä vastaavan käyttäjäolion kannasta ja tallettaa olion id:n sessioon jos käyttäjä on olemassa. Lopuksi käyttäjä _uudelleenohjataan_ (kertaa [viime viikolta](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/main/web/viikko2.md#uudelleenohjaus) mitä uudelleenohjauksella tarkoitetaan) omalle sivulleen. Kontrollerin koodi vielä uudelleen seuraavassa:
 
 ```ruby
 def create
@@ -521,7 +521,7 @@ def create
 end
 ```
 
-Huom1: komento <code>redirect_to user</code> siis on lyhennysmerkintä seuraavalla <code>redirect_to user_path(user)</code>, ks. [viikko 1](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/viikko1.md#kertausta-polkujen-ja-kontrollerien-niment%C3%A4konventiot).
+Huom1: komento <code>redirect_to user</code> siis on lyhennysmerkintä seuraavalla <code>redirect_to user_path(user)</code>, ks. [viikko 1](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/main/web/viikko1.md#kertausta-polkujen-ja-kontrollerien-niment%C3%A4konventiot).
 
 Huom2: Rubyssa yhdistelmän <code>if not</code> sijaan voidaan käyttää myös komentoa <code>unless</code>, eli metodin toinen rivi oltaisiin voitu kirjoittaa muodossa
 
@@ -1026,7 +1026,7 @@ end
 
 Yhteen olueeseen liittyy monta reittausta, ja reittaus liittyy aina yhteen käyttäjään, eli olueeseen liittyy monta reittauksen tehnyttä käyttäjää. Vastaavasti käyttäjällä on monta reittausta ja reittaus liittyy yhteen olueeseen. Eli käyttäjään liittyy monta reitattua olutta. Oluiden ja käyttäjien välillä on siis **monen suhde moneen -yhteys**, jossa ratings-taulu toimii liitostaulun tavoin.
 
-Saammekin tuotua tämän many to many -yhteyden kooditasolle helposti käyttämällä jo [edellisen viikon lopulta tuttua](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/viikko2.md#olioiden-ep%C3%A4suora-yhteys) tapaa, eli **has_many through** -yhteyttä:
+Saammekin tuotua tämän many to many -yhteyden kooditasolle helposti käyttämällä jo [edellisen viikon lopulta tuttua](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/main/web/viikko2.md#olioiden-ep%C3%A4suora-yhteys) tapaa, eli **has_many through** -yhteyttä:
 
 ```ruby
 class Beer < ApplicationRecord
@@ -1086,7 +1086,7 @@ Vaikuttaa ihan toimivalta, mutta tuntuu hieman kömpeltä viitata oluen reitanne
 has_many :raters, through: :ratings, source: :user
 ```
 
-Oletusarvoisesti <code>has*many</code> etsii liitettävää taulun nimeä ensimmäisen parametrinsa nimen perusteella. Koska <code>raters</code> ei ole nyt yhteyden kohteen nimi, on se määritelty erikseen \_source*-option avulla.
+Oletusarvoisesti `has_many` etsii liitettävää taulun nimeä ensimmäisen parametrinsa nimen perusteella. Koska <code>raters</code> ei ole nyt yhteyden kohteen nimi, on se määritelty erikseen \_source*-option avulla.
 
 Yhteytemme uusi nimi toimii:
 
@@ -1342,7 +1342,7 @@ Huomaa, että pelkkä **delete**-linkin poistaminen ei estä poistamasta muiden 
 
 > ## Tehtävä 15
 >
-> Laajenna vielä sovellusta siten, että käyttäjän tuhoutuessa käyttäjän tekemät reittaukset tuhoutuvat automaattisesti. Ks. https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/viikko2.md#orvot-oliot
+> Laajenna vielä sovellusta siten, että käyttäjän tuhoutuessa käyttäjän tekemät reittaukset tuhoutuvat automaattisesti. Ks. https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/main/web/viikko2.md#orvot-oliot
 >
 > Jos teit tehtävät 9-11 eli toteutit järjestelmään olutkerhot, tuhoa käyttäjän tuhoamisen yhteydessä myös käyttäjän jäsenyydet olutkerhoissa
 
@@ -1456,7 +1456,7 @@ Kun ohjelman päivitetty versio deployataan herokuun, törmätään jälleen ong
 
 ![kuva](https://github.com/mluukkai/WebPalvelinohjelmointi2017/raw/master/images/ratebeer-w2-12.png)
 
-Kuten [viime viikolla](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/viikko2.md#ongelmia-herokussa) jo totesimme, tulee ongelman syy selvittää herokun lokeista.
+Kuten [viime viikolla](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/main/web/viikko2.md#ongelmia-herokussa) jo totesimme, tulee ongelman syy selvittää herokun lokeista.
 
 Kaikkien käyttäjien sivu aiheuttaa seuraavan virheen:
 

@@ -103,7 +103,7 @@ Osa viikon tehtävistä on käytännössä pakollisia, muuten eteneminen pysäht
 
 ## Railsin asennus
 
-Asennusohje osoitteessa https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/railsin_asentaminen.md
+Asennusohje osoitteessa https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/main/web/railsin_asentaminen.md
 
 ## Sovelluksen luominen
 
@@ -388,7 +388,7 @@ Olemme tässä hyödyntäneet Rubyn vapaamielistä suhtautumista sulkujen käytt
 Brewery.new( name: "Stadin Panimo", year: 1997 )
 ```
 
-Myös parametri on hieman erikoisessa formaatissa. Kyseessä on symboleilla indeksöity assosiatiivinen taulukko eli _hash_, ks. https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/rubyn_perusteita.md#hash-ja-symbolit
+Myös parametri on hieman erikoisessa formaatissa. Kyseessä on symboleilla indeksöity assosiatiivinen taulukko eli _hash_, ks. https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/main/web/rubyn_perusteita.md#hash-ja-symbolit
 
 Kuten yo. linkistä selviää, hashit määritellään aaltosuluissa:
 
@@ -440,7 +440,7 @@ t = Brewery.where name: "Koff"
 t.first.year                   # t.first tarkoittaa kuin t[0] eli taulukon 1. alkiota
 ```
 
-Lisää Rubyn taulukosta ks. https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/rubyn_perusteita.md#taulukko
+Lisää Rubyn taulukosta ks. https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/main/web/rubyn_perusteita.md#taulukko
 
 Huomaa, että jätimme edellä kaikissa esimerkeissä metodikutsuista sulut pois. <code>Brewery.find 1</code> siis tarkoittaa samaa kuin <code>Brewery.find(1)</code>
 
@@ -761,7 +761,7 @@ irb(main):071:0> koff.beers.create name: "Extra Light Triple Brewed", style: "La
 > - Päädymme kuitenkin siihen että Hartwall on huonon laatunsa takia poistettava. Ennen poistamista, ota muistiin Hartwall-olion id
 > - Hartwallin poistaminen jättää tietokantaan olut-olioita, jotka liittyvät jo poistettuun panimoon
 > - Hae orvoksi jääneet oluet komennolla <code>Beer.where tähänsopivaparametri</code>
-> - Tuhoa operaation palauttamat oluet. Ohjeita oluiden listan läpikäyntiin esim. seuraavasta https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/rubyn_perusteita.md#taulukko
+> - Tuhoa operaation palauttamat oluet. Ohjeita oluiden listan läpikäyntiin esim. seuraavasta https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/main/web/rubyn_perusteita.md#taulukko
 
 ## Kontrollerin ja viewien yhteys
 
@@ -840,7 +840,7 @@ Palataan sitten tarkemmin panimot listaavaan koodiin. Jokainen panimo tulostuu o
   <% end %>
 ```
 
-Muuttujaan `@breweries` talletettu panimoiden lista käydään läpi `each`-iteraattorin avulla. (lisää eachista ks. https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/master/web/rubyn_perusteita.md#each). 
+Muuttujaan `@breweries` talletettu panimoiden lista käydään läpi `each`-iteraattorin avulla. (lisää eachista ks. https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/main/web/rubyn_perusteita.md#each). 
 
 Rails luo rivit käyttäen <code>render</code> metodia jota se kutsuu jokaiselle panimolle: 
 
