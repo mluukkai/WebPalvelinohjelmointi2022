@@ -33,3 +33,29 @@ Kerro sähköpostissa
 - syntymäaikasi. 
 
 Opiskelijaneuvonnan sähköpostiosoite: <avoin-student@helsinki.fi> 
+
+## Suoritusmerkinnän pyytäminen
+
+Kun et enää halua palauttaa enempää tehtäviä ja olet ilmoittautunut kurssille voit pyytää suoritusmerkintää palautussovelluksen My submissions -välilehdeltä.
+
+Suoritusmerkinnän pyytäminen edellyttää, että olet tallettanut Helsingin yliopiston opiskelijanumerosi palautussovellukseen:
+
+![kuva](https://raw.githubusercontent.com/mluukkai/WebPalvelinohjelmointi2022/main/images/ilmo-1.png)
+
+Suoritusmerkintä pyydetään painamalla My submissions -välilehden sinistä nappia
+
+![kuva](https://raw.githubusercontent.com/mluukkai/WebPalvelinohjelmointi2022/main/images/ilmo-2.png)
+
+Huomaa, että joudut painamaan nappia vielä toisen kerran:
+
+![kuva](https://raw.githubusercontent.com/mluukkai/WebPalvelinohjelmointi2022/main/images/ilmo-3.png)
+
+Kun nappia on painettu tarpeeksi monta kertaa näet seuraavan tekstin:
+
+> University credit registration in progress...
+
+Arvosana siirtyy Helsingin yliopiston opintorekisteriin Sisuun ja [Opintopolkuun](https://opintopolku.fi/oma-opintopolku/) neljän viikon sisällä suoritusmerkintäpyynnön jälkeen.
+
+Kun suoritusmerkintä on kirjattu, näet palautussovelluksessa tekstin
+
+> University credits registered, see the course page how to get a transcript if you need one
