@@ -32,7 +32,7 @@ Voisimme toteuttaa keskiarvon laskemisen "javamaisesti" laskemalla summan käym�
 
 Kaikki rubyn kokoelmamaiset asiat (mm. taulukko ja <code>has_many</code>-kenttä) sisältävät Enumerable-moduulin (ks. http://ruby-doc.org/core-2.5.1/Enumerable.html) tarjoamat apumetodit. Päätetäänkin hyödyntää apumetodeja keskiarvon laskemisessa.
 
-Koodin kirjoittamisessa kannattaa _ehdottomasti_ hyödyntää konsolia. Oikeastaan konsoliakin parempi vaihtoehdo on debuggerin käyttö. Debuggerin avulla saadaan avattua konsoli suoraan siihen kontekstiin, johon koodia ollaan kirjoittamassa. Lisätään metodikutsuun debuggerin käynnistävä komento <code>binding.break</code> tai komento <code>binding.pry</code> jos käytössä on pry-konsoli:
+Koodin kirjoittamisessa kannattaa _ehdottomasti_ hyödyntää konsolia. Oikeastaan konsoliakin parempi vaihtoehdo on debuggerin käyttö. Debuggerin avulla saadaan avattua konsoli suoraan siihen kontekstiin, johon koodia ollaan kirjoittamassa. Lisätään metodikutsuun debuggerin käynnistävä komento <code>binding.break</code>:
 
 ```ruby
 class Beer < ApplicationRecord
@@ -40,7 +40,7 @@ class Beer < ApplicationRecord
   has_many :ratings, dependent: :destroy
 
   def average
-    binding.pry
+    binding.break
   end
 end
 ```
@@ -48,7 +48,7 @@ end
 Avataan sitten rails konsoli (eli komento _rails c_ komentoriviltä), luetaan tietokannasta reittauksia sisältävä olio ja kutsutaan sille metodia <code>average</code>:
 
 ```ruby
-[6] pry(main)> b = Beer.first
+[6] irb(main)> b = Beer.first
   Beer Load (0.4ms)  SELECT  "beers".* FROM "beers" ORDER BY "beers"."id" ASC LIMIT ?  [["LIMIT", 1]]
 => #<Beer:0x00007fa9e48d35e8
  id: 1,
@@ -62,7 +62,7 @@ Avataan sitten rails konsoli (eli komento _rails c_ komentoriviltä), luetaan ti
 From: /Users/mluukkai/opetus/ratebeer/app/models/beer.rb @ line 8 Beer#average:
 
     7: def average
- => 8:   binding.pry
+ => 8:   binding.break
     9: end
 
 >
@@ -231,7 +231,7 @@ class Beer < ApplicationRecord
 end
 ```
 
-Testataan metodia, eli poistutaan debuggerista (prystä poistutaan komennolla exit ja debuggerista komennolla c eli jatkamalla aiemman tyhjän metodin suoritus loppuun), _lataamalla_ uusi koodi, hakemalla olio ja suorittamalla metodi:
+Testataan metodia, eli poistutaan debuggerista, _lataamalla_ uusi koodi, hakemalla olio ja suorittamalla metodi:
 
 ```ruby
 > exit
@@ -252,7 +252,7 @@ Jatkotestaus kuitenkin paljastaa että kaikki ei ole hyvin:
 => NaN
 ```
 
-eli Hardcore IPA:n reittausten keskiarvo on <code>NaN</code>. Turvaudutaan jälleen debuggeriin. Laitetaan komento <code>binding.pry</code> keskiarvon laskevaan metodiin, uudelleenladataan koodi ja kutsutaan metodia ongelmalliselle oliolle:
+eli Hardcore IPA:n reittausten keskiarvo on <code>NaN</code>. Turvaudutaan jälleen debuggeriin. Laitetaan komento <code>binding.break</code> keskiarvon laskevaan metodiin, uudelleenladataan koodi ja kutsutaan metodia ongelmalliselle oliolle:
 
 ```ruby
 [3, 12] in /Users/mluukkai/kurssirepot/ratebeer/app/models/beer.rb
@@ -261,7 +261,7 @@ eli Hardcore IPA:n reittausten keskiarvo on <code>NaN</code>. Turvaudutaan jäll
     5:   has_many :ratings, dependent: :destroy
     6:
     7:   def average
-    8:     binding.pry
+    8:     binding.break
 =>  9:     ratings.map{ |r| r.score }.sum / ratings.count.to_f
    10:   end
    11:
@@ -308,9 +308,6 @@ Kutakin kieltä käytettäessä tulee kuitenkin mukautua kielen omaan tyyliin, v
 
 Jos et ole jo rutinoitunut debuggerin käyttöön, kannattaa ehdottomasti kerrata viime viikon debuggeria käsittelevä materiaali.
 
-## binding.break vai binding.pry deguggaukseen?
-
-Jos käytössäsi on [Pry](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/main/web/viikko2.md#parempi-konsoli) komento `binding.break` ei (välttämättä) käyttäydy kaikissa tilanteissa hyvin, kannattaakin käyttää oikeastaan aina komentoa `binding.pry`
 
 ## Rubocop: tyyli ratkaisee
 
