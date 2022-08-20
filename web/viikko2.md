@@ -1267,12 +1267,14 @@ Määrittelemme ensin panimokontrolleriin (<code>private</code>-näkyvyydellä v
 
 ```ruby
 class BreweriesController < ApplicationController
-  before_action :set_brewery, only: [:show, :edit, :update, :destroy]
+  before_action :set_brewery, only: %i[ show edit update destroy ]
   before_action :authenticate
 
-  # HUOM: älä kirjoita private-määrettä tiedostoon ennen kontrollerimetodeja (index, new, ...)
+  # ...
 
   private
+
+  # ...
 
   def authenticate
     raise "toteuta autentikointi"
@@ -1286,12 +1288,14 @@ Rajoitetaan sitten filtterimetodin suoritus koskemaan ainoastaan panimon poistoa
 
 ```ruby
 class BreweriesController < ApplicationController
-  before_action :set_brewery, only: [:show, :edit, :update, :destroy]
+  before_action :set_brewery, only: %i[ show edit update destroy ]
   before_action :authenticate, only: [:destroy]
 
   # ...
 
   private
+
+  # ...
 
   def authenticate
     raise "toteuta autentikointi"
@@ -1313,6 +1317,8 @@ class BreweriesController < ApplicationController
   # ...
 
   private
+
+  # ...
 
   def authenticate
     authenticate_or_request_with_http_basic do |username, password|
@@ -1380,7 +1386,7 @@ Viikon lopuksi on taas aika deployata sovellus herokuun.
 
 Navigoitaessa reittausten sivulle syntyy pahaenteinen virheilmoitus:
 
-![kuva](../images/ratebeer-w2-12.png)
+![kuva](https://raw.githubusercontent.com/mluukkai/WebPalvelinohjelmointi2022/main/images/ratebeer-w2-12.png)
 
 Tuotantomoodissa pyörivän sovelluksen virheiden jäljittäminen on aina hiukan vaikeampaa kuin kehitysmoodissa, jossa Rails tarjoaa sovellusohjelmoijalle monia mahdollisuuksia virheiden selvittämiseen.
 
