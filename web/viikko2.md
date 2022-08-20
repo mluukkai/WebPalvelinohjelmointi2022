@@ -548,10 +548,12 @@ Panimon sisällä <code>year</code> siis on ActiveRecordin tietokantaan tallenta
 
 > ## Tehtävä 3
 >
-> Tee sitten luokalle Rating partials-tiedosto, jossa arvostelu oliosta tehdään parempi merkkijonoesitys muodossa "karhu 35", eli ensin reitatun oluen nimi ja sen jälkeen reittauksen pistemäärä.
+> Muuta sivun ratings-näkymä sellaiseksi, että arvosteluoliosta tehdään parempi merkkijonoesitys muodossa "karhu 35", eli ensin reitatun oluen nimi ja sen jälkeen reittauksen pistemäärä.
 >
 > Merkkijonon muodostamisessa myös seuraavasta voi olla apua https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/main/web/rubyn_perusteita.md#merkkijonot
 >
+> Voit tehdä kaiken suoraan tiedostoon views/partials/index.html.erb tai voit halutessasi myös tehdä luokalle Rating partials-tiedoston, joka hoitaa yhden ratingin muotoilemisen
+> 
 > Apua partials-tiedoston tekemiseen ja renderöimiseen voi katsoa esim. \_beer.html.erb ja vastaavasta index.html.erb tiedostosta. Muista partials-tiedostojen nimeämiskäytäntö!
 
 Tehtävän jälkeen reittausten sivujen tulisi näyttää suunnilleen seuraavalta:
@@ -923,30 +925,6 @@ Nostetaan vielä esiin tämä tärkeä ero:
 
 **Jokaisen** Web-ohjelmoijan on syytä ymmärtää edellinen!
 
-## Lisää Rails-sovelluksen debuggaamisesta
-
-Rails on sisältänyt versiosta 4.2 alkaen oletusarvoisesti debuggerin tapaan toimivan _web-konsolin_. Konsolinäkymä avautuu automaattisesti jos ohjelmassa syntyy poikkeus.
-
-Poikkeuksen voi "aiheuttaa" esim. kirjoittamalla mihin tahansa kohtaan koodia <code>raise</code> kuten teimme jo hieman aiemmin.
-
-Palautetaan raise reittauskontrollerin metodiin create:
-
-```ruby
-class RatingsController < ApplicationController
-  def create
-    raise
-    Rating.create params.require(:rating).permit(:score, :beer_id)
-    redirect_to ratings_path
-  end
-end
-```
-
-Kun nyt luot reittauksen, renderöityy tuttu virhesivu. Virhesivun alalaidassa olevassa konsolinäkymässä voi nyt suorittaa ruby-komentoja täsmälleen samalla tavalla kuin debuggeria käytettäessä:
-
-![kuva](../images/ratebeer-w2-9.png)
-
-Aivan kuten debuggeria käytettäessä, web-konsolin näkymä avautuu siihen kontekstiin, jossa virhe tapahtuu, eli esim. muuttuja <code>params</code> on viitattavissa, samoin voidaan suorittaa kaikkia komentoja, joita konrollerimetodista käsin voitaisiin suorittaa, esim. hakea reittauksia tietokannasta modelin <code>Rating</code> avulla.
-
 ## Polkuapumetodit
 
 Rails luo automaattisesti kaikille tiedostoon _routes.rb_ määritellyille reiteille ns. polkuapumetodit (engl. path helper), joita hyödyntämällä sovelluksessa ei ole tarvetta kovakoodata eri sivujen osoitteita.
@@ -1071,7 +1049,7 @@ Kolmas parametri siis määrittelee miten yksittäiset valinnat näytetään lom
 > def new
 >  @beer = Beer.new
 >  @breweries = Brewery.all
->  @styles = ["Weizen", "Lager", "Pale ale", "IPA", "Porter"]
+>  @styles = ["Weizen", "Lager", "Pale ale", "IPA", "Porter", "Lowalcohol"]
 > end
 > ```
 >
@@ -1083,7 +1061,7 @@ Näiden muutosten jälkeen oluen tietojen editointi ei yllättäen enää toimi.
 ```ruby
   def edit
     @breweries = Brewery.all
-    @styles = ["Weizen", "Lager", "Pale ale", "IPA", "Porter"]
+    @styles = ["Weizen", "Lager", "Pale ale", "IPA", "Porter", "Lowalcohol"]
   end
 ```
 
@@ -1198,6 +1176,8 @@ Nyt orpojen ongelma poistuu.
 > Tee vastaava muutos panimoihin, eli kun panimo poistetaan, tulee panimoon liittyvien oluiden poistua.
 >
 > Tee panimo jolla on vähintään yksi olut jolla on reittauksia. Poista panimo ja varmista, että panimoon liittyvät oluet ja niihin liittyvät reittaukset poistuvat.
+>
+> Jos kaikkien painoiden sivulta ei vielä ratkaisussasi pääse yksittäisten panimoiden sivuille, korjaa tilanne!
 
 ## Olioiden epäsuora yhteys
 
