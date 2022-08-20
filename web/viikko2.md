@@ -287,7 +287,7 @@ ja luodaan tietokantataulu suorittamalla komentoriviltä migraatio
 
 Toisin kuin viime viikolla käyttämämme _scaffold_-generaattori, model-generaattori ei luo ollenkaan kontrolleria eikä näkymätemplateja.
 
-**Muistutuksena viime viikolta:** railsin generaattorien (scaffold, model, ...) luomat tiedostot on mahdollista poistaa komennolla _destroy_:
+**Muistutuksena viime viikolta:** Railsin generaattorien (scaffold, model, ...) luomat tiedostot on mahdollista poistaa komennolla _destroy_:
 
     rails destroy model Rating
 
@@ -741,7 +741,7 @@ Uuden ratingin tiedot ovat hashissa avaimen <code>:rating</code> arvona, eli pä
 
 Tutkitaan hieman asiaa kontrollerista käsin Railsin debuggeria hyödyntäen
 
-Rails on jo konfiguroinut sovelluksesi käyttöön [debuggerin](https://github.com/ruby/debug) (ja railsin web-konsolin, jota tarkastelemme hieman myöhemmin). Aiemmissa Rails-versioissa oli käytössä byebyg-gem, mutta Rails 7 versiossa tämä on korvattu ylläolevalla debuggerilla.
+Rails on jo konfiguroinut sovelluksesi käyttöön [debuggerin](https://github.com/ruby/debug).
 
 Lisätään kontrollerin alkuun, eli sille kohtaan koodia jota haluamme tarkkailla, komento <code>binding.break</code>
 
@@ -871,7 +871,7 @@ end
 
 <code>ratings_path</code> on Railsin tarjoama polkuapumetodi, joka tarkoittaa samaa kuin "/ratings"
 
-Jos olet luonut reittauksia joihin liittyvä <code>beer_id</code> ei vastaa olemassa olevan oluen id:tä, saat nyt todennäköisesti virheilmoituksen. Voit tuhota railsin konsolista (käsin nämä ratingit seuraavasti
+Jos olet luonut reittauksia joihin liittyvä <code>beer_id</code> ei vastaa olemassa olevan oluen id:tä, saat nyt todennäköisesti virheilmoituksen. Voit tuhota Railsin konsolista (käsin nämä ratingit seuraavasti
 
 ```ruby
 Rating.last        # näyttää viimeksi luodun ratingin, tarkasta onko siinä oleva beer_id virheellinen
@@ -1378,11 +1378,11 @@ Kannattaa huomata, että HTTP Basic -autentikaatiota ei tule käyttää kuin suo
 >
 > ja kokeile mitä muuttujissa _admin_accounts_, _username_ ja _password_ on arvoina ja kehittele oikea komento.
 >
-> VIHJE2: koodilohkon pitää siis saada arvokseen tosi/epätosi riipuen siitä onko salasana oikein. Arvon ei kuitenkaan tarvitse välttämättä olla true tai false, sillä ruby tulkitsee myös muut arvot joko todeksi (truthy) tai epätodeksi (falsy), esim. _nil_ tulkitaan epätodeksi katso tarkemmin esim. seuraavasta https://learn.co/lessons/truthiness-in-ruby-readme
+> VIHJE2: koodilohkon pitää siis saada arvokseen tosi/epätosi riipuen siitä onko salasana oikein. Arvon ei kuitenkaan tarvitse välttämättä olla true tai false, sillä Ruby tulkitsee myös muut arvot joko todeksi (truthy) tai epätodeksi (falsy), esim. _nil_ tulkitaan epätodeksi katso tarkemmin esim. seuraavasta https://learn.co/lessons/truthiness-in-ruby-readme
 
-## Ongelmia herokussa
+## Ongelmia Herokussa
 
-Viikon lopuksi on taas aika deployata sovellus herokuun.
+Viikon lopuksi on taas aika deployata sovellus Herokuun.
 
 Navigoitaessa reittausten sivulle syntyy pahaenteinen virheilmoitus:
 
@@ -1390,31 +1390,31 @@ Navigoitaessa reittausten sivulle syntyy pahaenteinen virheilmoitus:
 
 Tuotantomoodissa pyörivän sovelluksen virheiden jäljittäminen on aina hiukan vaikeampaa kuin kehitysmoodissa, jossa Rails tarjoaa sovellusohjelmoijalle monia mahdollisuuksia virheiden selvittämiseen.
 
-Tuotantomoodissa virheiden syy täytyykin kaivaa sovelluksen lokista. Kuten viime viikolla jo mainittiin, herokussa olevan sovelluksen lokiin pääsee käsiksi komennolla <code>heroku logs</code>.
+Tuotantomoodissa virheiden syy täytyykin kaivaa sovelluksen lokista. Kuten viime viikolla jo mainittiin, Herokussa olevan sovelluksen lokiin pääsee käsiksi komennolla <code>heroku logs</code>.
 
 Tälläkin kertaa virheen syy paljastuu:
 
 ```ruby
 > heroku logs
-2018-09-08T13:34:55.379420+00:00 app[web.1]: [fc20f584-1aef-4d93-8bff-c1a55e5cb6f5] Processing by RatingsController#index as HTML
-2018-09-08T13:34:55.381470+00:00 app[web.1]: [fc20f584-1aef-4d93-8bff-c1a55e5cb6f5]   Rendering ratings/index.html.erb within layouts/application
-2018-09-08T13:34:55.384735+00:00 app[web.1]: [fc20f584-1aef-4d93-8bff-c1a55e5cb6f5]   Rating Load (1.2ms)  SELECT "ratings".* FROM "ratings"
-2018-09-08T13:34:55.385523+00:00 app[web.1]: [fc20f584-1aef-4d93-8bff-c1a55e5cb6f5]   Rendered ratings/index.html.erb within layouts/application (3.9ms)
-2018-09-08T13:34:55.385780+00:00 app[web.1]: [fc20f584-1aef-4d93-8bff-c1a55e5cb6f5] Completed 500 Internal Server Error in 6ms (ActiveRecord: 1.2ms)
-2018-09-08T13:34:55.386820+00:00 app[web.1]: [fc20f584-1aef-4d93-8bff-c1a55e5cb6f5]
-2018-09-08T13:34:55.386846+00:00 app[web.1]: [fc20f584-1aef-4d93-8bff-c1a55e5cb6f5] ActionView::Template::Error (PG::UndefinedTable: ERROR:  relation "ratings" does not exist
-2018-09-08T13:34:55.386848+00:00 app[web.1]: LINE 1: SELECT "ratings".* FROM "ratings"
-2018-09-08T13:34:55.386849+00:00 app[web.1]: ^
-2018-09-08T13:34:55.386850+00:00 app[web.1]: : SELECT "ratings".* FROM "ratings"):
-2018-09-08T13:34:55.386958+00:00 app[web.1]: [fc20f584-1aef-4d93-8bff-c1a55e5cb6f5]     1: <h2>List of ratings</h2>
-2018-09-08T13:34:55.386960+00:00 app[web.1]: [fc20f584-1aef-4d93-8bff-c1a55e5cb6f5]     2:
-2018-09-08T13:34:55.386966+00:00 app[web.1]: [fc20f584-1aef-4d93-8bff-c1a55e5cb6f5]     3: <ul>
-2018-09-08T13:34:55.386968+00:00 app[web.1]: [fc20f584-1aef-4d93-8bff-c1a55e5cb6f5]     4:  <% @ratings.each do |rating| %>
-2018-09-08T13:34:55.386970+00:00 app[web.1]: [fc20f584-1aef-4d93-8bff-c1a55e5cb6f5]     5:    <li> <%= rating %> <%= link_to 'delete', rating_path(rating.id), method: :delete, data: { confirm: 'Are you sure?' } %> </li>
-2018-09-08T13:34:55.386972+00:00 app[web.1]: [fc20f584-1aef-4d93-8bff-c1a55e5cb6f5]     6:  <% end %>
-2018-09-08T13:34:55.386973+00:00 app[web.1]: [fc20f584-1aef-4d93-8bff-c1a55e5cb6f5]     7: </ul>
-2018-09-08T13:34:55.386977+00:00 app[web.1]: [fc20f584-1aef-4d93-8bff-c1a55e5cb6f5]
-2018-09-08T13:34:55.387016+00:00 app[web.1]: [fc20f584-1aef-4d93-8bff-c1a55e5cb6f5] app/views/ratings/index.html.erb:4:in `_app_views_ratings_index_html_erb___3457620989041177195_70202650345860'
+2020-08-20T13:34:55.379420+00:00 app[web.1]: [fc20f584-1aef-4d93-8bff-c1a55e5cb6f5] Processing by RatingsController#index as HTML
+2020-08-20T13:34:55.381470+00:00 app[web.1]: [fc20f584-1aef-4d93-8bff-c1a55e5cb6f5]   Rendering ratings/index.html.erb within layouts/application
+2020-08-20T13:34:55.384735+00:00 app[web.1]: [fc20f584-1aef-4d93-8bff-c1a55e5cb6f5]   Rating Load (1.2ms)  SELECT "ratings".* FROM "ratings"
+2020-08-20T13:34:55.385523+00:00 app[web.1]: [fc20f584-1aef-4d93-8bff-c1a55e5cb6f5]   Rendered ratings/index.html.erb within layouts/application (3.9ms)
+2020-08-20T13:34:55.385780+00:00 app[web.1]: [fc20f584-1aef-4d93-8bff-c1a55e5cb6f5] Completed 500 Internal Server Error in 6ms (ActiveRecord: 1.2ms)
+2020-08-20T13:34:55.386820+00:00 app[web.1]: [fc20f584-1aef-4d93-8bff-c1a55e5cb6f5]
+2020-08-20T13:34:55.386846+00:00 app[web.1]: [fc20f584-1aef-4d93-8bff-c1a55e5cb6f5] ActionView::Template::Error (PG::UndefinedTable: ERROR:  relation "ratings" does not exist
+2020-08-20T13:34:55.386848+00:00 app[web.1]: LINE 1: SELECT "ratings".* FROM "ratings"
+2020-08-20T13:34:55.386849+00:00 app[web.1]: ^
+2020-08-20T13:34:55.386850+00:00 app[web.1]: : SELECT "ratings".* FROM "ratings"):
+2020-08-20T13:34:55.386958+00:00 app[web.1]: [fc20f584-1aef-4d93-8bff-c1a55e5cb6f5]     1: <h2>List of ratings</h2>
+2020-08-20T13:34:55.386960+00:00 app[web.1]: [fc20f584-1aef-4d93-8bff-c1a55e5cb6f5]     2:
+2020-08-20T13:34:55.386966+00:00 app[web.1]: [fc20f584-1aef-4d93-8bff-c1a55e5cb6f5]     3: <ul>
+2020-08-20T13:34:55.386968+00:00 app[web.1]: [fc20f584-1aef-4d93-8bff-c1a55e5cb6f5]     4:  <% @ratings.each do |rating| %>
+2020-08-20T13:34:55.386970+00:00 app[web.1]: [fc20f584-1aef-4d93-8bff-c1a55e5cb6f5]     5:    <li> <%= rating %> <%= link_to 'delete', rating_path(rating.id), method: :delete, data: { confirm: 'Are you sure?' } %> </li>
+2020-08-20T13:34:55.386972+00:00 app[web.1]: [fc20f584-1aef-4d93-8bff-c1a55e5cb6f5]     6:  <% end %>
+2020-08-20T13:34:55.386973+00:00 app[web.1]: [fc20f584-1aef-4d93-8bff-c1a55e5cb6f5]     7: </ul>
+2020-08-20T13:34:55.386977+00:00 app[web.1]: [fc20f584-1aef-4d93-8bff-c1a55e5cb6f5]
+2020-08-20T13:34:55.387016+00:00 app[web.1]: [fc20f584-1aef-4d93-8bff-c1a55e5cb6f5] app/views/ratings/index.html.erb:4:in `_app_views_ratings_index_html_erb___3457620989041177195_70202650345860'
 ```
 
 Tietokantataulua _ratings_ siis ei ole olemassa. Ongelma korjaantuu suorittamalla migratiot:
@@ -1425,7 +1425,7 @@ heroku run rails db:migrate
 
 Generoidaan seuraavaksi tilanne, jossa tietokanta joutuu hieman epäkonsistenttiin tilaan.
 
-Käynnistä heroku-konsoli komennolla <code>heroku run console</code> ja luo sovellukseen olut johon ei liity mitään panimoa
+Käynnistä Heroku-konsoli komennolla <code>heroku run console</code> ja luo sovellukseen olut johon ei liity mitään panimoa
 
 ```ruby
 > b = Beer.new name:"crap beer", style:"lager"
@@ -1442,20 +1442,19 @@ ja olut johon liittyvää panimoa ei ole olemassa (eli viiteavaimena oleva panim
 Kun menet nyt kaikkien oluiden sivulle on seurauksena jälleen ikävä ilmoitus "We're sorry, but something went wrong.". Jälleen kerran ongelmaa on etsittävä lokeista:
 
 ```ruby
-2018-09-08T13:39:17.133318+00:00 app[web.1]: [c355e369-86e1-4a48-9bca-b7bda15ddc97]   Rendered beers/index.html.erb within layouts/application (14.1ms)
-2018-09-08T13:39:17.133472+00:00 app[web.1]: [c355e369-86e1-4a48-9bca-b7bda15ddc97] Completed 500 Internal Server Error in 15ms (ActiveRecord: 3.1ms)
-2018-09-08T13:39:17.134072+00:00 app[web.1]: [c355e369-86e1-4a48-9bca-b7bda15ddc97]
-2018-09-08T13:39:17.134111+00:00 app[web.1]: [c355e369-86e1-4a48-9bca-b7bda15ddc97] ActionView::Template::Error (undefined method `name' for nil:NilClass):
-2018-09-08T13:39:17.134992+00:00 app[web.1]: [c355e369-86e1-4a48-9bca-b7bda15ddc97]     17:       <tr>
-2018-09-08T13:39:17.134995+00:00 app[web.1]: [c355e369-86e1-4a48-9bca-b7bda15ddc97]     18:         <td><%= link_to beer.name, beer %></td>
-2018-09-08T13:39:17.134998+00:00 app[web.1]: [c355e369-86e1-4a48-9bca-b7bda15ddc97]     20:         <td><%= link_to beer.brewery.name, beer.brewery %></td>
-2018-09-08T13:39:17.134996+00:00 app[web.1]: [c355e369-86e1-4a48-9bca-b7bda15ddc97]     19:         <td><%= beer.style %></td>
-2018-09-08T13:39:17.135001+00:00 app[web.1]: [c355e369-86e1-4a48-9bca-b7bda15ddc97]     22:         <td><%= link_to 'Destroy', beer, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-2018-09-08T13:39:17.135003+00:00 app[web.1]: [c355e369-86e1-4a48-9bca-b7bda15ddc97]     23:       </tr>
-2018-09-08T13:39:17.135000+00:00 app[web.1]: [c355e369-86e1-4a48-9bca-b7bda15ddc97]     21:         <td><%= link_to 'Edit', edit_beer_path(beer) %></td>
-2018-09-08T13:39:17.135009+00:00 app[web.1]: [c355e369-86e1-4a48-9bca-b7bda15ddc97]
-2018-09-08T13:39:17.135058+00:00 app[web.1]: [c355e369-86e1-4a48-9bca-b7bda15ddc97] app/views/beers/index.html.erb:20:in `block in _app_views_beers_index_html_erb___3429094900426111748_70202515664160'
-2018-09-08T13:39:17.135060+00:00 app[web.1]: [c355e369-86e1-4a48-9bca-b7bda15ddc97] app/views/beers/index.html.erb:16:in `_app_views_beers_index_html_erb___3429094900426111748_70202515664160'
+2022-08-20T10:56:01.307817+00:00 app[web.1]: F, [2022-08-20T10:56:01.307761 #4] FATAL -- : [22db4647-3122-419e-8e83-e2e99bfe3606]
+2022-08-20T10:56:01.307818+00:00 app[web.1]: [22db4647-3122-419e-8e83-e2e99bfe3606] ActionView::Template::Error (undefined method `name' for nil:NilClass):
+2022-08-20T10:56:01.307818+00:00 app[web.1]: [22db4647-3122-419e-8e83-e2e99bfe3606]     10:
+2022-08-20T10:56:01.307819+00:00 app[web.1]: [22db4647-3122-419e-8e83-e2e99bfe3606]     11:   <p>
+2022-08-20T10:56:01.307819+00:00 app[web.1]: [22db4647-3122-419e-8e83-e2e99bfe3606]     12:     <strong>Brewery:</strong>
+2022-08-20T10:56:01.307820+00:00 app[web.1]: [22db4647-3122-419e-8e83-e2e99bfe3606]     13:     <%= link_to beer.brewery.name, beer.brewery %>
+2022-08-20T10:56:01.307820+00:00 app[web.1]: [22db4647-3122-419e-8e83-e2e99bfe3606]     14:   </p>
+2022-08-20T10:56:01.307821+00:00 app[web.1]: [22db4647-3122-419e-8e83-e2e99bfe3606]     15:
+2022-08-20T10:56:01.307821+00:00 app[web.1]: [22db4647-3122-419e-8e83-e2e99bfe3606]     16:   <% if beer.ratings.empty? %>
+2022-08-20T10:56:01.307821+00:00 app[web.1]: [22db4647-3122-419e-8e83-e2e99bfe3606]
+2022-08-20T10:56:01.307822+00:00 app[web.1]: [22db4647-3122-419e-8e83-e2e99bfe3606] app/views/beers/_beer.html.erb:13
+2022-08-20T10:56:01.307822+00:00 app[web.1]: [22db4647-3122-419e-8e83-e2e99bfe3606] app/views/beers/index.html.erb:7
+2022-08-20T10:56:01.307822+00:00 app[web.1]: [22db4647-3122-419e-8e83-e2e99bfe3606] app/views/beers/index.html.erb:6
 ```
 
 Syy löytyy:
@@ -1467,16 +1466,16 @@ undefined method `name' for nil:NilClass
 Virheen aiheuttanut rivi on:
 
 ```erb
-<td><%= link_to beer.brewery.name, beer.brewery %></td>
+<%= link_to beer.brewery.name, beer.brewery %>
 ```
 
 Eli on olemassa olut, jonka kentässä <code>brewery</code> on arvona <code>nil</code>. Tämä voi johtua joko siitä, että oluen <code>brewery_id</code> on <code>nil</code> tai <code>brewery_id</code>:n arvona on virheellinen (esim. poistetun panimon) id.
 
-Kun virheen syy paljastuu, on etsittävä syylliset. Eli avataan heroku-konsoli komennolla <code>heroku run console</code> ja haetaan panimottomat oluet:
+Kun virheen syy paljastuu, on etsittävä syylliset. Eli avataan Heroku-konsoli komennolla <code>heroku run console</code> ja haetaan panimottomat oluet:
 
 ```ruby
 > Beer.all.select{ |b| b.brewery.nil? }
-=> [#<Beer id: 8, name: "crap beer", style: "lager", brewery_id: nil, created_at: "2018-09-08 13:37:21", updated_at: "2018-09-08 13:37:21">, #<Beer id: 9, name: "shitty beer", style: "lager", brewery_id: 123, created_at: "2018-09-08 13:38:51", updated_at: "2018-09-08 13:38:51">]
+=> [#<Beer id: 8, name: "crap beer", style: "lager", brewery_id: nil, created_at: "2020-08-20 13:37:21", updated_at: "2020-08-20 13:37:21">, #<Beer id: 9, name: "shitty beer", style: "lager", brewery_id: 123, created_at: "2020-08-20 13:38:51", updated_at: "2020-08-20 13:38:51">]
 >
 ```
 
@@ -1484,7 +1483,7 @@ Seuraavana toimenpiteenä on virheen aiheuttavien olioiden korjaaminen. Koska lo
 
 ```ruby
 > bad_beer = _
-=> [#<Beer id: 8, name: "crap beer", style: "lager", brewery_id: nil, created_at: "2018-09-08 13:37:21", updated_at: "2018-09-08 13:37:21">, #<Beer id: 9, name: "shitty beer", style: "lager", brewery_id: 123, created_at: "2018-09-08 13:38:51", updated_at: "2018-09-08 13:38:51">]
+=> [#<Beer id: 8, name: "crap beer", style: "lager", brewery_id: nil, created_at: "2020-08-20 13:37:21", updated_at: "2020-08-20 13:37:21">, #<Beer id: 9, name: "shitty beer", style: "lager", brewery_id: 123, created_at: "2020-08-20 13:38:51", updated_at: "2020-08-20 13:38:51">]
 > bad_beer.each{ |bad| bad.delete }
 > Beer.all.select{ |b| b.brewery.nil? }
 => []

@@ -157,7 +157,7 @@ Seuraavassa hieman lyhennelty näkymä:
 
 Hakemistoista tärkein on sovelluksen ohjelmakoodin sisältävä **app**. Hakemiston **config** alla on erilaista sovelluksen konfigurointiin liittyvää dataa, mm. routes.rb, joka määrittelee miten sovellus käsittelee erilaiset sille kohdistuneet HTTP-pyynnöt. Tietokannan konfiguraatiot tulevat hakemistoon **db**. Gemfile taas määrittelee sovelluksen käyttämät kirjastot. Tulemme pikkuhiljaa tutustumaan sovelluksen hakemiston rakenteeseen tarkemmin.
 
-Hakemistorakenne on tärkeä osa Railsin Convention over Configuration -periaatetta, jokaiselle komponentille (esim. panimoista huolehtivalle kontrollerille) on oma tarkasti määritelty paikkansa, josta Rails osaa etsiä komponentin ilman että sovelluskehittäjän tarvitsee erikseen kertoa railsille missä hakemistossa ja tiedostossa komponentti sijaitsee.
+Hakemistorakenne on tärkeä osa Railsin Convention over Configuration -periaatetta, jokaiselle komponentille (esim. panimoista huolehtivalle kontrollerille) on oma tarkasti määritelty paikkansa, josta Rails osaa etsiä komponentin ilman että sovelluskehittäjän tarvitsee erikseen kertoa Railsille missä hakemistossa ja tiedostossa komponentti sijaitsee.
 
 Käynnistä sovellus antamalla komentoriviltä komento
 
@@ -247,9 +247,9 @@ Panimot tallettava tietokantataulu on nyt luotu ja sovelluksen pitäisi toimia.
 
 Refreshaa panimot näyttävä sivu [http://localhost:3000/breweries](http://localhost:3000/breweries) ja lisää sitä käyttäen tietokantaan nyt kolme panimoa.
 
-Kuten huomaamme, on railsin scaffoldingilla saatu jo melko paljon valmista toiminnallisuutta. Scaffoldingilla luotu toiminnallisuus on hyvä tapa päästä nopeasti alkuun. Mikään silver bullet scaffoldingit eivät kuitenkaan ole, sillä suurin osa scaffoldingeilla valmiiksi luodusta toiminnallisuudesta tullaan ajan myötä korvaamaan itse kirjoitetulla koodilla. Luomme kurssin aikana, viikosta 2 alkaen toiminnallisuutta myös kokonaan käsin, joten myös scaffoldingien automaattisesti generoima koodi tulee tutuksi.
+Kuten huomaamme, on Railsin scaffoldingilla saatu jo melko paljon valmista toiminnallisuutta. Scaffoldingilla luotu toiminnallisuus on hyvä tapa päästä nopeasti alkuun. Mikään silver bullet scaffoldingit eivät kuitenkaan ole, sillä suurin osa scaffoldingeilla valmiiksi luodusta toiminnallisuudesta tullaan ajan myötä korvaamaan itse kirjoitetulla koodilla. Luomme kurssin aikana, viikosta 2 alkaen toiminnallisuutta myös kokonaan käsin, joten myös scaffoldingien automaattisesti generoima koodi tulee tutuksi.
 
-**Huom:** railsin generaattorin luomat tiedostot on mahdollista poistaa komennolla _destroy_:
+**Huom:** Railsin generaattorin luomat tiedostot on mahdollista poistaa komennolla _destroy_:
 
 ```bash
 rails destroy scaffold brewery
@@ -523,7 +523,7 @@ Nyt siis on luotu
 
 Loimme oluelle string-tyyppiset nimen ja tyylin tallettavat kentät <code>name</code> ja <code>style</code>. Loimme myös integer-tyyppisen kentän <code>brewery_id</code>, jonka tarkoitus on toimia **vierasavaimena** (engl. foreign key), jonka liittää oluen panimoon.
 
-Tarvittaessa kentät voi tarkistaa kirjoittamalla tietokantataulua vastaavan luokan nimi rails-konsoliin:
+Tarvittaessa kentät voi tarkistaa kirjoittamalla tietokantataulua vastaavan luokan nimi Rails-konsoliin:
 
 ```ruby
 irb(main):035:0> Beer
@@ -648,7 +648,7 @@ Poistetaan kaikki vanha data tietokannasta antamalla komentoriviltä komento:
 
 Komento "seedaa" kannan automaattisesti eli vanhan datan poistamisen lisäksi suorittaa myös tiedoston seeds.rb sisällön.
 
-**Sovellus sekä rails-konsoli kannattaa uudelleenkäynnistää seedauksen jälkeen.**
+**Sovellus sekä Rails-konsoli kannattaa uudelleenkäynnistää seedauksen jälkeen.**
 
 **HUOM:** et välttämättä tarvitse sovelluksessasi ollenkaan tiedostoon _seeds.rb_ määriteltyä dataa. Seediin määritelty data voi olla tarpeen jos sovellus tarvitsee esim. käynnistyäkseen joitan valmiksi määriteltyjä olioita. Tällöin seedin olemassaolo helpottaa uuden sovelluskehittäjän työtä, hän saa sovelluksen heti toimimaan omalla koneellaan ilman potentiaalisesti vaivalloista välttämättömien olioiden luomista.
 
