@@ -30,7 +30,7 @@ end
 
 Voisimme toteuttaa keskiarvon laskemisen "javamaisesti" laskemalla summan käymällä reittauksen läpi alkio alkiolta ja jakamalla summan alkioden määrällä.
 
-Kaikki rubyn kokoelmamaiset asiat (mm. taulukko ja <code>has_many</code>-kenttä) sisältävät Enumerable-moduulin (ks. http://ruby-doc.org/core-2.5.1/Enumerable.html) tarjoamat apumetodit. Päätetäänkin hyödyntää apumetodeja keskiarvon laskemisessa.
+Kaikki Rubyn kokoelmamaiset asiat (mm. taulukko ja <code>has_many</code>-kenttä) sisältävät Enumerable-moduulin (ks. http://ruby-doc.org/core-2.5.1/Enumerable.html) tarjoamat apumetodit. Päätetäänkin hyödyntää apumetodeja keskiarvon laskemisessa.
 
 Koodin kirjoittamisessa kannattaa _ehdottomasti_ hyödyntää konsolia. Oikeastaan konsoliakin parempi vaihtoehdo on debuggerin käyttö. Debuggerin avulla saadaan avattua konsoli suoraan siihen kontekstiin, johon koodia ollaan kirjoittamassa. Lisätään metodikutsuun debuggerin käynnistävä komento <code>binding.break</code>:
 
@@ -45,27 +45,29 @@ class Beer < ApplicationRecord
 end
 ```
 
-Avataan sitten rails konsoli (eli komento _rails c_ komentoriviltä), luetaan tietokannasta reittauksia sisältävä olio ja kutsutaan sille metodia <code>average</code>:
+Avataan sitten Rails konsoli (eli komento _rails c_ komentoriviltä), luetaan tietokannasta reittauksia sisältävä olio ja kutsutaan sille metodia <code>average</code>:
 
 ```ruby
-[6] irb(main)> b = Beer.first
-  Beer Load (0.4ms)  SELECT  "beers".* FROM "beers" ORDER BY "beers"."id" ASC LIMIT ?  [["LIMIT", 1]]
-=> #<Beer:0x00007fa9e48d35e8
- id: 1,
- name: "Iso 3",
- style: "Lager",
- brewery_id: 1,
- created_at: Sat, 01 Sep 2018 16:41:53 UTC +00:00,
- updated_at: Sat, 01 Sep 2018 16:41:53 UTC +00:00>
-> b.average
-
-From: /Users/mluukkai/opetus/ratebeer/app/models/beer.rb @ line 8 Beer#average:
-
-    7: def average
- => 8:   binding.break
-    9: end
-
->
+irb(main):026:0> b = Beer.first
+   (0.1ms)  SELECT sqlite_version(*)
+  Beer Load (5.0ms)  SELECT "beers".* FROM "beers" ORDER BY "beers"."id" ASC LIMIT ?  [["LIMIT", 1]]
+=>
+#<Beer:0x00007f044a848a00
+...
+irb(main):027:0> b.average
+[7, 14] in /myapp/app/models/beer.rb
+     7|   def to_s
+     8|     "#{name} #{brewery.name}"
+     9|   end
+    10|
+    11|   def average
+=>  12|     binding.break
+    13|   end
+    14| end
+=>#0	Beer#average at /myapp/app/models/beer.rb:12
+  #1	<main> at (irb):27
+  # and 28 frames (use `bt' command for all frames)
+(rdbg)
 ```
 
 eli saamme auki debuggerisession, joka avautuu metodin sisälle. Pääsemme siis käsiksi kaikkiin oluen tietoihin.
@@ -73,24 +75,24 @@ eli saamme auki debuggerisession, joka avautuu metodin sisälle. Pääsemme siis
 Olioon itseensä päästään käsiksi viitteellä <code>self</code>
 
 ```ruby
-> self
-=> #<Beer:0x00007fa9e48d35e8
+(rdbg) self
+#<Beer:0x00007f044a848a00
  id: 1,
  name: "Iso 3",
  style: "Lager",
  brewery_id: 1,
- created_at: Sat, 01 Sep 2018 16:41:53 UTC +00:00,
- updated_at: Sat, 01 Sep 2018 16:41:53 UTC +00:00>
->
+ created_at: Mon, 08 Aug 2022 17:13:09.108046000 UTC +00:00,
+ updated_at: Mon, 08 Aug 2022 17:13:09.108046000 UTC +00:00>
 ```
 
 ja olioiden kenttiin pistenotaatiolla tai pelkällä kentän nimellä:
 
 ```ruby
-> self.name
-=> "Iso 3"
-> style
-=> "Lager"
+(ruby) self.name
+"Iso 3"
+(rdbg) style
+"Lager"
+(rdbg)
 ```
 
 Huomaa, että jos metodin sisällä on tarkotus muuttaa olion kentän arvoa, on käytettävä pistenotaatiota:
@@ -112,39 +114,39 @@ end
 Voimme siis viitata oluen reittauksiin oluen metodin sisältä kentän nimellä <code>ratings</code>:
 
 ```ruby
-> ratings
-  Rating Load (0.8ms)  SELECT "ratings".* FROM "ratings" WHERE "ratings"."beer_id" = ?  [["beer_id", 1]]
-=> [#<Rating:0x00007fa9dec887e8
-  id: 1,
-  score: 21,
-  beer_id: 1,
-  created_at: Thu, 06 Sep 2018 14:19:44 UTC +00:00,
-  updated_at: Thu, 06 Sep 2018 14:19:44 UTC +00:00>,
- #<Rating:0x00007fa9e6aab558
+(rdbg) ratings
+  Rating Load (3.6ms)  SELECT "ratings".* FROM "ratings" WHERE "ratings"."beer_id" = ?  [["beer_id", 1]]
+[#<Rating:0x00007f044927afe8
   id: 2,
-  score: 18,
+  score: 22,
   beer_id: 1,
-  created_at: Thu, 06 Sep 2018 14:19:48 UTC +00:00,
-  updated_at: Thu, 06 Sep 2018 14:19:48 UTC +00:00>,
+  created_at: Fri, 19 Aug 2022 14:09:06.293428000 UTC +00:00,
+  updated_at: Fri, 19 Aug 2022 14:09:06.293428000 UTC +00:00>,
+ #<Rating:0x00007f0449285f38
+  id: 3,
+  score: 17,
+  beer_id: 1,
+  created_at: Fri, 19 Aug 2022 14:09:11.750743000 UTC +00:00,
+  updated_at: Fri, 19 Aug 2022 14:09:11.750743000 UTC +00:00>]
 ```
 
 Katsotaan yksittäistä reittausta:
 
 ```ruby
-> ratings.first
-=> #<Rating:0x00007fa9dec887e8
- id: 1,
+(ruby) ratings.first
+#<Rating:0x00007f044927afe8
+ id: 2,
  score: 21,
  beer_id: 1,
- created_at: Thu, 06 Sep 2018 14:19:44 UTC +00:00,
- updated_at: Thu, 06 Sep 2018 14:19:44 UTC +00:00>
+ created_at: Fri, 19 Aug 2022 14:09:06.293428000 UTC +00:00,
+ updated_at: Fri, 19 Aug 2022 14:09:06.293428000 UTC +00:00>
 ```
 
 summataksemme reittaukset, tulee siis jokaisesta reittausoliosta ottaa sen kentän <code>score</code> arvo:
 
 ```ruby
-> ratings.first.score
-=> 21
+(ruby) ratings.first.score
+21
 ```
 
 Enumerable-modulin metodi <code>map</code> tarjoaa keinon muodostaa kokoelman perusteella uusi kokoelma, jonka alkiot saadaan alkuperäisen kokelman alkioista, suorittamalla jokaiselle alkiolle mäppäys-funktio.
@@ -152,24 +154,24 @@ Enumerable-modulin metodi <code>map</code> tarjoaa keinon muodostaa kokoelman pe
 Jos alkuperäisen kokoelman alkioon viitataan nimellä <code>r</code>, mäppäysfunktio on yksinkertainen:
 
 ```ruby
-> r = ratings.first
-> r.score
-=> 21
+(ruby) r = ratings.first
+#<Rating:0x00007f044927afe8>
+(ruby) r.score
+21
 ```
 
 Nyt voimme kokeilla mitä <code>map</code> tuottaa:
 
 ```ruby
-> ratings.map { |r| r.score }
-=> [21, 18]
+(ruby) ratings.map { |r| r.score }
+[22, 17]
 ```
 
 mäppäysfunktio siis annetaan metodille <code>map</code> parametriksi aaltosulkein erotettuna koodilohkona. Koodilohko voitaisiin erottaa myös <code>do end</code>-parina, molemmat tuottavat saman lopputuloksen:
 
 ```ruby
-> ratings.map do |r| r.score end
-=> [21, 18]
->
+(ruby) ratings.map do |r| r.score end
+[22, 17]
 ```
 
 Metodin map avulla saamme siis muodostettua reittausten kokoelmasta taulukon reittausten arvoja. Seuraava tehtävä on summata nämä arvot.
@@ -178,23 +180,24 @@ Rails on lisännyt kaikille Enumerableille metodin
 [sum](http://apidock.com/rails/Enumerable/sum), kokeillaan sitä mapilla aikansaamaamme taulukkoon.
 
 ```ruby
-> ratings.map { |r| r.score }.sum
-=> 39
->
+(ruby) ratings.map { |r| r.score }.sum
+39
 ```
 
 Jotta saamme vielä aikaan keskiarvon, on näin saatava summa jaettava alkioiden kokonaismäärällä. Varmistetaan ensin kokonaismäärän laskevan metodin <code>count</code> tominta:
 
 ```ruby
-> ratings.count
-=> 2
+(ruby) ratings.count
+  Rating Count (2.2ms)  SELECT COUNT(*) FROM "ratings" WHERE "ratings"."beer_id" = ?  [["beer_id", 1]]
+2
 ```
 
 ja muodostetaan sitten keskiarvon laskeva onelineri:
 
 ```ruby
-> ratings.map { |r| r.score }.sum / ratings.count
-=> 19
+(ruby) ratings.map { |r| r.score }.sum / ratings.count
+  Rating Count (2.2ms)  SELECT COUNT(*) FROM "ratings" WHERE "ratings"."beer_id" = ?  [["beer_id", 1]]
+19
 ```
 
 huomaamme että lopputulos pyöristyy väärin. Kyse on tietenkin siitä että sekä jaettava että jakaja ovat kokonaislukuja. Muutetaan toinen näistä liukuluvuksi. Kokeillaan ensin miten kokonaisluvusta liukuluvun tekevä metodi toimii:
@@ -206,15 +209,16 @@ huomaamme että lopputulos pyöristyy väärin. Kyse on tietenkin siitä että s
 
 Jos et tiedä miten joku asia tehdään Rubyllä, google tietää.
 
-Mieti sopiva hakusana niin saat melko varmasti vastauksen. Kannattaa kuitenkin olla hiukan varovainen ja tutkia ainakin muutama googlen vastaus. Ainakin kannattaa varmistaa että vastauksessa puhutaan riittävän tuoreesta rubyn tai railsin versiosta.
+Mieti sopiva hakusana niin saat melko varmasti vastauksen. Kannattaa kuitenkin olla hiukan varovainen ja tutkia ainakin muutama googlen vastaus. Ainakin kannattaa varmistaa että vastauksessa puhutaan riittävän tuoreesta Rubyn tai Railsin versiosta.
 
-Rubyssä ja Railsissa on useimmiten joku valmis metodi tai gemi melkein kaikkeen, eli pyörän uudelleenkeksimisen sijaan kannattaa aina googlata tai vilkuilla dokumentaatiota.
+Rubyssä ja Railsissa on useimmiten joku valmis metodi tai gemi melkein kaikkeen, eli pyörän uudelleenkeksimisen sijaan kannattaa aina Googlata tai vilkuilla dokumentaatiota.
 
 Muodostetaan sitten lopullinen versio keskiarvon laskevasta koodista:
 
 ```ruby
-> ratings.map{ |r| r.score }.sum / ratings.count.to_f
-=> 19.5
+(ruby) ratings.map { |r| r.score }.sum / ratings.count.to_f
+  Rating Count (2.4ms)  SELECT COUNT(*) FROM "ratings" WHERE "ratings"."beer_id" = ?  [["beer_id", 1]]
+19.5
 ```
 
 Nyt koodi on valmis ja testattu, joten se voidaan kopioida metodiin:
@@ -234,54 +238,55 @@ end
 Testataan metodia, eli poistutaan debuggerista, _lataamalla_ uusi koodi, hakemalla olio ja suorittamalla metodi:
 
 ```ruby
-> exit
-=> nil
-> reload!
-Reloading...
-=> true
-> b = Beer.first
-> b.average
+irb(main):001:0> b = Beer.first
+irb(main):002:0> b.average
+  Rating Load (1.8ms)  SELECT "ratings".* FROM "ratings" WHERE "ratings"."beer_id" = ?  [["beer_id", 1]]
+  Rating Count (2.3ms)  SELECT COUNT(*) FROM "ratings" WHERE "ratings"."beer_id" = ?  [["beer_id", 1]]
 => 19.5
 ```
 
 Jatkotestaus kuitenkin paljastaa että kaikki ei ole hyvin:
 
 ```ruby
-> b = Beer.last
-> b.average
+irb(main):003:0> b = Beer.second
+irb(main):004:0> b.average
+  Rating Load (2.3ms)  SELECT "ratings".* FROM "ratings" WHERE "ratings"."beer_id" = ?  [["beer_id", 2]]
+  Rating Count (3.1ms)  SELECT COUNT(*) FROM "ratings" WHERE "ratings"."beer_id" = ?  [["beer_id", 2]]
 => NaN
 ```
 
-eli Hardcore IPA:n reittausten keskiarvo on <code>NaN</code>. Turvaudutaan jälleen debuggeriin. Laitetaan komento <code>binding.break</code> keskiarvon laskevaan metodiin, uudelleenladataan koodi ja kutsutaan metodia ongelmalliselle oliolle:
+eli kannassa toisena olevan oluen reittausten keskiarvo on <code>NaN</code>. Turvaudutaan jälleen debuggeriin. Laitetaan komento <code>binding.break</code> keskiarvon laskevaan metodiin, uudelleenladataan koodi ja kutsutaan metodia ongelmalliselle oliolle:
 
 ```ruby
-[3, 12] in /Users/mluukkai/kurssirepot/ratebeer/app/models/beer.rb
-    3:
-    4:   belongs_to :brewery
-    5:   has_many :ratings, dependent: :destroy
-    6:
-    7:   def average
-    8:     binding.break
-=>  9:     ratings.map{ |r| r.score }.sum / ratings.count.to_f
-   10:   end
-   11:
-   12: end
+irb(main):008:0> b.average
+[7, 15] in /myapp/app/models/beer.rb
+     7|   def to_s
+     8|     "#{name} #{brewery.name}"
+     9|   end
+    10|
+    11|   def average
+=>  12|     binding.break
+    13|     ratings.map{ |r| r.score }.sum / ratings.count.to_f
+    14|   end
+    15| end
 ```
 
 Evaluoidaan lausekkeen osat debuggerissa:
 
 ```ruby
-> ratings.map{ |r| r.score }.sum
-=> 0
-> ratings.count.to_f
-=> 0.0
+(ruby) ratings.map{ |r| r.score }.sum
+  Rating Load (2.5ms)  SELECT "ratings".* FROM "ratings" WHERE "ratings"."beer_id" = ?  [["beer_id", 2]]
+0
+(ruby) ratings.count.to_f
+  Rating Count (2.1ms)  SELECT COUNT(*) FROM "ratings" WHERE "ratings"."beer_id" = ?  [["beer_id", 2]]
+0.0
 ```
 
 Olemme siis jakamassa kokonaisluku nollaa luvulla nolla, katsotaan mikä laskuoperaation tulos on:
 
 ```ruby
-> 0/0.0
-=> NaN
+(ruby) 0/0.0
+NaN
 ```
 
 eli estääksemme nollalla jakamisen, tulee metodin käsitellä tapaus erikseen:
@@ -293,7 +298,7 @@ def average
 end
 ```
 
-Käytämme oneliner-if:iä ja kokoelman metodia <code>empty?</code> joka evaluoituu todeksi kokoelman ollessa tyhjä. Kyseessä on rubymainen tapa toteuttaa tyhjyystarkastus, joka "javamaisesti" kirjotettuna olisi:
+Käytämme oneliner-if:iä ja kokoelman metodia <code>empty?</code> joka evaluoituu todeksi kokoelman ollessa tyhjä. Kyseessä on Rubymainen tapa toteuttaa tyhjyystarkastus, joka "javamaisesti" kirjotettuna olisi:
 
 ```ruby
 def average
@@ -307,7 +312,6 @@ end
 Kutakin kieltä käytettäessä tulee kuitenkin mukautua kielen omaan tyyliin, varsinkin jos on mukana projekteissa joita ohjelmoi useampi ihminen.
 
 Jos et ole jo rutinoitunut debuggerin käyttöön, kannattaa ehdottomasti kerrata viime viikon debuggeria käsittelevä materiaali.
-
 
 ## Rubocop: tyyli ratkaisee
 
@@ -491,7 +495,7 @@ class SessionsController < ApplicationController
 end
 ```
 
-Huomaa, että vaikka sessioiden reitit kirjoitetaan nyt yksikössä **session** ja **session/new**, on kontrollerin ja näkymien hakemiston kirjoitusasu kuitenkin railsin normaalia monikkomuotoa noudattava.
+Huomaa, että vaikka sessioiden reitit kirjoitetaan nyt yksikössä **session** ja **session/new**, on kontrollerin ja näkymien hakemiston kirjoitusasu kuitenkin Railsin normaalia monikkomuotoa noudattava.
 
 Kirjautumissivun app/views/sessions/new.html.erb koodi on seuraavassa:
 
@@ -1198,7 +1202,7 @@ Rails käyttää tiivisteen tallettamiseen <code>bcrypt-ruby</code> gemiä. Otet
 
 Tämän jälkeen annetaan komentoriviltä komento <code>bundle install</code> jotta gem asentuu.
 
-Kokeillaan nyt hieman uutta toiminnallisuutta konsolista. Uudelleenkäynnistä konsoli, jotta se saa käyttöönsä uuden gemin. Myös rails-sovellus kannattaa tässä vaiheessa uudelleenkäynnistää. Muista myös suorittaa migraatio!
+Kokeillaan nyt hieman uutta toiminnallisuutta konsolista. Uudelleenkäynnistä konsoli, jotta se saa käyttöönsä uuden gemin. Myös Rails-sovellus kannattaa tässä vaiheessa uudelleenkäynnistää. Muista myös suorittaa migraatio!
 
 Salasanatoiminnallisuus <code>has_secure_password</code> lisää oliolle attribuutit <code>password</code> ja <code>password_confirmation</code>. Ideana on, että salasana ja se varmistettuna sijoitetaan näihin attribuutteihin. Kun olio talletetaan tietokantaan esim. metodin <code>save</code> kutsun yhteydessä, lasketaan tiiviste joka tallettuu tietokantaan olion sarakkeen <code>password_digest</code> arvoksi. Selväkielinen salasana eli attribuutti <code>password</code> ei siis tallennu tietokantaan, vaan on ainoastaan olion muistissa olevassa representaatiossa.
 
@@ -1263,7 +1267,7 @@ def create
 end
 ```
 
-Kokeillaan toimiiko kirjautuminen (**huom: jotta bcrypt-gem tulisi sovelluksen käyttöön, käynnistä rails server uudelleen**). Kirjautuminen onnistuu toistaiseksi vain niiden käyttäjien tunnuksilla joihin olet lisännyt salasanan konsolista käsin.
+Kokeillaan toimiiko kirjautuminen (**huom: jotta bcrypt-gem tulisi sovelluksen käyttöön, käynnistä Rails server uudelleen**). Kirjautuminen onnistuu toistaiseksi vain niiden käyttäjien tunnuksilla joihin olet lisännyt salasanan konsolista käsin.
 
 Lisätään vielä uuden käyttäjän luomiseen (eli näkymään view/users/\_form.html.erb) salasanan syöttökenttä:
 
@@ -1447,7 +1451,7 @@ Muutosten jälkeen käyttäjän tietojen muuttamislomake näyttää seuraavalta:
 
 ![kuva](https://raw.githubusercontent.com/mluukkai/WebPalvelinohjelmointi2022/main/images/ratebeer-w3-8.png)
 
-## Ongelmia herokussa
+## Ongelmia Herokussa
 
 Kun ohjelman päivitetty versio deployataan herokuun, törmätään jälleen ongelmiin. Kaikkien reittausten ja kaikkien käyttäjien sivu ja signup-linkki saavat aikaan tutun virheen:
 
@@ -1490,7 +1494,7 @@ eli järjestelmässä on reittauksia joihin ei liity user-olioa.
 
 Vaikka tietokantamigraatio on suoritettu, on osa järjestelmän datasta edelleen vanhan tietokantaskeeman mukaista. Tietokantamigraation yheyteen olisikin ollut järkevää kirjoittaa koodi, joka varmistaa että myös järjestelmän data saatetaan migraation jälkeen sellaiseen muotoon, mitä koodi olettaa, eli että esim. jokaiseen olemassaolevaan reittaukseen liitetään joku käyttäjä tai käyttäjättömät reittaukset poistetaan.
 
-Luodaan järjestelmään käyttäjä ja laitetaan herokun konsolista kaikkien olemassaolevien reittausten käyttäjäksi järjestelmään ensimmäisenä luotu käyttäjä:
+Luodaan järjestelmään käyttäjä ja laitetaan Herokun konsolista kaikkien olemassaolevien reittausten käyttäjäksi järjestelmään ensimmäisenä luotu käyttäjä:
 
 ```ruby
 > u = User.first
@@ -1499,7 +1503,7 @@ Luodaan järjestelmään käyttäjä ja laitetaan herokun konsolista kaikkien ol
 
 Nyt sovellus toimii.
 
-Toistetaan vielä viikon lopuksi edellisen viikon "ongelmia herokussa"-luvun lopetus
+Toistetaan vielä viikon lopuksi edellisen viikon "ongelmia Herokussa"-luvun lopetus
 
 <quote>
 Useimmiten tuotannossa vastaan tulevat ongelmat johtuvat siitä, että tietokantaskeeman muutosten takia jotkut oliot ovat joutuneet epäkonsistenttiin tilaan, eli ne esim. viittaavat olioihin joita ei ole tai viitteet puuttuvat. *Sovellus kannattaakin deployata tuotantoon mahdollisimman usein*, näin tiedetään että mahdolliset ongelmat ovat juuri tehtyjen muutosten aiheuttamia ja korjaus on helpompaa.
@@ -1507,7 +1511,7 @@ Useimmiten tuotannossa vastaan tulevat ongelmat johtuvat siitä, että tietokant
 
 ## Rubocop
 
-Muista testata rubocopilla, että koodisi noudattaa edelleen määriteltyjä tyylisääntöjä.
+Muista testata Rubocopilla, että koodisi noudattaa edelleen määriteltyjä tyylisääntöjä.
 
 Jos käytät Visual Studio Codea, voit asentaa [ruby-rubocop](https://marketplace.visualstudio.com/items?itemName=misogi.ruby-rubocop) laajennuksen, jolloin editori huomauttaa heti jos teet koodiin tyylivirheen:
 
@@ -1515,6 +1519,6 @@ Jos käytät Visual Studio Codea, voit asentaa [ruby-rubocop](https://marketplac
 
 ## Tehtävien palautus
 
-Commitoi kaikki tekemäsi muutokset ja pushaa koodi Githubiin. Deployaa myös uusin versio Herokuun.
+Commitoi kaikki tekemäsi muutokset ja pushaa koodi GitHubiin. Deployaa myös uusin versio Herokuun.
 
 Tehtävät kirjataan palautetuksi osoitteeseen https://studies.cs.helsinki.fi/stats/courses/rails2022/

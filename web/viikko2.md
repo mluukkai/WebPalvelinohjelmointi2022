@@ -1496,6 +1496,6 @@ Koska kyseessä on tuotannossa oleva ohjelma, tietokannan resetointi (<code>rail
 
 ## Tehtävien palautus
 
-Commitoi kaikki tekemäsi muutokset ja pushaa koodi Githubiin. Deployaa myös uusin versio Herokuun.
+Commitoi kaikki tekemäsi muutokset ja pushaa koodi GitHubiin. Deployaa myös uusin versio Herokuun.
 
 Tehtävät kirjataan palautetuksi osoitteeseen https://studies.cs.helsinki.fi/stats/courses/rails2022

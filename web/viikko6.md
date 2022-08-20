@@ -1198,7 +1198,7 @@ Jos tässä luvussa esitellyn tyyliset temput kiinnostavat, voit jatkaa esim. se
 
 ## Tehtävien palautus
 
-Commitoi kaikki tekemäsi muutokset ja pushaa koodi Githubiin. Deployaa myös uusin versio Herokuun. Muista myös testata rubocopilla, että koodisi noudattaa edelleen määriteltyjä tyylisääntöjä.
+Commitoi kaikki tekemäsi muutokset ja pushaa koodi GitHubiin. Deployaa myös uusin versio Herokuun. Muista myös testata Rubocopilla, että koodisi noudattaa edelleen määriteltyjä tyylisääntöjä.
 
 Jos Herokun kanssa on ongelmia niin muista käyttää tarkastelussa apuna <code>heroku logs</code>, jonka avulla pääset tarkastelemaan Herokun logeja.
 
