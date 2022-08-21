@@ -317,7 +317,7 @@ Jos et ole jo rutinoitunut debuggerin käyttöön, kannattaa ehdottomasti kerrat
 
 Isommissa ohjelmistoprojekteissa on tapana sopia yhtenäisestä koodityylistä, eli esim. tavoista miten asioita nimetään, mihin aaltosulkeet sijoitetan, missä on välilyönti ja missä ei. Railsin konventiot määrittelevät jo jossain määrin koodin tyyliäkin, lähinnä luokkien ja metodien nimennän tasolla.
 
-Otetaan nyt käyttöön [Rubocop](https://github.com/rubocop-hq/rubocop), jonka avulla voimme määritellä koodilemme tyylisäännöstön ja seurata, että pidättäydymme säännöstön mukaisessa koodissa. Rubocop on vastaavanlainen _staattisen analyysin_ työkalu kuin Javascript-maailmassa käytetty [ESLint](https://eslint.org/) tai Javan [checkstyle](http://checkstyle.sourceforge.net/).
+Otetaan nyt käyttöön [Rubocop](https://github.com/rubocop-hq/rubocop), jonka avulla voimme määritellä koodilemme tyylisäännöstön ja seurata, että pidättäydymme säännöstön mukaisessa koodissa. Rubocop on vastaavanlainen _staattisen analyysin_ työkalu kuin JavaScript-maailmassa käytetty [ESLint](https://eslint.org/) tai Javan [checkstyle](http://checkstyle.sourceforge.net/).
 
 Rubocop asennetaan antamalla komentoriviltä komento
 
@@ -393,7 +393,7 @@ Rubocop saattaa mainitaa raportissaan, että osa virheistä on automaattisesti k
 
 Näiden virheiden automaattinen korjaaminen onnistuu komennolla `rubocop -A`. 
 
-Tästä lähtien kannattaa pitää huoli, että kaikki koodi mitä teet säilyy rubocopin sääntöjen mukaisena. Voit halutessasi muokata konfiguroituja sääntöjä mielesi mukaiseksi.
+Tästä lähtien kannattaa pitää huoli, että kaikki koodi mitä teet säilyy Rubocopin sääntöjen mukaisena. Voit halutessasi muokata konfiguroituja sääntöjä mielesi mukaiseksi.
 
 ## Käyttäjä ja sessio
 
@@ -414,7 +414,7 @@ get 'signup', to: 'users#new'
 
 eli myös osoitteeseen signup tuleva HTTP GET -pyyntö käsitellään Users-kontrollerin metodin <code>new</code> avulla.
 
-HTTP on tilaton protokolla, eli kaikki HTTP-protokollalla suoritetut pyynnöt ovat toisistaan riippumattomia. Jos Web-sovellukseen kuitenkin halutaan toteuttaa tila, esim. tieto kirjautuneesta käyttäjästä tai ostoskori, tulee jonkinlainen tieto websession "tilasta" välittää jollain tavalla jokaisen selaimen tekemän HTTP-kutsun mukana. Yleisin tapa tilatiedon välittämiseen ovat evästeet, ks. <http://en.wikipedia.org/wiki/HTTP_cookie>
+HTTP on tilaton protokolla, eli kaikki HTTP-protokollalla suoritetut pyynnöt ovat toisistaan riippumattomia. Jos Web-sovellukseen kuitenkin halutaan toteuttaa tila, esim. tieto kirjautuneesta käyttäjästä tai vaikkapa verkkokauppaan ostoskori, tulee jonkinlainen tieto websession "tilasta" välittää jollain tavalla jokaisen selaimen tekemän HTTP-kutsun mukana. Yleisin tapa tilatiedon välittämiseen ovat evästeet, ks. <http://en.wikipedia.org/wiki/HTTP_cookie>
 
 Lyhyesti sanottuna evästeiden toimintaperiaate on seuraava: kun selaimella mennään jollekin sivustolle, voi palvelin lähettää vastauksessa selaimelle pyynnön evästeen tallettamisesta. Jatkossa selain liittää evästeen kaikkiin sivustolle kohdistuneisiin HTTP-pyyntöihin. Eväste on käytännössä pieni määrä dataa, ja palvelin voi käyttää evästeessä olevaa dataa haluamallaan tavalla evästeen omaavan selaimen tunnistamiseen.
 
@@ -611,7 +611,7 @@ eli mahdollistaa uloskirjautuminen HTTP GET:in avulla. Ei kuitenkaan pidetä hyv
 
 > ## Tehtävä 4
 >
-> Muokkaa nyt sovelluksen application layoutissa olevaa navigaatiopalkkia siten, että palkkiin tulee näkyville sisään- ja uloskirjautumislinkit. Huomioi, että uloskirjautumislinkin yhteydessä on määriteltävä käytettäväksi HTTP-metodiksi DELETE. Railsin versiossa 7 linkeille ei enää ole suoraa tukea deleten käyttöön, [linkit saa kuitenkin edelleen käyttämään delete-metodia](https://github.com/heartcombo/devise/issues/5439#issuecomment-997927041)
+> Muokkaa nyt sovelluksen application layoutissa olevaa navigaatiopalkkia siten, että palkkiin tulee näkyville sisään- ja uloskirjautumislinkit. Huomioi, että uloskirjautumislinkin yhteydessä on määriteltävä käytettäväksi HTTP-metodiksi DELETE. Railsin versiossa 7 linkeille ei enää ole suoraa tukea deleten käyttöön, [linkit saa kuitenkin käyttämään delete-metodia](https://github.com/heartcombo/devise/issues/5439#issuecomment-997927041)
 >
 > Edellisten lisäksi lisää palkkiin linkki kaikkien käyttäjien sivulle, sekä kirjautuneen käyttäjän nimi, joka toimii linkkinä käyttäjän omalle sivulle. Käyttäjän ollessa kirjaantuneena tulee palkissa olla myös linkki uuden oluen reittaukseen.
 >
@@ -712,7 +712,7 @@ Päätetään että laitetaan kaikkien olemassaolevien reittausten käyttäjäks
 > - käyttäjän reittausten määrä ja keskiarvo (huom: käytä edellisellä viikolla määriteltyä moduulia <code>RatingAverage</code>, jotta saat keskiarvon laskevan koodin käyttäjälle!)
 > - lista käyttäjän reittauksista ja mahdollisuus poistaa reittauksia
 >
-> Tee nämä muutokset käyttäjän partials-tiedostoon, eli app/views/users/\_user.html.erb
+> Tee partialin sijaan muutokset suoraan tiedostoon app/views/users/show.html.erb, poista partialin kutsu kokonaan ko. tiedostosta!
 
 Käyttäjän sivu siis näyttää suunilleen seuraavalta:
 
@@ -780,7 +780,7 @@ end
 Jotta viesti saadaan näkyville kirjautumissivulle, lisätään näkymään `app/views/sessions/new.html.erb` seuraava elementti:
 
 ```erb
-<p id="notice"><%= notice %></p>
+<p style="color: red"><%= notice %></p>
 ```
 
 Elementti on jo valmiina käyttäjän sivun templatessa (ellet vahingossa poistanut sitä), joten viesti toimii siellä.
