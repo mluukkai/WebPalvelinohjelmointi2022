@@ -47,7 +47,7 @@ Suoritettuasi kurssin [ilmoittaudu](https://github.com/mluukkai/WebPalvelinohjel
 
 ### Paja
 
-????
+5.9. alkavasta viikosta lähtien kurssilla 2-4 tuntia ohjausta Zoomissa/Kumpulan kampuksella. Tarkista aika täältä myöhemmin
 
 ## Materiaali ja tehtävät
 
