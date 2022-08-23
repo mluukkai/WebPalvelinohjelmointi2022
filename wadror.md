@@ -6,7 +6,7 @@ Ruby on Rails on reilut 15 vuotta sitten suureen suosioon noussut MVC-websovellu
 
 Kokeile miltä tuntuu ohjelmoida kielellä, jonka vallitseva suunnitteluparadigma on sovelluskehittäjän tyytyväisyys, ja sovelluskehyksellä joka on ratkaissut triviaalit, mutta hankalasti päätettävissä olevat asiat (mm. tiedostojen nimentä ja hakemistorakenteet) puolestasi! Huomaat myös, että toisin kuin uuden liiton sovelluksehittäjät ajattelevat, ei kakkien sovelluksien tarvitse olla SPA- eli yhden sivun sovelluksia...
 
-Kurssilla keskitytään palvelinpuolen toiminnallisuuden toteuttamiseen, kurssilla tuotettavat käyttöliittymät tulevat olemaan alkeellisia. Kurssi ei ole johdatuskurssi selainohjelmointiin ja käyttöliittymäsuunnitteluun, HTML:n, CSS:n ja JavaSacriptin rooli kurssilla on hyvin vähäinen.
+Kurssilla keskitytään palvelinpuolen toiminnallisuuden toteuttamiseen, kurssilla tuotettavat käyttöliittymät tulevat olemaan alkeellisia. Kurssi ei ole johdatuskurssi selainohjelmointiin ja käyttöliittymäsuunnitteluun, HTML:n, CSS:n ja JavaScriptin rooli kurssilla on hyvin vähäinen.
 
 Kurssin laajuus on 5 opintopistettä.
 
