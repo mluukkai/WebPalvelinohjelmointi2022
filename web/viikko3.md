@@ -1154,15 +1154,15 @@ Trendinä kuitenkin on, että metodin has_and_belongs_to_many sijaan käytetää
 >
 > Luo scaffoldingia hyväksikäyttäen model <code>BeerClub</code>, jolla on attribuutit <code>name</code> (merkkijono) <code>founded</code> (kokonaisluku) ja <code>city</code> (merkkijono)
 >
-> Muodosta <code>BeerClub</code>in ja <code>User</code>ien välille monen suhde moneen -yhteys. Luo tätä varten liitostauluksi model <code>Membership</code>, jolla on attribuutteina vierasavaimet <code>User</code>- ja <code>BeerClub</code>-olioihin (eli <code>beerclub_id</code> ja <code>user_id</code>.Tämänkin modelin voit luoda scaffoldingilla.
->
-> Aiemmissa Railsin versioissa beerclub_id olisi ollut muotoa beer_club_id, mutta nykyisessä versiossa beerclub kirjoitetaan yhteen. Esimerkkisovelluksessa membership on luotu käyttäen beer_club_id muuttujaa, mutta sovellus saadaan toimimaan siitä huolimatta määrittelemällä käytettävä <code>foreign_key</code> erikseen.
+> Muodosta <code>BeerClub</code>in ja <code>User</code>ien välille monen suhde moneen -yhteys. Luo tätä varten liitostauluksi model <code>Membership</code>, jolla on attribuutteina vierasavaimet <code>User</code>- ja <code>BeerClub</code>-olioihin (eli <code>beer_club_id</code> ja <code>user_id</code>.Tämänkin modelin voit luoda scaffoldingilla.
 >
 > Voit toteuttaa tässä vaiheessa jäsenien liittämisen olutseuroihin esim. samalla tavalla kuten oluiden reittaus tapahtuu tällä hetkellä, eli lisäämällä navigointipalkkiin linkin "join a club", jonka avulla kirjautunut käyttäjä voidaan liittää johonkin listalla näytettävistä olutseuroista.
 >
 > Listaa olutseuran sivulla kaikki jäsenet ja vastaavasti henkilöiden sivulla kaikki olutseurat, joiden jäsen henkilö on. Lisää navigointipalkkiin linkki kaikkien olutseurojen listalle.
 >
 > Tässä vaiheessa ei ole vielä tarvetta toteuttaa toiminnallisuutta, jonka avulla käyttäjän voi poistaa olutseurasta.
+>
+> Tässä tehtävässä joutuu olemaan tarkkana Railsin nimentäkäytänteiden suhteen. Olutseuran määrittelemä luokka kirjotietaan BeerClub ja sitä vastaava vierasavain taas beer_club_id, muissa olioissa, esim. Membership:eissä olutseuraan viitataan muodossa beer_club
 
 > ## Tehtävä 11
 >
