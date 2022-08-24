@@ -28,7 +28,7 @@ class Beer < ApplicationRecord
 end
 ```
 
-Voisimme toteuttaa keskiarvon laskemisen "javamaisesti" laskemalla summan käymällä reittauksen läpi alkio alkiolta ja jakamalla summan alkioden määrällä.
+Voisimme toteuttaa keskiarvon laskemisen "Javamaisesti" laskemalla summan käymällä reittauksen läpi alkio alkiolta ja jakamalla summan alkioden määrällä.
 
 Kaikki Rubyn kokoelmamaiset asiat (mm. taulukko ja <code>has_many</code>-kenttä) sisältävät Enumerable-moduulin (ks. http://ruby-doc.org/core-2.5.1/Enumerable.html) tarjoamat apumetodit. Päätetäänkin hyödyntää apumetodeja keskiarvon laskemisessa.
 
@@ -849,10 +849,10 @@ def create
 
   respond_to do |format|
     if @user.save
-      format.html { redirect_to @user, notice: 'User was successfully created.' }
-      format.json { render action: 'show', status: :created, location: @user }
+      format.html { redirect_to user_url(@user), notice: "User was successfully created." }
+      format.json { render :show, status: :created, location: @user }
     else
-      format.html { render action: 'new' }
+      format.html { render :new, status: :unprocessable_entity }
       format.json { render json: @user.errors, status: :unprocessable_entity }
     end
   end
@@ -877,13 +877,13 @@ Entä mitä metodin päättävä <code>respond_to</code> tekee? Jos olion luonti
 
 ```ruby
 if @user.save
-  redirect_to @user, notice: 'User was successfully created.'
+  redirect_to user_url(@user), notice: "User was successfully created."
 else
-  render action: 'new'
+  render :new, status: :unprocessable_entity 
 end
 ```
 
-eli suoritetaan komentoon (joka on oikeastaan metodi) <code>respond_to</code> liittyvässä koodilohkossa merkintään (joka on jälleen teknisesti ottaen metodikutsu) <code>format.html</code> liittyvä koodilohko. Jos taas käyttäjä-olion luova HTTP POST -kutsu olisi tehty siten, että vastausta odotettaisiin json-muodossa (näin tapahtuisi esim. jos pyyntö tehtäisiin toisesta palvelusta tai Web-sivulta javascriptillä), suoritettaisiin <code>format.json</code>:n liittyvä koodi. Syntaksi saattaa näyttää aluksi oudolta, mutta siihen tottuu pian.
+eli suoritetaan komentoon (joka on oikeastaan metodi) <code>respond_to</code> liittyvässä koodilohkossa merkintään (joka on jälleen teknisesti ottaen metodikutsu) <code>format.html</code> liittyvä koodilohko. Jos taas käyttäjä-olion luova HTTP POST -kutsu olisi tehty siten, että vastausta odotettaisiin json-muodossa (näin tapahtuisi esim. jos pyyntö tehtäisiin toisesta palvelusta tai Web-sivulta JavaScriptillä), suoritettaisiin <code>format.json</code>:n liittyvä koodi. Syntaksi saattaa näyttää aluksi oudolta, mutta siihen tottuu pian.
 
 Jatketaan sitten validointien parissa. Määritellään että oluen reittauksen tulee olla kokonaisluku väliltä 1-50:
 
@@ -913,12 +913,12 @@ def create
     redirect_to user_path current_user
   else
     @beers = Beer.all
-    render :new, status: 422
+    render :new, status: :unprocessable_entity
   end
 end
 ```
 
-Metodissa luodaan siis ensin Rating-olio <code>new</code>:llä, eli sitä ei vielä talleteta tietokantaan. Tämän jälkeen suoritetaan tietokantaan tallennus metodilla <code>save</code>. Jos tallennuksen yhteydessä suoritettava olion validointi epäonnistuu, metodi palauttaa epätoden, ja olio ei tallennu kantaan. Tällöin renderöidään new-näkymätemplate. Näkymätemplaten renderöinti edellyttää, että oluiden lista on talletettu muuttujaan <code>@beers</code>. [Rails 7 ei suoraan palauta erroreita näkymään](https://stackoverflow.com/questions/71751952/rails-7-signup-form-doesnt-show-error-messages), joten siksi palautamme myös HTTP-tilakoodin 422. Lisää tilakoodeista voi lukea esim. [wikipediasta](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes) tai kuvien kanssa [täältä](https://http.cat/).
+Metodissa luodaan siis ensin Rating-olio <code>new</code>:llä, eli sitä ei vielä talleteta tietokantaan. Tämän jälkeen suoritetaan tietokantaan tallennus metodilla <code>save</code>. Jos tallennuksen yhteydessä suoritettava olion validointi epäonnistuu, metodi palauttaa epätoden, ja olio ei tallennu kantaan. Tällöin renderöidään new-näkymätemplate. Näkymätemplaten renderöinti edellyttää, että oluiden lista on talletettu muuttujaan <code>@beers</code>. [Rails 7 ei renderöi erroreita näkymään](https://stackoverflow.com/questions/71751952/rails-7-signup-form-doesnt-show-error-messages), ellei palautamme myös symbolia :unprocessable_entity käyttäen HTTP-statyskoodia 422. Statuskoodeista voi lukea lisää esim. [wikipediasta](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes) tai kuvien kanssa [täältä](https://http.cat/).
 
 Kun nyt yritämme luoda virheellisen reittauksen, käyttäjä pysyy lomakkeen näyttävässä näkymässä (joka siis teknisesti ottaen renderöidään uudelleen POST-kutsun jälkeen). Virheilmoituksia ei kuitenkaan vielä näy.
 
@@ -999,7 +999,7 @@ def create
       format.json { render :show, status: :created, location: @beer }
     else
       @breweries = Brewery.all
-      @styles = ["Weizen", "Lager", "Pale ale", "IPA", "Porter"]
+      @styles = ["Weizen", "Lager", "Pale ale", "IPA", "Porter", "Lowalcohol"]
       format.html { render :new }
       format.json { render json: @beer.errors, status: :unprocessable_entity }
     end
@@ -1017,11 +1017,9 @@ end
 >
 > validates :year, numericality: { less_than_or_equal_to: Time.now.year }
 >
-> Nyt käy siten, että <code>Time.now.year</code> evaluoidaan siinä vaiheessa kun ohjelma lataa luokan koodin. Jos esim. ohjelma käynnistetään vuoden 2018 lopussa, ei vuoden 2019 alussa voida rekisteröidä 2019 aloittanutta panimoa, sillä vuoden yläraja validoinnissa on ohjelman käynnistyshetkellä evaluoitunut 2018
+> Nyt käy siten, että <code>Time.now.year</code> evaluoidaan siinä vaiheessa kun ohjelma lataa luokan koodin. Jos esim. ohjelma käynnistetään vuoden 2021 lopussa, ei vuoden 2022 alussa voida rekisteröidä 2022 aloittanutta panimoa, sillä vuoden yläraja validoinnissa on ohjelman käynnistyshetkellä evaluoitunut 2021
 >
 > Eräs kelvollinen ratkaisutapa on oman validointimetodin määritteleminen http://guides.rubyonrails.org/active_record_validations.html#custom-methods
->
-> Koodimäärällisesti lyhyempiäkin ratkaisuja löytyy, vihjeenä olkoon lambda/Proc/whatever...
 
 ## Monen suhde moneen -yhteydet
 
@@ -1069,16 +1067,22 @@ User.first.beers
 ja oluesta päin:
 
 ```ruby
-> Beer.first.users
-=> [#<User:0x00007fbe240cab68
+irb(main):007:0> Beer.first.users
+   (0.2ms)  SELECT sqlite_version(*)
+  Beer Load (2.3ms)  SELECT "beers".* FROM "beers" ORDER BY "beers"."id" ASC LIMIT ?  [["LIMIT", 1]]
+  User Load (2.0ms)  SELECT "users".* FROM "users" INNER JOIN "ratings" ON "users"."id" = "ratings"."user_id" WHERE "ratings"."beer_id" = ?  [["beer_id", 1]]
+=>
+[#<User:0x00007faf15b47aa0
   id: 1,
-  username: "hellas",
-  created_at: Tue, 11 Sep 2018 07:28:39 UTC +00:00,
-  updated_at: Tue, 11 Sep 2018 07:50:37 UTC +00:00>,
- #<User:0x00007fbe240caa28
+  username: "mluukkai",
+  created_at: Sun, 21 Aug 2022 15:35:05.281921000 UTC +00:00,
+  updated_at: Sun, 21 Aug 2022 15:35:05.281921000 UTC +00:00>,
+ #<User:0x00007faf15b4dc20
   id: 1,
-  username: "hellas",
-  # ...
+  username: "mluukkai",
+  created_at: Sun, 21 Aug 2022 15:35:05.281921000 UTC +00:00,
+  updated_at: Sun, 21 Aug 2022 15:35:05.281921000 UTC +00:00>
+]
 ```
 
 Vaikuttaa ihan toimivalta, mutta tuntuu hieman kömpeltä viitata oluen reitanneisiin käyttäjiin nimellä <code>users</code>. Luontevampi viittaustapa oluen reitanneisiin käyttäjiin olisi kenties <code>raters</code>. Tämä onnistuu vaihtamalla yhteyden määrittelyä seuraavasti
@@ -1092,28 +1096,36 @@ Oletusarvoisesti `has_many` etsii liitettävää taulun nimeä ensimmäisen para
 Yhteytemme uusi nimi toimii:
 
 ```ruby
-> Beer.first.raters
-=> [#<User:0x00007fbe240cab68
+irb(main):009:0> Beer.first.raters
+   (0.2ms)  SELECT sqlite_version(*)
+  Beer Load (2.2ms)  SELECT "beers".* FROM "beers" ORDER BY "beers"."id" ASC LIMIT ?  [["LIMIT", 1]]
+  User Load (2.0ms)  SELECT "users".* FROM "users" INNER JOIN "ratings" ON "users"."id" = "ratings"."user_id" WHERE "ratings"."beer_id" = ?  [["beer_id", 1]]
+=>
+[#<User:0x00007faf160f7748
   id: 1,
-  username: "hellas",
-  created_at: Tue, 11 Sep 2018 07:28:39 UTC +00:00,
-  updated_at: Tue, 11 Sep 2018 07:50:37 UTC +00:00>,
- #<User:0x00007fbe240caa28
+  username: "mluukkai",
+  created_at: Sun, 21 Aug 2022 15:35:05.281921000 UTC +00:00,
+  updated_at: Sun, 21 Aug 2022 15:35:05.281921000 UTC +00:00>,
+ #<User:0x00007faf160bad48
   id: 1,
-  username: "hellas",
-  # ...
+  username: "mluukkai",
+  created_at: Sun, 21 Aug 2022 15:35:05.281921000 UTC +00:00,
+  updated_at: Sun, 21 Aug 2022 15:35:05.281921000 UTC +00:00>]
 ```
 
 Koska sama käyttäjä voi tehdä useita reittauksia samasta oluesta, näkyy käyttäjä useaan kertaan oluen reittaajien joukossa. Jos haluamme yhden reittaajan näkymään ainoastaan kertaalleen, onnistuu tämä esim. seuraavasti:
 
 ```ruby
-> Beer.first.raters.uniq
-=> [#<User:0x00007fbe244c4c78
+irb(main):010:0> Beer.first.raters.uniq
+  Beer Load (1.7ms)  SELECT "beers".* FROM "beers" ORDER BY "beers"."id" ASC LIMIT ?  [["LIMIT", 1]]
+  User Load (2.2ms)  SELECT "users".* FROM "users" INNER JOIN "ratings" ON "users"."id" = "ratings"."user_id" WHERE "ratings"."beer_id" = ?  [["beer_id", 1]]
+=>
+[#<User:0x00007faf15cfd020
   id: 1,
-  username: "hellas",
-  created_at: Tue, 11 Sep 2018 07:28:39 UTC +00:00,
-  updated_at: Tue, 11 Sep 2018 07:50:37 UTC +00:00>]
->
+  username: "mluukkai",
+  created_at: Sun, 21 Aug 2022 15:35:05.281921000 UTC +00:00,
+  updated_at: Sun, 21 Aug 2022 15:35:05.281921000 UTC +00:00>]
+irb(main):011:0>
 ```
 
 On myös mahdollista määritellä, että oluen <code>raters</code> palauttaa oletusarvoisesti vain kertaalleen yksittäisen käyttäjän. Tämä onnistuisi asettamalla <code>has*many</code>-määreelle [rajoite](https://guides.rubyonrails.org/association_basics.html#scopes-for-has-many) \_distinct*, joka rajoittaa niiden olioiden joukkoa, jotka näytetään assosiaatioon liittyviksi siten, että samaa oliota ei näytetä kahteen kertaan:
