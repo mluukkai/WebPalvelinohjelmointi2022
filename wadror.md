@@ -14,7 +14,7 @@ Vaikka kurssi on sisällöllisesti hyvin samankaltainen kuin [Web-palvelinohjelm
 
 ## Esitietovaatimukset
 
-Ohjelmoinnin jatkukurssi ja Tietokantojen perusteet. HTML on hyvä tuntea siinä laajudessa kuin asiaa käsitellään kurssilla [Tietokone työvälineenä](https://tkt-lapio.github.io/)
+Ohjelmoinnin jatkukurssi ja Tietokantojen perusteet. HTML on hyvä tuntea siinä laajudessa kuin asiaa käsitellään kurssilla [Tietokone työvälineenä](https://tkt-lapio.github.io/).
 
 Kurssille osallistuminen edellyttää hyvää ohjelmointirutiinia sekä valmiutta omatoimiseen opiskeluun.
 
@@ -66,7 +66,7 @@ Suoritettuasi kurssin [ilmoittaudu](https://github.com/mluukkai/WebPalvelinohjel
 - [viikko 7](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/main/web/viikko7.md)
 
 - [Materiaalista](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/main/web/materiaalista.md)
-- 
+
 ## Linkkejä
 
 [Railsin asentaminen](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/main/web/railsin_asentaminen.md)
@@ -77,7 +77,7 @@ Suoritettuasi kurssin [ilmoittaudu](https://github.com/mluukkai/WebPalvelinohjel
 
 Rubyn harjoitteluun tarkoitetun materiaalin [ensimmäinen osa](https://github.com/HY-TKTL/ruby-materiaali/blob/master/Perusteet.md) ja [toinen osa](https://github.com/HY-TKTL/ruby-materiaali/blob/master/LuokkiaJaOlioita.md)
 
-[[tehtäväkirjanpito](https://studies.cs.helsinki.fi/stats/courses/rails2022)](https://studies.cs.helsinki.fi/courses/#/rails2018)
+[Tehtäväkirjanpito](https://studies.cs.helsinki.fi/stats/courses/rails2022)
 
 [Kurssin Tietokone työvälineenä HTML:ää koskeva osuus](https://tkt-lapio.github.io/verkkosivut/)
 
@@ -86,7 +86,7 @@ Rubyn harjoitteluun tarkoitetun materiaalin [ensimmäinen osa](https://github.co
 Rails-tuki löytyy useimmista kehitysympäristöistä. Koska Ruby on dynaamisesti tyypitetty, tulkattava kieli, kehitysympäristöjen tuki (esim. automaattinen koodintäydennys) ei ole läheskään samaa luokkaa kuin esim. Javalla ohjelmoitaessa.
 
 Tämän hetken "paras" Rails-kehitysympäristö on Jetbrainsin kehittämä RubyMine http://www.jetbrains.com/ruby/
-Ohjelma on maksullinen, mutta kaikki @helsinki-emailosoitteen omaavat saavat opiskelijalisenssin ilmaiseksi [JetBrainsin sivuilta](https://www.jetbrains.com/student/)
+Ohjelma on maksullinen, mutta kaikki @helsinki-email-osoitteen omaavat saavat opiskelijalisenssin ilmaiseksi [JetBrainsin sivuilta](https://www.jetbrains.com/student/)
 
 Myös useat tekstieditorit esim. [Visual Studio Code](https://code.visualstudio.com) tarjoavat kohtuullisen Rails-tuen.
 
