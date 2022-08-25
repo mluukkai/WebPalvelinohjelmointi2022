@@ -1162,7 +1162,7 @@ Trendinä kuitenkin on, että metodin has_and_belongs_to_many sijaan käytetää
 >
 > Tässä vaiheessa ei ole vielä tarvetta toteuttaa toiminnallisuutta, jonka avulla käyttäjän voi poistaa olutseurasta.
 >
-> Tässä tehtävässä joutuu olemaan tarkkana Railsin nimentäkäytänteiden suhteen. Olutseuran määrittelemä luokka kirjotietaan BeerClub ja sitä vastaava vierasavain taas beer_club_id, muissa olioissa, esim. Membership:eissä olutseuraan viitataan muodossa beer_club
+> Tässä tehtävässä joutuu olemaan tarkkana Railsin nimentäkäytänteiden suhteen. Olutseuran määrittelemä luokka kirjotietaan BeerClub, sitä vastaava vierasavain taas beer_club_id ja muissa olioissa, esim. Membership:eissä olutseuraan viitataan muodossa beer_club
 
 > ## Tehtävä 11
 >
@@ -1206,7 +1206,7 @@ class User < ApplicationRecord
 end
 ```
 
-<code>has*secure_password</code> (ks. http://api.rubyonrails.org/classes/ActiveModel/SecurePassword/ClassMethods.html) lisää luokalle toiminnallisuuden, jonka avulla salasanan \_tiiviste* talletetaan kantaan ja käyttäjä voidaan tarpeen vaatiessa autentikoida.
+<code>has_secure_password</code> (ks. http://api.rubyonrails.org/classes/ActiveModel/SecurePassword/ClassMethods.html) lisää luokalle toiminnallisuuden, jonka avulla *salasanan tiiviste* talletetaan kantaan ja käyttäjä voidaan tarpeen vaatiessa autentikoida.
 
 Rails käyttää tiivisteen tallettamiseen <code>bcrypt-ruby</code> gemiä. Otetaan se käyttöön lisäämällä Gemfile:en rivi
 
