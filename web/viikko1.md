@@ -869,7 +869,7 @@ Rails on luonut yksittäiselle panimolle automaattisesti partials-tiedoston (app
 
 Jokaista yksittäistä panimoa kohti siis luodaan listaan div-tagien sisällä olevat rivit. Ensimmäiselle riville tulee panimon nimi ja toiselle perustamisvuosi.
 
-Partials-tiedostot nimetään käyttäen tiedoston alussa alaviivaa, jotta ne pystytänä jo silmäyksellä erottamaan normaaleista näkymistä.
+Partials-tiedostot nimetään käyttäen tiedoston alussa alaviivaa, jotta ne pystytään jo silmäyksellä erottamaan normaaleista näkymistä.
 
 Partialin määrittelyssä ja käytössä on hieman Rails-magiaa. Partialia siis kutsutaan seuraavasti:
 
@@ -1059,7 +1059,7 @@ Koska muutamme pian yksittäisen panimoin näkymää, mutta emme halua samaa tem
 <%= link_to "New brewery", new_brewery_path %>
 ```
 
-Partialin \_brewery.html.erb koodi on siis copypasteuttu suoraan kaikkien panimoiden templaten sisään.
+Partialin \_brewery.html.erb koodi on siis copypastettu suoraan kaikkien panimoiden templaten sisään.
 
 > ## Tehtävä 7: Panimon sivun hiominen
 >
@@ -1067,7 +1067,7 @@ Partialin \_brewery.html.erb koodi on siis copypasteuttu suoraan kaikkien panimo
 >
 > Muokkaa valmista sivua siten, että panimon nimestä tulee h2-tason otsikko ja vuosi ilmoitetaan kursivoituna tyyliin "_Established_ _in_ _1897_". Tämän tehdäksesi on otettava partialsin renderöinti pois käytöstä ja tehtävä renderöinti ilman sen apua.
 >
-> Nämä, ja seuraavan tehtävän muutokset siis tehdään ykisttäisen panimon tietojen näyttämisestä huolehtivaan partialiin \_brewery.html.erb
+> Nämä, ja seuraavan tehtävän muutokset siis tehdään yksittäisen panimon tietojen näyttämisestä huolehtivaan partialiin \_brewery.html.erb
 
 Jatketaan muutosten tekemistä.
 
@@ -1511,8 +1511,8 @@ sqlite3 gem on siis käytössä ainoastaan development- ja test-ympäristöissä
 
 ## Tehtävien palautus
 
-Commitoi kaikki tekemäsi muutokset ja pushaa koodi Githubiin. Lisää GitFubin readme-tiedostoon linkki sovelluksen Heroku-instanssiin. Oletusarvoisesti Rails-sovelluksen readme-tiedostoon generoituvan sisältö kannattanee poistaa. _Sovelluksen vieminen Herokuun ei ole edellytys palautuksen tekeminen, se on kuitenkin ehdottoman suositeltavaa ja hyödyllistä._ 
+Commitoi kaikki tekemäsi muutokset ja pushaa koodi Githubiin. Lisää GitHubin readme-tiedostoon linkki sovelluksen Heroku-instanssiin. Oletusarvoisesti Rails-sovelluksen readme-tiedostoon generoituvan sisältö kannattanee poistaa. _Sovelluksen vieminen Herokuun ei ole edellytys palautuksen tekeminen, se on kuitenkin ehdottoman suositeltavaa ja hyödyllistä._ 
 
-Jos käytät yksityistä repositoria, lisää käyttäjät mluukkai ja kaltsoon collaboraattoreiksi!
+Jos käytät yksityistä repositoriota, lisää käyttäjät mluukkai ja kaltsoon collaboraattoreiksi!
 
 Tehtävät kirjataan palautetuksi osoitteeseen https://studies.cs.helsinki.fi/stats/courses/rails2022
