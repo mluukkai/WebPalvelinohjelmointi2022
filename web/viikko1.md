@@ -1293,33 +1293,7 @@ Koska metodikutsun parametrin tyyppi on Beer, tietää Rails, että on tarkoitus
 
 ## Sovellus internettiin
 
-Tällä hetkellä käytännöllisin tapa sovellusten hostaamiseen on PaaS (eli Platform as a Service) -palvelu [Heroku](http://heroku.com). Heroku tarjoaa web-sovellukselle tietokannan ja suoritusympäristön. Vähän kapasiteettia käyttäville sovelluksille Heroku on ilmainen.
-
-Sovelluksen deployaaminen Herokuun onnistuu helpoiten jos sovelluksen hakemisto on oma git-repositorionsa.
-
-Jos et ole käyttänyt aiemmin Herokua
-
-- luo Herokuun tunnus.
-- luo ssh-avain ja lisää se herokuun sivulla https://dashboard.heroku.com/account
-  - ohje ssh-avaimen luomiseen https://github.com/mluukkai/otm-2018/blob/master/tehtavat/viikko1.md#julkinen-avain
-- Asenna komentoriviliittymän sisältävä Heroku CLI sivun https://devcenter.heroku.com/articles/heroku-cli ohjeiden mukaan.
-  - osaston koneilta ja päivitysten suhteen ajantasaisista
-
-Asennettuasi komentorivikäyttöliittymän mene sovelluksen juurihakemistoon, ja luo sovellusta varten heroku-instanssi komennolla <code>heroku create</code>:
-
-```ruby
-$ heroku create
-Creating app... done, ⬢ young-escarpment-87255
-https://young-escarpment-87255.herokuapp.com/ | https://git.heroku.com/young-escarpment-87255.git
-```
-
-Syötä pyydettäessä Heroku-tunnuksesi.
-
-Sovelluksen URL tulee olemaan tässä tapauksessa https://young-escarpment-87255.herokuapp.com/. Sovelluksen URLin alkuosan saa haluamaansa muotoon antamalla komennon muodossa **heroku create urlin_alkuosa**.
-
-**Huomaa**, että sovelluksen juuressa, eli osoitteessa https://young-escarpment-87255.herokuapp.com/ ei ole (tällä hetkellä) mitään. Sovelluksemme oluet tulevat löytymään osoitteesta https://young-escarpment-87255.herokuapp.com/beers ja panimot osoitteesta https://young-escarpment-87255.herokuapp.com/breweries
-
-Railsissa sovellukset käyttävät oletusarvoisesti sqlite-tietokantaa, mutta Herokussa käytössä on PostgreSQL-tietokanta. Rails-sovelluksen käyttämät kirjastot eli Rubyn termein gemit on määritelty sovelluksen juuressa olevassa Gemfile-nimisessä tiedostossa. Jotta saamme PostgreSQLn käyttöön, joudumme tekemään muutoksen Gemfileen.
+Railsissa sovellukset käyttävät oletusarvoisesti sqlite-tietokantaa, mutta tuotantokäytössä on syytä käyttää jotain todellista tietokantaa, kuten PostgreSQL:ää. Rails-sovelluksen käyttämät kirjastot eli Rubyn termein gemit on määritelty sovelluksen juuressa olevassa Gemfile-nimisessä tiedostossa. Jotta saamme PostgreSQLn käyttöön, joudumme tekemään muutoksen Gemfileen.
 
 Poista rivi
 
@@ -1367,10 +1341,70 @@ Committoidaan kaikki muutokset versionhallintaan antamalla komennot:
 
 ```ruby
 git add -A
-git commit -m"updated Gemfile for Heroku"
+git commit -m"updated Gemfile for Internet"
 ```
 
-Nyt olemme valmiina käynnistämään sovelluksen herokussa. Sovellus käynnistetään suorittamalla komentoriviltä operaatio <code>git push heroku main</code>
+Sovellusten hostaamiseen, eli "internettiin laittamiseen" on olemassa lukematon määrä erilaisia ratkaisuja. Helpoimpia näistä sovelluskehittäjän kannalta ovat ns PaaS (eli Platform as a Service) -palvelut, jotka huolehtivat sovelluskehittäjän puolesta tietokannan ja suoritusympäristön asentamisen.
+
+Kymmenen vuoden ajan PaaS-ratkaisujen ykkönen on ollut [Heroku](http://heroku.com). Elokuun 2022 lopussa Heroku ilmoitti että 27.11.2022 alkaen alustan maksuttomat palvelut loppuvat. Tämän takia esittelemme seuraavassa myös lupaavan korvaajan [Fly.io](https://fly.io/). Voit käyttää kumpaa vaan kunhan muistat sen että Herokun ilmaisuus loppuu pian. Heroku on lupaillut jonkinlaista ilmaista käyttömahdollisuutta opiskelijoille, mutta sen varaan ei kannata liiaksi tässä vaiheessa laskea.
+
+### Fly.io
+
+Luo tunnus [Fly.io](https://fly.io/)-palveluun. En enää muista mitä itse tarkalleen tein, mutta kirjauduin palveluun GitHub-tunnuksen kautta.
+
+Asenna Fly.io [tämän ohjeen](https://fly.io/docs/getting-started/installing-flyctl/) mukaan.
+
+Edetään sitten noudattaen Fly.io:n [Rails](https://fly.io/docs/rails/getting-started/)-ohjetta.
+
+Mene sovelluksen hakemistoon ja luo Fly.io-sovellus komennolla `fly launch`. Samalla tapahtuu postgres-tietokannan luominen. Vastaile kysymyksiin "sopivasti".
+
+Vie sovellus tuotantoon komennolla `fly deploy`. Tämä komento toistetaan aina kun sovellukseen uusi versio halutaan internettiin.
+
+Sovelluksen saa avattua selaimeen komennolla `fly open`.
+
+**Huomaa**, että sovelluksen juuressa, eli esim. omassa tapauksessani osoitteessa https://ratebeer.fly.dev/ ei ole (tällä hetkellä) mitään. Sovelluksemme oluet tulevat löytymään osoitteesta https://ratebeer.fly.dev/beers ja panimot osoitteesta https://ratebeer.fly.dev/breweries
+
+Jos jokin ei toimi, vikaa kannattaa etsiä palvelimen lokeista jotka näkee komennolla `fly logs`.
+
+Myös palvelimella olevan sovelluksen Rails-konsoliin on mahdollista ottaa yhteys, se tapahtuu menemällä ensin sovellusta pyörittävään Docker-konttiin komennolla `fly ssh console` ja antamalla konsolissa komento `/app/bin/rails c`.
+
+Ennen komentoa joudut todennäköisesti autentikoitumaan komennolla `fly log` 
+
+Myös sovelluksen postgres-tietokantaan on mahdollista ottaa yhteys komennolla `flyctl postgres connect -a tietokannan_nimi` . Tietokannan nimi on sovelluksen nimi, jonka perään on lisätty `-db`. Oman sovelluksen nimi on ratebeer, joten tietokantayhteys onnistuu seuraavasti
+
+`flyctl postgres connect -a ratebeer-db`
+
+Kokemusta Fly.io:n käytöstä laitoksen kursseilla ei vielä juurikaan ole, jos törmään ongelmiin, kysy apua Discordissa.
+
+Fly.io:ssa tapahtuu kaikenlaista mielenkiintoista pellin alla. Sovellus suoritetaan ns. [Docker](https://www.docker.com/)-kontissa. Hakemistoosi syntyy kontin muodostamisen määrittelevä tiedosto Dockerfile. Docker on tämän päivän ja tulevaisuuden ykkösteknologia sovellusten tuotantokäytössä ja monessa muussa. Tällä kurssilla pärjäät vielä ilman konepellin alle kurkkimista, mutta syvällisempi tutustuminen Dockeriin on ohjelmistoalan ihmisille jo lähes välttämättömyys. Kun aikaa jää, kannattaa suorittaa kurssi [DevOps with Docker](https://devopswithdocker.com/)
+
+### Heroku
+
+Sovelluksen deployaaminen Herokuun onnistuu helpoiten jos sovelluksen hakemisto on oma git-repositorionsa.
+
+Jos et ole käyttänyt aiemmin Herokua
+
+- luo Herokuun tunnus.
+- luo ssh-avain ja lisää se herokuun sivulla https://dashboard.heroku.com/account
+  - ohje ssh-avaimen luomiseen https://github.com/mluukkai/otm-2018/blob/master/tehtavat/viikko1.md#julkinen-avain
+- Asenna komentoriviliittymän sisältävä Heroku CLI sivun https://devcenter.heroku.com/articles/heroku-cli ohjeiden mukaan.
+
+Asennettuasi komentorivikäyttöliittymän mene sovelluksen juurihakemistoon, ja luo sovellusta varten heroku-instanssi komennolla <code>heroku create</code>:
+
+```ruby
+$ heroku create
+Creating app... done, ⬢ young-escarpment-87255
+https://young-escarpment-87255.herokuapp.com/ | https://git.heroku.com/young-escarpment-87255.git
+```
+
+Syötä pyydettäessä Heroku-tunnuksesi.
+
+Sovelluksen URL tulee olemaan tässä tapauksessa https://young-escarpment-87255.herokuapp.com/. Sovelluksen URLin alkuosan saa haluamaansa muotoon antamalla komennon muodossa **heroku create urlin_alkuosa**.
+
+**Huomaa**, että sovelluksen juuressa, eli osoitteessa https://young-escarpment-87255.herokuapp.com/ ei ole (tällä hetkellä) mitään. Sovelluksemme oluet tulevat löytymään osoitteesta https://young-escarpment-87255.herokuapp.com/beers ja panimot osoitteesta https://young-escarpment-87255.herokuapp.com/breweries
+
+
+Nyt olemme valmiina käynnistämään sovelluksen Herokussa. Sovellus käynnistetään suorittamalla komentoriviltä operaatio <code>git push heroku main</code>
 
 ```ruby
 $ git push heroku main
@@ -1511,7 +1545,7 @@ sqlite3 gem on siis käytössä ainoastaan development- ja test-ympäristöissä
 
 ## Tehtävien palautus
 
-Commitoi kaikki tekemäsi muutokset ja pushaa koodi Githubiin. Lisää GitFubin readme-tiedostoon linkki sovelluksen Heroku-instanssiin. Oletusarvoisesti Rails-sovelluksen readme-tiedostoon generoituvan sisältö kannattanee poistaa. _Sovelluksen vieminen Herokuun ei ole edellytys palautuksen tekeminen, se on kuitenkin ehdottoman suositeltavaa ja hyödyllistä._ 
+Commitoi kaikki tekemäsi muutokset ja pushaa koodi Githubiin. Lisää GitFubin readme-tiedostoon linkki sovelluksen Heroku- tai Fly.io-instanssiin. Oletusarvoisesti Rails-sovelluksen readme-tiedostoon generoituvan sisältö kannattanee poistaa. _Sovelluksen vieminen Herokuun ei ole edellytys palautuksen tekeminen, se on kuitenkin ehdottoman suositeltavaa ja hyödyllistä._ 
 
 Jos käytät yksityistä repositoria, lisää käyttäjät mluukkai ja kaltsoon collaboraattoreiksi!
 

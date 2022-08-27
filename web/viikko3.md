@@ -791,7 +791,7 @@ Sivulla tarvittaessa näytettävät, seuraavaan HTTP-pyyntöön muistettavat eli
 
 Sovelluksessamme on tällä hetkellä pieni ongelma: on mahdollista luoda useita käyttäjiä, joilla on sama käyttäjätunnus. User-kontrollerin metodissa <code>create</code> pitäisi siis tarkastaa, ettei <code>username</code> ole jo käytössä.
 
-Railsiin on sisäänrakennettu monipuolinen mekanismi olioiden kenttien validointiin, ks http://guides.rubyonrails.org/active_record_validations.html ja http://apidock.com/rails/ActiveModel/Validations/ClassMethods
+Railsiin on sisäänrakennettu monipuolinen mekanismi olioiden kenttien validointiin, ks http://guides.rubyonrails.org/active_record_validations.html
 
 Käyttäjätunnuksen yksikäsitteisyyden validointi onkin helppoa, pieni lisäys User-luokkaan riittää:
 
@@ -1057,8 +1057,8 @@ User.first.beers
   name: "Iso 3",
   style: "Lager",
   brewery_id: 1,
-  created_at: Sat, 01 Sep 2018 16:41:53 UTC +00:00,
-  updated_at: Sat, 01 Sep 2018 16:41:53 UTC +00:00>,
+  created_at: Sun, 21 Aug 2022 15:25:05 UTC +00:00,
+  updated_at: Sun, 21 Aug 2022 15:25:05 UTC +00:00>,
  #<Beer:0x00007fbe23b8a608
   id: 1,
   # ...
@@ -1225,27 +1225,25 @@ Talletetaan käyttäjälle salasana:
 > u.password = "salainen"
 > u.password_confirmation = "salainen"
 > u.save
-   (0.1ms)  begin transaction
-  User Exists (0.2ms)  SELECT  1 AS one FROM "users" WHERE "users"."username" = ? AND "users"."id" != ? LIMIT ?  [["username", "hellas"], ["id", 1], ["LIMIT", 1]]
-  User Update (0.4ms)  UPDATE "users" SET "updated_at" = ?, "password_digest" = ? WHERE "users"."id" = ?  [["updated_at", "2018-09-11 15:39:19.258281"], ["password_digest", "$2a$10$UVsfl5fYQfQDLqI8nsn/Zejpn/dUqzqqhzZ6jDIRzcb7RvArfevIq"], ["id", 1]]
-   (1.5ms)  commit transaction
+  TRANSACTION (0.1ms)  begin transaction
+  User Exists? (2.9ms)  SELECT 1 AS one FROM "users" WHERE "users"."username" = ? AND "users"."id" != ? LIMIT ?  [["username", "mluukkai"], ["id", 1], ["LIMIT", 1]]
+  User Update (15.3ms)  UPDATE "users" SET "updated_at" = ?, "password_digest" = ? WHERE "users"."id" = ?  [["updated_at", "2022-08-25 11:41:12.367244"], ["password_digest", "[FILTERED]"], ["id", 1]]
+  TRANSACTION (10.8ms)  commit transaction
 => true
->
 ```
 
 Autentikointi tapahtuu <code>User</code>-olioille lisätyn metodin <code>authenticate</code> avulla seuraavasti:
 
 ```ruby
-> u.authenticate "salainen"
-=> #<User:0x00007fb9d59ffce0
+>  u.authenticate "salainen"
+=>
+#<User:0x00007f320cdbba38
  id: 1,
- username: "hellas",
- created_at: Tue, 11 Sep 2018 07:28:39 UTC +00:00,
- updated_at: Tue, 11 Sep 2018 15:39:19 UTC +00:00,
- password_digest: "$2a$10$UVsfl5fYQfQDLqI8nsn/Zejpn/dUqzqqhzZ6jDIRzcb7RvArfevIq">
-> u.authenticate "this_is_wrong_password"
- => false
->
+ username: "mluukkai",
+ created_at: Sun, 21 Aug 2022 15:35:05.281921000 UTC +00:00,
+ updated_at: Thu, 25 Aug 2022 11:41:12.367244000 UTC +00:00,
+ password_digest: "[FILTERED]">
+irb(main):006:0>
 ```
 
 eli metodi <code>authenticate</code> palauttaa <code>false</code>, jos sille parametrina annettu salasana on väärä. Jos salasana on oikea, palauttaa metodi olion itsensä.
@@ -1416,8 +1414,8 @@ eli ensin se renderöi \_form-templatessa olevat elementit ja sen jälkeen pari 
 Haluaisimme siis poistaa lomakkeesta seuraavat
 
 ```erb
-<div class="field">
-  <%= form.label :username %>
+<div>
+  <%= form.label :username, style: "display: block" %>
   <%= form.text_field :username %>
 </div>
 ```
@@ -1428,9 +1426,9 @@ Lomake voi kysyä oliolta <code>@user</code> onko se vielä tietokantaan tallent
 
 ```erb
 <% if @user.new_record? %>
-  <div class="field">
-  <%= form.label :username %>
-  <%= form.text_field :username %>
+  <div>
+    <%= form.label :username, style: "display: block" %>
+    <%= form.text_field :username %>
   </div>
 <% end %>
 ```
@@ -1463,7 +1461,11 @@ Muutosten jälkeen käyttäjän tietojen muuttamislomake näyttää seuraavalta:
 
 ![kuva](https://raw.githubusercontent.com/mluukkai/WebPalvelinohjelmointi2022/main/images/ratebeer-w3-8.png)
 
-## Ongelmia Herokussa
+## Sovellus internetiin
+
+Viikon lopuksi on taas aika deployata sovellus Fly.io:n Herokuun. Deployment Fly.io:n onnistuu ehkä ongelmitta, sillä Fly.io suorittaa automaattisesti sovellukseen määritellyt tietokantamigraatiot. Herokun suhteen tilanne on toisin.
+
+### Ongelmia Herokussa
 
 Kun ohjelman päivitetty versio deployataan herokuun, törmätään jälleen ongelmiin. Kaikkien reittausten ja kaikkien käyttäjien sivu ja signup-linkki saavat aikaan tutun virheen:
 
@@ -1484,16 +1486,16 @@ Myös signup-sivu toimii migraatioiden suorittamisen jälkeen.
 Reittausten sivun ongelma ei korjaantunut migraatioiden avulla ja syytä on etsittävä lokeista:
 
 ```ruby
-2018-09-11T16:28:33.610096+00:00 app[web.1]: [2fb11437-8b3c-4ec2-a65c-5f725a7e65b4] ActionView::Template::Error (undefined method `name' for nil:NilClass):
-2018-09-11T16:28:33.610221+00:00 app[web.1]: [2fb11437-8b3c-4ec2-a65c-5f725a7e65b4]     2:
-2018-09-11T16:28:33.610225+00:00 app[web.1]: [2fb11437-8b3c-4ec2-a65c-5f725a7e65b4]     3: <ul>
-2018-09-11T16:28:33.610227+00:00 app[web.1]: [2fb11437-8b3c-4ec2-a65c-5f725a7e65b4]     4:  <% @ratings.each do |rating| %>
-2018-09-11T16:28:33.610229+00:00 app[web.1]: [2fb11437-8b3c-4ec2-a65c-5f725a7e65b4]     5:    <li> <%= rating %> <%= link_to rating.user.username, rating.user %></li>
-2018-09-11T16:28:33.610231+00:00 app[web.1]: [2fb11437-8b3c-4ec2-a65c-5f725a7e65b4]     6:  <% end %>
-2018-09-11T16:28:33.610232+00:00 app[web.1]: [2fb11437-8b3c-4ec2-a65c-5f725a7e65b4]     7: </ul>
-2018-09-11T16:28:33.610234+00:00 app[web.1]: [2fb11437-8b3c-4ec2-a65c-5f725a7e65b4]     8:
-2018-09-11T16:28:33.610239+00:00 app[web.1]: [2fb11437-8b3c-4ec2-a65c-5f725a7e65b4]
-2018-09-11T16:28:33.610241+00:00 app[web.1]: [2fb11437-8b3c-4ec2-a65c-5f725a7e65b4] app/models/rating.rb:10:in `to_s'
+2022-08-24T16:28:33.610096+00:00 app[web.1]: [2fb11437-8b3c-4ec2-a65c-5f725a7e65b4] ActionView::Template::Error (undefined method `name' for nil:NilClass):
+2022-08-24T16:28:33.610221+00:00 app[web.1]: [2fb11437-8b3c-4ec2-a65c-5f725a7e65b4]     2:
+2022-08-24T16:28:33.610225+00:00 app[web.1]: [2fb11437-8b3c-4ec2-a65c-5f725a7e65b4]     3: <ul>
+2022-08-24T16:28:33.610227+00:00 app[web.1]: [2fb11437-8b3c-4ec2-a65c-5f725a7e65b4]     4:  <% @ratings.each do |rating| %>
+2022-08-24T16:28:33.610229+00:00 app[web.1]: [2fb11437-8b3c-4ec2-a65c-5f725a7e65b4]     5:    <li> <%= rating %> <%= link_to rating.user.username, rating.user %></li>
+2022-08-24T16:28:33.610231+00:00 app[web.1]: [2fb11437-8b3c-4ec2-a65c-5f725a7e65b4]     6:  <% end %>
+2022-08-24T16:28:33.610232+00:00 app[web.1]: [2fb11437-8b3c-4ec2-a65c-5f725a7e65b4]     7: </ul>
+2022-08-24T16:28:33.610234+00:00 app[web.1]: [2fb11437-8b3c-4ec2-a65c-5f725a7e65b4]     8:
+2022-08-24T16:28:33.610239+00:00 app[web.1]: [2fb11437-8b3c-4ec2-a65c-5f725a7e65b4]
+2022-08-24T16:28:33.610241+00:00 app[web.1]: [2fb11437-8b3c-4ec2-a65c-5f725a7e65b4] app/models/rating.rb:10:in `to_s'
 ```
 
 Syy on jälleen tuttu, eli näkymäkoodi yrittää kutsua metodia <code>username</code> nil-arvoiselle oliolle. Syyn täytyy olla <code>link_to</code> metodissa oleva parametri

@@ -1380,9 +1380,11 @@ Kannattaa huomata, että HTTP Basic -autentikaatiota ei tule käyttää kuin suo
 >
 > VIHJE2: koodilohkon pitää siis saada arvokseen tosi/epätosi riipuen siitä onko salasana oikein. Arvon ei kuitenkaan tarvitse välttämättä olla true tai false, sillä Ruby tulkitsee myös muut arvot joko todeksi (truthy) tai epätodeksi (falsy), esim. _nil_ tulkitaan epätodeksi katso tarkemmin esim. seuraavasta https://learn.co/lessons/truthiness-in-ruby-readme
 
-## Ongelmia Herokussa
+## Sovellus internetiin
 
-Viikon lopuksi on taas aika deployata sovellus Herokuun.
+Viikon lopuksi on taas aika deployata sovellus Fly.io:n Herokuun. Deployment Fly.io:n onnistuu ehkä ongelmitta, sillä Fly.io suorittaa automaattisesti sovellukseen määritellyt tietokantamigraatiot. Herokun suhteen tilanne on toisin.
+
+### Ongelmia Herokussa
 
 Navigoitaessa reittausten sivulle syntyy pahaenteinen virheilmoitus:
 
@@ -1496,6 +1498,6 @@ Koska kyseessä on tuotannossa oleva ohjelma, tietokannan resetointi (<code>rail
 
 ## Tehtävien palautus
 
-Commitoi kaikki tekemäsi muutokset ja pushaa koodi GitHubiin. Deployaa myös uusin versio Herokuun.
+Commitoi kaikki tekemäsi muutokset ja pushaa koodi GitHubiin. Deployaa myös uusin versio Fly.io:n tai Herokuun.
 
 Tehtävät kirjataan palautetuksi osoitteeseen https://studies.cs.helsinki.fi/stats/courses/rails2022
