@@ -1360,7 +1360,7 @@ describe "User" do
 end
 ```
 
-Testi demonstroi lomakkeen kanssa käytävää interaktiota, komento <code>fill_in</code> etsii lomakkeesta id-kentän perusteella tekstikenttää, jolle se syöttää parametrina annetun arvon. <code>click_button</code> toimii kuten arvata saattaa, eli painaa sivulta etsittävää painiketta.
+Testi demonstroi lomakkeen kanssa käytävää interaktiota, komento <code>fill\_in</code> etsii lomakkeesta id-kentän perusteella tekstikenttää, jolle se syöttää parametrina annetun arvon. <code>click\_button</code> toimii kuten arvata saattaa, eli painaa sivulta etsittävää painiketta.
 
 Huomaa, että testissä on <code>before :each</code>-lohko, joka luo ennen jokaista testiä FactoryBotiä käyttäen User-olion. Ilman olion luomista kirjautuminen ei onnistuisi, sillä tietokanta on jokaiseen testin suoritukseen lähdettäessä tyhjä.
 
@@ -1405,7 +1405,7 @@ it "when signed up with good credentials, is added to the system" do
 end
 ```
 
-Huomaa, että lomakkeen kentät määriteltiin <code>fill*in</code>-metodeissa hieman eri tavalla kuin kirjautumislomakkeessa. Kenttien id:t voi ja kannattaa aina tarkastaa katsomalla sivun lähdekoodia selaimen \_view page source* -toiminnolla.
+Huomaa, että lomakkeen kentät määriteltiin <code>fill\_in</code>-metodeissa hieman eri tavalla kuin kirjautumislomakkeessa. Kenttien id:t voi ja kannattaa aina tarkastaa katsomalla sivun lähdekoodia selaimen _view page source_ -toiminnolla.
 
 Testi siis odottaa, että _Create user_ -painikkeen klikkaaminen muuttaa tietokantaan talletettujen käyttäjien määrää yhdellä. Syntaksi on hieno, mutta kestää hetki ennen kuin koko Rspecin ilmaisuvoimainen kieli alkaa tuntua tutulta.
 
