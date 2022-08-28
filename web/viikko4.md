@@ -1537,7 +1537,7 @@ end
 
 Kirjautumisen toteutuksen siirtäminen apumetodiin siis kasvattaa myös testien luettavuutta, ja jos kirjautumissivun toiminnallisuus myöhemmin muuttuu, on testien ylläpito helppoa, koska muutoksia ei tarvita kuin yhteen kohtaan.
 
-Saattaa olla järkevää siirtää myös aiemmin tiedostoon _user_sper.rb_ määrittelemämme apumetodit <code>create*beer_with_rating</code> ja <code>create_beers_with_many_ratings</code> moduuliin \_Helpers*, erityisesti jos jatkossa tulee tilanteita, joissa samaa toiminnallisuutta tarvitaan muissakin testeissä.
+Saattaa olla järkevää siirtää myös aiemmin tiedostoon _user_spec.rb_ määrittelemämme apumetodit <code>create\_beer\_with\_rating</code> ja <code>create\_beers\_with\_many\_ratings</code> moduuliin _Helpers_, erityisesti jos jatkossa tulee tilanteita, joissa samaa toiminnallisuutta tarvitaan muissakin testeissä.
 
 > ## Tehtävä 5
 >
