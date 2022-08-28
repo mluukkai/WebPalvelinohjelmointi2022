@@ -1646,7 +1646,7 @@ Githubissa olevat projektit on helppo asettaa Github actionsin tarkkailtaviksi.
 > name: "Ruby on Rails CI"
 > on:
 >   push:
->     branches: [ "main" ]
+>     branches: [ "main" ] # Jos repositoriosi päähaara ei ole main, muuta nämä
 >   pull_request:
 >     branches: [ "main" ]
 > jobs:
@@ -1678,7 +1678,7 @@ Githubissa olevat projektit on helppo asettaa Github actionsin tarkkailtaviksi.
 >
 > Erona defaultina tarjottavaan versioon tässä on se, että sekä ubuntusta ja rubyn setuppaavasta actionista käytetään uusimpia versiota, jotta rubyn 3.1.2. versio toimii.
 >
-> Vaihdettuasi sisällön valitse Start commit ja lisää tiedosto versionhallintaasi. Github actions lähteekin suoraan käyntiin ja suorittaa testit.
+> Vaihdettuasi sisällön valitse Start commit ja lisää tiedosto versionhallintaasi. Github actions lähteekin suoraan käyntiin ja suorittaa testit. 
 >
 > Jos jokin testi ei toimi Github actionseissa korjaa se!
 
