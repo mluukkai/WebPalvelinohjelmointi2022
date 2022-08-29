@@ -787,7 +787,7 @@ Vaikka tiedostossa olevat requiret näyttävät olevan kommenteissa, on kuitenki
 
 Asset pipeline mahdollistaa myös [coffeescriptin](http://coffeescript.org/) käyttämisen, tällöin tiedostojen päätteeksi tulee <code>.js.coffee</code>. Sovellusta suoritettaessa scprockets kääntää coffeescriptin automaattisesti javascriptiksi.
 
-Tuotantokäytössä sovelluksella ei suorituskykysyistä yleensä kannata olla useampia javascript- tai tyylitiedostoja. Kun sovellusta aletaan suorittaa tuotantoympäristössä (eli production-moodissa), sprockets yhdistääkin kaikki sovelluksen javascript- ja tyylitiedostot yksittäisiksi, optimoiduiksi tiedostoiksi. Huomaamme tämän jos katsomme herokussa olevan sovelluksen html-lähdekoodia, esim: https://ratebeer22.herokuapp.com/ sisältää se nyt ainoastaan yhden js- ja yhden css-tiedoston joista varsinkin js-tiedoston luettavuus on ihmisen kannalta heikko.
+Tuotantokäytössä sovelluksella ei suorituskykysyistä yleensä kannata olla useampia javascript- tai tyylitiedostoja. Kun sovellusta aletaan suorittaa tuotantoympäristössä (eli production-moodissa), sprockets yhdistääkin kaikki sovelluksen javascript- ja tyylitiedostot yksittäisiksi, optimoiduiksi tiedostoiksi. Huomaamme tämän jos katsomme herokussa olevan sovelluksen html-lähdekoodia, esim: https://ratebeer22.fly.dev/ sisältää se nyt ainoastaan yhden js- ja yhden css-tiedoston joista varsinkin js-tiedoston luettavuus on ihmisen kannalta heikko.
 
 Lisää asset pipelinestä ja mm. javascriptin liittämisestä railssovelluksiin mm. seuraavissa:
 

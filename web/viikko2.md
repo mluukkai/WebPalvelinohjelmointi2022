@@ -2,7 +2,7 @@ Jatkamme sovelluksen rakentamista siitä, mihin jäimme viikon 1 lopussa. Allaol
 
 ## Järkevä editori
 
-Käytäthän jo järkevää editoria, eli jotain muuta kun nanoa, geditiä tai notepadia? Suositeltavia editoreja ovat esim. RubyMine, Visual Studio Code ks lisää [täältä](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/main/wadror.md#editoriide)
+Käytäthän jo järkevää editoria, eli jotain muuta kun nanoa, geditiä tai notepadia? Suositeltavia editoreja ovat esim. RubyMine, Visual Studio Code, ks. lisää [täältä](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/main/wadror.md#editoriide).
 
 Nykyään hyvin yleisesti käytössä on [Visual Studio Codea](https://code.visualstudio.com). Jos käytät VSC:tä, kannattaa ehdottamasti asentaa [Ruby-plugin](https://code.visualstudio.com/docs/languages/overview)
 
