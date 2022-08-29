@@ -1350,14 +1350,14 @@ Kymmenen vuoden ajan PaaS-ratkaisujen ykkönen on ollut [Heroku](http://heroku.c
 
 ### Fly.io
 
-Luo tunnus [Fly.io](https://fly.io/)-palveluun. En enää muista mitä itse tarkalleen tein, mutta kirjauduin palveluun GitHub-tunnuksen kautta.
+Luo tunnus [Fly.io](https://fly.io/)-palveluun. Palveluun voi kirjautua myös GitHub-tunnuksella.
 
-Asenna Fly.io [tämän ohjeen](https://fly.io/docs/getting-started/installing-flyctl/) mukaan.
+Asenna Fly.io [tämän ohjeen](https://fly.io/docs/getting-started/installing-flyctl/) mukaan. Asennuksen yhteydessä sinua voidaan pyytää manuaalisesti tallentamaan Fly.ion vaatimat ympäristömuuttujat. Toimi kehoitteen mukaan.
 
 Edetään sitten noudattaen Fly.io:n [Rails](https://fly.io/docs/rails/getting-started/)-ohjetta.
 
-Mene sovelluksen hakemistoon ja luo Fly.io-sovellus komennolla `fly launch`. Samalla tapahtuu postgres-tietokannan luominen. Vastaile kysymyksiin "sopivasti".
-
+Mene sovelluksen hakemistoon ja luo Fly.io-sovellus komennolla `fly launch`. Samalla tapahtuu postgres-tietokannan luominen. Vastaile kysymyksiin "sopivasti". (Sovelluksen nimen tulee sisältää vain numeroita, pieniä kirjaimia ja väliviivoja.)
+    
 Vie sovellus tuotantoon komennolla `fly deploy`. Tämä komento toistetaan aina kun sovellukseen uusi versio halutaan internettiin.
 
 Sovelluksen saa avattua selaimeen komennolla `fly open`.
