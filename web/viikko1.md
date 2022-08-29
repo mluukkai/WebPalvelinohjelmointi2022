@@ -1550,3 +1550,5 @@ Commitoi kaikki tekemäsi muutokset ja pushaa koodi Githubiin. Lisää GitHubin 
 Jos käytät yksityistä repositoriota, lisää käyttäjät mluukkai ja kaltsoon collaboraattoreiksi!
 
 Tehtävät kirjataan palautetuksi osoitteeseen https://studies.cs.helsinki.fi/stats/courses/rails2022
+
+Jatketaan tykitystä: [viikko 2](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/main/web/viikko2.md).
