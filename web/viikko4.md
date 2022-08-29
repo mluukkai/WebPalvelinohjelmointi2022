@@ -30,7 +30,7 @@ eli pudotusvalikkojen valintavaihtoehdot välitetään lomakkeelle muuttujissa <
 def new
   @beer = Beer.new
   @breweries = Brewery.all
-  @styles = ["Weizen", "Lager", "Pale ale", "IPA", "Porter"]
+  @styles = ["Weizen", "Lager", "Pale ale", "IPA", "Porter", "Lowalcohol"]
 end
 ```
 
@@ -43,7 +43,7 @@ Syynä tälle on se, että uuden oluen luominen ja oluen tietojen editointi käy
 ```ruby
 def edit
   @breweries = Brewery.all
-  @styles = ["Weizen", "Lager", "Pale ale", "IPA", "Porter"]
+  @styles = ["Weizen", "Lager", "Pale ale", "IPA", "Porter", "Lowalcohol"]
 end
 ```
 
@@ -73,7 +73,7 @@ Onkin hyvin tyypillistä, että kontrollerimetodit <code>new</code>, <code>creat
 ```ruby
 def set_breweries_and_styles_for_template
   @breweries = Brewery.all
-  @styles = ["Weizen", "Lager", "Pale ale", "IPA", "Porter"]
+  @styles = ["Weizen", "Lager", "Pale ale", "IPA", "Porter", "Lowalcohol"]
 end
 ```
 
@@ -99,38 +99,38 @@ class BeersController < ApplicationController
 tällöin muuttujien <code>@styles</code> ja <code>@breweries</code> arvot asettava metodi siis suoritetaan automaattisesti aina ennen metodien
 <code>new</code>, <code>create</code> ja <code>edit</code> suoritusta. Metodissa <code>create</code> muuttujien arvot asetetaan ehkä turhaan sillä niitä tarvitaan ainoastaan validoinnin epäonnistuessa. Kenties olisikin parempi käyttää eksplisiittistä kutsua createssa.
 
-### Ongelmia Herokun kanssa
+### Ongelmia Herokun tai Fly.io:n kanssa
 
 Moni kurssin osallistujista on törmännyt siihen, että paikallisesti loistavasti toimiva sovellus on aiheuttanut Herokussa pahaenteisen virheilmoituksen _We're sorry, but something went wrong_.
 
 Heti ensimmäisenä kannattaa tarkistaa, että paikalliselta koneelta kaikki koodi on lisätty versionhallintaan, eli <code>git status</code>
 
-Epätriviaalit ongelmat selviävät aina Herokun lokin avulla. Lokia päästään tutkimaan komentoriviltä komennolla <code>heroku logs</code>
+Epätriviaalit ongelmat selviävät aina Herokun/Fly.io:n lokin avulla. Herokussa lokia päästään tutkimaan komentoriviltä komennolla <code>heroku logs</code> ja Fly.io:ta käytettäessä komennolla <code>fly logs</code>
 
-Seuraavassa tyypillisen ongelmatilanteen loki:
+Seuraavassa Herokulle tyypillisen ongelmatilanteen loki:
 
 ```ruby
 mbp-18:ratebeer-public mluukkai$ heroku logs
-2018-09-15T18:53:05.867973+00:00 app[web.1]:                   ON a.attrelid = d.adrelid AND a.attnum = d.adnum
-2018-09-15T18:53:05.867973+00:00 app[web.1]:
-2018-09-15T18:53:05.867973+00:00 app[web.1]:                                           ^
-2018-09-15T18:53:05.867973+00:00 app[web.1]:                WHERE a.attrelid = '"users"'::regclass
-2018-09-15T18:53:05.874380+00:00 app[web.1]: Completed 500 Internal Server Error in 10ms
-2018-09-15T18:53:05.878587+00:00 app[web.1]: :               SELECT a.attname, format_type(a.atttypid, a.atttypmod),
-2018-09-15T18:53:05.878587+00:00 app[web.1]:                                           ^
-2018-09-15T18:53:05.878587+00:00 app[web.1]:
-2018-09-15T18:53:05.868310+00:00 app[web.1]:
-2018-09-15T18:53:05.867973+00:00 app[web.1]:                      pg_get_expr(d.adbin, d.adrelid), a.attnotnull, a.atttypid, a.atttypmod
-2018-09-15T18:53:05.867973+00:00 app[web.1]:                  AND a.attnum > 0 AND NOT a.attisdropped
-2018-09-15T18:53:05.868310+00:00 app[web.1]:                ORDER BY a.attnum
-2018-09-15T18:53:05.878587+00:00 app[web.1]:                WHERE a.attrelid = '"users"'::regclass
-2018-09-15T18:53:05.867973+00:00 app[web.1]:                 FROM pg_attribute a LEFT JOIN pg_attrdef d
-2018-09-15T18:53:05.882824+00:00 app[web.1]: LINE 5:                WHERE a.attrelid = '"users"'::regclass
-2018-09-15T18:53:05.882824+00:00 app[web.1]:                                           ^
-2018-09-15T18:53:05.878587+00:00 app[web.1]:                      pg_get_expr(d.adbin, d.adrelid), a.attnotnull, a.atttypid, a.atttypmod
-2018-09-15T18:53:05.878587+00:00 app[web.1]:                   ON a.attrelid = d.adrelid AND a.attnum = d.adnum
-2018-09-15T18:53:05.874380+00:00 app[web.1]: Completed 500 Internal Server Error in 10ms
-2018-09-15T18:53:05.878587+00:00 app[web.1]: ActiveRecord::StatementInvalid (PG::UndefinedTable: ERROR:  relation "users" does not exist
+2022-08-28T18:53:05.867973+00:00 app[web.1]:                   ON a.attrelid = d.adrelid AND a.attnum = d.adnum
+2022-08-28T18:53:05.867973+00:00 app[web.1]:
+2022-08-28T18:53:05.867973+00:00 app[web.1]:                                           ^
+2022-08-28T18:53:05.867973+00:00 app[web.1]:                WHERE a.attrelid = '"users"'::regclass
+2022-08-28T18:53:05.874380+00:00 app[web.1]: Completed 500 Internal Server Error in 10ms
+2022-08-28T18:53:05.878587+00:00 app[web.1]: :               SELECT a.attname, format_type(a.atttypid, a.atttypmod),
+2022-08-28T18:53:05.878587+00:00 app[web.1]:                                           ^
+2022-08-28T18:53:05.878587+00:00 app[web.1]:
+2022-08-28T18:53:05.868310+00:00 app[web.1]:
+2022-08-28T18:53:05.867973+00:00 app[web.1]:                      pg_get_expr(d.adbin, d.adrelid), a.attnotnull, a.atttypid, a.atttypmod
+2022-08-28T18:53:05.867973+00:00 app[web.1]:                  AND a.attnum > 0 AND NOT a.attisdropped
+2022-08-28T18:53:05.868310+00:00 app[web.1]:                ORDER BY a.attnum
+2022-08-28T18:53:05.878587+00:00 app[web.1]:                WHERE a.attrelid = '"users"'::regclass
+2022-08-28T18:53:05.867973+00:00 app[web.1]:                 FROM pg_attribute a LEFT JOIN pg_attrdef d
+2022-08-28T18:53:05.882824+00:00 app[web.1]: LINE 5:                WHERE a.attrelid = '"users"'::regclass
+2022-08-28T18:53:05.882824+00:00 app[web.1]:                                           ^
+2022-08-28T18:53:05.878587+00:00 app[web.1]:                      pg_get_expr(d.adbin, d.adrelid), a.attnotnull, a.atttypid, a.atttypmod
+2022-08-28T18:53:05.878587+00:00 app[web.1]:                   ON a.attrelid = d.adrelid AND a.attnum = d.adnum
+2022-08-28T18:53:05.874380+00:00 app[web.1]: Completed 500 Internal Server Error in 10ms
+2022-08-28T18:53:05.878587+00:00 app[web.1]: ActiveRecord::StatementInvalid (PG::UndefinedTable: ERROR:  relation "users" does not exist
 ```
 
 lokia tarkasti lukemalla selviää että syynä on seuraava
@@ -143,82 +143,23 @@ eli migraatiot ovat jääneet suorittamatta. Korjaus on helppo:
 
     heroku run rails db:migrate
 
-Seuraavassa loki eräästä toisesta hyvin tyypillisestä virhetilanteesta:
+Fly.io suorittaa migraatiot automaattisesti tuotantoonviennin yhteydessä, joten todennäköisesti tämä virhe ei siellä ole vaivana.
+
+Seuraavassa loki eräästä toisesta, myös Fly.io:n kanssa hyvin tyypillisestä virhetilanteesta:
 
 ```ruby
-2018-09-15T19:04:43.830852+00:00 app[web.1]: Started POST "/ratings" for 84.253.203.234 at 2018-09-15 19:04:43 +0000
-2018-09-15T19:04:43.833992+00:00 app[web.1]:   Parameters: {"utf8"=>"✓", "authenticity_token"=>"n1VTj7WrICHZUT594fbxJBue2uqcSk6wrYQR7lY5nzk=", "rating"=>{"beer_id"=>"2", "score"=>"10"}, "commit"=>"Create Rating"}
-2018-09-15T19:04:43.833913+00:00 app[web.1]: Processing by RatingsController#create as HTML
-2018-09-15T19:04:43.833992+00:00 app[web.1]: Processing by RatingsController#create as HTML
-2018-09-15T19:04:43.833992+00:00 app[web.1]:   Parameters: {"utf8"=>"✓", "authenticity_token"=>"n1VTj7WrICHZUT594fbxJBue2uqcSk6wrYQR7lY5nzk=", "rating"=>{"beer_id"=>"2", "score"=>"10"}, "commit"=>"Create Rating"}
-2018-09-15T19:04:43.853276+00:00 app[web.1]:
-2018-09-15T19:04:43.851427+00:00 app[web.1]: Completed 500 Internal Server Error in 19ms
-2018-09-15T19:04:43.852028+00:00 app[web.1]: Completed 500 Internal Server Error in 19ms
-2018-09-15T19:04:43.853276+00:00 app[web.1]:   app/controllers/ratings_controller.rb:15:in `create'
-2018-09-15T19:04:43.853276+00:00 app[web.1]:
-2018-09-15T19:04:43.853276+00:00 app[web.1]: NoMethodError (undefined method `ratings' for nil:NilClass):
-2018-09-15T19:04:43.853276+00:00 app[web.1]:   app/controllers/ratings_controller.rb:15:in `create'
-2018-09-15T19:04:43.853276+00:00 app[web.1]:
-2018-09-15T19:04:43.853276+00:00 app[web.1]:
-2018-09-15T19:04:43.853276+00:00 app[web.1]: NoMethodError (undefined method `ratings' for nil:NilClass):
-2018-09-15T19:04:43.853276+00:00 app[web.1]:
-```
-
-Virhe on aiheutunut tiedoston _app/controllers/ratings_controller.rb_ rivillä 15 ja syynä on <code>NoMethodError (undefined method `ratings' for nil:NilClass)</code>.
-
-Katsotaan ko. tiedostoa ja ongelman aiheuttanutta riviä:
-
-```ruby
-def create
-  @rating = Rating.new params.require(:rating).permit(:score, :beer_id)
-
-  if @rating.save
-    current_user.ratings << @rating  ## virheen aiheuttanut rivi
-    redirect_to user_path current_user
-  else
-    @beers = Beer.all
-    render :new
-  end
-end
-```
-
-eli ongelman aiheutti se, että yritettiin tehdä reittaus tilanteessa, jossa kukaan ei ollut kirjaantuneena ja <code>current_user</code> oli <code>nil</code>. Ongelma voidaan korjata esim. seuraavasti:
-
-```ruby
-def create
-  @rating = Rating.new params.require(:rating).permit(:score, :beer_id)
-
-  if current_user.nil?
-    redirect_to signin_path, notice: 'you should be signed in'
-
-  @rating.user = current_user
-
-  if @rating.save
-    redirect_to current_user
-  else
-    @beers = Beer.all
-    render :new, status: 422
-  end
-end
-```
-
-eli jos käyttäjä ei ole kirjautunut, ohjataan selain kirjautumissivulle. Kannattaa myös poistaa _ratings_-näkymään ehkä jäänyt linkki, joka mahdollistaa reittauksen yrittämisen kirjautumattomana.
-
-Tarkastellaan lopuksi erään suorastaan klassikon asemaan nousseen virheen lokia:
-
-```ruby
-2018-09-15T19:32:31.609344+00:00 app[web.1]:     6:   <% @ratings.each do |rating| %>
-2018-09-15T19:32:31.609530+00:00 app[web.1]:
-2018-09-15T19:32:31.609530+00:00 app[web.1]:
-2018-09-15T19:32:31.609530+00:00 app[web.1]:   app/views/ratings/index.html.erb:6:in `_app_views_ratings_index_html_erb___254869282653960432_70194062879340'
-2018-09-15T19:32:31.609530+00:00 app[web.1]:
-2018-09-15T19:32:31.609530+00:00 app[web.1]: ActionView::Template::Error (undefined method `username' for nil:NilClass):
-2018-09-15T19:32:31.609344+00:00 app[web.1]:   app/views/ratings/index.html.erb:7:in `block in _app_views_ratings_index_html_erb___254869282653960432_70194062879340'
-2018-09-15T19:32:31.609530+00:00 app[web.1]:     7:       <li> <%= rating %> <%= link_to rating.user.username, rating.user %> </li>
-2018-09-15T19:32:31.609530+00:00 app[web.1]:     4:
-2018-09-15T19:32:31.609530+00:00 app[web.1]:     6:   <% @ratings.each do |rating| %>
-2018-09-15T19:32:31.609530+00:00 app[web.1]:     5: <ul>
-2018-09-15T19:32:31.609715+00:00 app[web.1]:    10:
+2022-08-28T19:32:31.609344+00:00 app[web.1]:     6:   <% @ratings.each do |rating| %>
+2022-08-28T19:32:31.609530+00:00 app[web.1]:
+2022-08-28T19:32:31.609530+00:00 app[web.1]:
+2022-08-28T19:32:31.609530+00:00 app[web.1]:   app/views/ratings/index.html.erb:6:in `_app_views_ratings_index_html_erb___254869282653960432_70194062879340'
+2022-08-28T19:32:31.609530+00:00 app[web.1]:
+2022-08-28T19:32:31.609530+00:00 app[web.1]: ActionView::Template::Error (undefined method `username' for nil:NilClass):
+2022-08-28T19:32:31.609344+00:00 app[web.1]:   app/views/ratings/index.html.erb:7:in `block in _app_views_ratings_index_html_erb___254869282653960432_70194062879340'
+2022-08-28T19:32:31.609530+00:00 app[web.1]:     7:       <li> <%= rating %> <%= link_to rating.user.username, rating.user %> </li>
+2022-08-28T19:32:31.609530+00:00 app[web.1]:     4:
+2022-08-28T19:32:31.609530+00:00 app[web.1]:     6:   <% @ratings.each do |rating| %>
+2022-08-28T19:32:31.609530+00:00 app[web.1]:     5: <ul>
+2022-08-28T19:32:31.609715+00:00 app[web.1]:    10:
 ```
 
 Tarkka silmä huomaa lokin seasta että ongelma on _ActionView::Template::Error (undefined method `username' for nil:NilClass)_ ja virhe syntyi tiedoston _app/views/ratings/index.html.erb_ riviä 7 suoritettaessa. Virheen aiheuttanut rivi on
@@ -229,13 +170,13 @@ Tarkka silmä huomaa lokin seasta että ongelma on _ActionView::Template::Error 
 
 vaikuttaa siis siltä, että tietokannassa on <code>rating</code>-olio, johon liittyvä <code>user</code> on <code>nil</code>. Kyseessä on siis jo [viikolta 2 tuttu](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/main/web/viikko2.md#ongelmia-herokussa) ongelma.
 
-Ongelman perimmäinen syy on joko se, että jonkin ratingin <code>user_id</code>-kentän arvo on <code>nil</code>, tai että jonkin rating-olion <code>user_id</code>:n arvona on virheellinen id. Tilanteesta selvitään esim. tuhoamalla 'huonot' rating-oliot komennolla <code>heroku run console</code> käynnistyvän Herokun konsolin avulla:
+Ongelman perimmäinen syy on joko se, että jonkin ratingin <code>user_id</code>-kentän arvo on <code>nil</code>, tai että jonkin rating-olion <code>user_id</code>:n arvona on virheellinen id. Tilanteesta selvitään esim. tuhoamalla 'huonot' rating-oliot konsolista käsin. Herokussa konsoli avautuu komennolla <code>heroku run console</code>. Fly.io:n konsoliin pääset antamalla ensin komennon <code>fly ssh console</code> ja sen jälkeen komennon <code>/app/bin/rails c</code>
 
 ```ruby
 > bad_ratings = Rating.all.select{ |r| r.user.nil? or r.beer.nil? }
-=> [#<Rating id: 1, score: 10, beer_id: 2, created_at: "2018-09-15 19:04:43", updated_at: "2018-09-15 19:04:43", user_id: nil>]
+=> [#<Rating id: 1, score: 10, beer_id: 2, created_at: "2022-08-28 19:04:43", updated_at: "2022-08-28 19:04:43", user_id: nil>]
 > bad_ratings.each{ |bad| bad.destroy }
-=> [#<Rating id: 1, score: 10, beer_id: 2, created_at: "2018-09-15 19:04:43", updated_at: "2018-09-15 19:04:43", user_id: nil>]
+=> [#<Rating id: 1, score: 10, beer_id: 2, created_at: "2022-08-28 19:04:43", updated_at: "2022-08-28 19:04:43", user_id: nil>]
 > Rating.all.select{ |r| r.user.nil? or r.beer.nil? }
 => []
 >
@@ -243,7 +184,7 @@ Ongelman perimmäinen syy on joko se, että jonkin ratingin <code>user_id</code>
 
 Ylläoleva hakee varalta kannasta myös ratingit, joihin ei liity mitään olemassaolevaa olutta.
 
-Eli jos joudut Herokun kanssa ongelmiin, selvitä analyyttisesti mistä on kyse, loki ja konsoli auttavat aina hädässä!
+Eli jos ja kun joudut Fly.io:n tai Herokun kanssa ongelmiin, selvitä analyyttisesti mistä on kyse, loki ja konsoli auttavat aina hädässä!
 
 ### Migraation peruminen
 
