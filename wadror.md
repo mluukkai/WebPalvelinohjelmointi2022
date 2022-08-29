@@ -20,7 +20,7 @@ Kurssille osallistuminen edellyttää hyvää ohjelmointirutiinia sekä valmiutt
 
 ## Suoritusmuoto
 
-Kurssin rakenne poikkeaa jossain määrin osaston kurssistandardista. Kurssilla tehdään ainoastaan yksi sovellus (joka tulee kurssin lopussa näyttämään suunilleen [tällaiselta](http://ratebeer22.herokuapp.com/)), samaa sovellusta tehdään sekä teoriamateriaalissa että teorian sekaan upotetuissa laskareissa. **Kurssin teoriamateriaalia ei pystykään pelkästään lukemaan; Materiaalia seuratessa tulee itse rakentaa matkan varrella täydentyvää sovellusta, sillä muuten tehtävien tekeminen on mahdotonta. Toisin sanoen kurssia on seurattava tasaisesti koko seitsemän viikon ajan.**
+Kurssin rakenne poikkeaa jossain määrin osaston kurssistandardista. Kurssilla tehdään ainoastaan yksi sovellus (joka tulee kurssin lopussa näyttämään suunilleen [tällaiselta](https://ratebeer22.fly.dev/)), samaa sovellusta tehdään sekä teoriamateriaalissa että teorian sekaan upotetuissa laskareissa. **Kurssin teoriamateriaalia ei pystykään pelkästään lukemaan; Materiaalia seuratessa tulee itse rakentaa matkan varrella täydentyvää sovellusta, sillä muuten tehtävien tekeminen on mahdotonta. Toisin sanoen kurssia on seurattava tasaisesti koko seitsemän viikon ajan.**
 
 Kurssi jakautuu seitsemään "viikkoon", eli osaan jotka tehtiin kurssin aiemmissa versiossa yhden viikon aikana. Tällä kurssilla on kuitenkin ainoastaan yksi deadline, 31.12.2022 klo 23.59.
 

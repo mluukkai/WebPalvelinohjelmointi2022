@@ -52,7 +52,7 @@ Tällä kurssilla käytämme Web-sovellusten toteuttamiseen Ruby on Rails -sovel
 
 Rails-sovellukset noudattavat [MVC-mallia](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller) (tai WebMVC:tä, joka poikkeaa hiukan alkuperäisestä MVC:stä), jossa ideana on jakaa sovelluksen data- ja sovelluslogiikka (Model), näyttöjen muodostaminen (View) ja toiminnan koordinointi (Controller) selkeästi eriytettyihin osiin. Valtaosa web-palvelinpuolen sovelluskehityksestä tapahtuu nykyään MVC-periaatetta noudattaen.
 
-Tutkitaan mitä tapahtuu kun käyttäjä menee Railsilla toteutetulle web-sivulle, olkoon sivun URL esim. <https://ratebeer22.herokuapp.com/breweries>, eli kurssin aikana tekemämme esimerkkisovelluksen sivu, joka listaa kaikki esimerkkisovelluksen tuntemat panimot.
+Tutkitaan mitä tapahtuu kun käyttäjä menee Railsilla toteutetulle web-sivulle, olkoon sivun URL esim. <https://ratebeer22.fly.dev/breweries>, eli kurssin aikana tekemämme esimerkkisovelluksen sivu, joka listaa kaikki esimerkkisovelluksen tuntemat panimot.
 
 ![mvc-kuva](http://www.cs.helsinki.fi/u/mluukkai/rails_mvc.png)
 
@@ -107,7 +107,7 @@ Asennusohje osoitteessa https://github.com/mluukkai/WebPalvelinohjelmointi2022/b
 
 ## Sovelluksen luominen
 
-Teemme kurssilla olutharrastajille tarkoitetun palvelun, jonka avulla olutharrastajat voivat selata olemassa olevia panimoja, oluita, oluttyylejä sekä "reitata" juomiaan oluita (eli antaa oluille oman mieltymyksensä mukaisen pistemäärän). Kurssin lopussa sovellus näyttää suunnilleen seuraavalta <https://ratebeer22.herokuapp.com>
+Teemme kurssilla olutharrastajille tarkoitetun palvelun, jonka avulla olutharrastajat voivat selata olemassa olevia panimoja, oluita, oluttyylejä sekä "reitata" juomiaan oluita (eli antaa oluille oman mieltymyksensä mukaisen pistemäärän). Kurssin lopussa sovellus näyttää suunnilleen seuraavalta <https://ratebeer22.fly.dev/>
 
 Rails tarjoaa sovelluskehittäjän avuksi useita generattoreita (ks. [http://guides.rubyonrails.org/generators.html](http://guides.rubyonrails.org/generators.html)), joiden avulla on helppo generoida hieman valmista toiminnallisuutta sisältäviä tiedostopohjia.
 
