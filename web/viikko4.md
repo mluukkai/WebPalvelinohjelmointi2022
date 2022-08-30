@@ -211,7 +211,8 @@ Käytämme testaukseen Rspec:iä ks. http://rspec.info/, https://github.com/rspe
 Otetaan käyttöön rspec-rails gem lisäämällä Gemfileen seuraava:
 
 ```ruby
-group :development, :test do
+group :test do
+  # ...
   gem 'rspec-rails', '~> 6.0.0.rc1'
 end
 ```
@@ -272,7 +273,7 @@ Komento <code>rspec spec</code> määrittelee, että suoritetaan kaikki testit, 
     rspec spec/models                # suoritetaan hakemiston model sisältävät testit
     rspec spec/models/user_spec.rb   # suoritetaan user_spec.rb:n määrittelemät testi
 
-Testien ajon voi myös automatisoida aina kun testi tai sitä koskeva koodi muuttuu. [guard](https://github.com/guard/guard) on tähän käytetty kirjasto ja siihen löytyy monia laajennoksia.
+Testien suorituksen voi myös automatisoida aina kun testi tai sitä koskeva koodi muuttuu. [guard](https://github.com/guard/guard) on tähän käytetty kirjasto ja siihen löytyy monia laajennoksia.
 
 Aloitetaan testien tekeminen. Kirjoitetaan (tiedostoon _user_spec.rb_) aluksi testi joka testaa, että konstruktori asettaa käyttäjätunnuksen oikein:
 
@@ -281,7 +282,7 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
   it "has the username set correctly" do
-    user = User.new username:"Pekka"
+    user = User.new username: "Pekka"
 
     expect(user.username).to eq("Pekka")
   end
@@ -313,7 +314,7 @@ RSpec.describe User, type: :model do
   # aiemmin määritellyn testin koodi ...
 
   it "is not saved without a password" do
-    user = User.create username:"Pekka"
+    user = User.create username: "Pekka"
 
     expect(user.valid?).to be(false)
     expect(User.count).to eq(0)
@@ -368,7 +369,7 @@ Tehdään sitten testi kunnollisella salasanalla:
 
 ```ruby
 it "is saved with a proper password" do
-  user = User.create username:"Pekka", password:"Secret1", password_confirmation:"Secret1"
+  user = User.create username: "Pekka", password: "Secret1", password_confirmation: "Secret1"
 
   expect(user.valid?).to be(true)
   expect(User.count).to eq(1)
@@ -387,7 +388,7 @@ On huomattavaa, että rspec **nollaa tietokannan aina ennen jokaisen testin ajam
 
 ```ruby
 it "with a proper password and two ratings, has the correct average rating" do
-  user = User.create username:"Pekka", password:"Secret1", password_confirmation:"Secret1"
+  user = User.create username: "Pekka", password: "Secret1", password_confirmation: "Secret1"
   brewery = Brewery.new name: "test", year: 2000
   beer = Beer.new name: "testbeer", style: "teststyle", brewery: brewery
   rating = Rating.new score: 10, beer: beer
@@ -408,20 +409,20 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
   it "has the username set correctly" do
-    user = User.new username:"Pekka"
+    user = User.new username: "Pekka"
 
     expect(user.username).to eq("Pekka")
   end
 
   it "is not saved without a password" do
-    user = User.create username:"Pekka"
+    user = User.create username: "Pekka"
 
     expect(user).not_to be_valid
     expect(User.count).to eq(0)
   end
 
   describe "with a proper password" do
-    let(:user){ User.create username:"Pekka", password:"Secret1", password_confirmation:"Secret1" }
+    let(:user){ User.create username: "Pekka", password: "Secret1", password_confirmation: "Secret1" }
     let(:test_brewery) { Brewery.new name: "test", year: 2000 }
     let(:test_beer) { Beer.create name: "testbeer", style: "teststyle", brewery: test_brewery }
 
@@ -446,7 +447,9 @@ end
 
 Muuttujien alustus tapahtuu hieman erikoisen <code>let</code>-metodin avulla, esim.
 
-    let(:user){ User.create username:"Pekka", password:"Secret1", password_confirmation:"Secret1" }
+```ruby
+let(:user){ User.create username: "Pekka", password: "Secret1", password_confirmation: "Secret1" }
+```
 
 saa aikaan sen, että määrittelyn jälkeen muuttuja _user_ viittaa <code>let</code>-metodin koodilohkossa luotuun User-olioon.
 
@@ -501,6 +504,7 @@ Lisätään Gemfileen seuraava
 
 ```ruby
 group :test do
+  # ...
   gem 'factory_bot_rails'
 end
 ```
@@ -836,7 +840,7 @@ Apumetodia käyttämällä saamme siistityksi testiä
 ```ruby
 it "is the one with highest rating if several rated" do
   create_beer_with_rating({ user: user }, 10 )
-  create_beer_with_rating({ user: user}, 7 )
+  create_beer_with_rating({ user: user }, 7 )
   best = create_beer_with_rating({ user: user }, 25 )
 
   expect(user.favorite_beer).to eq(best)
@@ -1091,11 +1095,11 @@ Nyt jokainen peräkkäisten tehtaan <code>FactoryBot.create(:user)</code> kutsuj
 
 **Älä kuitenkaan muuta** tehdasta tähän muotoon, muuten osa viikon testeistä ei toimi!
 
-## testit ja debuggeri
+## Testit ja debuggeri
 
-Toivottavasti olet jo tässä vaiheessa kurssia rutinoitunut [debuggerin](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/main/web/viikko2.md#debuggeri) käyttäjä. Koska testitkin ovat normaalia ruby-koodia, ovat myös _binding.break_ ja _binding.pry_ käytettävissä sekä testikoodissa että testattavassa koodissa. Testausympäristön tietokannan tila saattaa joskus olla yllättävä, kuten edellä olevista esimerkeistä näimme. Ongelmatilanteissa kannattaa ehdottomasti pysäyttää testikoodi debuggerilla ja tutkia vastaako testattavien olioiden tila oletettua.
+Toivottavasti olet jo tässä vaiheessa kurssia rutinoitunut [debuggerin](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/main/web/viikko2.md#debuggeri) käyttäjä. Koska testitkin ovat normaalia Ruby-koodia, on myös _binding.break_ käytettävissä sekä testikoodissa että testattavassa koodissa. Testausympäristön tietokannan tila saattaa joskus olla yllättävä, kuten edellä olevista esimerkeistä näimme. Ongelmatilanteissa kannattaa ehdottomasti pysäyttää testikoodi debuggerilla ja tutkia vastaako testattavien olioiden tila oletettua.
 
-## yksittäisten testien suorittaminen
+## Yksittäisten testien suorittaminen
 
 Rspecillä voi suorittaa myös yksittäisiä testejä tai describe-lohkoja, esim. seuraava suorittaisi ainoastaan tiedoston user_spec.rb riviltä 108 alkavan testin
 
@@ -1134,16 +1138,15 @@ Metodien <code>favorite_brewery</code> ja <code>favorite_style</code> tarvitsema
 
 Siirrymme seuraavaksi järjestelmätason testaukseen. Kirjoitamme siis automatisoituja testejä, jotka käyttävät sovellusta normaalin käyttäjän tapaan selaimen kautta. De facto -tapa Rails-sovellusten selaintason testaamiseen on Capybaran https://github.com/jnicklas/capybara käyttö. Itse testit kirjoitetaan edelleen Rspecillä, capybara tarjoaa siis rspec-testien käyttöön selaimen simuloinnin.
 
-Capybara on oletusarvoisesti määriteltynä projektissa. Lisätään Gemfileen (test-scopeen) apukirjasto [launchy](https://github.com/copiousfreetime/launchy) eli test-scopen pitäisi näyttää seuraavalta:
+Capybara on oletusarvoisesti määriteltynä projektissa. Lisätään Gemfileen (test-scopeen) apukirjasto [launchy](https://github.com/copiousfreetime/launchy) eli test-scopen pitäisi näyttää suunilleen seuraavalta:
 
 ```ruby
 group :test do
-  # Adds support for Capybara system testing and selenium driver
-  gem 'capybara', '>= 2.15'
-  gem 'selenium-webdriver'
-  # Easy installation and use of chromedriver to run system tests with Chrome
-  gem 'chromedriver-helper'
+  gem 'rspec-rails', '~> 6.0.0.rc1'
   gem 'factory_bot_rails'
+  gem "capybara"
+  gem "selenium-webdriver"
+  gem "webdrivers"
   gem 'launchy'
 end
 ```
@@ -1290,8 +1293,8 @@ describe "User" do
   describe "who has signed up" do
     it "can signin with right credentials" do
       visit signin_path
-      fill_in('username', with:'Pekka')
-      fill_in('password', with:'Foobar1')
+      fill_in('username', with: 'Pekka')
+      fill_in('password', with: 'Foobar1')
       click_button('Log in')
 
       expect(page).to have_content 'Welcome back!'
@@ -1315,8 +1318,8 @@ Tehdään vielä muutama testi käyttäjälle. Virheellisen salasanan syöttämi
 
     it "is redirected back to signin form if wrong credentials given" do
       visit signin_path
-      fill_in('username', with:'Pekka')
-      fill_in('password', with:'wrong')
+      fill_in('username', with: 'Pekka')
+      fill_in('password', with: 'wrong')
       click_button('Log in')
 
       expect(current_path).to eq(signin_path)
@@ -1336,9 +1339,9 @@ Myös sivujen kautta tehtävät lisäykset ja poistot kannattaa testata. Esim. s
 ```ruby
 it "when signed up with good credentials, is added to the system" do
   visit signup_path
-  fill_in('user_username', with:'Brian')
-  fill_in('user_password', with:'Secret55')
-  fill_in('user_password_confirmation', with:'Secret55')
+  fill_in('user_username', with: 'Brian')
+  fill_in('user_password', with: 'Secret55')
+  fill_in('user_password_confirmation', with: 'Secret55')
 
   expect{
     click_button('Create User')
@@ -1365,22 +1368,22 @@ Tehdään vielä testi oluen reittaamiselle. Tehdään testiä varten oma tiedos
 require 'rails_helper'
 
 describe "Rating" do
-  let!(:brewery) { FactoryBot.create :brewery, name:"Koff" }
-  let!(:beer1) { FactoryBot.create :beer, name:"iso 3", brewery:brewery }
-  let!(:beer2) { FactoryBot.create :beer, name:"Karhu", brewery:brewery }
+  let!(:brewery) { FactoryBot.create :brewery, name: "Koff" }
+  let!(:beer1) { FactoryBot.create :beer, name: "iso 3", brewery:brewery }
+  let!(:beer2) { FactoryBot.create :beer, name: "Karhu", brewery:brewery }
   let!(:user) { FactoryBot.create :user }
 
   before :each do
     visit signin_path
-    fill_in('username', with:'Pekka')
-    fill_in('password', with:'Foobar1')
+    fill_in('username', with: 'Pekka')
+    fill_in('password', with: 'Foobar1')
     click_button('Log in')
   end
 
   it "when given, is registered to the beer and user who is signed in" do
     visit new_rating_path
-    select('iso 3', from:'rating[beer_id]')
-    fill_in('rating[score]', with:'15')
+    select('iso 3', from: 'rating[beer_id]')
+    fill_in('rating[score]', with: '15')
 
     expect{
       click_button "Create Rating"
@@ -1419,18 +1422,17 @@ Voimme ottaa modulin määrittelemän metodi käyttöön testeissä komennolla <
 
 ```ruby
 require 'rails_helper'
-require 'helpers'
 
 include Helpers
 
 describe "Rating" do
-  let!(:brewery) { FactoryBot.create :brewery, name:"Koff" }
-  let!(:beer1) { FactoryBot.create :beer, name:"iso 3", brewery:brewery }
-  let!(:beer2) { FactoryBot.create :beer, name:"Karhu", brewery:brewery }
+  let!(:brewery) { FactoryBot.create :brewery, name: "Koff" }
+  let!(:beer1) { FactoryBot.create :beer, name: "iso 3", brewery:brewery }
+  let!(:beer2) { FactoryBot.create :beer, name: "Karhu", brewery:brewery }
   let!(:user) { FactoryBot.create :user }
 
   before :each do
-    sign_in(username:"Pekka", password:"Foobar1")
+    sign_in(username: "Pekka", password: "Foobar1")
   end
 ```
 
@@ -1438,7 +1440,6 @@ ja
 
 ```ruby
 require 'rails_helper'
-require 'helpers'
 
 include Helpers
 
