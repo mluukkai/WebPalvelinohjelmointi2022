@@ -1019,7 +1019,7 @@ end
 
 tai hieman myöhemmin esiteltävissä <code>before</code>-lohkoissa.
 
-Saat poistettua testikantaan vahingossa menneet oluet käynnistämällä konsolin testiympäristössä komennolla <code>rails c test</code>.
+Saat poistettua testikantaan vahingossa menneet oluet käynnistämällä konsolin testiympäristössä komennolla <code>rails c -e test</code>.
 
 #### validointi
 
@@ -1618,15 +1618,15 @@ Githubissa olevat projektit on helppo asettaa Github actionsin tarkkailtaviksi.
 >         run: bundle exec rspec
 > ```
 >
-> Erona defaultina tarjottavaan versioon tässä on se, että sekä ubuntusta ja rubyn setuppaavasta actionista käytetään uusimpia versiota, jotta rubyn 3.1.2. versio toimii.
+> Erona defaultina tarjottavaan versioon tässä on se, että sekä Ubuntusta ja Rubyn setuppaavasta actionista käytetään uusimpia versiota, jotta Rubyn 3.1.2. versio toimii.
 >
-> Vaihdettuasi sisällön valitse Start commit ja lisää tiedosto versionhallintaasi. Github actions lähteekin suoraan käyntiin ja suorittaa testit. 
+> Vaihdettuasi sisällön valitse Start commit ja lisää tiedosto versionhallintaasi. GitHub Actions lähteekin suoraan käyntiin ja suorittaa testit. 
 >
-> Jos jokin testi ei toimi Github actionseissa korjaa se!
+> Jos jokin testi ei toimi GitHub actionseissa korjaa se!
 
 > ## Tehtävä 12
 >
-> Lisätään nyt myös rubocop Github actioniin. Käytetään tässä avuksemme [marketplacesta valmiiksi löytyvää actionia](https://github.com/marketplace/actions/rubocop-linter-action), jonka voimme liittää omaamme.
+> Lisätään nyt myös Rubocop GitHub Actioniin. Käytetään tässä avuksemme [marketplacesta valmiiksi löytyvää actionia](https://github.com/marketplace/actions/rubocop-linter-action), jonka voimme liittää omaamme.
 >
 > Lisää <code>rubyonrails.yml</code> tiedostoon seuraava sisältö:
 >
@@ -1648,7 +1648,7 @@ Githubissa olevat projektit on helppo asettaa Github actionsin tarkkailtaviksi.
 >
 > GITHUB_TOKEN rivillä käytetään [Githubin tarjoamaa automaattista tokenia](https://docs.github.com/en/actions/security-guides/automatic-token-authentication), jolla pystytään autentikoimaan githubin sovellukset.
 >
-> Nyt Github Actionsin pitäisi ajaa sekä testit, että rubocop sovellukselle joka kerta kun githubiin pusketaan muutoksia.
+> Nyt Github Actionsin pitäisi suorittaa sekä testit, että Rubocop sovellukselle joka kerta kun GitHubiin lisätään muutoksia.
 
 ## Continuous delivery
 
@@ -1660,13 +1660,15 @@ Eriyisesti Web-sovellusten yhteydessä jatkuva deployaaminen saattaa olla hyvink
 >
 > ### Tämän ja seuraavan tehtävän tekeminen ei ole välttämätöntä viikon jatkamisen kannalta. Voit tehdä tämän tehtävän myös viikon muiden tehtävien jälkeen.
 >
-> Toteuta sovelluksellesi jatkuva automaattinen deployaaminen Herokuun
+> Toteuta sovelluksellesi jatkuva automaattinen deployaaminen Fly.io:n tai Herokuun
 >
-> Ks. ohjeita seuraavasta https://devcenter.heroku.com/articles/github-integration
+> > Fly.io:n ohjeita seuraavasta https://fly.io/docs/app-guides/continuous-deployment-with-github-actions/
+>
+> Herokuun ohjeita seuraavasta https://devcenter.heroku.com/articles/github-integration
 >
 > **_HUOM_** Muista valita "Wait for CI to pass before deploy"
 >
-> Voit testata toimiiko CI/CD putkesti tekemällä jonkin muutoksen sovellukseesi ja puskemalla muutoksen githubiin ja seuraamalla tuleeko muutos myös Herokussa olevaan sovellukseesi. Herokun Overview välilehdeltä näet "Latest Activity" syötteestä mitä putkessa tapahtuu.
+> Voit testata toimiiko CI/CD putkesti tekemällä jonkin muutoksen sovellukseesi ja lisäämllä muutoksen GitHubiin ja seuraamalla tuleeko muutos myös Fly.io:ssa/Herokussa olevaan sovellukseesi. Herokun tapauksessa näet Overview välilehdeltä "Latest Activity" syötteestä mitä putkessa tapahtuu.
 
 ## Koodin laatumetriikat
 
@@ -1720,7 +1722,7 @@ Eli linkkielementti näytetään ainoastaan jos <code>current_user</code> ei ole
 <%= link_to('New Beer', new_beer_path) if not current_user.nil? %>
 ```
 
-Nyt siis <code>link_to</code> metodi suoritetaan (eli linkin koodi renderöityy) ainoastaan jos if:in ehto on tosi. if not -muotoiset ehtolauseet eivät ole kovin hyvää Rubyä, parempi olisikin käyttää <code>unless</code>-ehtolausetta:
+Nyt siis <code>link_to</code> metodi suoritetaan (eli linkin koodi renderöityy) ainoastaan jos if:in ehto on tosi. if not -muotoiset ehtolauseet eivät ole kovin hyvää Rubya, parempi olisikin käyttää <code>unless</code>-ehtolausetta:
 
 ```erb
 <%= link_to('New Beer', new_beer_path) unless current_user.nil? %>
@@ -1728,7 +1730,7 @@ Nyt siis <code>link_to</code> metodi suoritetaan (eli linkin koodi renderöityy)
 
 Eli renderöidään linkki **ellei** <code>current_user</code> ei ole <code>nil</code>.
 
-Oikeastaan <code>unless</code> on nyt tarpeeton, rubyssä nimittäin <code>nil</code> tulkitaan epätodeksi, eli kaikkien siistein muoto komennosta on
+Oikeastaan <code>unless</code> on nyt tarpeeton, Rubyssä nimittäin <code>nil</code> tulkitaan epätodeksi, eli kaikkien siistein muoto komennosta on
 
 ```erb
 <%= link_to('New Beer', new_beer_path) if current_user %>
