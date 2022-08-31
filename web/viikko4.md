@@ -1662,13 +1662,13 @@ Eriyisesti Web-sovellusten yhteydessä jatkuva deployaaminen saattaa olla hyvink
 >
 > Toteuta sovelluksellesi jatkuva automaattinen deployaaminen Fly.io:n tai Herokuun
 >
-> > Fly.io:n ohjeita seuraavasta https://fly.io/docs/app-guides/continuous-deployment-with-github-actions/
+> Fly.io:n ohje seuraavasta https://fly.io/docs/app-guides/continuous-deployment-with-github-actions/
 >
-> Herokuun ohjeita seuraavasta https://devcenter.heroku.com/articles/github-integration
+> Herokuun ohje seuraavasta https://devcenter.heroku.com/articles/github-integration
 >
-> **_HUOM_** Muista valita "Wait for CI to pass before deploy"
+> **_HUOM_** Käyttäessäsi Herokua, muista valita "Wait for CI to pass before deploy"
 >
-> Voit testata toimiiko CI/CD putkesti tekemällä jonkin muutoksen sovellukseesi ja lisäämllä muutoksen GitHubiin ja seuraamalla tuleeko muutos myös Fly.io:ssa/Herokussa olevaan sovellukseesi. Herokun tapauksessa näet Overview välilehdeltä "Latest Activity" syötteestä mitä putkessa tapahtuu.
+> Voit testata toimiiko CI/CD-putkesi tekemällä jonkin muutoksen sovellukseesi ja lisäämllä muutoksen GitHubiin ja seuraamalla tuleeko muutos myös Fly.io:ssa/Herokussa olevaan sovellukseesi. Herokun tapauksessa näet Overview välilehdeltä "Latest Activity" syötteestä mitä putkessa tapahtuu.
 
 ## Koodin laatumetriikat
 

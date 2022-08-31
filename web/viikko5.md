@@ -6,8 +6,7 @@ Suuri osa internetin palveluista hyödyntää nykyään joitain avoimia rajapint
 
 Myös oluihin liittyviä avoimia rajapintoja on tarjolla, ks. https://www.programmableweb.com/ hakusanalla beer
 
-Tämän hetken tarjolla olevista rajapinnoista parhaalta näyttää https://www.programmableweb.com/api/brewery-db
-jonka ilmainen käyttö on kuitenkin rajattu 400 päivittäiseen kyselyyn, joten emme tällä kertaa käytä sitä, vaan Beermapping API:a (ks. <https://www.programmableweb.com/api/beer-mapping> ja <https://beermapping.com/api/>), joka tarjoaa mahdollisuuden oluita tarjoilevien ravintoloiden tietojen etsintään.
+Käyttöömme valikoituu Beermapping API (ks. <https://www.programmableweb.com/api/beer-mapping> ja <https://beermapping.com/api/>), joka tarjoaa mahdollisuuden oluita tarjoilevien ravintoloiden tietojen etsintään.
 
 Beermapingin API:a käyttävät sovellukset tarvitsevat yksilöllisen API-avaimen. Saat avaimen sivulta https://beermapping.com/api/ kirjauduttuasi ensin sivulle (kirjautumisen jälkeen vaihda selaimen osoiteriviltä osoite takaisin muotoon https://beermapping.com/api/). Vastaava käytäntö on olemassa hyvin suuressa osassa nykyään tarjolla olevissa avoimissa rajapinnoissa.
 
@@ -30,7 +29,9 @@ Selaimella näemme palautetun XML:n hieman ihmisluettavammassa muodossa:
 
 ![kuva](https://raw.githubusercontent.com/mluukkai/WebPalvelinohjelmointi2022/main/images/ratebeer-w5-1.png)
 
-**HUOM: älä käytä tässä näytettyä API-avainta vaan rekisteröi itsellesi oma avain.**
+**HUOM1: älä käytä tässä näytettyä API-avainta vaan rekisteröi itsellesi oma avain.**
+
+**HUOM2: syksyllä 2022 API ei löydä Espoosta yhtään baaria, kokeile joitan muuta kaupunkia! Suomen osalta API:n paikkatuntemus on heikko**
 
 Tehdään nyt sovellukseemme olutravintoloita etsivä toiminnallisuus.
 
@@ -52,7 +53,7 @@ ja näkymä app/views/places/index.html.erb, joka aluksi ainoastaan näyttää h
 ```erb
 <h1>Beer places search</h1>
 
-<%= form_with url: places_path, method: :get do |form| %>
+<%= form_with url: places_path, method: :post do |form| %>
   city <%= form.text_field :city %>
   <%= form.submit "Search" %>
 <% end %>
@@ -90,8 +91,6 @@ Kokeillaan nyt etsiä konsolista käsin Helsingin ravintoloita (muista uudelleen
 > url = "http://beermapping.com/webservice/loccity/#{api_key}/"
 > response = HTTParty.get "#{url}helsinki"
 ```
-
-Jos käytössäsi on normaalin rails-konsolin sijaan Pry, osaa se jo renderöidä baarien tietoja.
 
 Kutsu palauttaa luokan <code>HTTParty::Response</code>-olion. [Dokumentaatiosta](https://www.rubydoc.info/github/jnunemaker/httparty/HTTParty/Response) selviää, että oliolta voidaan kysyä esim. HTTP-pyynnön vastaukseen liittyvät _headerit_ seuraavasti
 
@@ -131,7 +130,7 @@ HTTP-pyynnön statuskoodi selviää seuraavasti:
 
 Statuskoodi ks. https://www.rfc-editor.org/rfc/rfc9110.html#name-successful-2xx on tällä kertaa 200 eli ok, kutsu on siis onnistunut.
 
-Vastausolion metodi <code>parsed_response</code> palauttaa metodin palauttaman datan rubyn hashina:
+Vastausolion metodi <code>parsed_response</code> palauttaa metodin palauttaman datan Rubyn hashina:
 
 ```ruby
 > response.parsed_response
@@ -197,7 +196,6 @@ Helsingistä tunnetaan siis 12 paikkaa. Tutkitaan ensimmäistä:
  "imagecount"=>"0"}
 ```
 
-Pry muotoilee tulostuksen oletusarvoisesti melko hyvin, eli tulostaa jokaisen hashin alkion omalle rivilleen. Jos käytät normaalia rails konsolia, kannattaa hyödyntää komentoa <code>pp</code>, jonka avulla hash on mahdollista tulostaa Pry:n tapaan muotoiltuna.
 
 Luodaan panimoiden esittämiseen oma olio, kutsuttakoon sitä nimellä <code>Place</code>. Sijoitetaan luokka models-hakemistoon.
 
@@ -258,12 +256,13 @@ Oman luokan määritteleminen tekee koodista selkeämmän ja mahdollistaa tarvit
 Luokkaamme siis käytetään siten, että annetaan sille konstruktoriparametriksi olutpaikkaa vastaava hash:
 
 ```ruby
-> baari = Place.new places.first
-=> #<Place id="6742", name="Pullman Bar", status="Beer Bar", reviewlink="https://beermapping.com/location/6742", proxylink="http://beermapping.com/maps/proxymaps.php?locid=6742&d=5", blogmap="http://beermapping.com/maps/blogproxy.php?locid=6742&d=1&type=norm", street="Kaivokatu 1", city="Helsinki", state=nil, zip="00100", country="Finland", phone="+358 9 0307 22", overall="72.500025", imagecount="0">
-[32] pry(main)> baari.name
+irb(main):011:0> baari = Place.new places.first
+=> #<Place id="6742", name="Pullman Bar", status="Beer Bar", reviewlink="https://beermapping.com/location/6742", proxylink="http://beerma...
+irb(main):012:0> baari.name
 => "Pullman Bar"
-> baari.zip
+irb(main):013:0> baari.zip
 => "00100"
+irb(main):014:0>
 ```
 
 Kirjoitetaan sitten kontrolleriin alustava koodi. Kovakoodataan etsinnän tapahtuvan aluksi Helsingistä ja luodaan ainoastaan ensimmäisestä löydetystä paikasta Place-olio:
@@ -276,8 +275,6 @@ class PlacesController < ApplicationController
   def search
     api_key = "731955affc547174161dbd6f97b46538"
     url = "http://beermapping.com/webservice/loccity/#{api_key}/"
-    # tai vaihtoehtoisesti
-    # url = 'http://stark-oasis-9187.herokuapp.com/api/'
 
     response = HTTParty.get "#{url}helsinki"
     places_from_api = response.parsed_response["bmp_locations"]["location"]
@@ -288,7 +285,7 @@ class PlacesController < ApplicationController
 end
 ```
 
-Lisätään myös renderiin status-koodi 418, jotta Railsin käyttämä turbo osaa renderöidä saman sivun uudestaan post-pyynnön jälkeen. Tämän statuskoodin avulla myös testit toimivat, sillä jos statuskoodiksi asettaisi esimerkiksi 303 [testit hajoaisivat](https://stackoverflow.com/a/30555199). Tämä hack on esimerkki huonosta koodista, mutta navigoidaksemme turbon ja testien kanssa se on vaadittu.
+Lisätään myös renderiin status-koodi 418, jotta Railsin käyttämä [Turbo](https://github.com/hotwired/turbo-rails) osaa renderöidä saman sivun uudestaan post-pyynnön jälkeen. Tämän statuskoodin avulla myös testit toimivat, sillä jos statuskoodiksi asettaisi esimerkiksi 303 [testit hajoaisivat](https://stackoverflow.com/a/30555199). Tämä hack on esimerkki huonosta koodista, mutta navigoidaksemme Turbon ja testien kanssa se on vaadittu.
 
 Muokataan app/views/places/index.html.erb:tä siten, että se näyttää löydetyt ravintolat
 
@@ -402,6 +399,8 @@ index.html.erb:n paranneltu koodi seuraavassa:
 <% end %>
 ```
 
+Ravintolat näytetään nyt [HTML-taulukkona](https://developer.mozilla.org/en-US/docs/Learn/HTML/Tables/Basics).
+
 ## Olion metodien kutsuminen _send_-metodin avulla
 
 Taulukon rivit muodostava koodi on muodossa
@@ -456,7 +455,7 @@ Rubyssä olioiden metodeja voidaan kutsua myös "epäsuoraan" käyttämällä me
 </tr>
 ```
 
-Ja koska määrittelimme metodin <code>Place.rendered*fields</code> palauttamaan listan <code>[ :id, :name, :status, :street, :city, :zip, :country, :overall ]</code>, voimme generoida \_td*-tagit <code>each</code>-loopin avulla:
+Ja koska määrittelimme metodin <code>Place.rendered_fields</code> palauttamaan listan <code>[ :id, :name, :status, :street, :city, :zip, :country, :overall ]</code>, voimme generoida td-tagit <code>each</code>-loopin avulla:
 
 ```erb
 <tr>
@@ -567,7 +566,7 @@ class PlacesController < ApplicationController
     if @places.empty?
       redirect_to places_path, notice: "No locations in #{params[:city]}"
     else
-      render :index
+      render :index, status: 418
     end
   end
 end
@@ -1321,7 +1320,7 @@ Olemme käyttäneet Railsin migraatioita jo ensimmäisestä viikosta alkaen. On 
 >
 > **Huomaa, että Heroku-instanssin ajantasaistaminen kannattaa tehdä samalla!**
 >
-> Vihje: voit harjoitella datamigraation tekemistä siten, että kopioit ennen migraation aloittamista tietokannan eli tiedoston _db/development.sqlite3_ ja jos migraatiossa menee jokin pieleen, voit palauttaa tilanteen ennalleen kopion avulla. Myös debuggeri (binding.break tai binding.pry) saattaa osoittautua hyödylliseksi migraation kehittelemisessä.
+> Vihje: voit harjoitella datamigraation tekemistä siten, että kopioit ennen migraation aloittamista tietokannan eli tiedoston _db/development.sqlite3_ ja jos migraatiossa menee jokin pieleen, voit palauttaa tilanteen ennalleen kopion avulla. Myös debuggeri (binding.break) saattaa osoittautua hyödylliseksi migraation kehittelemisessä.
 >
 > Voit myös suorittaa siirtymisen uusiin tietokannassa oleviin tyyleihin suoraviivaisemmin eli poistamalla oluilta _style_-sarakkeen ja asettamalla oluiden tyylit esim. konsolista.
 >
