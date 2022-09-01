@@ -1351,6 +1351,10 @@ Tehtävän jälkeen olutpaikkojen sivu voi näyttää esim. seuraavalta
 
 ![kuva](https://raw.githubusercontent.com/mluukkai/WebPalvelinohjelmointi2022/main/images/ratebeer-w5-7.png)
 
+> ## Tehtävä 16
+>
+> Tehtävä 15 hajottaa osan testeitä. Korjaa testit. Voit merkata tämän tehtävän tehdyksi ainoastaan jos teet edellisen tehtävän.
+
 ## Tehtävien palautus
 
 Commitoi kaikki tekemäsi muutokset ja pushaa koodi GitHubiin. Deployaa myös uusin versio Fly.io:n tai Herokuun. Muista myös testata Rubocopilla, että koodisi noudattaa edelleen määriteltyjä tyylisääntöjä.
