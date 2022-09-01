@@ -32,7 +32,7 @@ Voisimme toteuttaa keskiarvon laskemisen "Javamaisesti" laskemalla summan käym�
 
 Kaikki Rubyn kokoelmamaiset asiat (mm. taulukko ja <code>has_many</code>-kenttä) sisältävät Enumerable-moduulin (ks. http://ruby-doc.org/core-2.5.1/Enumerable.html) tarjoamat apumetodit. Päätetäänkin hyödyntää apumetodeja keskiarvon laskemisessa.
 
-Koodin kirjoittamisessa kannattaa _ehdottomasti_ hyödyntää konsolia. Oikeastaan konsoliakin parempi vaihtoehdo on debuggerin käyttö. Debuggerin avulla saadaan avattua konsoli suoraan siihen kontekstiin, johon koodia ollaan kirjoittamassa. Lisätään metodikutsuun debuggerin käynnistävä komento <code>binding.break</code>:
+Koodin kirjoittamisessa kannattaa _ehdottomasti_ hyödyntää konsolia. Oikeastaan konsoliakin parempi vaihtoehdo on debuggerin käyttö. Debuggerin avulla saadaan avattua konsoli suoraan siihen kontekstiin, johon koodia ollaan kirjoittamassa. Lisätään metodikutsuun debuggerin käynnistävä komento <code>binding.pry</code>:
 
 ```ruby
 class Beer < ApplicationRecord
@@ -40,7 +40,7 @@ class Beer < ApplicationRecord
   has_many :ratings, dependent: :destroy
 
   def average
-    binding.break
+    binding.pry
   end
 end
 ```
@@ -61,7 +61,7 @@ irb(main):027:0> b.average
      9|   end
     10|
     11|   def average
-=>  12|     binding.break
+=>  12|     binding.pry
     13|   end
     14| end
 =>#0	Beer#average at /myapp/app/models/beer.rb:12
@@ -255,7 +255,7 @@ irb(main):004:0> b.average
 => NaN
 ```
 
-eli kannassa toisena olevan oluen reittausten keskiarvo on <code>NaN</code>. Turvaudutaan jälleen debuggeriin. Laitetaan komento <code>binding.break</code> keskiarvon laskevaan metodiin, uudelleenladataan koodi ja kutsutaan metodia ongelmalliselle oliolle:
+eli kannassa toisena olevan oluen reittausten keskiarvo on <code>NaN</code>. Turvaudutaan jälleen debuggeriin. Laitetaan komento <code>binding.pry</code> keskiarvon laskevaan metodiin, uudelleenladataan koodi ja kutsutaan metodia ongelmalliselle oliolle:
 
 ```ruby
 irb(main):008:0> b.average
@@ -265,7 +265,7 @@ irb(main):008:0> b.average
      9|   end
     10|
     11|   def average
-=>  12|     binding.break
+=>  12|     binding.pry
     13|     ratings.map{ |r| r.score }.sum / ratings.count.to_f
     14|   end
     15| end

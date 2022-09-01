@@ -61,7 +61,7 @@ ja näkymä app/views/places/index.html.erb, joka aluksi ainoastaan näyttää h
 
 Lomake siis lähettää HTTP POST -kutsun places_path:iin. Määritellään tälle oma reitti routes.rb:hen
 
-    post 'places', to:'places#search'
+    post 'places', to: 'places#search'
 
 Päätimme siis että metodin nimi on <code>search</code>. Laajennetaan kontrolleria seuraavasti:
 
@@ -533,7 +533,7 @@ end
 
 Luokka siis määrittelee stattisen metodin, joka palauttaa taulukon parametrina määritellystä kaupungista löydetyistä olutpaikoista. Jos paikkoja ei löydy, on taulukko tyhjä. API:n eristävä luokka ei ole vielä viimeiseen asti hiotussa muodossa, sillä emme vielä täysin tiedä mitä muita metodeja tarvitsemme.
 
-Jotta _lib_-hakemistoon sijoitettu koodi toimisi (sekä omalla koneella, että herokussa), tulee tiedostoon _config/application.rb_ lisätä seuraavat kaksi riviä
+Jotta _lib_-hakemistoon sijoitettu koodi toimisi (sekä omalla koneella, että Fly.io:ssa ja Herokussa), tulee tiedostoon _config/application.rb_ lisätä seuraavat kaksi riviä
 
 ```ruby
 config.autoload_paths << Rails.root.join("lib")
@@ -588,7 +588,7 @@ require 'rails_helper'
 describe "Places" do
   it "if one is returned by the API, it is shown at the page" do
     allow(BeermappingApi).to receive(:places_in).with("kumpula").and_return(
-      [ Place.new( name:"Oljenkorsi", id: 1 ) ]
+      [ Place.new( name: "Oljenkorsi", id: 1 ) ]
     )
 
     visit places_path
@@ -604,7 +604,7 @@ Testi alkaa heti mielenkiintoisella komennolla:
 
 ```ruby
 allow(BeermappingApi).to receive(:places_in).with("kumpula").and_return(
-  [ Place.new( name:"Oljenkorsi", id: 1 ) ]
+  [ Place.new( name: "Oljenkorsi", id: 1 ) ]
 )
 ```
 
@@ -619,7 +619,7 @@ Kun nyt testissä tehdään HTTP-pyyntö places-kontrollerille, ja kontrolleri k
 > - jos API palauttaa useita olutpaikkoja, kaikki näistä näytetään sivulla
 > - jos API ei löydä paikkakunnalta yhtään olutpaikkaa (eli paluuarvo on tyhjä taulukko), sivulla näytetään ilmoitus "No locations in _etsitty paikka_"
 >
-> Viikon 3 luku [kirjautumisen hienosäätöä](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/main/web/viikko3.md#kirjautumisen-hienos%C3%A4%C3%A4t%C3%B6%C3%A4) antaa vihjeitä toista kohtaa varte.
+> Viikon 3 luku [kirjautumisen hienosäätöä](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/main/web/viikko3.md#kirjautumisen-hienos%C3%A4%C3%A4t%C3%B6%C3%A4) antaa vihjeitä toista kohtaa varten.
 
 Siirrytään sitten luokan <code>BeermappingApi</code> testaamiseen. Luokka siis tekee HTTP GET -pyynnön HTTParty-kirjaston avulla Beermapping-palveluun. Voisimme edellisen esimerkin tapaan stubata HTTPartyn get-metodin. Tämän on kuitenkin hieman ikävää, sillä metodi palauttaa <code>HTTPartyResponse</code>-olion ja sellaisen muodostaminen stubauksen yhteydessä käsin ei välttämättä ole kovin mukavaa.
 
@@ -647,7 +647,7 @@ require 'webmock/rspec'
 Webmock-kirjaston käyttö on melko helppoa. Esim. seuraava komento stubaa _jokaiseen_ URLiin (määritelty regexpillä <code>/.\*/</code>) tulevan GET-pyynnön palauttamaan 'Lapin kullan' tiedot XML-muodossa:
 
 ```ruby
-stub_request(:get, /.*/).to_return(body:"<beer><name>Lapin kulta</name><brewery>Hartwall</brewery></beer>", headers:{ 'Content-Type' => "text/xml" })
+stub_request(:get, /.*/).to_return(body: "<beer><name>Lapin kulta</name><brewery>Hartwall</brewery></beer>", headers:{ 'Content-Type' => "text/xml" })
 ```
 
 Eli jos kutsuisimme komennon tehtyämme esim. <code>HTTParty.get("http://www.google.com")</code> olisi vastauksena
@@ -696,11 +696,11 @@ describe "BeermappingApi" do
 end
 ```
 
-Testi siis ensin määrittelee, että URL:iin joka loppuu merkkijonoon "espoo" (määritelty regexpillä <code>/.\*espoo/</code>) kohdistuvan HTTP GET -kutsun palauttamaan kovakoodatun XML:n, HTTP-kutsun palauttamaan headeriin määritellään, että palautettu tieto on XML-muodossa. Ilman tätä määritystä HTTParty-kirjasto ei osaa parsia HTTP-pyynnön palauttamaa dataa oikein.
+Testi siis ensin määrittelee, että URL:iin joka loppuu merkkijonoon "turku" (määritelty regexpillä <code>/.\*turku/</code>) kohdistuvan HTTP GET -kutsun palauttamaan kovakoodatun XML:n, HTTP-kutsun palauttamaan headeriin määritellään, että palautettu tieto on XML-muodossa. Ilman tätä määritystä HTTParty-kirjasto ei osaa parsia HTTP-pyynnön palauttamaa dataa oikein.
 
 Itse testi tapahtuu suoraviivaisesti tarkastelemalla BeermappingApi:n metodin <code>places_in</code> palauttamaa taulukkoa.
 
-_Huom:_ stubasimme testissä ainoastaan merkkijonoon "espoo" loppuviin URL:eihin (<code>/.\*espoo/</code>) kohdistuvat HTTP GET -kutsut. Jos testin suoritus aiheuttaa jonkin muunlaisen HTTP-kutsun, huomauttaa testi tästä:
+_Huom:_ stubasimme testissä ainoastaan merkkijonoon "turku" loppuviin URL:eihin (<code>/.\*turku</code>) kohdistuvat HTTP GET -kutsut. Jos testin suoritus aiheuttaa jonkin muunlaisen HTTP-kutsun, huomauttaa testi tästä:
 
 ```ruby
 ) BeermappingApi When HTTP GET returns no entries, an empty array is returned
@@ -727,7 +727,7 @@ Kuten virheilmoitus antaa ymmärtää, voidaan komennon <code>stub_request</code
 >
 > Muista käyttää debuggeria apuna testatessa
 
-Erilaisten lavastekomponenttien tekeminen eli metodien ja kokonaisten olioiden stubaus sekä mockaus on hyvin laaja aihe. Voit lukea aiheesta Rspeciin liittyen seuraavasta http://rubydoc.info/gems/rspec-mocks/
+Erilaisten vale- ja lavastekomponenttien tekeminen eli metodien ja kokonaisten olioiden stubaus sekä mockaus on hyvin laaja aihe. Voit lukea aiheesta Rspeciin liittyen seuraavasta http://rubydoc.info/gems/rspec-mocks/
 
 Nimityksiä stub- ja mock-olio tai "stubaaminen ja mockaaminen" käytetään usein varsin huolettomasti. Onneksi Rails-yhteisö käyttää termejä oikein. Lyhyesti ilmaistuna stubit ovat olioita, joihin on kovakoodattu valmiiksi metodien vastauksia. Mockit taas toimivat myös stubien tapaan kovakoodattujen vastausten antajana, mutta sen lisäksi mockien avulla voidaan määritellä odotuksia siitä miten niiden metodeja kutsutaan. Jos testattavana olevat oliot eivät kutsu odotetulla tavalla mockien metodeja, aiheutuu tästä testivirhe.
 
@@ -741,10 +741,11 @@ Rails tarjoaa avain-arvopari-periaatteella toimivan hyvin helppokäyttöisen cac
 
 Välimuisti on oletusarvoisesti poissa päältä. Saat sen päälle suorittamalla komentoriviltä komennon <code>rails dev:cache</code>
 
-Muuta myös tiedostosta _config/environments/development.rb_ rivi
+Muuta myös tiedostosta _config/environments/development.rb_ rivit
 
 ```ruby
 config.cache_store = :memory_store
+config.cache_store = :null_store
 ```
 
 muotoon
@@ -764,7 +765,7 @@ Cacheen päästään käsiksi muuttujaan <code>Rails.cache</code> talletetun oli
  => "arvo"
 > Rails.cache.read "kumpula"
  => nil
-> Rails.cache.write "kumpula", Place.new(name:"Oljenkorsi")
+> Rails.cache.write "kumpula", Place.new(name: "Oljenkorsi")
  => true
 > Rails.cache.read "kumpula"
  => #<Place:0x00000104628608 @name="Oljenkorsi">
@@ -931,6 +932,7 @@ describe "BeermappingApi" do
       expect(place.name).to eq("Panimoravintola Koulu")
       expect(place.street).to eq("Eerikinkatu 18")
     end
+  end
 end
 ```
 
@@ -971,7 +973,8 @@ class BeermappingApi
   # ...
 
   def self.key
-    raise "BEERMAPPING_APIKEY env variable not defined" if ENV['BEERMAPPING_APIKEY'].nil?
+    return nil if Rails.env.test? # testatessa ei apia tarvita, palautetaan nil
+    raise 'BEERMAPPING_APIKEY env variable not defined' if ENV['BEERMAPPING_APIKEY'].nil?
     ENV.fetch('BEERMAPPING_APIKEY')
   end
 end
@@ -994,10 +997,9 @@ mluukkai@melkki$ BEERMAPPING_APIKEY="731955affc547174161dbd6f97b46538" rails s
 
 Voit myös määritellä ympäristömuuttujan arvon (export-komennolla) komentotulkin käynnistyksen yhteydessä suoritettavassa tiedostossa (.zshrc, .bashrc tai .profile komentotulkista riippuen).
 
-Ympäristömuuttujille on helppo asettaa arvo myös Herokussa, ks.
-https://devcenter.heroku.com/articles/config-vars
+Ympäristömuuttujille on helppo asettaa arvo myös Fly.io:ssa ks. https://fly.io/docs/reference/secrets/#setting-secrets ja Herokussa, ks. https://devcenter.heroku.com/articles/config-vars
 
-**HUOM** Jos haluat pitää Github actionsin toimintakunnossa, joudut määrittelemään ympäristömuuttujan workflown-konfiguraatioon ks.
+**HUOM** Jos haluat pitää Github Actionsin toimintakunnossa, joudut määrittelemään ympäristömuuttujan workflown-konfiguraatioon ks.
 https://docs.github.com/en/actions/learn-github-actions/environment-variables
 
 ## Lisäselvennys kontrollerin toiminnasta
@@ -1089,10 +1091,10 @@ eli tällä kertaa routeissa määriteltiin, että panimon id:hen viitataan <cod
 > ```ruby
 > resources :places, only: [:index, :show]
 > # mikä generoi samat polut kuin seuraavat kaksi
-> # get 'places', to:'places#index'
-> # get 'places/:id', to:'places#show'
+> # get 'places', to: 'places#index'
+> # get 'places/:id', to: 'places#show'
 >
-> post 'places', to:'places#search'
+> post 'places', to: ' places#search'
 > ```
 >
 > - HUOM: ravintolan tiedot löytyvät hieman epäsuorasti cachesta siinä vaiheessa kun ravintolan sivulle ollaan menossa. Jotta pääset tietoihin käsiksi on ravintolan id:n lisäksi "muistettava" kaupunki, josta ravintolaa etsittiin, tai edelliseksi tehdyn search-operaation tulos. Yksi tapa muistamiseen on käyttää sessiota, ks. https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/main/web/viikko3.md#k%C3%A4ytt%C3%A4j%C3%A4-ja-sessio
@@ -1174,12 +1176,10 @@ Näkymätemplatea /views/beers/show.html.erb muutetaan seuraavasti:
   <% end %>
 
   <div>
-    <%= link_to "Edit this beer |", edit_beer_path(@beer) %>
-    <%= link_to "Destroy this beer", @beer, form: { data: {turbo_confirm: "Are you sure?"} }, method: :delete if current_user%>
+    <%= link_to "Edit this beer", edit_beer_path(@beer) %>
+    <%= button_to "Destroy this beer", @beer, method: :delete %>
   </div>
 <% end %>
-
-<%= link_to "Back to beers", beers_path %>
 ```
 
 Jotta lomake lähettäisi oluen id:n, tulee <code>beer_id</code>-kenttä lisätä lomakkeeseen. Emme kuitenkaan halua käyttäjän pystyvän manipuloimaan kenttää, joten kenttä on määritelty lomakkeelle <code>hidden_field</code>:iksi.
@@ -1196,12 +1196,12 @@ renderöi kontrolleri (eli reittauskontrollerin metodi <code>create</code>) olue
 
 Ongelman voisi kiertää katsomalla mistä osoitteesta create-metodiin on tultu ja renderöidä sitten oikea sivu riippuen tulo-osoitteesta. Emme kuitenkaan tee nyt tätä muutosta.
 
-Korjaamme ensin erään vielä vakavamman ongelman. Edellistä kahta kuvaa tarkastelemalla huomaamme että jos reittauksen (joka yritetään antaa oluelle _Weihenstephaner Hefeweizen_) validointi epäonnistuu, ei tehty oluen valinta ole enää tallessa (valittuna on _iso 3_).
+Korjaamme ensin erään vielä vakavamman ongelman. Edellistä kahta kuvaa tarkastelemalla huomaamme että jos reittauksen (joka yritetään antaa oluelle _Weihenstephaner Hefeweizen_) validointi epäonnistuu, ei tehty oluen valinta ole enää tallessa (valittuna on _Iso 3_).
 
 Ongelman syynä on se, että pudotusvalikon vaihtoehdot generoivalle metodille <code>options_from_collection_for_select</code> ei ole kerrottu mikä vaihtoehdoista tulisi valita oletusarvoisesti, ja tälläisessä tilanteessa valituksi tulee kokoelman ensimmäinen olio. Oletusarvoinen valinta kerrotaan antamalla metodille neljäs parametri:
 
 ```erb
-options_from_collection_for_select(@beers, :id, :to_s, selected: @rating.beer_id) %>
+options_from_collection_for_select(@beers, :id, :to_s, selected: @rating.beer_id)
 ```
 
 Eli muutetaan näkymätemplate app/views/ratings/new.html.erb seuraavaan muotoon:
@@ -1237,9 +1237,9 @@ Sama ongelma itse asiassa vaivaa muutamia sovelluksemme lomakkeita, kokeile esim
 >
 > ```erb
 > <%= form_with(model: @membership) do |form| %>
->   <%= form.hidden_field :beer_club_id, value: @beerclub.id %>
+>   <%= form.hidden_field :beer_club_id, value: @beer_club.id %>
 >   <%= form.hidden_field :user_id, value: current_user.id %>
->   <%= form.submit "Join the beerclub" %>
+>   <%= form.submit "Join the beer club" %>
 > <% end %>
 > ```
 
@@ -1262,19 +1262,13 @@ Hienosäädetään olutseuraan liittymistä
 > Vihje: eroamistoiminnallisuuden voi toteuttaa liittymistoiminnalisuuden tapaan olutseuran sivulle sijoitettavalla lomakkeella. Lomakkeen käyttämäksi HTTP-metodiksi tulee määritellä delete:
 >
 > ```erb
-> <%= form_with(model: @membership, ..., method: :delete) do |form| %>
+> <%= form_with(..., method: :delete) do |form| %>
 >   ...
->   <%= form.hidden_field :beer_club_id, value: @beerclub.id %>
+>   <%= form.hidden_field :beer_club_id, value: @beer_club.id %>
 >   <%= form.hidden_field :user_id, value: current_user.id %>
 >   <%= form.submit "End the membership" %>
 > <% end %>
 > ```
->
-> **HUOM:** saatat saada virheilmoituksen <code>No route matches [DELETE] "/memberships"</code>
->
-> Syynä tälle on se, että routes-tiedoston määrittely määrittelee HTTP Delete -operaation vaan polulle, joka on muotoa _/memberships/:id_, eli esim. _memberships/42_
->
-> Metodi <code>form*for</code> tuottaa polun muotoa \_memberships* jos sen parametrina oleva olio _ei ole_ talletettu tietokantaan. Jos parametrina oleva olio on talletettu tietokantaan, generoituva polku on muotoa _memberships/42_, missä 42 siis parametrina olevan olion id.
 >
 > Tehtävän toteuttamiseen on monta keinoa, yksi keino on saada selville käyttäjän <code>membership</code> olion id, jonka avulla voi käsin asettaa oikean id:n polkuun.
 >
@@ -1314,11 +1308,12 @@ Olemme käyttäneet Railsin migraatioita jo ensimmäisestä viikosta alkaen. On 
 > - luo tietokantataulu tyyleille
 > - tee tauluun rivi jokaista _beers_-taulusta löytyvää erinimistä tyyliä kohti (tämä onnistuu konsolista käsin)
 > - uudelleennimeä _beers_-taulun sarake style esim. _old_style_:ksi (tämä siis migraation avulla)
+> - tee _beers_-taulun viiteavain tyylejä varten (tämäkin migraation avulla, voit tehdä tämän ja edellisen askeleen samassa migraatiossa)
 > - liitä konsolista käsin oluet _style_-olioihin käyttäen hyväksi oluilla vielä olevaa old_style-saraketta
 >   - tyylikkäämpää on tehdä myös tämä askel migraatiossa
 > - tuhoa oluiden taulusta migraation avulla _old_style_
 >
-> **Huomaa, että Heroku-instanssin ajantasaistaminen kannattaa tehdä samalla!**
+> **Huomaa, että Fly.io/Heroku-instanssin ajantasaistaminen kannattaa tehdä samalla!**
 >
 > Vihje: voit harjoitella datamigraation tekemistä siten, että kopioit ennen migraation aloittamista tietokannan eli tiedoston _db/development.sqlite3_ ja jos migraatiossa menee jokin pieleen, voit palauttaa tilanteen ennalleen kopion avulla. Myös debuggeri (binding.break) saattaa osoittautua hyödylliseksi migraation kehittelemisessä.
 >
@@ -1328,7 +1323,7 @@ Olemme käyttäneet Railsin migraatioita jo ensimmäisestä viikosta alkaen. On 
 >
 > Tyylien sivulle kannattaa lisätä lista kaikista tyylin oluista.
 >
-> **HUOM1** Jos lisäät luokalle _Beer_ määreen <code>belongs*to :style</code> et enää pääse käsiksi \_style*-nimiseen merkkijonomuotoiseen attribuuttiin pistenotaatiolla _beer.style_, vaan joudut käyttämään muotoa _beer['style']_
+> **HUOM1** Jos lisäät luokalle _Beer_ määreen <code>belongs_to :style</code> et enää pääse käsiksi \_style*-nimiseen merkkijonomuotoiseen attribuuttiin pistenotaatiolla _beer.style_, vaan joudut käyttämään muotoa _beer['style']_
 >
 > **HUOM2** varmista, että _uusien oluiden luominen toimii_ vielä laajennuksen jälkeen! Joudut muuttamaan muutamaakin kohtaa, näistä vaikein huomata lienee olutkontrollerin apumetodi <code>beer_params</code>.
 

@@ -737,21 +737,27 @@ Parametrit sisältävä hash on kontrollerin sisällä talletettu muuttujaan <co
 
 Uuden ratingin tiedot ovat hashissa avaimen <code>:rating</code> arvona, eli pääsemme niihin käsiksi komennolla <code>params[:rating]</code> joka taas on hash jonka arvo on <code>{"beer_id"=>"1", "score"=>"2"}</code>. Eli esim. pistemäärään päästäisiin käsiksi komennolla <code>params[:rating][:score]</code>.
 
-## debuggeri
+## Debuggeri
 
 Tutkitaan hieman asiaa kontrollerista käsin Railsin debuggeria hyödyntäen
 
-Rails on jo konfiguroinut sovelluksesi käyttöön [debuggerin](https://github.com/ruby/debug).
+Rails on jo konfiguroinut sovelluksesi käyttöön [debuggerin](https://github.com/ruby/debug). Railsin oletusarvoinen debuggeri ei kuitenkaan tällä hetkellä käyttäydy kaikissa tilanteissa hyvin, joten asennetaan vaihtoehtoinen [pry-byebug](https://github.com/deivid-rodriguez/pry-byebug) lisäämällä tiedostoon Gemfile seuraava
 
-Lisätään kontrollerin alkuun, eli sille kohtaan koodia jota haluamme tarkkailla, komento <code>binding.break</code>
+group :development, :test do
+  gem 'pry-byebug'
+end
+
+Lisäyksen jälkeen tulee suorita komentoriviltä komento _bundle install_ ja käynnistää sovellus uudelleen.
+
+Lisätään kontrollerin alkuun, eli sille kohtaan koodia jota haluamme tarkkailla, komento <code>binding.pry</code>
 
 ```ruby
 def create
-  binding.break
+  binding.pry
 end
 ```
 
-Kun luot lomakkeella uuden reittauksen, sovellus pysähtyy komennon <code>binding.break</code> kohdalle. Terminaaliin josta Rails on käynnistetty, avautuu nyt interaktiivinen konsolinäkymä:
+Kun luot lomakkeella uuden reittauksen, sovellus pysähtyy komennon <code>binding.pry</code> kohdalle. Terminaaliin josta Rails on käynnistetty, avautuu nyt interaktiivinen konsolinäkymä:
 
 ```ruby
 Started POST "/ratings" for ::1 at 2022-07-20 14:02:51 +0300
@@ -763,7 +769,7 @@ Processing by RatingsController#create as TURBO_STREAM
      9|     end
     10|
     11|     def create
-=>  12|       binding.break
+=>  12|       binding.pry
     13|     end
     14|
     15| end
@@ -1373,7 +1379,7 @@ Kannattaa huomata, että HTTP Basic -autentikaatiota ei tule käyttää kuin suo
 > VIHJE: oikean koodin kirjoittaminen saattaa olla helpointa debuggerin avulla, pysäytä ohjelman suoritus:
 >
 > authenticate_or_request_with_http_basic do |username, password|
-> binding.break
+> binding.pry
 > end
 >
 > ja kokeile mitä muuttujissa _admin_accounts_, _username_ ja _password_ on arvoina ja kehittele oikea komento.
