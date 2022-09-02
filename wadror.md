@@ -49,9 +49,9 @@ Suoritettuasi kurssin [ilmoittaudu](https://github.com/mluukkai/WebPalvelinohjel
 
 Ohjausajat Zoomissa ja Kumpulan kampuksella:
 
-- Tiistai 14.9. klo 14-16 Zoomissa
+- Tiistai 14.9. klo 14-16 [Zoomissa](https://helsinki.zoom.us/j/61147325867?pwd=czVLWEcwaWkzdGo0L09ZSDBrWWhXUT09)
 - Tiistai 4.10. klo 14-16 Kumpulan kampuksella huoneessa BK107
-- Tiistai 18.10 klo 14-16 Zoomissa
+- Tiistai 18.10 klo 14-16 [Zoomissa](https://helsinki.zoom.us/j/63972326681?pwd=bnFFVWhzb2oxc2hRTERlbkRpV2RJdz09)
 
 ## Materiaali ja tehtävät
 
