@@ -170,7 +170,7 @@ Määrittelimme viikolla 2 navigointipalkille tyylin lisäämällä hakemistossa
 
 CSS:ää käyttämällä koko sivuston ulkoasu voitaisiin muotoilla sivuston suunnittelijan haluamalla tavalla, jos silmää ja kykyä muotoiluun löytyy.
 
-Sivuston muotoilunkaan suhteen ei onneksi ole enää tarvetta keksiä pyörää uudelleen. Bootstrap http://getbootstrap.com/ on "kehys", joka sisältää suuren määrän web-sivujen ulkoasun muotoiluun tarkoitettuja CSS-tyylitiedostoja ja javascriptiä. Bootstrap on pitkään nauttinut suosiota web-sivujen ulkoasun muotoilussa käytettävien kirjastojen joukossa.
+Sivuston muotoilunkaan suhteen ei onneksi ole enää tarvetta keksiä pyörää uudelleen. Bootstrap http://getbootstrap.com/ on tyylikirjasto, joka sisältää suuren määrän web-sivujen ulkoasun muotoiluun tarkoitettuja CSS-tyylitiedostoja ja javascriptiä. Bootstrap on pitkään nauttinut suosiota web-sivujen ulkoasun muotoilussa käytettävien kirjastojen joukossa. Bootstrap oli aikoinaan ensimmäinen laajalti suosiota saavuttanut tyylikirjasto, sittemmin tyylikirjastoja on syntynyt todella suuri määrä, muutamana esimerkkinä mainitkoon [Material UI](https://mui.com/material-ui/customization/how-to-customize/) ja hieman uudempi tulokas [Tailwind CSS](https://tailwindcss.com/)
 
 Aloitetaan sitten sovelluksemme bootstrappaaminen gemin <https://github.com/twbs/bootstrap-rubygem> avulla. Lisätään Gemfileen seuraavat:
 
@@ -219,56 +219,57 @@ Muutetaan tiedosto _app/views/layouts/application.html.erb_ seuraavaan muotoon:
 
   <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item">
-            <%= link_to 'breweries', breweries_path, { class: "nav-link" }  %>
-          </li>
-          <li class="nav-item">
-            <%= link_to 'beers', beers_path , { class: "nav-link" } %>
-          </li>
-          <li class="nav-item">
-            <%= link_to 'ratings', ratings_path , { class: "nav-link" } %>
-          </li>
-          <li class="nav-item">
-            <%= link_to 'users', users_path , { class: "nav-link" } %>
-          </li>
-          <li class="nav-item">
-            <%= link_to 'clubs', beerclubs_path , { class: "nav-link" } %>
-          </li>
-          <li class="nav-item">
-            <%= link_to 'places', places_path, { class: "nav-link" }  %>
-          </li>
-          <li class="nav-item">
-            <%= link_to 'styles', styles_path , { class: "nav-link" } %>
-          </li>
-      |
-      <% if current_user %>
-        <li class="nav-item">
-          <%= link_to "#{current_user.username}", current_user , { class: "nav-link" } %>
-        </li>
-        <li class="nav-item">
-          <%= link_to "Rate a new beer", new_rating_path , { class: "nav-link" } %>
-        </li>
-        <li class="nav-item">
-          <%= link_to "Join a club", new_membership_path , { class: "nav-link" } %>
-        </li>
-        <li class="nav-item">
-          <%= link_to "Sign out", signout_path, class: "nav-link", data: {turbo_method: :delete} %>
-        </li>
-      <% else %>
-        <li class="nav-item">
-          <%= link_to "Sign up", signup_path , { class: "nav-link" } %>
-        </li>
-        <li class="nav-item">
-          <%= link_to "Sign in", signin_path , { class: "nav-link" } %>
-        </li>
-      <% end %>
-        </ul>
+      <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <%= link_to 'breweries', breweries_path, { class: "nav-link" } %>
+            </li>
+            <li class="nav-item">
+              <%= link_to 'beers', beers_path , { class: "nav-link" } %>
+            </li>
+            <li class="nav-item">
+              <%= link_to 'ratings', ratings_path , { class: "nav-link" } %>
+            </li>
+            <li class="nav-item">
+              <%= link_to 'users', users_path , { class: "nav-link" } %>
+            </li>
+            <li class="nav-item">
+              <%= link_to 'clubs', beer_clubs_path , { class: "nav-link" } %>
+            </li>
+            <li class="nav-item">
+              <%= link_to 'places', places_path, { class: "nav-link" }  %>
+            </li>
+            <li class="nav-item">
+              <%= link_to 'styles', styles_path , { class: "nav-link" } %>
+            </li>
+            |
+            <% if current_user %>
+              <li class="nav-item">
+                <%= link_to "#{current_user.username}", current_user , { class: "nav-link" } %>
+              </li>
+              <li class="nav-item">
+                <%= link_to "Rate a beer", new_rating_path , { class: "nav-link" } %>
+              </li>
+              <li class="nav-item">
+                <%= link_to "Join a club", new_membership_path , { class: "nav-link" } %>
+              </li>
+              <li class="nav-item">
+                <%= link_to "Sign out", signout_path, class: "nav-link", data: {turbo_method: :delete} %>
+              </li>
+            <% else %>
+              <li class="nav-item">
+                <%= link_to "Sign up", signup_path , { class: "nav-link" } %>
+              </li>
+              <li class="nav-item">
+                <%= link_to "Sign in", signin_path , { class: "nav-link" } %>
+              </li>
+            <% end %>        
+          </ul>
+        </div>
       </div>
     </nav>
 
@@ -277,9 +278,9 @@ Muutetaan tiedosto _app/views/layouts/application.html.erb_ seuraavaan muotoon:
 </html>
 ```
 
-Bootstrapin dokumentaatio ei ole ihan selkein mahdollinen, mutta pienellä ihmettelyllä saimme aikaan navigaatiopalkin, joka on sisällöltään samanlainen entisen kaltainen.
+Bootstrapin dokumentaatio ei ole ihan selkein mahdollinen, mutta pienellä ihmettelyllä saimme aikaan navigaatiopalkin, joka on sisällöltään entisen kaltainen.
 
-Vaikka bootstrapilla muotoiltu navigaatiopalkki on koodina pidempi ja sotkuisempikin kuin aiempi navigaatiopalkkimme, on sillä kuitenkin eräs merkittävä etu. Jos sovellusta tarkastellaan "isolta" näytöltä, näkyy navigaatiopalkki normaalisti:
+Vaikka Bootstrapilla muotoiltu navigaatiopalkki on koodina pidempi ja sotkuisempikin kuin aiempi navigaatiopalkkimme, on sillä kuitenkin eräs merkittävä etu. Jos sovellusta tarkastellaan "isolta" näytöltä, näkyy navigaatiopalkki normaalisti:
 
 ![kuva](https://raw.githubusercontent.com/mluukkai/WebPalvelinohjelmointi2022/main/images/ratebeer-w6-0a.png)
 
@@ -318,11 +319,11 @@ muotoon
 </div>
 ```
 
-Eli sijoitamme bootstrapin containeriin, eli varsinaisen sivun sisällön sisältävään osaan yhden rivin, jonka jaamme kahteen sarakkeeseen: 8:n levyiseen johon kunkin sivun tiedot upotetaan ja 4:n levyiseen osaan jossa näytämme kuvan riippumatta siitä millä sivulla ollan.
+Eli sijoitamme Bootstrapin containeriin, eli varsinaisen sivun sisällön sisältävään osaan yhden rivin, jonka jaamme kahteen sarakkeeseen: 8:n levyiseen johon kunkin sivun tiedot upotetaan ja 4:n levyiseen osaan jossa näytämme kuvan riippumatta siitä millä sivulla ollan.
 
 Sivun pohja on nyt kunnossa ja voimme hyödyntää bootstrapin tyylejä ja komponentteja sivuillamme.
 
-### notifikaatio
+### Notifikaatio
 
 Useissa sovelluksen näkymissä on rivi
 
@@ -362,9 +363,9 @@ ja poistaa se muista näkymätiedostoista, kuten _app/views/beers/index.html.erb
 
 Jos käytät Visual Studio Codea, niin voit käyttää _replace in files_ -toimintoa poistamaan ylimääräiseksi jääneet `<p id="notice"><%= notice %></p>` -komennot.
 
-### lisää komponentteja
+### Lisää komponentteja
 
-Bootstrap tarjoaa paljon erilaisia komponentteja, esimerkiksi taulukot saa tyylikkäiksi käyttämällä bootstrapin tarjoamaa komponenttia: https://getbootstrap.com/docs/5.2/content/tables/ . Taulukon normaali bootstrap-muotoilu saadaan käyttöön lisäämällä taulukon HTML-koodille luokka <code>table</code>, seuraavasti:
+Bootstrap tarjoaa paljon erilaisia komponentteja, esimerkiksi taulukot saa tyylikkäiksi käyttämällä Bootstrapin tarjoamaa komponenttia: https://getbootstrap.com/docs/5.2/content/tables/ . Taulukon normaali bootstrap-muotoilu saadaan käyttöön lisäämällä taulukon HTML-koodille luokka <code>table</code>, seuraavasti:
 
 ```erb
 <table class="table">
@@ -382,9 +383,13 @@ Lisäämällä taulukolle vielä luokka <code>table-hover</code>, saadaan se riv
 
 > ## Tehtävä 1
 >
-> Oluet listaava sivu muuttuu melko lukukelvottomaksi oluiden lukumäärän kasvaessa. Muutetaan olueiden näkymä käyttämään [taulukkoa](https://www.w3schools.com/html/html_tables.asp) ja otetaan käyttöön bootstrapin määrittelemät tyylit.
+> Oluet listaava sivu muuttuu melko lukukelvottomaksi oluiden lukumäärän kasvaessa. Muutetaan olueiden näkymä käyttämään [taulukkoa](https://www.w3schools.com/html/html_tables.asp) joka tyylitellään Bootstrapillä https://getbootstrap.com/docs/5.2/content/tables/
 >
-> Jos muokkaat yhden oluen rivin käyttämällä partials-tiedostoa muista ottaa muutokset huomioon muissa tiedostoissa. Voikin olla järkevämpää eritellä oluen näyttävän sivun koodi kokonaan <code>show.html.erb</code>-tiedostoon
+> Jos muokkaat yhden oluen rivin käyttämällä partials-tiedostoa muista ottaa muutokset huomioon muissa tiedostoissa. Tässä tehtävässä kannattaa luopua partialin <code>_beer.html.erb</code> käytöstä oluiden taulukon renderöinnissä, tee siis taulukko kokonaisuudessaan tiedostoon <code>views/beers/index.html.erb</code>
+
+Tehtävän jälkeen oluiden sivu voi näyttää esim. seuraavalta
+
+![kuva](https://raw.githubusercontent.com/mluukkai/WebPalvelinohjelmointi2022/main/images/beers-bootstrapped.png)
 
 Bootstrap tarjoaa valmiit tyylit myös painikkeille https://getbootstrap.com/docs/5.2/components/buttons/
 
