@@ -47,7 +47,12 @@ Suoritettuasi kurssin [ilmoittaudu](https://github.com/mluukkai/WebPalvelinohjel
 
 ### Paja
 
-5.9. alkavasta viikosta lähtien kurssilla 2-4 tuntia ohjausta Zoomissa/Kumpulan kampuksella. Tarkista aika täältä myöhemmin
+Ohjausajat Zoomissa ja Kumpulan kampuksella:
+
+- Tiistai 14.9. klo 15-16 Zoomissa
+- Tiistai 20.9. klo 15-16 Kumpulan kampuksella huoneessa BK107
+- Tiistai 4.10. klo 15-16 Zoomissa
+- Tiistai 18.10 klo 15-16 Kumpulan kampuksella huoneessa BK107
 
 ## Materiaali ja tehtävät
 
