@@ -8,7 +8,7 @@ Osa tämän viikon tehtävistä saattaa hajottaa jotain edellisinä viikkoina te
 
 Viikolla 2 tutustuimme [debuggeriin](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/main/web/viikko2.md#debuggeri). Jos debuggeri ei ole vielä löytänyt tietänsä sinun työkaluvalikoimaan niin tässä vielä nopea kertaus käytöstä.
 
-Debuggerin käyttö on erittäin helppoa. Riittää kirjoittaa komento <code>binding.pry</code> (tai <code>binding.break</code>) _mihin tahansa_ kohtaan sovelluksen koodia. Seuraavassa esimerkki:
+Debuggerin käyttö on erittäin helppoa. Riittää kirjoittaa komento <code>binding.pry</code> (tai hieman huonommin toimiva Railsin natiividebuggeri komennolla <code>binding.break</code>) _mihin tahansa_ kohtaan sovelluksen koodia. Seuraavassa esimerkki:
 
 ```ruby
 class PlacesController < ApplicationController
@@ -31,37 +31,53 @@ class PlacesController < ApplicationController
 Tarkastelemme siis debuggerilla BeermappingApia käyttävää osaa sovelluksesta. Kun nyt sovelluksella haetaan jotain olutravintolaa avaa debuggeri konsolisession koodiin merkittyyn kohtaan:
 
 ```ruby
-From: /Users/mluukkai/opetus/ratebeer/app/controllers/places_controller.rb @ line 10 PlacesController#search:
+From: /myapp/app/controllers/places_controller.rb:13 PlacesController#search:
 
-     9: def search
- => 10:   binding.pry
-    11:   @places = BeermappingApi.places_in(params[:city])
-    12:   if @places.empty?
-    13:     redirect_to places_path, notice: "No locations in #{params[:city]}"
-    14:   else
-    15:     @weather = ApixuApi.weather_in(params[:city])
-    16:     session[:city] = params[:city]
-    17:     render :index
-    18:   end
-    19: end
+    10: def search
+    11:   @city = params[:city].downcase
+    12:   binding.pry
+ => 13:   @places = BeermappingApi.places_in(@city)
+    14:   @weather = Weather.current(@city)
+    15:
+    16:   if @places.empty?
+    17:     redirect_to places_path, notice: "No locations in #{@city}"
+    18:   else
+    19:     session[:last_city] = @city
+    20:     render :index, status: 418
+    21:   end
+    22: end
 
->  params
-=> <ActionController::Parameters {"utf8"=>"✓", "authenticity_token"=>"b6MZBx2+UL1dc8uWnCxmjNiCGHtODDMf6PgtB6OQAjxQL15jAZ2NO+YyHOVIFO/96qVJAYJktBKPB4hUeWJEHA==", "city"=>"turku", "commit"=>"Search", "controller"=>"places", "action"=>"search"} permitted: false>
+[1] pry(#<PlacesController>)> params
+=> #<ActionController::Parameters {"authenticity_token"=>"n7tewb4WlQqBhhr0dc_hFWc5r2VCiBIroM4q0N1AkYn7pXcRdjA61k98XguiVPm3QRmNShjzoMZ-Hy7KbQ9WZg", "city"=>"helsinki", "commit"=>"Search", "controller"=>"places", "action"=>"search"} permitted: false>
+[2] pry(#<PlacesController>)>
 ```
 
 eli pystymme mm. tarkastamaan että <code>params</code> hashin sisältö on sellainen kuin oletamme sen olevan.
 
-Suoritetaan sitten seuraava komento ja katsotaan että tulos on odotetun kaltainen. Jos käytämme _debuggeria_ voi seuraavan komennon suorittaa komennolla <code>continue/c</code>. Pry ei tätä mahdollisuutta tarjoa ja seuraava komento pitää käytännössa suorittaa kopioimalla komento terminaaliin:
+Suoritetaan sitten seuraava komento ja katsotaan että tulos on odotetun kaltainen. Seuraavan komennon voi suorittaa komennolla <code>ne</code>:
 
 ```ruby
-> @places = BeermappingApi.places_in(city)
-=> @places = BeermappingApi.places_in(city)
-=> [#<Place id="18856", name="Panimoravintola Koulu", status="Brewpub", reviewlink="https://beermapping.com/location/18856", proxylink="http://beermapping.com/maps/proxymaps.php?locid=18856&d=5", blogmap="http://beermapping.com/maps/blogproxy.php?locid=18856&d=1&type=norm", street="Eerikinkatu 18", city="Turku", state=nil, zip="20100", country="Finland", phone="(02) 274 5757", overall="0", imagecount="0">]
-> @places.size
-=> 1
->@places.first.name
-"Panimoravintola Koulu"
-> exit
+From: /myapp/app/controllers/places_controller.rb:14 PlacesController#search:
+
+    10: def search
+    11:   @city = params[:city].downcase
+    12:   binding.pry
+    13:   @places = BeermappingApi.places_in(@city)
+ => 14:   @weather = Weather.current(@city)
+    15:
+    16:   if @places.empty?
+    17:     redirect_to places_path, notice: "No locations in #{@city}"
+    18:   else
+    19:     session[:last_city] = @city
+    20:     render :index, status: 418
+    21:   end
+    22: end
+
+[3] pry(#<PlacesController>)> @places.size
+=> 12
+[4] pry(#<PlacesController>)> @places.first.name
+=> "Pullman Bar"
+[5] pry(#<PlacesController>)> exit
 ```
 
 viimeinen komento jatkaa ohjelman normaalia suorittamista.
@@ -69,36 +85,44 @@ viimeinen komento jatkaa ohjelman normaalia suorittamista.
 Debuggerin voi siis käynnistää _mistä tahansa kohtaa_ sovelluksen koodia, myös testeistä tai jopa näkymistä. Kokeillaan debuggerin käynnistämistä uuden oluen luomislomakkeen renderöinnin aikana:
 
 ```erb
-     9:       <% end %>
+From: /myapp/app/views/beers/_form.html.erb:15 #<Class:0x00007ffb824e7ac0>#_app_views_beers__form_html_erb__2870933239970559054_132200:
+
     10:       </ul>
     11:     </div>
     12:   <% end %>
     13:
- => 14:   <% binding.pry %>
-    15:
-    16:   <div class="field">
-    17:     <%= f.label :name %><br>
-    18:     <%= f.text_field :name %>
+    14:   <% binding.pry %>
+ => 15:
+    16:   <div>
+    17:     <%= form.label :name, style: "display: block" %>
+    18:     <%= form.text_field :name %>
     19:   </div>
+    20:
 
-> @styles.size
-=> 7
-> @styles.first
-=> #<Style:0x00007f8edc0ca4f0
+[1] pry(#<#<Class:0x00007ffb824e7750>>)> @styles.size
+  Style Count (3.8ms)  SELECT COUNT(*) FROM "styles"
+  ↳ (pry):7
+=> 8
+[2] pry(#<#<Class:0x00007ffb824e7750>>)> @styles.first
+  Style Load (3.6ms)  SELECT "styles".* FROM "styles" ORDER BY "styles"."id" ASC LIMIT ?  [["LIMIT", 1]]
+  ↳ (pry):8
+=> #<Style:0x00007ffb83062cd8
  id: 1,
  name: "European pale lager",
  description:
   "Similar to Munich Helles, many European countries reacted to the popularity of early pale lagers by brewing their own. Hop flavor is significant and of noble varieties, bitterness is moderate, and both are backed by a solid malt body and sweet notes from an all-malt base.",
- created_at: Thu, 20 Sep 2018 10:17:39 UTC +00:00,
- updated_at: Thu, 20 Sep 2018 10:35:04 UTC +00:00>
+ created_at: Thu, 01 Sep 2022 11:49:42.556514000 UTC +00:00,
+ updated_at: Thu, 01 Sep 2022 14:06:48.157892000 UTC +00:00>
+[3] pry(#<#<Class:0x00007ffb824e7750>>)>
 ```
 
-Näkymätemplateen on siis lisätty <code><% binding.pry %></code>. Kuten huomaamme, on jopa näkymän apumetodin <code>options_from_collection_for_select</code> kutsuminen mahdollista debuggerista käsin:
+Uuden oluen luomisen lomakkeen bäkymätemplateen on siis lisätty <code><% binding.pry %></code>. Jopa näkymän apumetodin <code>options_from_collection_for_select</code> kutsuminen mahdollista debuggerista käsin:
 
 ```ruby
-> options_from_collection_for_select(@styles, :id, :name, selected: @beer.style_id)
-  Style Load (0.2ms)  SELECT "styles".* FROM "styles"
-=> "<option value=\"1\">European pale lager</option>\n<option value=\"2\">Pale Ale</option>\n<option value=\"3\">Porter</option>\n<option value=\"4\">German hefeweizen</option>\n<option value=\"5\">IPA</option>\n<option value=\"6\">Ilowalcohol</option>\n<option value=\"7\">Pale ale</option>"
+[3] pry(#<#<Class:0x00007ffb824e7750>>)> options_from_collection_for_select(@styles, :id, :name, selected: @beer.style_id)
+  Style Load (3.9ms)  SELECT "styles".* FROM "styles"
+  ↳ (pry):9
+=> "<option value=\"1\">European pale lager</option>\n<option value=\"2\">Pale Ale</option>\n<option value=\"3\">Porter</option>\n<option value=\"4\">Weizen</option>\n<option value=\"5\">watery</option>\n<option value=\"6\">IPA</option>\n<option value=\"7\">lowalcohol</option>\n<option value=\"8\">Lowalcohol</option>"
 ```
 
 Eli vielä kertauksena **kun kohtaat ongelman, turvaudu arvailun sijaan debuggeriin!**
