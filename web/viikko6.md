@@ -170,7 +170,7 @@ Määrittelimme viikolla 2 navigointipalkille tyylin lisäämällä hakemistossa
 
 CSS:ää käyttämällä koko sivuston ulkoasu voitaisiin muotoilla sivuston suunnittelijan haluamalla tavalla, jos silmää ja kykyä muotoiluun löytyy.
 
-Sivuston muotoilunkaan suhteen ei onneksi ole enää tarvetta keksiä pyörää uudelleen. Bootstrap http://getbootstrap.com/ on tyylikirjasto, joka sisältää suuren määrän web-sivujen ulkoasun muotoiluun tarkoitettuja CSS-tyylitiedostoja ja javascriptiä. Bootstrap on pitkään nauttinut suosiota web-sivujen ulkoasun muotoilussa käytettävien kirjastojen joukossa. Bootstrap oli aikoinaan ensimmäinen laajalti suosiota saavuttanut tyylikirjasto, sittemmin tyylikirjastoja on syntynyt todella suuri määrä, muutamana esimerkkinä mainitkoon [Material UI](https://mui.com/material-ui/customization/how-to-customize/) ja hieman uudempi tulokas [Tailwind CSS](https://tailwindcss.com/)
+Sivuston muotoilunkaan suhteen ei onneksi ole enää tarvetta keksiä pyörää uudelleen. Bootstrap http://getbootstrap.com/ on tyylikirjasto, joka sisältää suuren määrän web-sivujen ulkoasun muotoiluun tarkoitettuja CSS-tyylitiedostoja ja JavaScriptiä. Bootstrap on pitkään nauttinut suosiota web-sivujen ulkoasun muotoilussa käytettävien kirjastojen joukossa. Bootstrap oli aikoinaan ensimmäinen laajalti suosiota saavuttanut tyylikirjasto, sittemmin tyylikirjastoja on syntynyt todella suuri määrä, muutamana esimerkkinä mainitkoon [Material UI](https://mui.com/material-ui/customization/how-to-customize/) ja hieman uudempi tulokas [Tailwind CSS](https://tailwindcss.com/)
 
 Aloitetaan sitten sovelluksemme bootstrappaaminen gemin <https://github.com/twbs/bootstrap-rubygem> avulla. Lisätään Gemfileen seuraavat:
 
@@ -417,7 +417,7 @@ Luokka voidaan lisätä myös niihin linkkeihin, jotka halutaan napin painikkeen
 
 > ## Tehtävä 3
 >
-> Sovelluksemme lomakkeet ovat tällä hetkellä melko rumia. Tee ainakin uuden olutseuran luomislomakkeesta tyylikkäämpi Bootstrapin [lomakkeiden](https://getbootstrap.com/docs/5.2/components/forms/) muotoiluun tarkoitettujen komponenttien avulla.
+> Sovelluksemme lomakkeet ovat tällä hetkellä melko rumia. Tee ainakin uuden olutseuran luomislomakkeesta tyylikkäämpi Bootstrapin [lomakkeiden](https://getbootstrap.com/docs/5.2/forms/overview/) muotoiluun tarkoitettujen komponenttien avulla.
 >
 > Saat päättää lomakkeen tarkan tyylin itse. Eräs tapa muotoilla lomake on seuraava
 
@@ -428,12 +428,6 @@ Luokka voidaan lisätä myös niihin linkkeihin, jotka halutaan napin painikkeen
 > Muuta navigointipalkkia siten, että käyttäjän kirjautuessa kirjautunutta käyttäjää koskevat toiminnot tulevat menupalkin dropdowniksi alla olevan kuvan tapaan.
 >
 > Apua löydät [navbarin](https://getbootstrap.com/docs/5.2/components/navbar/) ohjeiden _dropdown_-elementtejä sisältävistä esimerkeistä.
->
-> Ratkaisu ei ole kaikilta osin ihan suoraviivainen. Eräs mahdollisuus muokata apufunktion <code>link*to</code> tekemän linkin \_class* halutun kaltaiseksi:
->
-> ```
-> <%= link_to 'signout', signout_path, { class: "dropdown-item", method: :delete } %>
-> ```
 
 ![kuva](https://raw.githubusercontent.com/mluukkai/WebPalvelinohjelmointi2022/main/images/ratebeer-w6-3c.png)
 
@@ -471,35 +465,11 @@ Muutetaan sitten panimon sivua siten, että se kertoo panimon mahdollisen epäak
 
 ```erb
  <h2>
-  <%= @brewery.name %>
-  <% if not @brewery.active  %>
+  <%= brewery.name %>
+  <% if not brewery.active  %>
     <span class="badge bg-secondary">retired</span>
   <% end %>
 </h2>
-
-<p><em>Established at <%= @brewery.year %></em></p>
-
-<p>Number of beers <%= @brewery.beers.count %> </p>
-
-<p>
- <% @brewery.beers.each do |beer| %>
-   <%= link_to beer.name, beer %>
- <% end %>
-</p>
-
-<p>
-  <% if @brewery.ratings.empty? %>
-    beer has not yet been rated!
-  <% else %>
-    Has <%= pluralize(@brewery.ratings.count, 'rating') %>, average <%= @brewery.average_rating %>
-  <% end %>
-</p>
-
-<% if current_user %>
-  <%= link_to 'Edit', edit_brewery_path(@brewery), class:"btn btn-primary" %>
-  <%= link_to 'Destroy', @brewery, method: :delete, data: { confirm: 'Are you sure?' }, class:"btn btn-danger" %>
-<% end %>
-
 ```
 
 Panimon luomis- ja editointilomakkeeseen on syytä lisätä mahdollisuus panimon aktiivisuuden asettamiseen. Lisätään views/breweries/\_form.html.erb:iin checkbox aktiivisuuden säätelyä varten:
@@ -574,7 +544,7 @@ Copypastetaan näkymään taulukko kahteen kertaan, erikseen aktiivisille ja el�
 
 <p> Number of retired breweries: <%= @retired_breweries.count %> </p>
 
-<div id="breweries">
+<div id="retired_breweries">
   <% @retired_breweries.each do |brewery| %>
     <%= render brewery %>
   <% end %>
@@ -636,7 +606,7 @@ Ratkaisu on luettavuuden lisäksi parempi myös olioiden vastuujaon kannalta. Ei
 Kannattaa huomioida, että ActiveRecord mahdollistaa operaatioiden ketjuttamisen. Voitaisiin kirjoittaa esim:
 
 ```ruby
-  Brewery.where(active: true).where("year>2000")
+  Brewery.where(active: true).where("year > 2000")
 ```
 
 ja tuloksena olisi SQL-kysely
@@ -648,7 +618,7 @@ SELECT "breweries".* FROM "breweries" WHERE "breweries"."active" = ? AND (year>2
 ActiveRecord osaa siis optimoida ketjutetut metodikutsut yhdeksi SQL-operaatioksi. Myös scope toimii osana ketjutusta, eli vuoden 2000 jälkeen perustetut, edelleen aktiiviset panimot saataisiin selville myös seuraavalla 'onelinerilla':
 
 ```ruby
-Brewery.active.where("year>2000")
+Brewery.active.where("year > 2000")
 ```
 
 > ## Tehtävä 6-7 (kahden tehtävän arvoinen)
@@ -673,7 +643,7 @@ Brewery.active.where("year>2000")
 >  # ...
 >
 >  def self.top(n)
->    sorted_by_rating_in_desc_order = Brewery.all.sort_by{ |b| -(b.average_rating || 0) }
+>    sorted_by_rating_in_desc_order = Brewery.all.sort_by{ |b| ... }
 >    # palauta listalta parhaat n kappaletta
 >    # miten? ks. http://www.ruby-doc.org/core-2.5.1/Array.html
 >  end
@@ -873,10 +843,7 @@ Administraattori voi uudelleenaktivoida suljetun käyttäjätunnuksen käyttäj�
 
 ## Monimutkaisempi pääsynhallinta
 
-Jos sovelluksessa on tarvetta monipuolisempaan pääsynhallintaan (engl. authorization), kannattanee asia hoitaa esim. _cancan_-gemin avulla ks. https://github.com/CanCanCommunity/cancancan ja
-http://railscasts.com/episodes/192-authorization-with-cancan
-
-Aihetta esittelevä Rails cast on jo aika ikääntynyt, eli tarkemmat ohjeet kannattaa katsoa projektin Github-sivulta. Rails castit tarjoavat todella hyviä esittelyjä monista aihepiireistä, eli vaikka castit eivät enää olisi täysin ajantasalla kaikkien detaljien suhteen, kannattaa ne usein silti katsoa läpi.
+Jos sovelluksessa on tarvetta monipuolisempaan pääsynhallintaan (engl. authorization), kannattanee asia hoitaa esim. _cancan_-gemin avulla ks. https://github.com/CanCanCommunity/cancancan 
 
 ## Rails-sovellusten tietoturvasta
 
@@ -900,7 +867,7 @@ Emme ole vielä toistaiseksi puhuneet mitään Rails-sovellusten tietoturvasta. 
 > - https://guides.rubyonrails.org/action_controller_overview.html#force-https-protocol
 > - https://guides.rubyonrails.org/action_controller_overview.html#log-filtering
 
-Ylläolevasta dokumentista ei käy täysin selväksi se, että Rails _sanitoi_ (eli escapettaa kaikki script- ja html-tagit yms) oletusarvoisesti sivuilla renderöitävän syötteen, eli esim. jos yrittäisimme syöttää javascript-pätkän <code> &lt;script&gt;alert(&#39;Evil XSS attack&#39;);&lt;/script&gt;</code> oluttyylin kuvaukseen, koodia ei suoriteta, vaan koodi renderöityy sivulle 'tekstinä':
+Ylläolevasta dokumentista ei käy täysin selväksi se, että Rails _sanitoi_ (eli escapettaa kaikki script- ja html-tagit yms) oletusarvoisesti sivuilla renderöitävän syötteen, eli esim. jos yrittäisimme syöttää JavaScript-pätkän <code> &lt;script&gt;alert(&#39;Evil XSS attack&#39;);&lt;/script&gt;</code> oluttyylin kuvaukseen, koodia ei suoriteta, vaan koodi renderöityy sivulle 'tekstinä':
 
 ![kuva](https://raw.githubusercontent.com/mluukkai/WebPalvelinohjelmointi2022/main/images/ratebeer-w5-7.png)
 
@@ -918,13 +885,13 @@ Oletusarvoisen sanitoinnin saa 'kytkettyä pois' pyytämällä eksplisiittisesti
 </p>
 ```
 
-suoritetaan javascript-koodi sivun renderöinnion yhteydessä:
+suoritetaan JavaScript-koodi sivun renderöinnion yhteydessä:
 
 ![kuva](https://raw.githubusercontent.com/mluukkai/WebPalvelinohjelmointi2022/main/images/ratebeer-w5-8.png)
 
 Lisätietoa http://www.railsdispatch.com/posts/security ja http://railscasts.com/episodes/204-xss-protection-in-rails-3
 
-## Mielipanimoiden ja tyylin refaktorointi
+## Epilogi: mielipanimoiden ja tyylin refaktorointi
 
 Tällä viikolla ei ole enää enempää tehtäviä. Riittää että luet tästä eteenpäin olevan materiaalin. Seuraavan viikon materiaali ei riipu millään tavalla tämän viikon päättävästä refaktoroinnista.
 
