@@ -841,6 +841,10 @@ Administraattori voi uudelleenaktivoida suljetun käyttäjätunnuksen käyttäj�
 
 ![kuva](https://raw.githubusercontent.com/mluukkai/WebPalvelinohjelmointi2022/main/images/ratebeer-w6-1d.png)
 
+> ## Tehtävä 13
+>
+> Hyvin suurella todennäköisyydellä osa testeitä on hajonnut tämän viikon muutosten myötä. Korjaa testit.
+
 ## Monimutkaisempi pääsynhallinta
 
 Jos sovelluksessa on tarvetta monipuolisempaan pääsynhallintaan (engl. authorization), kannattanee asia hoitaa esim. _cancan_-gemin avulla ks. https://github.com/CanCanCommunity/cancancan 
@@ -849,7 +853,7 @@ Jos sovelluksessa on tarvetta monipuolisempaan pääsynhallintaan (engl. authori
 
 Emme ole vielä toistaiseksi puhuneet mitään Rails-sovellusten tietoturvasta. Nyt on aika puuttua asiaan. Rails-guideissa on tarjolla erinomainen katsaus tyypillisimmistä web-sovellusten tietoturvauhista ja siitä miten Rails-sovelluksissa voi uhkiin varautua.
 
-> ## Tehtävät 13-15 (kolmen tehtävän arvoinen)
+> ## Tehtävät 14-16 (kolmen tehtävän arvoinen)
 >
 > Lue https://guides.rubyonrails.org/security.html
 >
@@ -1196,6 +1200,6 @@ Jos tässä luvussa esitellyn tyyliset temput kiinnostavat, voit jatkaa esim. se
 
 Commitoi kaikki tekemäsi muutokset ja pushaa koodi GitHubiin. Deployaa myös uusin versio Fly.io:n tai Herokuun. Muista myös testata Rubocopilla, että koodisi noudattaa edelleen määriteltyjä tyylisääntöjä.
 
-Jos Herokun kanssa on ongelmia niin muista käyttää tarkastelussa apuna <code>heroku logs</code>, jonka avulla pääset tarkastelemaan Herokun logeja.
+Jos Herokun kanssa on ongelmia niin muista käyttää tarkastelussa apuna <code>heroku logs</code>, jonka avulla pääset tarkastelemaan Herokun logeja. Sama onnistuu Fly.io:a käyttävillä komennolla <code>fly logs</code>
 
 Tehtävät kirjataan palautetuksi osoitteeseen https://studies.cs.helsinki.fi/stats/courses/rails2022/

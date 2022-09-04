@@ -8,7 +8,7 @@ Rails-konsolin käytön tärkeyttä sovelluskehityksen välineenä on yritetty k
 
 ## Testeistä
 
-Osa tämän viikon tehtävistä saattaa hajottaa jotain edellisinä viikkoina tehtyjä testejä. Voit merkitä tehtävät testien hajoamisesta huolimatta, eli testien ja github actionsin pitäminen kunnossa on vapaaehtoista.
+Osa tämän viikon tehtävistä saattaa hajottaa jotain edellisinä viikkoina tehtyjä testejä. Voit merkitä tehtävät testien hajoamisesta huolimatta, eli testien ja GitHub Actionsin pitäminen kunnossa on vapaaehtoista.
 
 ## Erilaiset järjestykset
 
@@ -103,7 +103,7 @@ Beer.includes(:style).order("style.name")
 
 Ratkaisumme oluiden listan järjestämiseen on melko hyvä. Suorituskyvyn kannalta hieman ongelmallista on tosin se, että aina järjestettäessä tehdään kutsu palvelimelle, joka generoi uudessa järjestyksessä näytettävän sivun.
 
-Järjestämistoiminnallisuus voitaisiin toteuttaa myös selaimen puolella javascriptillä. Vaikka kurssi keskittyy palvelinpuolen toiminnallisuuteen, näytetään seuraavassa esimerkki siitä, miten järjestämistoiminnallisuus toteutettaisiin selainpuolella. Tässä ratkaisussa palvelin tarjoaa ainoastaan oluiden listan json-muodossa, ja selaimessa suoritettava javascript-koodi hoitaa myös oluet listaavan taulukon muodostamisen.
+Järjestämistoiminnallisuus voitaisiin toteuttaa myös selaimen puolella javascriptillä. Vaikka kurssi keskittyy palvelinpuolen toiminnallisuuteen, näytetään seuraavassa esimerkki siitä, miten järjestämistoiminnallisuus toteutettaisiin selainpuolella. Tässä ratkaisussa palvelin tarjoaa ainoastaan oluiden listan json-muodossa, ja selaimessa suoritettava JavaScript-koodi hoitaa myös oluet listaavan taulukon muodostamisen.
 
 Emme korvaa nyt olemassaolevaa oluiden listaa, eli sivun beers toiminnallisuutta, sen sijaan tehdään toiminnallisuutta varten kokonaan uusi, osoitteessa beerlist toimiva sivu. Tehdään sivua varten reitti tiedostoon routes.rb:
 
@@ -139,7 +139,7 @@ Kuten odotettua, osoitteessa http://localhost:3000/beerlist ei nyt näy mitään
 
 Alamme nyt kirjoittamaan toimintalogiikan toteutusta JavaScriptiä hyödyntäen.
 
-Rails-sovelluksen tarvitsema javascript-koodi kannattaa sijoittaa hakemistoon app/javascript/custom. Tehdään hakemistoon tiedosto _utils.js_ jolla on seuraava sisältö:
+Rails-sovelluksen tarvitsema JavaScript-koodi kannattaa sijoittaa hakemistoon app/javascript/custom. Tehdään hakemistoon tiedosto _utils.js_ jolla on seuraava sisältö:
 
 ```javascript
 function hello() {
@@ -164,9 +164,9 @@ Otetaan myös custom-hakemistossa sijaitseva javascript käyttöön sovelluksen 
 pin_all_from "app/javascript/custom", under: "custom"
 ```
 
-Kun sivu nyt avataan uudelleen, haetaan ensin javascriptillä id:n <code>beers</code> omaavaan omaava elementti, jonka jälkeen sen tekstiksi asetetaan "hello form javascript". Seuraava komento kirjoittaa javascript-konsoliin tervehdyksen.
+Kun sivu nyt avataan uudelleen, haetaan ensin javascriptillä id:n <code>beers</code> omaavaan omaava elementti, jonka jälkeen sen tekstiksi asetetaan "hello form JavaScript". Seuraava komento kirjoittaa JavaScript-konsoliin tervehdyksen.
 
-Javascript-ohjelmoinnissa selaimessa oleva konsoli on **erittäin tärkeä** työväline. Konsolin saa avattua chromessa tools-valikosta tai painamalla ctrl, shift, j (linux) tai alt, cmd, i (mac):
+JavaScript-ohjelmoinnissa selaimessa oleva konsoli on **erittäin tärkeä** työväline. Konsolin saa avattua chromessa tools-valikosta tai painamalla ctrl, shift, j (linux) tai alt, cmd, i (mac):
 
 ![kuva](https://raw.githubusercontent.com/mluukkai/WebPalvelinohjelmointi2022/main/images/ratebeer-w7-1.png)
 
@@ -264,7 +264,7 @@ Jbuilder-templatejen käyttö on kuitenkin ehdottomasti parempi vaihtoehto, täl
 
 Palataan oluiden sivun pariin. Kun muodostamme sivun javascriptillä, ideana onkin hakea palvelimelta nimenomaan oluet json-muodossa ja renderöidä ne sitten sopivasti javascriptin avulla.
 
-Muokataan javascript-koodiamme seuraavasti:
+Muokataan JavaScript-koodiamme seuraavasti:
 
 ```javascript
 const handleResponse = (request) => {
@@ -287,7 +287,7 @@ hello-funktio nimetään uudelleen beers nimiseksi (HUOM: muista vaihtaa funktio
 
 Funktion pitäisi siis saatuaan oluet palvelimelta muodostaa ne listaava HTML-koodi ja lisätä se sivulle.
 
-Muutetaan javascript-koodiamme siten, että se listaa aluksi ainoastaan oluiden nimet:
+Muutetaan JavaScript-koodiamme siten, että se listaa aluksi ainoastaan oluiden nimet:
 
 ```javascript
 const handleResponse = (request) => {
@@ -473,7 +473,7 @@ Nyt palvelimen lähettämä oluiden jsonmuotoinen lista on huomattavasti inhimil
 
 ![kuva](https://raw.githubusercontent.com/mluukkai/WebPalvelinohjelmointi2022/main/images/ratebeer-w7-5.png)
 
-Rekisteröimme vielä järjestämisen suorittavat tapahtumankuuntelijat linkeille (seuraavassa lopullinen javascript-koodi):
+Rekisteröimme vielä järjestämisen suorittavat tapahtumankuuntelijat linkeille (seuraavassa lopullinen JavaScript-koodi):
 
 ```javascript
 const BEERS = {};
@@ -557,9 +557,9 @@ export { beertable };
 
 Tapahtumakuuntelijoita kutsuessa lisätään uudessa järjestyksessä olevat BEERS.list alkiot taulukkoon olemassaolevien jatkoksi. Korjataan tämä lisäämällä BEERS.show-funktion alkuun rivi, jossa haetaan olemassaolevat <code>tablerow</code>-luokalla varustetut rivit ja poistetaan ne.
 
-Javascript-koodimme tulee liitetyksi sovelluksen jokaiselle sivulle. Tästä on se ikävä seuraus, että ollaanpa millä sivulla tahansa, suorittaa javascript <code>beertable</code>-funktion. Myös tapahtumakunntelijat yritetään rekisteröidä jokaiselle sivulle vaikka niiden rekisteröinti on mielekästä ainoastaan jos ollaan oluiden listalla.
+JavaScript-koodimme tulee liitetyksi sovelluksen jokaiselle sivulle. Tästä on se ikävä seuraus, että ollaanpa millä sivulla tahansa, suorittaa javascript <code>beertable</code>-funktion. Myös tapahtumakunntelijat yritetään rekisteröidä jokaiselle sivulle vaikka niiden rekisteröinti on mielekästä ainoastaan jos ollaan oluiden listalla.
 
-Viritellään javascript-koodia vielä siten, että <code>beertable</code>-funktion koodi suoritetaan ainoastaan jos ollaan sivulla, josta taulukko <code>beertable</code> löytyy:
+Viritellään JavaScript-koodia vielä siten, että <code>beertable</code>-funktion koodi suoritetaan ainoastaan jos ollaan sivulla, josta taulukko <code>beertable</code> löytyy:
 
 ```javascript
 const beertable = () => {
@@ -582,19 +582,19 @@ Tällä hetkellä trendinä siirtää yhä suurempi osa web-sivujen toiminnallis
 
 ## React
 
-Äsken javascriptillä toteuttamamme oluet listaava sivu oli koodin rakenteen puolesta ihan kohtuullista, mutta Railsin sujuvuuteen ja vaivattomuuteen verrattuna koodi oli raskaahkoa ja paikoin ikävien, rutiininomaisten yksityiskohtien täyttämää. Jos sovelluksen selainpuolella toteutettavan koodin määrä alkaa kasvaa, on lopputuloksena helposti sekava koodi, jonka toiminnasta kukaan ei enää ota selvää ja jonka laajentaminen muuttuu erittäin haastavaksi.
+Äsken JavasSriptillä toteuttamamme oluet listaava sivu oli koodin rakenteen puolesta ihan kohtuullista, mutta Railsin sujuvuuteen ja vaivattomuuteen verrattuna koodi oli raskaahkoa ja paikoin ikävien, rutiininomaisten yksityiskohtien täyttämää. Jos sovelluksen selainpuolella toteutettavan koodin määrä alkaa kasvaa, on lopputuloksena helposti sekava koodi, jonka toiminnasta kukaan ei enää ota selvää ja jonka laajentaminen muuttuu erittäin haastavaksi.
 
-Javascript-frontendsovelluskehykset tuovat asiaan helpotusta. Pitkään jo suosiota nauttinut ja edelleen suosituin ratkaisu frontendien tekemiseen on Facebookin kehittämä [React](https://facebook.github.io/react/). React on laaja aihe ja pääset syventymään siihen laitoksen kurssilla Fullstack-websovellusohjelmointi joka järjestetään nyt menossa olevana [avoimen yliopiston kurssina](https://fullstackopen.github.io/).
+JavaScript-frontendsovelluskehykset tuovat asiaan helpotusta. Pitkään jo suosiota nauttinut ja edelleen suosituin ratkaisu frontendien tekemiseen on Facebookin kehittämä [React](https://facebook.github.io/react/). React on laaja aihe ja pääset syventymään siihen laitoksen kurssilla Full Stack -websovelluskehitys joka järjestetään nyt menossa olevana [avoimen yliopiston kurssina](https://fullstackopen.github.io/).
 
 > ## Tehtävä 2
 >
-> Toteuta edellisten esimerkkien tyyliin javascriptillä kaikki panimot listaava sivu http://localhost:3000/brewerylist
+> Toteuta edellisten esimerkkien tyyliin JavaScriptillä kaikki panimot listaava sivu http://localhost:3000/brewerylist
 >
 > Sivulla näytetään jokaisesta panimosta nimi, perustusvuosi, panimon valmistamien oluiden lukumäärä ja tieto siitä onko panimo lopettanut. Sivun siis **ei** tarvitse eritellä lopettaneita panimoita omaan taulukkoonsa.
 >
 > Panimoiden järjestäminen toteutetaan vasta seuraavassa tehtäässä.
 >
-> **Muista pitää Javascript-konsoli koko ajan auki tehtävää tehdessäsi!** Voit debugata Javasriptia tulostelemalla konsoliin komennolla <code>console.log()</code>
+> **Muista pitää JavaScript-konsoli koko ajan auki tehtävää tehdessäsi!** Voit debugata Javasriptia tulostelemalla konsoliin komennolla <code>console.log()</code>
 >
 > **HUOM:** edellisellä viikolla tekemämme muutoksen takia panimoiden json-lista http://localhost:3000/breweries.json ei toimi, sillä breweries#index-kontrolleri ei enää aseta kaikkien panimoiden listaa muuttujaan <code>@breweries</code>. Korjaa tilanne.
 >
@@ -606,7 +606,7 @@ Javascript-frontendsovelluskehykset tuovat asiaan helpotusta. Pitkään jo suosi
 
 ## Selainpuolella toteutetun toiminnallisuuden testaaminen
 
-Tehdään rspec/capybaralla muutama testi javascriptillä toteutetulle oluiden listalle. Seuraavassa on lähtökohtamme, tiedosto spec/features/beerlist_page_spec.rb:
+Tehdään rspec/capybaralla muutama testi JavaScriptillä toteutetulle oluiden listalle. Seuraavassa on lähtökohtamme, tiedosto spec/features/beerlist_page_spec.rb:
 
 ```ruby
 require 'rails_helper'
@@ -660,7 +660,7 @@ Syy ongelmalle löytyy capybaran dokumentaatiosta https://github.com/jnicklas/ca
 
 > By default, Capybara uses the :rack_test driver, which is fast but limited: it does not support JavaScript, nor is it able to access HTTP resources outside of your Rack application, such as remote APIs and OAuth services. To get around these limitations, you can set up a different default driver for your features.
 
-Ja korjauskin on helppo. Javascriptiä tarvitseviin testeihin riittää lisätä parametri, jonka ansiosta testi suoritetaan javascriptiä osaavan Selenium-testiajurin avulla:
+Ja korjauskin on helppo. JavaScriptiä tarvitseviin testeihin riittää lisätä parametri, jonka ansiosta testi suoritetaan JavaScriptiä osaavan Selenium-testiajurin avulla:
 
 ```ruby
 it "shows the known beers", js:true do
@@ -689,7 +689,7 @@ Kun suoritamme testit, törmäämme virheilmoitukseen
       ============================================================
 ```
 
-Virheen syy on siinä, että otimme viikolla 5 käyttöömme [WebMock-gemin](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/main/web/viikko5.md#olutpaikkojen-etsimistoiminnon-testaaminen) joka oletusarvoisesti kieltää testikoodin suorittamat HTTP-yhteydet. Javascriptilla toteutettu olutlistahan yrittää hakea oluiden listan json-muodossa palvelimelta. Pääsemme virheestä eroon sallimalla yhteydet, esim. muuttamalla testit alustavaan <code>before :all</code> -lohkoa seuraavasti:
+Virheen syy on siinä, että otimme viikolla 5 käyttöömme [WebMock-gemin](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/main/web/viikko5.md#olutpaikkojen-etsimistoiminnon-testaaminen) joka oletusarvoisesti kieltää testikoodin suorittamat HTTP-yhteydet. JavaScriptilla toteutettu olutlistahan yrittää hakea oluiden listan json-muodossa palvelimelta. Pääsemme virheestä eroon sallimalla yhteydet, esim. muuttamalla testit alustavaan <code>before :all</code> -lohkoa seuraavasti:
 
 ```ruby
 before :all do
@@ -702,7 +702,7 @@ end
 
 Testi toimii vihdoin.
 
-Kun sivuille luodaan sisältöä javascriptillä, ei sisältö ilmesty sivulle vielä samalla hetkellä kuin sivun html-pohja ladataan vaan vasta javascript takaisinkutsufunktion suorituksen jälkeen. Eli jos katsomme sivun sisältöä välittömästi sivulle navigoinnin jälkeen, ei javascript ole vielä ehtinyt muodostaa sivun lopullista sisältöä. Esim. seuraavassa <code>save_and_open_page</code> saattaa avata sivun, jossa ei vielä näy yhtään olutta:
+Kun sivuille luodaan sisältöä JavaScriptillä, ei sisältö ilmesty sivulle vielä samalla hetkellä kuin sivun html-pohja ladataan vaan vasta javascript takaisinkutsufunktion suorituksen jälkeen. Eli jos katsomme sivun sisältöä välittömästi sivulle navigoinnin jälkeen, ei JavaScript ole vielä ehtinyt muodostaa sivun lopullista sisältöä. Esim. seuraavassa <code>save_and_open_page</code> saattaa avata sivun, jossa ei vielä näy yhtään olutta:
 
 ```ruby
 it "shows a known beer", js:true do
@@ -712,9 +712,9 @@ it "shows a known beer", js:true do
 end
 ```
 
-Kuten sivulla https://github.com/jnicklas/capybara#asynchronous-javascript-ajax-and-friends sanotaan, osaa capybara odottaa asynkroonisia javascript-kutsuja sen verran, että testien sivulta etsimät elementit ovat latautuneet.
+Kuten sivulla https://github.com/jnicklas/capybara#asynchronous-javascript-ajax-and-friends sanotaan, osaa Capybara odottaa asynkroonisia JavaScript-kutsuja sen verran, että testien sivulta etsimät elementit ovat latautuneet.
 
-Tiedämme, että javascriptin pitäisi lisätä sivun taulukkoon rivejä. Saammekin sivun näkymään oikein, jos lisäämme alkuun komennon <code>find('table').find('tr:nth-child(2)')</code> joka etsii sivulta taulukon ja sen sisältä toisen rivin (taulukon ensimmäinen rivihän on jo sivupohjassa mukana oleva taulukon otsikkorivi):
+Tiedämme, että JavaScriptin pitäisi lisätä sivun taulukkoon rivejä. Saammekin sivun näkymään oikein, jos lisäämme alkuun komennon <code>find('table').find('tr:nth-child(2)')</code> joka etsii sivulta taulukon ja sen sisältä toisen rivin (taulukon ensimmäinen rivihän on jo sivupohjassa mukana oleva taulukon otsikkorivi):
 
 ```ruby
 it "shows a known beer", :js => true do
@@ -764,13 +764,13 @@ Konfiguraation muutoksen jälkeen suoritus normaalilla selaimella onnistuu tyhje
 
 ## Asset pipeline
 
-Rails-sovelluksiin liittyviä javascript- ja tyylitiedostoja (ja kuvia) hallitaan ns. Asset pipelinen avulla, ks. https://guides.rubyonrails.org/asset_pipeline.html
+Rails-sovelluksiin liittyviä JavaScript- ja tyylitiedostoja (ja kuvia) hallitaan ns. Asset pipelinen avulla, ks. https://guides.rubyonrails.org/asset_pipeline.html
 
-Periaatteena on se, että sovelluskehittäjä sijoittaa sovellukseen liittyvät javascript-tiedostot hakemistoon _app/assets/javascripts_ ja tyylitiedostot hakemistoon _app/assets/stylesheets_. Molempia voidaan sijoittaa useaan eri tiedostoon, ja tarvittaessa alihakemistoihin.
+Periaatteena on se, että sovelluskehittäjä sijoittaa sovellukseen liittyvät JavaScript-tiedostot hakemistoon _app/assets/javascripts_ ja tyylitiedostot hakemistoon _app/assets/stylesheets_. Molempia voidaan sijoittaa useaan eri tiedostoon, ja tarvittaessa alihakemistoihin.
 
-Sovellusta kehitettäessä (eli kun sovellus on ns. development-moodissa) Rails liittää kaikki (ns. manifest-tiedostossa) määritellyt javascript- ja tyylitiedostot mukaan sovellukseen. Huomaammekin tarkastellessamme sovellusta selaimen view source -ominaisuuden avulla, että mukaan on liitetty suuri joukko javascriptiä ja tyylitiedostoja.
+Sovellusta kehitettäessä (eli kun sovellus on ns. development-moodissa) Rails liittää kaikki (ns. manifest-tiedostossa) määritellyt JavaScript- ja tyylitiedostot mukaan sovellukseen. Huomaammekin tarkastellessamme sovellusta selaimen view source -ominaisuuden avulla, että mukaan on liitetty suuri joukko JavaScriptiä ja tyylitiedostoja.
 
-Sovelluksen mukaan liitettävät javascript-tiedostot määritellään tiedostossa _app/assets/javascripts/application.js_, jonka sisältö on nyt seuraava
+Sovelluksen mukaan liitettävät JavaScript-tiedostot määritellään tiedostossa _app/assets/javascripts/application.js_, jonka sisältö on nyt seuraava
 
 ```javascript
 //= require jquery3
@@ -783,13 +783,11 @@ import { beertable } from "custom/utils";
 beertable();
 ```
 
-Vaikka tiedostossa olevat requiret näyttävät olevan kommenteissa, on kuitenkin kyse "oikeista", asset pipelinestä huolehtivan [sprockets-kääntäjän](https://github.com/sstephenson/sprockets) komennoista, joiden avulla määritellään sovellukseen mukaan otettavat javascript-tiedostot. Tiedosto määrittelee, että mukaan otetaan jquery3, popper, bootstrap-sprockets. Kaikki näistä on asennettu sovellukseen gemien avulla.
+Vaikka tiedostossa olevat requiret näyttävät olevan kommenteissa, on kuitenkin kyse "oikeista", asset pipelinestä huolehtivan [sprockets-kääntäjän](https://github.com/sstephenson/sprockets) komennoista, joiden avulla määritellään sovellukseen mukaan otettavat JavaScript-tiedostot. Tiedosto määrittelee, että mukaan otetaan jquery3, popper, bootstrap-sprockets. Kaikki näistä on asennettu sovellukseen gemien avulla.
 
-Asset pipeline mahdollistaa myös [coffeescriptin](http://coffeescript.org/) käyttämisen, tällöin tiedostojen päätteeksi tulee <code>.js.coffee</code>. Sovellusta suoritettaessa scprockets kääntää coffeescriptin automaattisesti javascriptiksi.
+Tuotantokäytössä sovelluksella ei suorituskykysyistä yleensä kannata olla useampia JavaScript- tai tyylitiedostoja. Kun sovellusta aletaan suorittaa tuotantoympäristössä (eli production-moodissa), sprockets yhdistääkin kaikki sovelluksen JavaScript- ja tyylitiedostot yksittäisiksi, optimoiduiksi tiedostoiksi. Huomaamme tämän jos katsomme herokussa olevan sovelluksen html-lähdekoodia, esim: https://ratebeer22.fly.dev/ sisältää se nyt ainoastaan yhden js- ja yhden css-tiedoston joista varsinkin js-tiedoston luettavuus on ihmisen kannalta heikko.
 
-Tuotantokäytössä sovelluksella ei suorituskykysyistä yleensä kannata olla useampia javascript- tai tyylitiedostoja. Kun sovellusta aletaan suorittaa tuotantoympäristössä (eli production-moodissa), sprockets yhdistääkin kaikki sovelluksen javascript- ja tyylitiedostot yksittäisiksi, optimoiduiksi tiedostoiksi. Huomaamme tämän jos katsomme herokussa olevan sovelluksen html-lähdekoodia, esim: https://ratebeer22.fly.dev/ sisältää se nyt ainoastaan yhden js- ja yhden css-tiedoston joista varsinkin js-tiedoston luettavuus on ihmisen kannalta heikko.
-
-Lisää asset pipelinestä ja mm. javascriptin liittämisestä railssovelluksiin mm. seuraavissa:
+Lisää asset pipelinestä ja mm. JavaScriptin liittämisestä railssovelluksiin mm. seuraavissa:
 
 - http://railscasts.com/episodes/279-understanding-the-asset-pipeline
 - http://railsapps.github.io/rails-javascript-include-external.html
