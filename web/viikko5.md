@@ -1167,7 +1167,7 @@ Näkymätemplatea /views/beers/show.html.erb muutetaan seuraavasti:
 <%= render @beer %>
 
 <% if current_user %>
-  <h4>give a rating:<h4>
+  <h4>give a rating:</h4>
 
   <%= form_with(model: @rating) do |form| %>
     <%= form.hidden_field :beer_id %>
