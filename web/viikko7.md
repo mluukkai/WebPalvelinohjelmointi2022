@@ -15,13 +15,13 @@ Osa tämän viikon tehtävistä saattaa hajottaa jotain edellisinä viikkoina te
 Päätetään toteuttaa oluiden listalle toiminnallisuus, jonka avulla oluet voidaan järjestää eri sarakkeiden perusteella. Välitetään tieto halutusta järjestyksestä kontrollerille HTTP-pyynnön parametrina. Muutetaan näkymässä `app/views/beers/index.html.erb` olevaa taulukkoa seuraavasti:
 
 ```erb
-<table class="table table-hover">
+<table class="table table-striped  table-hover">
   <thead>
     <tr>
-      <th><%= link_to "Name", beers_path(order:"name")%></th>
-      <th><%= link_to "Style", beers_path(order:"style")%></th>
-      <th><%= link_to "Brewery", beers_path(order:"brewery")%></th>
-      <th><%= link_to "Rating", beers_path(order:"rating")%></th>
+      <th><%= link_to "Name", beers_path(order: "name")%></th>
+      <th><%= link_to "Style", beers_path(order: "style")%></th>
+      <th><%= link_to "Brewery", beers_path(order: "brewery")%></th>
+      <th><%= link_to "Rating", beers_path(order: "rating")%></th>
     </tr>
   </thead>
   ...
@@ -57,7 +57,7 @@ order = params[:order] || 'name'
 
 Normaalisti <code>order</code> saa arvon <code>params[:order]</code>, jos parametria <code>:order</code> ei ole asetettu, eli sen arvo on <code>nil</code>, tulee arvoksi <code>||</code>:n jälkeinen osa eli 'name'.
 
-**Huom1:** käytämme oluiden järjestämiseen rubyn <code>case when</code>-komentoa
+**Huom1:** käytämme oluiden järjestämiseen Rubyn <code>case when</code>-komentoa
 
 ```ruby
 @beers = case order
@@ -103,11 +103,11 @@ Beer.includes(:style).order("style.name")
 
 Ratkaisumme oluiden listan järjestämiseen on melko hyvä. Suorituskyvyn kannalta hieman ongelmallista on tosin se, että aina järjestettäessä tehdään kutsu palvelimelle, joka generoi uudessa järjestyksessä näytettävän sivun.
 
-Järjestämistoiminnallisuus voitaisiin toteuttaa myös selaimen puolella javascriptillä. Vaikka kurssi keskittyy palvelinpuolen toiminnallisuuteen, näytetään seuraavassa esimerkki siitä, miten järjestämistoiminnallisuus toteutettaisiin selainpuolella. Tässä ratkaisussa palvelin tarjoaa ainoastaan oluiden listan json-muodossa, ja selaimessa suoritettava JavaScript-koodi hoitaa myös oluet listaavan taulukon muodostamisen.
+Järjestämistoiminnallisuus voitaisiin toteuttaa myös selaimen puolella JavaScriptillä. Vaikka kurssi keskittyy palvelinpuolen toiminnallisuuteen, näytetään seuraavassa esimerkki siitä, miten järjestämistoiminnallisuus toteutettaisiin selainpuolella. Tässä ratkaisussa palvelin tarjoaa ainoastaan oluiden listan json-muodossa, ja selaimessa suoritettava JavaScript-koodi hoitaa myös oluet listaavan taulukon muodostamisen.
 
 Emme korvaa nyt olemassaolevaa oluiden listaa, eli sivun beers toiminnallisuutta, sen sijaan tehdään toiminnallisuutta varten kokonaan uusi, osoitteessa beerlist toimiva sivu. Tehdään sivua varten reitti tiedostoon routes.rb:
 
-    get 'beerlist', to:'beers#list'
+    get 'beerlist', to: 'beers#list'
 
 Käytämme siis olutkontrollerissa olevaa <code>list</code>-metodia. Metodin ei tarvitse tehdä mitään:
 
@@ -123,7 +123,7 @@ class BeersController < ApplicationController
 end
 ```
 
-**HUOM** lisäsimme metodin <code>list</code> niihin, joita ennen ei tarvitse suorittaa <code>ensure_that_signed_in</code>-metodia, eli oluiden javascriptilla tuotetun listan näkeminen ei edellytä sivulle kirjautumista!
+**HUOM** lisäsimme metodin <code>list</code> niihin, joita ennen ei tarvitse suorittaa <code>ensure_that_signed_in</code>-metodia, eli oluiden JavaScriptilla tuotetun listan näkeminen ei edellytä sivulle kirjautumista!
 
 Myös näkymä views/beers/list.html.erb on minimalistinen:
 
@@ -164,20 +164,20 @@ Otetaan myös custom-hakemistossa sijaitseva javascript käyttöön sovelluksen 
 pin_all_from "app/javascript/custom", under: "custom"
 ```
 
-Kun sivu nyt avataan uudelleen, haetaan ensin javascriptillä id:n <code>beers</code> omaavaan omaava elementti, jonka jälkeen sen tekstiksi asetetaan "hello form JavaScript". Seuraava komento kirjoittaa JavaScript-konsoliin tervehdyksen.
+Kun sivu nyt avataan uudelleen, haetaan ensin JavaScriptillä id:n <code>beers</code> omaavaan omaava elementti, jonka jälkeen sen tekstiksi asetetaan "hello form JavaScript". Seuraava komento kirjoittaa JavaScript-konsoliin tervehdyksen.
 
-JavaScript-ohjelmoinnissa selaimessa oleva konsoli on **erittäin tärkeä** työväline. Konsolin saa avattua chromessa tools-valikosta tai painamalla ctrl, shift, j (linux) tai alt, cmd, i (mac):
+JavaScript-ohjelmoinnissa selaimessa oleva konsoli on **erittäin tärkeä** työväline. Konsolin saa avattua Chromessa tools-valikosta tai painamalla ctrl, shift, j (linux) tai alt, cmd, i (mac):
 
 ![kuva](https://raw.githubusercontent.com/mluukkai/WebPalvelinohjelmointi2022/main/images/ratebeer-w7-1.png)
 
-**Konsoli on syytä pitää koko ajan auki Javascriptillä ohjelmoitaessa!**
+**Konsoli on syytä pitää koko ajan auki JavaScriptillä ohjelmoitaessa!**
 
 Javascript näyttää aluksi melko kryptiseltä, mm. paljon käytettyjen anonyymifunktioiden takia. application.js tiedostossa oleva koodi määrittelee, että sivun latautuessa utils.js tiedostossa oleva hello-funktio suoritetaan.
 
 Jos kokeilemme selaimella osoitetta http://localhost:3000/beers.json huomaamme, että saamme vastaukseksi oluiden tiedot tekstuaalisessa json-muodossa (ks. http://en.wikipedia.org/wiki/JSON, http:www.json.org):
 
 ```ruby
-[{"id":10,"name":"Extra Light Triple Brewed","style":{"id":1,"name":"European pale lager","description":"Similar to Munich Helles, many European countries reacted to the popularity of early pale lagers by brewing their own. Hop flavor is significant and of noble varieties, bitterness is moderate, and both are backed by a solid malt body and sweet notes from an all-malt base.","created_at":"2018-09-20T10:17:39.358Z","updated_at":"2018-09-20T10:35:04.921Z"},"brewery_id":1,"created_at":"2018-09-01T16:47:54.117Z","updated_at":"2018-09-20T10:17:39.414Z","url":"http://localhost:3000/beers/10.json"},{"id":6,"name":"Hefeweizen","style":{"id":4,"name":"German hefeweizen","description":"A south German style of wheat beer (weissbier) typically made with a ratio of 50 percent barley to 50 percent wheat. Sometimes the percentage of wheat is even higher. \"Hefe\" means \"with yeast,\" hence the beer's unfiltered and cloudy appearance. The particular ale yeast used produces unique esters and phenols of banana and cloves with an often dry and tart edge, some spiciness, and notes of bubblegum or apples. Hefeweizens are typified by little hop bitterness, and a moderate level of alcohol. Often served with a lemon wedge (popularized by Americans), to cut the wheat or yeasty edge, some may find this to be either a flavorful snap or an insult that can damage the beer's taste and head retention.","created_at":"2018-09-20T10:17:39.361Z","updated_at":"2018-09-20T10:36:17.788Z"},"brewery_id":3,"created_at":"2018-09-01T16:41:53.522Z","updated_at":"2018-09-20T10:17:39.406Z","url":"http://localhost:3000/beers/6.json"},{"id":7,"name":"Helles","style":{"id":1,"name":"European pale lager","description":"Similar to Munich Helles, many European countries reacted to the popularity of early pale lagers by brewing their own. Hop flavor is significant and of noble varieties, bitterness is moderate, and both are backed by a solid malt body and sweet notes from an all-malt base.","created_at":"2018-09-20T10:17:39.358Z","updated_at":"2018-09-20T10:35:04.921Z"},"brewery_id":3,"created_at":"2018-09-01T16:41:53.525Z","updated_at":"2018-09-20T10:17:39.408Z","url":"http://localhost:3000/beers/7.json"},{"id":16,"name":"Helles","style":{"id":1,"name":"European pale lager","description":"Similar to Munich Helles, many European countries reacted to the popularity of early pale lagers by brewing their own. Hop flavor is significant and of noble varieties, bitterness is moderate, and both are backed by a solid malt body and sweet notes from an all-malt base.","created_at":"2018-09-20T10:17:39.358Z","updated_at":"2018-09-20T10:35:04.921Z"},"brewery_id":3,"created_at":"2018-09-08T10:56:52.592Z","updated_at":"2018-09-20T10:17:39.420Z","url":"http://localhost:3000/beers/16.json"},{"id":4,"name":"Huvila Pale Ale","style":{"id":2,"name":"American Pale Ale","description":"Originally British in origin, this style is now popular worldwide and the use of local or imported ingredients produces variances in character from region to region. American versions tend to be cleaner and hoppier (with the piney, citrusy Cascade variety appearing frequently) than British versions, which are usually more malty, buttery, aromatic, and balanced. Pale Ales range in color from deep gold to medium amber. Fruity esters and diacetyl can vary from none to moderate, and hop aroma can range from lightly floral to bold and pungent. In general, expect a good balance of caramel malt and expressive hops with a medium body and a mildly bitter finish. ","created_at":"2018-09-20T10:17:39.359Z","updated_at":"2018-09-22T12:07:42.742Z"},"brewery_id":2,"created_at":"2018-09-01T16:41:53.516Z","updated_at":"2018-09-20T10:17:39.396Z","url":"http://localhost:3000/beers/4.json"},{"id":9,"name":"IVB","style":{"id":1,"name":"European pale lager","description":"Similar to Munich Helles, many European countries reacted to the popularity of early pale lagers by brewing their own. Hop flavor is significant and of noble varieties, bitterness is moderate, and both are backed by a solid malt body and sweet notes from an all-malt base.","created_at":"2018-09-20T10:17:39.358Z","updated_at":"2018-09-20T10:35:04.921Z"},"brewery_id":1,"created_at":"2018-09-01T16:46:01.643Z","updated_at":"2018-09-20T10:17:39.412Z","url":"http://localhost:3000/beers/9.json"},{"id":1,"name":"Iso 3","style":{"id":1,"name":"European pale lager","description":"Similar to Munich Helles, many European countries reacted to the popularity of early pale lagers by brewing their own. Hop flavor is significant and of noble varieties, bitterness is moderate, and both are backed by a solid malt body and sweet notes from an all-malt base.","created_at":"2018-09-20T10:17:39.358Z","updated_at":"2018-09-20T10:35:04.921Z"},"brewery_id":1,"created_at":"2018-09-01T16:41:53.508Z","updated_at":"2018-09-20T10:17:39.384Z","url":"http://localhost:3000/beers/1.json"},{"id":2,"name":"Karhu","style":{"id":1,"name":"European pale lager","description":"Similar to Munich Helles, many European countries reacted to the popularity of early pale lagers by brewing their own. Hop flavor is significant and of noble varieties, bitterness is moderate, and both are backed by a solid malt body and sweet notes from an all-malt base.","created_at":"2018-09-20T10:17:39.358Z","updated_at":"2018-09-20T10:35:04.921Z"},"brewery_id":1,"created_at":"2018-09-01T16:41:53.511Z","updated_at":"2018-09-20T10:17:39.389Z","url":"http://localhost:3000/beers/2.json"},{"id":8,"name":"Lite","style":{"id":1,"name":"European pale lager","description":"Similar to Munich Helles, many European countries reacted to the popularity of early pale lagers by brewing their own. Hop flavor is significant and of noble varieties, bitterness is moderate, and both are backed by a solid malt body and sweet notes from an all-malt base.","created_at":"2018-09-20T10:17:39.358Z","updated_at":"2018-09-20T10:35:04.921Z"},"brewery_id":1,"created_at":"2018-09-01T16:45:09.037Z","updated_at":"2018-09-20T10:17:39.410Z","url":"http://localhost:3000/beers/8.json"},{"id":14,"name":"Nanny State","style":{"id":6,"name":"Low alcohol beer","description":"Low Alcohol Beer is also commonly known as Non Alcohol (NA) beer, despite containing small amounts of alcohol. Low Alcohol Beers are generally subjected to one of two things: a controlled brewing process that results in a low alcohol content, or the alcohol is removed using a reverse-osmosis method which passes alcohol through a permeable membrane. They tend to be very light on aroma, body, and flavor.","created_at":"2018-09-20T10:17:39.362Z","updated_at":"2018-09-22T12:11:57.808Z"},"brewery_id":5,"created_at":"2018-09-06T14:30:50.585Z","updated_at":"2018-09-20T10:17:39.418Z","url":"http://localhost:3000/beers/14.json"},{"id":23,"name":"Panimomestarin IPA","style":{"id":5,"name":"American IPA","description":"Today's American IPA is a different soul from the IPA style first reincarnated in the 1980s. More flavorful and aromatic than the withering English IPA, its color can range from very pale golden to reddish amber. Hops are the star here, and those used in the style tend to be American with an emphasis on herbal, piney, and/or fruity (especially citrusy) varieties. Southern Hemisphere and experimental hops do appear with some frequency though, as brewers seek to distinguish their flagship IPA from a sea of competitors. Bitterness levels vary, but typically run moderate to high. Medium bodied with a clean, bready, and balancing malt backbone, the American IPA has become a dominant force in the marketplace, influencing brewers and beer cultures worldwide.","created_at":"2018-09-20T10:17:39.361Z","updated_at":"2018-09-22T12:09:23.686Z"},"brewery_id":1,"created_at":"2018-09-22T10:33:04.353Z","updated_at":"2018-09-22T10:33:04.353Z","url":"http://localhost:3000/beers/23.json"},{"id":13,"name":"Punk IPA","style":{"id":5,"name":"American IPA","description":"Today's American IPA is a different soul from the IPA style first reincarnated in the 1980s. More flavorful and aromatic than the withering English IPA, its color can range from very pale golden to reddish amber. Hops are the star here, and those used in the style tend to be American with an emphasis on herbal, piney, and/or fruity (especially citrusy) varieties. Southern Hemisphere and experimental hops do appear with some frequency though, as brewers seek to distinguish their flagship IPA from a sea of competitors. Bitterness levels vary, but typically run moderate to high. Medium bodied with a clean, bready, and balancing malt backbone, the American IPA has become a dominant force in the marketplace, influencing brewers and beer cultures worldwide.","created_at":"2018-09-20T10:17:39.361Z","updated_at":"2018-09-22T12:09:23.686Z"},"brewery_id":5,"created_at":"2018-09-06T14:30:33.589Z","updated_at":"2018-09-20T10:17:39.416Z","url":"http://localhost:3000/beers/13.json"},{"id":22,"name":"Sink the Bismarck","style":{"id":3,"name":"Baltic Porter","description":"Porters of the late 1700's were quite strong compared to today's standards, easily surpassing 7 percent alcohol by volume. Some English brewers made a stronger, more robust version, to be shipped across the North Sea that they dubbed a Baltic Porter. In general, the style's dark brown color covered up cloudiness and the smoky, roasted brown malts and bitter tastes masked brewing imperfections. Historically, the addition of stale ale also lent a pleasant acidic flavor to the style, which made it quite popular. These issues were quite important given that most breweries at the time were getting away from pub brewing and opening up production facilities that could ship beer across the world.","created_at":"2018-09-20T10:17:39.360Z","updated_at":"2018-09-22T12:08:13.953Z"},"brewery_id":5,"created_at":"2018-09-22T10:09:59.120Z","updated_at":"2018-09-22T10:09:59.120Z","url":"http://localhost:3000/beers/22.json"},{"id":21,"name":"Trans European Lager","style":{"id":1,"name":"European pale lager","description":"Similar to Munich Helles, many European countries reacted to the popularity of early pale lagers by brewing their own. Hop flavor is significant and of noble varieties, bitterness is moderate, and both are backed by a solid malt body and sweet notes from an all-malt base.","created_at":"2018-09-20T10:17:39.358Z","updated_at":"2018-09-20T10:35:04.921Z"},"brewery_id":1,"created_at":"2018-09-20T10:42:19.312Z","updated_at":"2018-09-20T10:42:19.312Z","url":"http://localhost:3000/beers/21.json"},{"id":3,"name":"Tuplahumala","style":{"id":1,"name":"European pale lager","description":"Similar to Munich Helles, many European countries reacted to the popularity of early pale lagers by brewing their own. Hop flavor is significant and of noble varieties, bitterness is moderate, and both are backed by a solid malt body and sweet notes from an all-malt base.","created_at":"2018-09-20T10:17:39.358Z","updated_at":"2018-09-20T10:35:04.921Z"},"brewery_id":1,"created_at":"2018-09-01T16:41:53.513Z","updated_at":"2018-09-20T10:17:39.392Z","url":"http://localhost:3000/beers/3.json"},{"id":5,"name":"X Porter","style":{"id":3,"name":"Baltic Porter","description":"Porters of the late 1700's were quite strong compared to today's standards, easily surpassing 7 percent alcohol by volume. Some English brewers made a stronger, more robust version, to be shipped across the North Sea that they dubbed a Baltic Porter. In general, the style's dark brown color covered up cloudiness and the smoky, roasted brown malts and bitter tastes masked brewing imperfections. Historically, the addition of stale ale also lent a pleasant acidic flavor to the style, which made it quite popular. These issues were quite important given that most breweries at the time were getting away from pub brewing and opening up production facilities that could ship beer across the world.","created_at":"2018-09-20T10:17:39.360Z","updated_at":"2018-09-22T12:08:13.953Z"},"brewery_id":2,"created_at":"2018-09-01T16:41:53.519Z","updated_at":"2018-09-20T10:17:39.400Z","url":"http://localhost:3000/beers/5.json"}]
+[{"id":10,"name": "Extra Light Triple Brewed","style":{"id":1,"name": "European pale lager","description": "Similar to Munich Helles, many European countries reacted to the popularity of early pale lagers by brewing their own. Hop flavor is significant and of noble varieties, bitterness is moderate, and both are backed by a solid malt body and sweet notes from an all-malt base.","created_at": "2018-09-20T10:17:39.358Z","updated_at": "2018-09-20T10:35:04.921Z"},"brewery_id":1,"created_at": "2018-09-01T16:47:54.117Z","updated_at": "2018-09-20T10:17:39.414Z","url": "http://localhost:3000/beers/10.json"},{"id":6,"name": "Hefeweizen","style":{"id":4,"name": "German hefeweizen","description": "A south German style of wheat beer (weissbier) typically made with a ratio of 50 percent barley to 50 percent wheat. Sometimes the percentage of wheat is even higher. \"Hefe\" means \"with yeast,\" hence the beer's unfiltered and cloudy appearance. The particular ale yeast used produces unique esters and phenols of banana and cloves with an often dry and tart edge, some spiciness, and notes of bubblegum or apples. Hefeweizens are typified by little hop bitterness, and a moderate level of alcohol. Often served with a lemon wedge (popularized by Americans), to cut the wheat or yeasty edge, some may find this to be either a flavorful snap or an insult that can damage the beer's taste and head retention.","created_at": "2018-09-20T10:17:39.361Z","updated_at": "2018-09-20T10:36:17.788Z"},"brewery_id":3,"created_at": "2018-09-01T16:41:53.522Z","updated_at": "2018-09-20T10:17:39.406Z","url": "http://localhost:3000/beers/6.json"},{"id":7,"name": "Helles","style":{"id":1,"name": "European pale lager","description": "Similar to Munich Helles, many European countries reacted to the popularity of early pale lagers by brewing their own. Hop flavor is significant and of noble varieties, bitterness is moderate, and both are backed by a solid malt body and sweet notes from an all-malt base.","created_at": "2018-09-20T10:17:39.358Z","updated_at": "2018-09-20T10:35:04.921Z"},"brewery_id":3,"created_at": "2018-09-01T16:41:53.525Z","updated_at": "2018-09-20T10:17:39.408Z","url": "http://localhost:3000/beers/7.json"},{"id":16,"name": "Helles","style":{"id":1,"name": "European pale lager","description": "Similar to Munich Helles, many European countries reacted to the popularity of early pale lagers by brewing their own. Hop flavor is significant and of noble varieties, bitterness is moderate, and both are backed by a solid malt body and sweet notes from an all-malt base.","created_at": "2018-09-20T10:17:39.358Z","updated_at": "2018-09-20T10:35:04.921Z"},"brewery_id":3,"created_at": "2018-09-08T10:56:52.592Z","updated_at": "2018-09-20T10:17:39.420Z","url": "http://localhost:3000/beers/16.json"},{"id":4,"name": "Huvila Pale Ale","style":{"id":2,"name": "American Pale Ale","description": "Originally British in origin, this style is now popular worldwide and the use of local or imported ingredients produces variances in character from region to region. American versions tend to be cleaner and hoppier (with the piney, citrusy Cascade variety appearing frequently) than British versions, which are usually more malty, buttery, aromatic, and balanced. Pale Ales range in color from deep gold to medium amber. Fruity esters and diacetyl can vary from none to moderate, and hop aroma can range from lightly floral to bold and pungent. In general, expect a good balance of caramel malt and expressive hops with a medium body and a mildly bitter finish. ","created_at": "2018-09-20T10:17:39.359Z","updated_at": "2018-09-22T12:07:42.742Z"},"brewery_id":2,"created_at": "2018-09-01T16:41:53.516Z","updated_at": "2018-09-20T10:17:39.396Z","url": "http://localhost:3000/beers/4.json"},{"id":9,"name": "IVB","style":{"id":1,"name": "European pale lager","description": "Similar to Munich Helles, many European countries reacted to the popularity of early pale lagers by brewing their own. Hop flavor is significant and of noble varieties, bitterness is moderate, and both are backed by a solid malt body and sweet notes from an all-malt base.","created_at": "2018-09-20T10:17:39.358Z","updated_at": "2018-09-20T10:35:04.921Z"},"brewery_id":1,"created_at": "2018-09-01T16:46:01.643Z","updated_at": "2018-09-20T10:17:39.412Z","url": "http://localhost:3000/beers/9.json"},{"id":1,"name": "Iso 3","style":{"id":1,"name": "European pale lager","description": "Similar to Munich Helles, many European countries reacted to the popularity of early pale lagers by brewing their own. Hop flavor is significant and of noble varieties, bitterness is moderate, and both are backed by a solid malt body and sweet notes from an all-malt base.","created_at": "2018-09-20T10:17:39.358Z","updated_at": "2018-09-20T10:35:04.921Z"},"brewery_id":1,"created_at": "2018-09-01T16:41:53.508Z","updated_at": "2018-09-20T10:17:39.384Z","url": "http://localhost:3000/beers/1.json"},{"id":2,"name": "Karhu","style":{"id":1,"name": "European pale lager","description": "Similar to Munich Helles, many European countries reacted to the popularity of early pale lagers by brewing their own. Hop flavor is significant and of noble varieties, bitterness is moderate, and both are backed by a solid malt body and sweet notes from an all-malt base.","created_at": "2018-09-20T10:17:39.358Z","updated_at": "2018-09-20T10:35:04.921Z"},"brewery_id":1,"created_at": "2018-09-01T16:41:53.511Z","updated_at": "2018-09-20T10:17:39.389Z","url": "http://localhost:3000/beers/2.json"},{"id":8,"name": "Lite","style":{"id":1,"name": "European pale lager","description": "Similar to Munich Helles, many European countries reacted to the popularity of early pale lagers by brewing their own. Hop flavor is significant and of noble varieties, bitterness is moderate, and both are backed by a solid malt body and sweet notes from an all-malt base.","created_at": "2018-09-20T10:17:39.358Z","updated_at": "2018-09-20T10:35:04.921Z"},"brewery_id":1,"created_at": "2018-09-01T16:45:09.037Z","updated_at": "2018-09-20T10:17:39.410Z","url": "http://localhost:3000/beers/8.json"},{"id":14,"name": "Nanny State","style":{"id":6,"name": "Low alcohol beer","description": "Low Alcohol Beer is also commonly known as Non Alcohol (NA) beer, despite containing small amounts of alcohol. Low Alcohol Beers are generally subjected to one of two things: a controlled brewing process that results in a low alcohol content, or the alcohol is removed using a reverse-osmosis method which passes alcohol through a permeable membrane. They tend to be very light on aroma, body, and flavor.","created_at": "2018-09-20T10:17:39.362Z","updated_at": "2018-09-22T12:11:57.808Z"},"brewery_id":5,"created_at": "2018-09-06T14:30:50.585Z","updated_at": "2018-09-20T10:17:39.418Z","url": "http://localhost:3000/beers/14.json"},{"id":23,"name": "Panimomestarin IPA","style":{"id":5,"name": "American IPA","description": "Today's American IPA is a different soul from the IPA style first reincarnated in the 1980s. More flavorful and aromatic than the withering English IPA, its color can range from very pale golden to reddish amber. Hops are the star here, and those used in the style tend to be American with an emphasis on herbal, piney, and/or fruity (especially citrusy) varieties. Southern Hemisphere and experimental hops do appear with some frequency though, as brewers seek to distinguish their flagship IPA from a sea of competitors. Bitterness levels vary, but typically run moderate to high. Medium bodied with a clean, bready, and balancing malt backbone, the American IPA has become a dominant force in the marketplace, influencing brewers and beer cultures worldwide.","created_at": "2018-09-20T10:17:39.361Z","updated_at": "2018-09-22T12:09:23.686Z"},"brewery_id":1,"created_at": "2018-09-22T10:33:04.353Z","updated_at": "2018-09-22T10:33:04.353Z","url": "http://localhost:3000/beers/23.json"},{"id":13,"name": "Punk IPA","style":{"id":5,"name": "American IPA","description": "Today's American IPA is a different soul from the IPA style first reincarnated in the 1980s. More flavorful and aromatic than the withering English IPA, its color can range from very pale golden to reddish amber. Hops are the star here, and those used in the style tend to be American with an emphasis on herbal, piney, and/or fruity (especially citrusy) varieties. Southern Hemisphere and experimental hops do appear with some frequency though, as brewers seek to distinguish their flagship IPA from a sea of competitors. Bitterness levels vary, but typically run moderate to high. Medium bodied with a clean, bready, and balancing malt backbone, the American IPA has become a dominant force in the marketplace, influencing brewers and beer cultures worldwide.","created_at": "2018-09-20T10:17:39.361Z","updated_at": "2018-09-22T12:09:23.686Z"},"brewery_id":5,"created_at": "2018-09-06T14:30:33.589Z","updated_at": "2018-09-20T10:17:39.416Z","url": "http://localhost:3000/beers/13.json"},{"id":22,"name": "Sink the Bismarck","style":{"id":3,"name": "Baltic Porter","description": "Porters of the late 1700's were quite strong compared to today's standards, easily surpassing 7 percent alcohol by volume. Some English brewers made a stronger, more robust version, to be shipped across the North Sea that they dubbed a Baltic Porter. In general, the style's dark brown color covered up cloudiness and the smoky, roasted brown malts and bitter tastes masked brewing imperfections. Historically, the addition of stale ale also lent a pleasant acidic flavor to the style, which made it quite popular. These issues were quite important given that most breweries at the time were getting away from pub brewing and opening up production facilities that could ship beer across the world.","created_at": "2018-09-20T10:17:39.360Z","updated_at": "2018-09-22T12:08:13.953Z"},"brewery_id":5,"created_at": "2018-09-22T10:09:59.120Z","updated_at": "2018-09-22T10:09:59.120Z","url": "http://localhost:3000/beers/22.json"},{"id":21,"name": "Trans European Lager","style":{"id":1,"name": "European pale lager","description": "Similar to Munich Helles, many European countries reacted to the popularity of early pale lagers by brewing their own. Hop flavor is significant and of noble varieties, bitterness is moderate, and both are backed by a solid malt body and sweet notes from an all-malt base.","created_at": "2018-09-20T10:17:39.358Z","updated_at": "2018-09-20T10:35:04.921Z"},"brewery_id":1,"created_at": "2018-09-20T10:42:19.312Z","updated_at": "2018-09-20T10:42:19.312Z","url": "http://localhost:3000/beers/21.json"},{"id":3,"name": "Tuplahumala","style":{"id":1,"name": "European pale lager","description": "Similar to Munich Helles, many European countries reacted to the popularity of early pale lagers by brewing their own. Hop flavor is significant and of noble varieties, bitterness is moderate, and both are backed by a solid malt body and sweet notes from an all-malt base.","created_at": "2018-09-20T10:17:39.358Z","updated_at": "2018-09-20T10:35:04.921Z"},"brewery_id":1,"created_at": "2018-09-01T16:41:53.513Z","updated_at": "2018-09-20T10:17:39.392Z","url": "http://localhost:3000/beers/3.json"},{"id":5,"name": "X Porter","style":{"id":3,"name": "Baltic Porter","description": "Porters of the late 1700's were quite strong compared to today's standards, easily surpassing 7 percent alcohol by volume. Some English brewers made a stronger, more robust version, to be shipped across the North Sea that they dubbed a Baltic Porter. In general, the style's dark brown color covered up cloudiness and the smoky, roasted brown malts and bitter tastes masked brewing imperfections. Historically, the addition of stale ale also lent a pleasant acidic flavor to the style, which made it quite popular. These issues were quite important given that most breweries at the time were getting away from pub brewing and opening up production facilities that could ship beer across the world.","created_at": "2018-09-20T10:17:39.360Z","updated_at": "2018-09-22T12:08:13.953Z"},"brewery_id":2,"created_at": "2018-09-01T16:41:53.519Z","updated_at": "2018-09-20T10:17:39.400Z","url": "http://localhost:3000/beers/5.json"}]
 ```
 
 Json-muotoisen sivun saa hieman luettavampaan muotoon esim. kopioimalla sivun sisällön [jsonlint](http://jsonlint.com/) palveluun:
@@ -192,16 +192,16 @@ Tarkemmin tarkasteltuna jokainen yksittäinen json-muotoinen olut muistuttaa hyv
 
 ```ruby
 {
-  "id":10,"name":"Extra Light Triple Brewed",
+  "id":10,"name": "Extra Light Triple Brewed",
   "style":{
-    "id":1,"name":"European pale lager",
-    "description":"Similar to Munich Helles, many European countries reacted to the popularity of early pale lagers by brewing their own. Hop flavor is significant and of noble varieties, bitterness is moderate, and both are backed by a solid malt body and sweet notes from an all-malt base.",
-    "created_at":"2018-09-20T10:17:39.358Z",
-    "updated_at":"2018-09-20T10:35:04.921Z"
+    "id":1,"name": "European pale lager",
+    "description": "Similar to Munich Helles, many European countries reacted to the popularity of early pale lagers by brewing their own. Hop flavor is significant and of noble varieties, bitterness is moderate, and both are backed by a solid malt body and sweet notes from an all-malt base.",
+    "created_at": "2018-09-20T10:17:39.358Z",
+    "updated_at": "2018-09-20T10:35:04.921Z"
   },
   "brewery_id":1,
-  "created_at":"2018-09-01T16:47:54.117Z",
-  "updated_at":"2018-09-20T10:17:39.414Z","url":"http://localhost:3000/beers/10.json"}
+  "created_at": "2018-09-01T16:47:54.117Z",
+  "updated_at": "2018-09-20T10:17:39.414Z","url": "http://localhost:3000/beers/10.json"}
 ```
 
 Minkä takia Rails osaa tarvittaessa palauttaa resurssit HTML:n sijaan jsonina?
@@ -262,7 +262,7 @@ end
 
 Jbuilder-templatejen käyttö on kuitenkin ehdottomasti parempi vaihtoehto, tällöin json-muotoisen "näytön" eli resurssin representaation muodostaminen eriytetään täysin kontrollerista. Ei ole kontrollerin vastuulla muotoilla vastauksen ulkoasua oli kyseessä sitten json- tai HTML-muotoinen vastaus.
 
-Palataan oluiden sivun pariin. Kun muodostamme sivun javascriptillä, ideana onkin hakea palvelimelta nimenomaan oluet json-muodossa ja renderöidä ne sitten sopivasti javascriptin avulla.
+Palataan oluiden sivun pariin. Kun muodostamme sivun JavaScriptillä, ideana onkin hakea palvelimelta nimenomaan oluet json-muodossa ja renderöidä ne sitten sopivasti JavaScriptin avulla.
 
 Muokataan JavaScript-koodiamme seuraavasti:
 
@@ -283,7 +283,7 @@ const beers = () => {
 };
 ```
 
-hello-funktio nimetään uudelleen beers nimiseksi (HUOM: muista vaihtaa funktion nimi myös exportissa, sekä application.js tiedoston importissa!). beers-funktion ensimmäinen rivi luo [XMLHttpRequest](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest). Oliolle asetetaan onload-muuttujaan ylempänä määritelty handleResponse-funktio joka käsittelee pyynnön. Tämän jälkeen requestille asetetaan tiedot siitä, mitä sen täytyy tehdä eli hakea ("get") osoitteesta beers.json. Tämän jälkeen kutsu lähetetään ja vastauksen saavuttua siirrytään handleResponse-funktioon. handleResponse-funktio saa parametrinään request-objektin, jonka vastauksesta pystymme saamaan oluet JSON.parse-funktion avulla. Tämän jälkeen sivulle lisätään oluiden lukumäärä. Javascriptissä pystytään yhdistämään tekstiä ja muuttujia rubyn tapaan, tosin javascriptissä käytetään dollarisymbolia sekä normaalien heittomerkkien sijaan `-merkkiä.
+hello-funktio nimetään uudelleen beers nimiseksi (HUOM: muista vaihtaa funktion nimi myös exportissa, sekä application.js tiedoston importissa!). beers-funktion ensimmäinen rivi luo [XMLHttpRequest](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest). Oliolle asetetaan onload-muuttujaan ylempänä määritelty handleResponse-funktio joka käsittelee pyynnön. Tämän jälkeen requestille asetetaan tiedot siitä, mitä sen täytyy tehdä eli hakea ("get") osoitteesta beers.json. Tämän jälkeen kutsu lähetetään ja vastauksen saavuttua siirrytään handleResponse-funktioon. handleResponse-funktio saa parametrinään request-objektin, jonka vastauksesta pystymme saamaan oluet JSON.parse-funktion avulla. Tämän jälkeen sivulle lisätään oluiden lukumäärä. JavaScriptissä pystytään yhdistämään tekstiä ja muuttujia Rubyn tapaan, tosin JavaScriptissä käytetään dollarisymbolia sekä normaalien heittomerkkien sijaan `-merkkiä.
 
 Funktion pitäisi siis saatuaan oluet palvelimelta muodostaa ne listaava HTML-koodi ja lisätä se sivulle.
 
@@ -345,7 +345,7 @@ Lisätään sivulle teksti, jota painamalla oluet saadaan sivulle käänteiseen 
 <div id="beers"></div>
 ```
 
-Lisätään sitten javascriptillä linkille klikkauksenkäsittelijä, joka linkkiä klikatessa laittaa oluet käänteiseen järjestykseen ja näyttää ne sivun beers-elementissä:
+Lisätään sitten JavaScriptillä linkille klikkauksenkäsittelijä, joka linkkiä klikatessa laittaa oluet käänteiseen järjestykseen ja näyttää ne sivun beers-elementissä:
 
 ```javascript
 BEERS.reverse = () => {
@@ -394,7 +394,7 @@ Muutetaan näkymää seuraavasti:
 
 Eli kolmesta sarakenimestä on tehty elementti, joihin tullaan rekisteröimään klikkauksenkuuntelijat. Taulukolle on annettu id <code>beertable</code>.
 
-Muutetaan sitten javascriptissä määriteltyä metodia <code>show</code> siten, että se laittaa oluiden nimet taulukkoon:
+Muutetaan sitten JavaScriptissä määriteltyä metodia <code>show</code> siten, että se laittaa oluiden nimet taulukkoon:
 
 ```javascript
 const createTableRow = (beer) => {
@@ -598,7 +598,7 @@ JavaScript-frontendsovelluskehykset tuovat asiaan helpotusta. Pitkään jo suosi
 >
 > **HUOM:** edellisellä viikolla tekemämme muutoksen takia panimoiden json-lista http://localhost:3000/breweries.json ei toimi, sillä breweries#index-kontrolleri ei enää aseta kaikkien panimoiden listaa muuttujaan <code>@breweries</code>. Korjaa tilanne.
 >
-> **HUOM2:** tehtävä kannattaa tehdä yksi pieni askel kerrallaan, samaan tapaan kuin oluiden lista tehtiin yllä olevassa esimerkissä. Javascriptin debuggaus saattaa olla haasteellista ja **varmin tapa aiheuttaa iso turhautuma onkin yrittää tehdä tehtävä nopeasti copypasteamalla beerlistin koodi**.
+> **HUOM2:** tehtävä kannattaa tehdä yksi pieni askel kerrallaan, samaan tapaan kuin oluiden lista tehtiin yllä olevassa esimerkissä. JavaScriptin debuggaus saattaa olla haasteellista ja **varmin tapa aiheuttaa iso turhautuma onkin yrittää tehdä tehtävä nopeasti copypasteamalla beerlistin koodi**.
 
 > ## Tehtävä 3
 >
@@ -619,15 +619,15 @@ describe "Beerlist page" do
   end
 
   before :each do
-    @brewery1 = FactoryBot.create(:brewery, name:"Koff")
-    @brewery2 = FactoryBot.create(:brewery, name:"Schlenkerla")
-    @brewery3 = FactoryBot.create(:brewery, name:"Ayinger")
-    @style1 = Style.create name:"Lager"
-    @style2 = Style.create name:"Rauchbier"
-    @style3 = Style.create name:"Weizen"
-    @beer1 = FactoryBot.create(:beer, name:"Nikolai", brewery: @brewery1, style:@style1)
-    @beer2 = FactoryBot.create(:beer, name:"Fastenbier", brewery:@brewery2, style:@style2)
-    @beer3 = FactoryBot.create(:beer, name:"Lechte Weisse", brewery:@brewery3, style:@style3)
+    @brewery1 = FactoryBot.create(:brewery, name: "Koff")
+    @brewery2 = FactoryBot.create(:brewery, name: "Schlenkerla")
+    @brewery3 = FactoryBot.create(:brewery, name: "Ayinger")
+    @style1 = Style.create name: "Lager"
+    @style2 = Style.create name: "Rauchbier"
+    @style3 = Style.create name: "Weizen"
+    @beer1 = FactoryBot.create(:beer, name: "Nikolai", brewery: @brewery1, style:@style1)
+    @beer2 = FactoryBot.create(:beer, name: "Fastenbier", brewery:@brewery2, style:@style2)
+    @beer3 = FactoryBot.create(:beer, name: "Lechte Weisse", brewery:@brewery3, style:@style3)
   end
 
   it "shows one known beer" do
@@ -1031,11 +1031,11 @@ beers_in_brewery = 50
 ratings_per_user = 30
 
 (1..users).each do |i|
-  User.create! username: "user_#{i}", password:"Passwd1", password_confirmation: "Passwd1"
+  User.create! username: "user_#{i}", password: "Passwd1", password_confirmation: "Passwd1"
 end
 
 (1..breweries).each do |i|
-  Brewery.create! name:"Brewery_#{i}", year: 1900, active: true
+  Brewery.create! name: "Brewery_#{i}", year: 1900, active: true
 end
 
 bulk = Style.create! name: "Bulk", description: "cheap, not much taste"
@@ -1043,7 +1043,7 @@ bulk = Style.create! name: "Bulk", description: "cheap, not much taste"
 Brewery.all.each do |b|
   n = rand(beers_in_brewery)
   (1..n).each do |i|
-    beer = Beer.create! name:"Beer #{b.id} -- #{i}", style:bulk
+    beer = Beer.create! name: "Beer #{b.id} -- #{i}", style:bulk
     b.beers << beer
   end
 end
@@ -1142,10 +1142,10 @@ Fragmentticachayksen lisääminen oluiden listalle views/beers/index.html on hel
 <div id="beers">
   <table class="table table-hover">
   <tr>
-    <th><%= link_to "Name", beers_path(order:"name")%></th>
-    <th><%= link_to "Style", beers_path(order:"style")%></th>
-    <th><%= link_to "Brewery", beers_path(order:"brewery")%></th>
-    <th><%= link_to "Rating", beers_path(order:"rating")%></th>
+    <th><%= link_to "Name", beers_path(order: "name")%></th>
+    <th><%= link_to "Style", beers_path(order: "style")%></th>
+    <th><%= link_to "Brewery", beers_path(order: "brewery")%></th>
+    <th><%= link_to "Rating", beers_path(order: "rating")%></th>
   </tr>
   <% @beers.each do |beer| %>
     <%= render beer %>
@@ -1156,7 +1156,7 @@ Fragmentticachayksen lisääminen oluiden listalle views/beers/index.html on hel
 <% end %>
 
 <p><%= link_to "List of breweries", breweries_path %> </P>
-<%= link_to("New beer", new_beer_path, class:"btn btn-primary") if current_user %>
+<%= link_to("New beer", new_beer_path, class: "btn btn-primary") if current_user %>
 ```
 
 Kun nyt menemme sivulle, ei sivufragmenttia ole vielä talletettu välimuistin ja sivun lataaminen kestää yhtä kauan kuin ennen cachayksen lisäämistä:
@@ -1312,13 +1312,13 @@ Jos haluaisimme cachata yksittäisen oluen sivun, kannattaa fragmentin avaimeksi
   <%= form_with(model: @rating) do |form| %>
     <%= form.hidden_field :beer_id %>
     score: <%= form.number_field :score %>
-    <%= form.submit "Create rating", class:"btn btn-primary" %>
+    <%= form.submit "Create rating", class: "btn btn-primary" %>
   <% end %>
 
   <% if current_user && current_user.admin %>
     <div>
-      <%= link_to("Edit this beer", edit_beer_path(@beer), class:"btn btn-primary") %>
-      <%= button_to "Destroy this beer", @beer, class:"btn btn-danger", form: { data: { turbo_confirm: "Are you sure ? "} }, method: :delete if current_user %>
+      <%= link_to("Edit this beer", edit_beer_path(@beer), class: "btn btn-primary") %>
+      <%= button_to "Destroy this beer", @beer, class: "btn btn-danger", form: { data: { turbo_confirm: "Are you sure ? "} }, method: :delete if current_user %>
     </div>
   <% end %>
 <% end %>
