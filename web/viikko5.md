@@ -1360,3 +1360,5 @@ Tehtävän jälkeen olutpaikkojen sivu voi näyttää esim. seuraavalta
 Commitoi kaikki tekemäsi muutokset ja pushaa koodi GitHubiin. Deployaa myös uusin versio Fly.io:n tai Herokuun. Muista myös testata Rubocopilla, että koodisi noudattaa edelleen määriteltyjä tyylisääntöjä.
 
 Tehtävät kirjataan palautetuksi osoitteeseen https://studies.cs.helsinki.fi/stats/courses/rails2022/
+    
+[Viikko 6](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/main/web/viikko6.md)
