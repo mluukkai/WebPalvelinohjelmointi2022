@@ -290,14 +290,10 @@ Funktion pitäisi siis saatuaan oluet palvelimelta muodostaa ne listaava HTML-ko
 Muutetaan JavaScript-koodiamme siten, että se listaa aluksi ainoastaan oluiden nimet:
 
 ```javascript
-const handleResponse = (request) => {
-  const beers = JSON.parse(request.target.response);
-
+const handleResponse = (beers) => {
   const beerList = beers.map((beer) => `<li>${beer.name}</li>`);
 
-  document.getElementById("beers").innerHTML = `<ul> ${beerList.join(
-    ""
-  )} </ul>`;
+  document.getElementById("beers").innerHTML = `<ul> ${beerList.join("")} </ul>`;
 };
 ```
 
@@ -316,22 +312,17 @@ Entä jos haluaisimme järjestää oluet? Jotta tämä onnistuu, refaktoroimme k
 ```javascript
 const BEERS = {};
 
-BEERS.show = () => {
-  const beers = JSON.parse(request.target.response);
-
-  const beerList = BEERS.list.map((beer) => `<li>${beer.name}</li>`);
-
-  document.getElementById("beers").innerHTML = `<ul> ${beerList.join(
-    ""
-  )} </ul>`;
-};
-
-const handleResponse = (request) => {
-  const beers = JSON.parse(request.target.response);
-
+const handleResponse = (beers) => {
   BEERS.list = beers;
   BEERS.show();
 };
+
+BEERS.show = () => {
+  const beerList = BEERS.list.map((beer) => `<li>${beer.name}</li>`);
+
+  document.getElementById("beers").innerHTML = `<ul> ${beerList.join("")} </ul>`;
+};
+
 ```
 
 Määrittelimme nyt olion <code>BEERS</code>, jonka attribuuttiin <code>BEERS.list</code> palvelimelta saapuva oluiden lista sijoitetaan. Metodi <code>BEERS.show</code> muodostaa <code>BEERS.list</code>:in oluista HTML-listan ja sijoittaa sen näytölle.
@@ -352,22 +343,22 @@ BEERS.reverse = () => {
   BEERS.list.reverse();
 };
 
-const beertable = () => {
+const beers = () => {
   document.getElementById("reverse").addEventListener("click", function (e) {
     e.preventDefault();
     BEERS.reverse();
     BEERS.show();
   });
-  var request = new XMLHttpRequest();
 
-  request.onload = handleResponse;
-
-  request.open("get", "beers.json", true);
-  request.send();
+  fetch("beers.json")
+    .then((response) => response.json())
+    .then(handleResponse);
 };
+
+export { beers };
 ```
 
-Tekstin klikkauksen käsittelijä siis määritellään sivun beer-table funktiossa, eli kun dokumentti on latautunut, _rekisteröidään_ klikkausten käsittelijäfunktio id:n "reverse" omaavalle elementille.
+Tekstin klikkauksen käsittelijä siis määritellään sivun beers funktiossa, eli kun dokumentti on latautunut, _rekisteröidään_ klikkausten käsittelijäfunktio id:n "reverse" omaavalle elementille.
 
 Kun linkkiä klikataan, tapahtumankäsittelijä kutsuu aluksi metodia <code>e.preventDefault</code>, joka estää klikkauksen "normaalin" toiminnallisuuden eli (nyt olemattoman) linkin seuraamisen. Tämän jälkeen kutsutaan metodeita _reverse_ ja _show_ piirtämään oluet ruudulle käänteisessä järjestysessä.
 
