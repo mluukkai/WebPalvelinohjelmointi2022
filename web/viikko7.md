@@ -142,7 +142,7 @@ Alamme nyt kirjoittamaan toimintalogiikan toteutusta JavaScriptiä hyödyntäen.
 Rails-sovelluksen tarvitsema JavaScript-koodi kannattaa sijoittaa hakemistoon app/javascript/custom. Tehdään hakemistoon tiedosto _utils.js_ jolla on seuraava sisältö:
 
 ```javascript
-function hello() {
+const hello = () => {
   document.getElementById("beers").innerText = "Hello from JavaScript";
   console.log("hello console!");
 }
@@ -344,7 +344,7 @@ BEERS.reverse = () => {
 };
 
 const beers = () => {
-  document.getElementById("reverse").addEventListener("click", function (e) {
+  document.getElementById("reverse").addEventListener("click", (e) => {
     e.preventDefault();
     BEERS.reverse();
     BEERS.show();
@@ -389,8 +389,8 @@ Muutetaan sitten JavaScriptissä määriteltyä metodia <code>show</code> siten,
 
 ```javascript
 const createTableRow = (beer) => {
-  let tr = document.createElement("tr");
-  let beername = tr.appendChild(document.createElement("td"));
+  const tr = document.createElement("tr");
+  const beername = tr.appendChild(document.createElement("td"));
   beername.innerHTML = beer.name;
 
   return tr;
@@ -435,13 +435,13 @@ Nyt saamme taulukon generoitua lisäämällä seuraavat rivit createTableRow-fun
 
 ```javascript
 const createTableRow = (beer) => {
-  let tr = document.createElement("tr");
+  const tr = document.createElement("tr");
   tr.classList.add("tablerow");
-  let beername = tr.appendChild(document.createElement("td"));
+  const beername = tr.appendChild(document.createElement("td"));
   beername.innerHTML = beer.name;
-  let style = tr.appendChild(document.createElement("td"));
+  const style = tr.appendChild(document.createElement("td"));
   style.innerHTML = beer.style.name;
-  let brewery = tr.appendChild(document.createElement("td"));
+  const brewery = tr.appendChild(document.createElement("td"));
   brewery.innerHTML = beer.brewery.name;
 
   return tr;
@@ -469,14 +469,19 @@ Rekisteröimme vielä järjestämisen suorittavat tapahtumankuuntelijat linkeill
 ```javascript
 const BEERS = {};
 
+const handleResponse = (beers) => {
+  BEERS.list = beers;
+  BEERS.show();
+};
+
 const createTableRow = (beer) => {
-  let tr = document.createElement("tr");
+  const tr = document.createElement("tr");
   tr.classList.add("tablerow");
-  let beername = tr.appendChild(document.createElement("td"));
+  const beername = tr.appendChild(document.createElement("td"));
   beername.innerHTML = beer.name;
-  let style = tr.appendChild(document.createElement("td"));
+  const style = tr.appendChild(document.createElement("td"));
   style.innerHTML = beer.style.name;
-  let brewery = tr.appendChild(document.createElement("td"));
+  const brewery = tr.appendChild(document.createElement("td"));
   brewery.innerHTML = beer.brewery.name;
 
   return tr;
@@ -512,48 +517,41 @@ BEERS.sortByBrewery = () => {
   });
 };
 
-const handleResponse = (request) => {
-  const beers = JSON.parse(request.target.response);
-  BEERS.list = beers;
-  BEERS.show();
-};
-
-const beertable = () => {
-  document.getElementById("name").addEventListener("click", function (e) {
+const beers = () => {
+  document.getElementById("name").addEventListener("click", (e) => {
     e.preventDefault;
     BEERS.sortByName();
     BEERS.show();
   });
-  document.getElementById("style").addEventListener("click", function (e) {
+
+  document.getElementById("style").addEventListener("click", (e) => {
     e.preventDefault;
     BEERS.sortByStyle();
     BEERS.show();
   });
-  document.getElementById("brewery").addEventListener("click", function (e) {
+
+  document.getElementById("brewery").addEventListener("click", (e) => {
     e.preventDefault;
     BEERS.sortByBrewery();
     BEERS.show();
   });
 
-  var request = new XMLHttpRequest();
-
-  request.onload = handleResponse;
-
-  request.open("get", "beers.json", true);
-  request.send();
+  fetch("beers.json")
+    .then((response) => response.json())
+    .then(handleResponse);
 };
 
-export { beertable };
+export { beers };
 ```
 
 Tapahtumakuuntelijoita kutsuessa lisätään uudessa järjestyksessä olevat BEERS.list alkiot taulukkoon olemassaolevien jatkoksi. Korjataan tämä lisäämällä BEERS.show-funktion alkuun rivi, jossa haetaan olemassaolevat <code>tablerow</code>-luokalla varustetut rivit ja poistetaan ne.
 
-JavaScript-koodimme tulee liitetyksi sovelluksen jokaiselle sivulle. Tästä on se ikävä seuraus, että ollaanpa millä sivulla tahansa, suorittaa javascript <code>beertable</code>-funktion. Myös tapahtumakunntelijat yritetään rekisteröidä jokaiselle sivulle vaikka niiden rekisteröinti on mielekästä ainoastaan jos ollaan oluiden listalla.
+JavaScript-koodimme tulee liitetyksi sovelluksen jokaiselle sivulle. Tästä on se ikävä seuraus, että ollaanpa millä sivulla tahansa, suorittaa JavaScript <code>beers</code>-funktion. Myös tapahtumakunntelijat yritetään rekisteröidä jokaiselle sivulle vaikka niiden rekisteröinti on mielekästä ainoastaan jos ollaan oluiden listalla.
 
-Viritellään JavaScript-koodia vielä siten, että <code>beertable</code>-funktion koodi suoritetaan ainoastaan jos ollaan sivulla, josta taulukko <code>beertable</code> löytyy:
+Viritellään JavaScript-koodia vielä siten, että <code>beers</code>-funktion koodi suoritetaan ainoastaan jos ollaan sivulla, josta taulukko <code>beertable</code> löytyy:
 
 ```javascript
-const beertable = () => {
+const beers = () => {
   if (document.querySelectorAll("#beertable").length < 1) return;
 
   //...
@@ -687,7 +685,7 @@ before :all do
   Capybara.register_driver :selenium do |app|
     Capybara::Selenium::Driver.new(app, :browser => :chrome)
   end
-    WebMock.allow_net_connect!
+  WebMock.allow_net_connect!
 end
 ```
 
@@ -744,7 +742,7 @@ Konfiguraation muutoksen jälkeen suoritus normaalilla selaimella onnistuu tyhje
 > find('#beertable').first('.tablerow')
 > ```
 >
-> Rivin sisältöä voi testata normaaliin tapaan expect ja have_content -metodeilla.
+> Rivin sisältöä voi testata normaaliin tapaan expect ja have_content -metodeilla. Capybaran komento find palauttaa [Node](https://rubydoc.info/github/jnicklas/capybara/master/Capybara/Node/Finders)-tyyppisen olion, katso linkin takaa vihjeitä miten Nodea käsitellään.
 
 > ## Tehtävä 5
 >
@@ -983,9 +981,11 @@ Huomaa, että if-ehdon <code>if user.closed</code> toimivuus riippuu siitä mite
 
 **Huom:** jos listaan liitettäisiin myös suosikkioluen kertova rivi
 
-    <% if user.favorite_beer != nil %>
-    <p>Favourite beer: <%= "#{user.favorite_beer.name}"%></p>
-    <% end %>
+```ruby
+<% if user.favorite_beer %>
+  <p>Favourite beer: <%= "#{user.favorite_beer.name}"%></p>
+<% end %>
+```
 
 Muuttuisi tilanne hieman hankalammaksi SQL:n optimoinnin suhteen. Metodimme viimeisin versio oli seuraava:
 
