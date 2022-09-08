@@ -885,12 +885,11 @@ Suorita <code>bundle install</code> ja käynnistä Rails server uudelleen. Kun m
 
 ![kuva](https://raw.githubusercontent.com/mluukkai/WebPalvelinohjelmointi2022/main/images/profile1.png)
 
-Raportti kertoo että <code>Executing action: index</code> eli kontrollerimetodin suoritus aiheuttaa yhden SQL-kyselyn <code>SELECT "beers".\* FROM "beers"</code>. Sen sijaan
-<code>Rendering: beers/index</code> eli näkymätemplaten suoritus aiheuttaa huomattavasti enemmän SQL-kyselyjä!
+Raportti kertoo että <code>Executing action: index</code> eli kontrollerimetodin suoritus aiheuttaa muutaman SQL-kyselyn. Sen sijaan <code>Rendering: beers/index</code> eli näkymätemplaten suoritus aiheuttaa huomattavasti enemmän SQL-kyselyjä!
 
 Kyselyjä klikkaamalla päästään tarkastelemaan syytä:
 
-![kuva](https://raw.githubusercontent.com/mluukkai/WebPalvelinohjelmointi2022/main/images/ratebeer-w6-8.png)
+![kuva](https://raw.githubusercontent.com/mluukkai/WebPalvelinohjelmointi2022/main/images/profiler2.png)
 
 Näkymätemplaten renderöinti siis suorittaa useaan kertaan seuraavat kyselyt:
 
@@ -902,7 +901,7 @@ SELECT  "breweries".* FROM "breweries" WHERE "breweries"."id" = ? LIMIT ?;
 
 Käytännössä jokaista erillistä olutta kohti tehdään oma kysely sekä <code>styles</code>- että <code>breweries</code> tauluun.
 
-Syynä tälle on se, että activerecordissa on oletusarvoisesti käytössä ns. _lazy loading_, eli kun haemme olion tietokannasta, olioon liittyvät kentät haetaan tietokannasta vasta jos niihin viitataan. Joskus tämä käyttäytyminen on toivottavaa, olioonhan voi liittyä suuri määrä olioita, joita ei välttämättä tarvita olion itsensä käsittelyn yhteydessä. Kaikkien oluiden sivulle mentäessä lazy loading ei kuitenkaan ole hyvä idea, sillä tiedämme varmuudella että jokaisen oluen yhteydessä näytetään myös oluen panimon sekä tyylin nimet ja nämä tiedot löytyvät ainoastaan panimoiden ja tyylien tietokantatauluista.
+Syynä tälle on se, että Active Recordissa on oletusarvoisesti käytössä ns. _lazy loading_, eli kun haemme olion tietokannasta, olioon liittyvät kentät haetaan tietokannasta vasta jos niihin viitataan. Joskus tämä käyttäytyminen on toivottavaa, olioonhan voi liittyä suuri määrä olioita, joita ei välttämättä tarvita olion itsensä käsittelyn yhteydessä. Kaikkien oluiden sivulle mentäessä lazy loading ei kuitenkaan ole hyvä idea, sillä tiedämme varmuudella että jokaisen oluen yhteydessä näytetään myös oluen panimon sekä tyylin nimet ja nämä tiedot löytyvät ainoastaan panimoiden ja tyylien tietokantatauluista.
 
 Voimme ohjata ActiveRecordin metodien parametrien avulla kyselyistä generoituvaa SQL:ää. Esim. seuraavasti voimme ohjeistaa, että oluiden lisäksi niihin liittyvät panimot tulee hakea tietokannasta:
 
