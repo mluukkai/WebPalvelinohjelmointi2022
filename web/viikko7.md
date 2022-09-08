@@ -1428,6 +1428,10 @@ end
 
 Käytännössä <code>belongs_to</code>-yhteyteen liitetty <code>touch: true</code> saa aikaan sen, että yhteyden toisessa päässä olevan olion kenttä <code>updated_at</code> päivittyy.
 
+Muuta seuraavaa tehtävää varten yksittäisen panimon näkymää siten, että se listaa panimon oluiden tiedot esim. seuraavaan tapaan
+
+![kuva](https://raw.githubusercontent.com/mluukkai/WebPalvelinohjelmointi2022/main/images/w7-brewery.png)
+
 > ## Tehtävä 11
 >
 > Toteuta yksittäisen panimon sivulle fragmentticachays. Huomaa, että edellisen esimerkin tapaan panimon sivufragmentin on ekspiroiduttava automaattisesti jos panimon oluisiin tulee muutoksia.
