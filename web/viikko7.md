@@ -1063,8 +1063,9 @@ Luodaan tietokantaamme hiukan lisää dataa.
 Korvaa tiedoston _db/seeds.db_ sisältö seuraavalla:
 
 ```ruby
-users = 400             # jos koneesi on hidas, riittää esim 200
-breweries = 200         # jos koneesi on hidas, riittää esim 100
+# jos koneesi on nopea, voit myös kasvattaa ao lukuja
+users = 50             
+breweries = 50
 beers_in_brewery = 50
 ratings_per_user = 30
 
@@ -1173,27 +1174,34 @@ Kuten arvata saattaa, <code>avain</code> on avain, jolla cachattava näkymäfrag
 Fragmentticachayksen lisääminen oluiden listalle views/beers/index.html on helppoa, cachataan sivulta sen dynaaminen osa eli oluiden taulukko:
 
 ```erb
-
 <h1>Beers</h1>
 
 <% cache 'beerlist', skip_digest: true do %>
-<div id="beers">
-  <table class="table table-hover">
-  <tr>
-    <th><%= link_to "Name", beers_path(order: "name")%></th>
-    <th><%= link_to "Style", beers_path(order: "style")%></th>
-    <th><%= link_to "Brewery", beers_path(order: "brewery")%></th>
-    <th><%= link_to "Rating", beers_path(order: "rating")%></th>
-  </tr>
-  <% @beers.each do |beer| %>
-    <%= render beer %>
-  <% end %>
-  </table>
-</div>
+  <div id="beers">
+    <table class="table table-striped table-hover">
+      <thead>
+        <tr>
+          <th><%= link_to "Name", beers_path(order: "name")%></th>
+          <th><%= link_to "Style", beers_path(order: "style")%></th>
+          <th><%= link_to "Brewery", beers_path(order: "brewery")%></th>
+          <th><%= link_to "Rating", beers_path(order: "rating")%></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @beers.each do |beer| %>
+          <tr>
+            <td><%= link_to beer.name, beer %></td>
+            <td><%= link_to beer.style.name, beer.style %></td>
+            <td><%= link_to beer.brewery.name, beer.brewery %></td>
+            <td><%= round(beer.average_rating) %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
 
 <% end %>
 
-<p><%= link_to "List of breweries", breweries_path %> </P>
 <%= link_to("New beer", new_beer_path, class: "btn btn-primary") if current_user %>
 ```
 
@@ -1310,11 +1318,44 @@ Exist fragment? views/beerlist-name (0.1ms)
 => nil
 ```
 
+Muuta seuraavaa tehtävää varten panimoiden sivu http://localhost:3000/breweries näyttämään panimotiedot taulukossa
+
+```ruby
+<h1>Listing breweries</h1>
+
+<p> Number of active breweries: <%= @active_breweries.count %> </p>
+
+<div id="active_breweries">
+  <table class="table table-striped table-hover">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Founded</th>
+        <th>Beers</th>
+        <th>Rating</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @active_breweries.each do |brewery| %>
+        <tr>
+          <td><%= link_to brewery.name, brewery %></td>
+          <td><%= brewery.year %></td>
+          <td><%= brewery.beers.count %></td>
+          <td><%= round(brewery.average_rating) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+```
+
 > ## Tehtävä 10
 >
-> Toteuta panimot listaavalle sivulle fragmentticachays. Varmista, että sivun sisältöön vaikuttava muutos ekspiroi cachen.
+> Toteuta panimot listaavalle sivulle fragmentticachays. Varmista, että sivun sisältöön vaikuttava muutos (panimon tietojen muutos,  tieto oluiden lukumäärän muutoksesta tai reittausten keskiarvon muutoksesta) ekspiroi cachen.
+>
+> Toteuta cachen expirointi before_action:iksi määritellyn funktion avulla, jotta ekspiroivaa koodia ei tarvitse kopioida eri metodeihin
 
-## Yksittäisen oluen sivun cashays
+## Yksittäisen oluen sivun cachays
 
 Jos haluaisimme cachata yksittäisen oluen sivun, kannattaa fragmentin avaimeksi laittaa itse cachattava olio:
 
