@@ -891,7 +891,7 @@ Kyselyjä klikkaamalla päästään tarkastelemaan syytä:
 
 ![kuva](https://raw.githubusercontent.com/mluukkai/WebPalvelinohjelmointi2022/main/images/profiler2.png)
 
-Tarkemman kuvan perusteella kontrolleri suorittaa kuitenkin vain yhden kyselyn
+Tarkemman kuvan perusteella kontrolleri suorittaa aiemmasta raportista huolimatta kuitenkin vain yhden kyselyn
 
 ```ruby
 SELECT "beers".* FROM "beers";
@@ -946,7 +946,42 @@ def index
 end
 ```
 
-Kontrollerin suoritus aiheuttaa nyt entistä vähemmän kyselyjä ja näytön renderöinti ainoastaan yhden kyselyn. Miniprofiler paljastaa että kysely on
+Huomaamme kuitenkin että vaikka kyselyjen määrä on vähentynyt, toistuu edelleen reittausten keskiarvon selvittävä kysely jokaisen oluen kohdalla:
+
+![kuva](https://raw.githubusercontent.com/mluukkai/WebPalvelinohjelmointi2022/main/images/profiler3.png)
+
+Syynä tälle on se, että olemme määritelleet että reittausten keskiarvo lasketaan SQL:n avulla:
+
+```ruby
+module RatingAverage
+  extend ActiveSupport::Concern
+
+  def average_rating
+    ratings.average(:score).to_f
+  end
+end
+```
+
+Nyt ei siis auta vaikka olemme kyselyn avulla jo hakeneet reittaukset muistiin. Voisimme hyödyntää _includes_-komennon avulla haettuja olueeseen liittyviä reittauksia laskennassa muokkaamalla sitä seuraavasti jolloin keskiarvon laskenta tapahtuu muistissa:
+
+```ruby
+module RatingAverage
+  extend ActiveSupport::Concern
+
+  def average_rating
+    rating_conut = ratings.size
+    
+    return 0 if rating_conut == 0
+    ratings.map{ |r| r.score }.sum / rating_conut
+  end
+end
+```
+
+Kontrollerin suoritus aiheuttaa nyt entistä vähemmän kyselyjä ja näytön renderöinti ainoastaan yhden kyselyn.
+
+![kuva](https://raw.githubusercontent.com/mluukkai/WebPalvelinohjelmointi2022/main/images/profiler4.png)
+
+Miniprofiler paljastaa että kysely on
 
 ```ruby
 SELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1
