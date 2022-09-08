@@ -891,12 +891,20 @@ Kyselyjä klikkaamalla päästään tarkastelemaan syytä:
 
 ![kuva](https://raw.githubusercontent.com/mluukkai/WebPalvelinohjelmointi2022/main/images/profiler2.png)
 
-Näkymätemplaten renderöinti siis suorittaa useaan kertaan seuraavat kyselyt:
+Tarkemman kuvan perusteella kontrolleri suorittaa kuitenkin vain yhden kyselyn
+
+```ruby
+SELECT "beers".* FROM "beers";
+```
+
+Näemme että näkymätemplaten renderöinti suorittaa useaan kertaan seuraavat kyselyt:
 
 ```ruby
 SELECT  "styles".* FROM "styles" WHERE "styles"."id" = ? LIMIT ?;
 
 SELECT  "breweries".* FROM "breweries" WHERE "breweries"."id" = ? LIMIT ?;
+
+SELECT AVG("ratings"."score") FROM "ratings" WHERE "ratings"."beer_id" = ?; 
 ```
 
 Käytännössä jokaista erillistä olutta kohti tehdään oma kysely sekä <code>styles</code>- että <code>breweries</code> tauluun.
