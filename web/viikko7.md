@@ -1520,13 +1520,13 @@ Ylläesitellyn kaltainen taustaprosessointitapa on siinä mielessä yksinkertain
 
 Viestijonoilla ja erillisillä prosesseilla tai säikeillä hoidetun taustaprosessoinnin toteuttamiseen Railsissa on paljon erilaisia vaihtoehtoja, yksi ratkaisu näistä on [Sidekiq](http://railscasts.com/episodes/366-sidekiq).
 
-Jos sovellus tarvitsee ainoastaan jonkin yksinkertaisen, tasaisin aikavälein suoritettavan taustaoperaation, saattaa [Heroku scheduler](https://devcenter.heroku.com/articles/scheduler) olla yksinkertaisin vaihtoehto. Tällöin taustaoperaatio määritellään [Rake-taskina](http://railscasts.com/episodes/66-custom-rake-tasks), jonka Heroku suorittaa joko kerran vuorokaudessa, tunnissa tai kymmenessä minuutissa.
+Jos sovellus tarvitsee ainoastaan jonkin yksinkertaisen, tasaisin aikavälein suoritettavan taustaoperaation, saattaa [Heroku scheduler](https://devcenter.heroku.com/articles/scheduler) olla yksinkertaisin vaihtoehto . Tällöin taustaoperaatio määritellään [Rake-taskina](http://railscasts.com/episodes/66-custom-rake-tasks), jonka Heroku suorittaa joko kerran vuorokaudessa, tunnissa tai kymmenessä minuutissa. Nopean googlailun perusteella Fly.io ei vielä tarjoa ihan vastaavaa helppokäyttöistä eräajokomentoa.
 
 ## Sucker Punch
 
-Kuten edellä todettiin, yksi vaihtoehto asynkronisten operaatioiden suorittamiseen Railsilla on [Sidekiq](http://railscasts.com/episodes/366-sidekiq). Sidekiq kuitenkin vaatii oman prosessinsa, eli esim. Herokussa sidekiqia ei ole helppoa suorittaa varaamatta sille omaa prosessia eli [dynoa](https://devcenter.heroku.com/articles/dynos), ja sen käyttäminen maksaa muutamia dollareita kuussa.
+Kuten edellä todettiin, yksi vaihtoehto asynkronisten operaatioiden suorittamiseen Railsilla on [Sidekiq](http://railscasts.com/episodes/366-sidekiq). Sidekiq kuitenkin vaatii oman prosessinsa, eli esim. Fly.io:ssa Herokussa sidekiqia ei ole helppoa suorittaa varaamatta sille omaa prosessia eli [dynoa](https://devcenter.heroku.com/articles/dynos), ja sen käyttäminen maksaa muutamia dollareita kuussa.
 
-Ilmaisten Heroku-palveluiden yhteydessä on mahdollista käyttää [Sucker Punch](https://github.com/brandonhilkert/sucker_punch)- kirjastoa:
+Ilmaisten Heroku-palveluiden yhteydessä on mahdollista käyttää [Sucker Punch](https://github.com/brandonhilkert/sucker_punch) -kirjastoa:
 
 > Sucker Punch is a single-process Ruby asynchronous processing library. This reduces costs of hosting on a service like Heroku along with the memory footprint of having to maintain additional jobs if hosting on a dedicated server. All queues can run within a single application (eg. Rails, Sinatra, etc.) process.
 
@@ -1534,11 +1534,11 @@ Eli Sucker Punch suorittaa asynkroniset työt samassa prosessissa, missä itse R
 
 Sucker Punchin käyttö on melko helppoa.
 
-Lisää gemfileen <code>gem 'sucker_punch', '~> 2.0'</code> ja suorita bundle install.
+Lisää gemfileen <code>gem 'sucker_punch', '~> 3.0'</code> ja suorita bundle install.
 
 eli määritellään Rails lataamaan automaattisesti luomaamme hakemistoon määritelty koodi.
 
-Luodaan nyt Sucker Punch -operaatio, eli tiedosto _test_job.rb_ jolla on seuraava sisältö:
+Luodaan nyt Sucker Punch -operaatio, eli hakemistoon _jobs_ tiedosto _test_job.rb_ jolla on seuraava sisältö:
 
 ```ruby
 class TestJob
