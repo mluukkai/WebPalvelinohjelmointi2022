@@ -840,7 +840,7 @@ end
 
 Suoritetaan migraatio komennolla <code>rails db:migrate</code> ja indeksi on valmis!
 
-Indeksin huono puoli on se, että kun järjestelmään lisätään uusi käyttäjä tai olemassaoleva käyttäjä poistetaan, on indeksiä muokattava ja tähän luonnollisestsi kuluu aikaa. Indeksin lisäys on siis tradeoff sen suhteen, mitä operaatiota halutaan optimoida.
+Indeksin huono puoli on se, että kun järjestelmään lisätään uusi käyttäjä tai olemassaoleva käyttäjä poistetaan, on indeksiä muokattava ja tähän luonnollisestsi kuluu aikaa. Indeksin lisäys on siis tradeoff sen suhteen, mitä operaatiota halutaan optimoida. Useimmissa tapauksissa tietokannasta lukuoperaatioita on niin paljon verrattuna kirjoitusoperaatioiden määrään, että indeksin hyödyt ylittävät ylivoimasti sen ylläpidosta koituvan lisätyön.
 
 ## Laiska lataaminen, n+1-ongelma ja tietokantakyselyjen optimointi
 
@@ -881,9 +881,9 @@ Miniprofilerin käyttöönotto on helppoa, riittää että Gemfileen lisätään
 
     gem 'rack-mini-profiler'
 
-Suorita <code>bundle install</code> ja käynnistä rails server uudelleen. Kun menet tämän jälkeen osoitteeseen http://localhost:3000/beers huomaat, että sivun yläkulmaan ilmestyy aikalukema joka kuvaa HTTP-pyynnön suoritukseen käytettyä aikaa. Numeroa klikkaamalla avautuu tarkempi erittely ajankäytöstä:
+Suorita <code>bundle install</code> ja käynnistä Rails server uudelleen. Kun menet tämän jälkeen osoitteeseen http://localhost:3000/beers huomaat, että sivun yläkulmaan ilmestyy aikalukema joka kuvaa HTTP-pyynnön suoritukseen käytettyä aikaa. Numeroa klikkaamalla avautuu tarkempi erittely ajankäytöstä:
 
-![kuva](https://raw.githubusercontent.com/mluukkai/WebPalvelinohjelmointi2022/main/images/ratebeer-w6-7.png)
+![kuva](https://raw.githubusercontent.com/mluukkai/WebPalvelinohjelmointi2022/main/images/profile1.png)
 
 Raportti kertoo että <code>Executing action: index</code> eli kontrollerimetodin suoritus aiheuttaa yhden SQL-kyselyn <code>SELECT "beers".\* FROM "beers"</code>. Sen sijaan
 <code>Rendering: beers/index</code> eli näkymätemplaten suoritus aiheuttaa huomattavasti enemmän SQL-kyselyjä!
