@@ -930,8 +930,8 @@ SELECT "breweries".* FROM "breweries" WHERE "breweries"."id" IN (?, ?, ?, ?);
 Näyttötemplaten suoritus aiheuttaa kyselyjä, jotka ovat esimerkiksi muotoa:
 
 ```ruby
-SELECT "ratings".* FROM "ratings" WHERE "ratings"."beer_id" = ?;
 SELECT  "styles".* FROM "styles" WHERE "styles"."id" = ? LIMIT ?;
+SELECT AVG("ratings"."score") FROM "ratings" WHERE "ratings"."beer_id" = ?; 
 ```
 
 Näytön renderöinnin yhteydessä enää on haettava oluisiin liittyvät tyylit tietokannasta, kukin omalla SQL-kyselyllä.
@@ -957,18 +957,20 @@ module RatingAverage
   extend ActiveSupport::Concern
 
   def average_rating
+    # tämä generoi SQL:ää
     ratings.average(:score).to_f
   end
 end
 ```
 
-Nyt ei siis auta vaikka olemme kyselyn avulla jo hakeneet reittaukset muistiin. Voisimme hyödyntää _includes_-komennon avulla haettuja olueeseen liittyviä reittauksia laskennassa muokkaamalla sitä seuraavasti jolloin keskiarvon laskenta tapahtuu muistissa:
+Nyt ei siis auta vaikka olemme kyselyn avulla jo hakeneet reittaukset muistiin. Voisimme hyödyntää _includes_-komennon avulla haettuja olueeseen liittyviä reittauksia laskennassa muokkaamalla laskenta tapahtumaan SQL:n sijaan keskusmuistissa:
 
 ```ruby
 module RatingAverage
   extend ActiveSupport::Concern
 
   def average_rating
+    # tehdään laskelmat muistiin haettujen olueen liittyvien ratings-olioiden avulla
     rating_conut = ratings.size
     
     return 0 if rating_conut == 0
@@ -999,27 +1001,30 @@ Saimme helposti optimoitua SQL-kutsujen määrää ja sitä myöden sivun lautau
 
 Kokemaamme kutsutaan n+1-ongelmaksi (ks. http://guides.rubyonrails.org/active_record_querying.html#eager-loading-associations), eli hakiessamme kannasta yhdellä kyselyllä listallisen olioita, jokainen listan olioista aiheuttaakin salakavalasti uuden tietokantahaun ja näin yhden haun sijaan tapahtuukin noin n+1 hakua.
 
-Muutetaan seuraavaa tehtävää varten käyttäjän partials seuraavaan muotoon:
+Muutetaan seuraavaa tehtävää varten käyttäjien näkymä views/users.html.erb näkymä/partiali yksinkertaisempaan muotoon:
 
 ```ruby
-<div id="<%= dom_id user %>">
-  <p>
-    <h3>Username: <%= user.username %></h3>
-  </p>
+<h1>Users</h1>
 
-  <% if user.closed %>
-    <span class="badge bg-primary">closed</span>
+<div id="users">
+  <% @users.each do |user| %>
+    <p>
+      <%= link_to(user.username, user) %>
+      <p>Has made <%= "#{user.ratings.size}"%> ratings, average rating <%= "#{user.average_rating}" %></p>
+      <% if user.closed? %>
+        <span class="badge text-bg-danger">account closed</span>
+      <% end %>
+    </p>
   <% end %>
-
-  <p>Has made <%= "#{user.ratings.count}"%> ratings, average rating <%= "#{user.average_rating}" %></p>
 </div>
+
 ```
 
 Huomaa, että if-ehdon <code>if user.closed</code> toimivuus riippuu siitä miten olet nimennyt asioita viikolla 5 tehdyn tehtävän koodissa. Voit tarvittaessa poistaa koko ehdon.
 
 > ## Tehtävä 9
 >
-> Käyttäjien sivulla on siis n+1-ongelma. Korjaa ongelma edellisen esimerkin tapaan eager loadaamalla tarvittavat oliot käyttäjien hakemisen yhteydessä. Varmista optimointisi onnistuminen miniprofilerilla.
+> Käyttäjien sivulla http://localhost:3000/beers on n+1-ongelma. Korjaa ongelma edellisen esimerkin tapaan eager loadaamalla tarvittavat oliot käyttäjien hakemisen yhteydessä. Varmista optimointisi onnistuminen miniprofilerilla.
 
 **Huom:** jos listaan liitettäisiin myös suosikkioluen kertova rivi
 
@@ -1076,7 +1081,7 @@ bulk = Style.create! name: "Bulk", description: "cheap, not much taste"
 Brewery.all.each do |b|
   n = rand(beers_in_brewery)
   (1..n).each do |i|
-    beer = Beer.create! name: "Beer #{b.id} -- #{i}", style:bulk
+    beer = Beer.create! name: "Beer #{b.id} -- #{i}", style: bulk, style: bulk, brewery: b
     b.beers << beer
   end
 end
@@ -1163,7 +1168,7 @@ Cachays tapahtuu sisällyttämällä näkymätemplaten cachattavan osa, eli _siv
 <% end %>
 ```
 
-Kuten arvata saattaa, <code>avain</code> on avain, jolla cachattava näkymäfragmentti talletetaan. Avaimena voi olla merkkijono tai olio. <code>skip*digest: true</code> liittyy [näyttötemplatejen versiointiin](http://blog.remarkablelabs.com/2012/12/russian-doll-caching-cache-digests-rails-4-countdown-to-2013) jonka haluamme nyt jättää huomioimatta. Tämä kuitenkin tarkoittaa, että välimuisti on syytä tyhjentää (komennolla <code>Rails.cache.clear</code>) \_jos* näkymätemplaten koodia muutetaan.
+Kuten arvata saattaa, <code>avain</code> on avain, jolla cachattava näkymäfragmentti talletetaan. Avaimena voi olla merkkijono tai olio. <code>skip_digest: true</code> liittyy [näyttötemplatejen versiointiin](http://blog.remarkablelabs.com/2012/12/russian-doll-caching-cache-digests-rails-4-countdown-to-2013) jonka haluamme nyt jättää huomioimatta. Tämä kuitenkin tarkoittaa, että välimuisti on syytä tyhjentää (komennolla <code>Rails.cache.clear</code>) jos näkymätemplaten koodia muutetaan.
 
 Fragmentticachayksen lisääminen oluiden listalle views/beers/index.html on helppoa, cachataan sivulta sen dynaaminen osa eli oluiden taulukko:
 
@@ -1236,7 +1241,7 @@ Kaikkien oluiden sivua olisi mahdollista nopeuttaa vielä jonkin verran. Nyt nim
 
 myös silloin kun sivufragmentti löytyy välimuistista. Voisimmekin testata fragmentin olemassaoloa metodilla <code>fragment_exist?</code> ja suorittaa tietokantaoperaation ainoastaan jos fragmentti ei ole olemassa:
 
-```erb
+```ruby
 def index
   # jos fragmentti olemassa, lopetetaan metodi tähän (eli renderöidään heti näkymä)
   return if request.format.html? && fragment_exist?('beerlist')
@@ -1309,7 +1314,7 @@ Exist fragment? views/beerlist-name (0.1ms)
 >
 > Toteuta panimot listaavalle sivulle fragmentticachays. Varmista, että sivun sisältöön vaikuttava muutos ekspiroi cachen.
 
-## yksittäisen oluen sivun cashays
+## Yksittäisen oluen sivun cashays
 
 Jos haluaisimme cachata yksittäisen oluen sivun, kannattaa fragmentin avaimeksi laittaa itse cachattava olio:
 
@@ -1359,7 +1364,7 @@ Jos haluaisimme cachata yksittäisen oluen sivun, kannattaa fragmentin avaimeksi
 <%= link_to "Back to beers", beers_path %>
 ```
 
-Nyt fragmentin avaimeksi tulee merkkijono, jonka Rails generoi kutsumalla olion metodia <code>cache*key_with_version</code>. Metodi generoi avaimen joka yksilöi olion \_ja* sisältää aikaleiman, joka edustaa hetkeä, jolloin olio on viimeksi muuttunut. Jos olion kenttiin tulee muutos, muuttuu fragmentin avaimen arvo eli vanha fragmentti ekspiroituu automaattisesti. Seuraavassa esimerkki automaattisesti generoituvasta cache-avaimesta:
+Nyt fragmentin avaimeksi tulee merkkijono, jonka Rails generoi kutsumalla olion metodia <code>cache_key_with_version</code>. Metodi generoi avaimen joka yksilöi olion ja sisältää aikaleiman, joka edustaa hetkeä, jolloin olio on viimeksi muuttunut. Jos olion kenttiin tulee muutos, muuttuu fragmentin avaimen arvo eli vanha fragmentti ekspiroituu automaattisesti. Seuraavassa esimerkki automaattisesti generoituvasta cache-avaimesta:
 
 ```ruby
 > b = Beer.first
