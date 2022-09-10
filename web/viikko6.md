@@ -419,6 +419,9 @@ Luokka voidaan lisätä myös niihin linkkeihin, jotka halutaan napin painikkeen
 >
 > Sovelluksemme lomakkeet ovat tällä hetkellä melko rumia. Tee ainakin uuden olutseuran luomislomakkeesta tyylikkäämpi Bootstrapin [lomakkeiden](https://getbootstrap.com/docs/5.2/forms/overview/) muotoiluun tarkoitettujen komponenttien avulla.
 >
+> Huom. jos käytät lomakkeiden apumetodeja kuten `select`, saatat joutua antamaan luokan `html_options`-hashissa. Ks. [dokumentaatio](https://api.rubyonrails.org/classes/ActionView/Helpers/FormBuilder.html#method-i-select)
+> Esim. selectiin luokka annettaisiin seuraavasti: `<%= f.select :field, choices, {}, { :class => "luokka" } %>`
+>
 > Saat päättää lomakkeen tarkan tyylin itse. Eräs tapa muotoilla lomake on seuraava
 
 ![kuva](https://raw.githubusercontent.com/mluukkai/WebPalvelinohjelmointi2022/main/images/ratebeer-w6-3a.png)
