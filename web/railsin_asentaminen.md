@@ -6,7 +6,9 @@ Kurssilla suositellaan ensisijaisesti käytettävän omaa tietokonetta.
 
 --
 
-Asennamme tässä Rubyn version 3.1.2 ja Railsin version 7.0.3 [rbenv-versiomanagerilla](https://github.com/sstephenson/rbenv)
+Asennamme tässä Rubyn version 3.1.2 ja Railsin version 7.0.4 [rbenv-versiomanagerilla](https://github.com/sstephenson/rbenv)
+
+7.0.4 on uusin versio tätä kirjoitettaessa (15.9.2022), voit katsoa [täältä](https://rubygems.org/gems/rails/versions) löytyykö vielä uudempaa versiota. Rubyn versiot selviävät [täältä](https://www.ruby-lang.org/en/downloads/releases/). 3.2 ilmestynee vielä syksyn aikana. Pärjäät kyllä kurssin 3.1.2:lla.
 
 Voit halutessasi käyttää myös [RVM:ää](https://rvm.io/rvm/install) eli rbenvin lähisukulaista.
 
@@ -115,5 +117,5 @@ Asennetaan sitten Rails antamalla komentoriviltä seuraavat komennot (vastaa mah
     gem install rspec
     gem install rake
     rbenv rehash
-    gem install rails -v 7.0.3
+    gem install rails -v 7.0.4
     rbenv rehash
