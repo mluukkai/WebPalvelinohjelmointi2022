@@ -1356,7 +1356,7 @@ Asenna Fly.io [tämän ohjeen](https://fly.io/docs/getting-started/installing-fl
 
 Edetään sitten noudattaen Fly.io:n [Rails](https://fly.io/docs/rails/getting-started/)-ohjetta.
 
-Mene sovelluksen hakemistoon ja luo Fly.io-sovellus komennolla `fly launch`. Samalla tapahtuu postgres-tietokannan luominen. Vastaile kysymyksiin "sopivasti". (Sovelluksen nimen tulee sisältää vain numeroita, pieniä kirjaimia ja väliviivoja.)
+Mene sovelluksen hakemistoon ja luo Fly.io-sovellus komennolla `fly launch`. Samalla tapahtuu Postgres-tietokannan luominen. Vastaile kysymyksiin "sopivasti". (Sovelluksen nimen tulee sisältää vain numeroita, pieniä kirjaimia ja väliviivoja.) Huomaa, että joudut hyväksymään tietokannan luomisen, oletusarvoisesti kysymykseen on vastattu 'no'.
     
 Vie sovellus tuotantoon komennolla `fly deploy`. Tämä komento toistetaan aina kun sovellukseen uusi versio halutaan internettiin.
 
