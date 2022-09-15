@@ -177,7 +177,7 @@ HUOM: **Tarkoituksena on, että materiaalia lukiessasi teet koko ajan samat asia
 >
 > Talletamme kurssilla tehtävän sovelluksen Githubissa sijaitsevaan repositorioon.
 >
-> Tee sovelluksesi hakemistosta (eli siitä hakemistosta jonka komento _rails new_ luo) git-repositorio suorittamalla hakemistossa komento <code>git init</code>
+> Oletusarvoisesti komento _rails new_ myös luo sovelluksen hakemistosta uuden git-repositorion. Jos näin ei tapahtunut, tee sovelluksesi hakemistosta (eli siitä hakemistosta jonka _rails new_ loi) git-repositorio suorittamalla hakemistossa komento <code>git init</code>
 >
 > Luo sovellusta varten repositorio GitHubiin ja liitä se etärepositorioksi sovelluksesi hakemiston repositorioon
 >
