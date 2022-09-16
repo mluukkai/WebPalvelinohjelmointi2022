@@ -743,9 +743,11 @@ Tutkitaan hieman asiaa kontrollerista käsin Railsin debuggeria hyödyntäen
 
 Rails on jo konfiguroinut sovelluksesi käyttöön [debuggerin](https://github.com/ruby/debug). Railsin oletusarvoinen debuggeri ei kuitenkaan tällä hetkellä käyttäydy kaikissa tilanteissa hyvin, joten asennetaan vaihtoehtoinen [pry-byebug](https://github.com/deivid-rodriguez/pry-byebug) lisäämällä tiedostoon Gemfile seuraava
 
+```ruby
 group :development, :test do
   gem 'pry-byebug'
 end
+```
 
 Lisäyksen jälkeen tulee suorita komentoriviltä komento _bundle install_ ja käynnistää sovellus uudelleen.
 
