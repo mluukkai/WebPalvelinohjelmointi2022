@@ -1507,3 +1507,5 @@ Koska kyseessä on tuotannossa oleva ohjelma, tietokannan resetointi (<code>rail
 Commitoi kaikki tekemäsi muutokset ja pushaa koodi GitHubiin. Deployaa myös uusin versio Fly.io:n tai Herokuun.
 
 Tehtävät kirjataan palautetuksi osoitteeseen https://studies.cs.helsinki.fi/stats/courses/rails2022
+
+Ja ei kun eteenpäin: [viikko 3](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/main/web/viikko3.md).
