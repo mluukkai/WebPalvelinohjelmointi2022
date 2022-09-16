@@ -1162,7 +1162,7 @@ Trendinä kuitenkin on, että metodin has_and_belongs_to_many sijaan käytetää
 >
 > Tässä vaiheessa ei ole vielä tarvetta toteuttaa toiminnallisuutta, jonka avulla käyttäjän voi poistaa olutseurasta.
 >
-> Tässä tehtävässä joutuu olemaan tarkkana Railsin nimentäkäytänteiden suhteen. Olutseuran määrittelemä luokka kirjotietaan BeerClub, sitä vastaava vierasavain taas beer_club_id ja muissa olioissa, esim. Membership:eissä olutseuraan viitataan muodossa beer_club
+> Tässä tehtävässä joutuu olemaan tarkkana Railsin nimentäkäytänteiden suhteen. Olutseuran määrittelemä luokka kirjoitetaan BeerClub, sitä vastaava vierasavain taas beer_club_id ja muissa olioissa, esim. Membership:eissä olutseuraan viitataan muodossa beer_club
 
 > ## Tehtävä 11
 >
