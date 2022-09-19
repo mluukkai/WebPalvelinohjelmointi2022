@@ -1024,7 +1024,7 @@ Huomaa, että if-ehdon <code>if user.closed</code> toimivuus riippuu siitä mite
 
 > ## Tehtävä 9
 >
-> Käyttäjien sivulla http://localhost:3000/beers on n+1-ongelma. Korjaa ongelma edellisen esimerkin tapaan eager loadaamalla tarvittavat oliot käyttäjien hakemisen yhteydessä. Varmista optimointisi onnistuminen miniprofilerilla.
+> Käyttäjien sivulla http://localhost:3000/users on n+1-ongelma. Korjaa ongelma edellisen esimerkin tapaan eager loadaamalla tarvittavat oliot käyttäjien hakemisen yhteydessä. Varmista optimointisi onnistuminen miniprofilerilla.
 
 **Huom:** jos listaan liitettäisiin myös suosikkioluen kertova rivi
 
