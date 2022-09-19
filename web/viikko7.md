@@ -971,10 +971,10 @@ module RatingAverage
 
   def average_rating
     # tehdään laskelmat muistiin haettujen olueen liittyvien ratings-olioiden avulla
-    rating_conut = ratings.size
+    rating_count = ratings.size
     
-    return 0 if rating_conut == 0
-    ratings.map{ |r| r.score }.sum / rating_conut
+    return 0 if rating_count == 0
+    ratings.map{ |r| r.score }.sum / rating_count
   end
 end
 ```
