@@ -71,7 +71,7 @@ Pajaohjausta järjestetään tiistaisin 13.9. - 13.12. klo 14-16 Kumpulan kampuk
 
 [Railsin asentaminen](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/main/web/railsin_asentaminen.md)
 
-[git- ja GitHubohjeita](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/main/web/versiohallinta.md)
+[Git- ja GitHub-ohjeita](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/main/web/versiohallinta.md)
 
 [Ruby-ohjeita](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/main/web/rubyn_perusteita.md)
 
