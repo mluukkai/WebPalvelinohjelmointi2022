@@ -1082,7 +1082,7 @@ bulk = Style.create! name: "Bulk", description: "cheap, not much taste"
 Brewery.all.each do |b|
   n = rand(beers_in_brewery)
   (1..n).each do |i|
-    beer = Beer.create! name: "Beer #{b.id} -- #{i}", style: bulk, style: bulk, brewery: b
+    beer = Beer.create! name: "Beer #{b.id} -- #{i}", style: bulk, brewery: b
     b.beers << beer
   end
 end
