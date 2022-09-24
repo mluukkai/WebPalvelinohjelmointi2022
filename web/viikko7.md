@@ -1597,7 +1597,9 @@ class TestJob
 end
 ```
 
-ja annat komennon <code>TestJob.perform_async</code> operaatio suoritetaan toistuvasti 30 sekunin välein niin kauan kunnes konsoli suljetaan.
+ja annat komennon <code>TestJob.perform_async</code> operaatio suoritetaan toistuvasti 30 sekunin välein niin kauan kunnes konsoli suljetaan. 
+
+Sivuhuomautuksena, ikuisesti pyörivää operaatiota ei kannata käynnistää testiympäristössä, sillä esim. Github Actions jää odottamaan prosessin loppumista.
 
 > ## Tehtävä 12
 >
