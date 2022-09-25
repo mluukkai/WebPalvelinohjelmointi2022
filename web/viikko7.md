@@ -1682,6 +1682,10 @@ Commitoi kaikki tekemäsi muutokset ja pushaa koodi GitHubiin. Deployaa myös uu
 
 Tehtävät kirjataan palautetuksi osoitteeseen https://studies.cs.helsinki.fi/stats/courses/rails2022/
 
+## Suoritusmerkintä
+
+[Ilmoittaudu](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/main/web/ilmoittautuminen.md) avoimen yliopiston kurssitoteutukseen ja [pyydä suoritusmerkintää](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/main/web/ilmoittautuminen.md#suoritusmerkinn%C3%A4n-pyyt%C3%A4minen) palautussovelluksessa.
+
 ## Mitä seuraavaksi?
 
 Jos Rails kiinnostaa, kannattaa tutustumista jatkaa esim. seuraaviin suuntiin
