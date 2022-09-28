@@ -222,7 +222,7 @@ Ottamalla mallia templatesta app/views/beers/index.json.jbuilder teemme reittauk
 json.array! @ratings, partial: "ratings/rating", as: :rating
 ```
 
-Tämän lisäksi tarvitsemme reittauksille myös partial-tiedoston. Otamme myös tähän mallia oluiden templatesta app/views/beers/\_beer.json.jbuilder (ja luomme tiedoston app/views/ratings/\_rating.json.jsbuilder):
+Tämän lisäksi tarvitsemme reittauksille myös partial-tiedoston. Otamme myös tähän mallia oluiden templatesta app/views/beers/\_beer.json.jbuilder (ja luomme tiedoston app/views/ratings/\_rating.json.jbuilder):
 
 ```ruby
 json.extract! rating, :id, :score
