@@ -11,3 +11,9 @@ Kurssisivu https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/main/wadr
 - [viikko 5](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/main/web/viikko5.md)
 - [viikko 6](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/main/web/viikko6.md)
 - [viikko 7](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/main/web/viikko7.md)
+
+### In English
+
+Unofficial translation of by Simone Romeo, is based on 2015 version of the course https://github.com/mluukkai/webdevelopment-rails
+
+Contributions more than welcome!
