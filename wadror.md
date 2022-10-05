@@ -1,10 +1,14 @@
 ## Web-palvelinohjelmointi Ruby on Rails, syksy 2022
 
-Web-palvelinohjelmointi Ruby on Rails palaa toiveuusintana opetusohjelmaan vielä kerran!
+Web-palvelinohjelmointi Ruby on Rails palaa toiveuusintana opetusohjelmaan vielä (ainakin) kerran!
 
 Ruby on Rails on reilut 15 vuotta sitten suureen suosioon noussut MVC-websovelluskehys, hipsterien ykköskieli vuonna 2006. Monet isot ja tunnetut sovellukset kuten Twitter, Heroku, AirBnB ja GitHub olivat aluksi Railsilla ohjelmoituja, osa näistä luottaa Railsiin edelleen. JavaScriptiin pohjautuvat teknologiat söivät Railsin suosion pikkuhiljaa vuoden 2015 jälkeen, työmarkkinoilla on kuitenkin edelleen olemassa jatkuva tarve Rails-kehittäjille, Railsia hallitsevia kehittäjiä on kuitenkin tarjolla kovin vähän.
 
 Kokeile miltä tuntuu ohjelmoida kielellä, jonka vallitseva suunnitteluparadigma on sovelluskehittäjän tyytyväisyys, ja sovelluskehyksellä joka on ratkaissut triviaalit, mutta hankalasti päätettävissä olevat asiat (mm. tiedostojen nimentä ja hakemistorakenteet) puolestasi! Huomaat myös, että toisin kuin uuden liiton sovelluksehittäjät ajattelevat, ei kaikkien sovelluksien tarvitse olla SPA- eli yhden sivun sovelluksia...
+
+Kurssin yhteistyökumppanina toimii pitkän linjan Rails-talo [Kisko](https://www.kiskolabs.com/fi/). Katso [täältä](https://www.youtube.com/watch?v=P8THIRXnLGk) Kiskon Vesan ja Antin terveiset kurssilaisille siitä miksi Rails on edelleen vuonna 2022 oivallinen teknologiavalinta moniin projekteihin.
+
+Myöhemmin kevään aikana kurssin suorittaneille on luvassa Rails-henkinen illanvietto Kiskon tiloissa... 
 
 Kurssilla keskitytään palvelinpuolen toiminnallisuuden toteuttamiseen, kurssilla tuotettavat käyttöliittymät tulevat olemaan alkeellisia. Kurssi ei ole johdatuskurssi selainohjelmointiin ja käyttöliittymäsuunnitteluun, HTML:n, CSS:n ja JavaScriptin rooli kurssilla on hyvin vähäinen.
 
