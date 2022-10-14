@@ -2,7 +2,7 @@ Jatkamme sovelluksen rakentamista siitä, mihin jäimme viikon 2 lopussa. Allaol
 
 ## Rails-ohjelmoijan workflow
 
-Railsia tehtäessä optimaalinen työskentelytapa poikkeaa merkittävästi esim. Java-ohjelmoinnista. Railsia _ei_ yleensä kannata ohjelmoida siten, että editoriin yritetään kirjoittaa paljon valmista koodia, jonka toimivuus sitten testataan menemällä koodin suorittavalle sivulle. Osittain syy tähän on kielen dynaaminen tyypitys ja tulkattavuus, joka tekee parhaillekin IDE:ille ohjelman syntaksin tarkastuksen mahdottomaksi. Toisaalta kielen tulkattavuus ja konsolityökalut (konsoli ja debuggeri) mahdollistavat pienempien koodinpätkien toiminnallisuuden testaamisen ennen niiden siirtämistä editoitavaan kooditiedostoon.
+Railsia tehtäessä optimaalinen työskentelytapa poikkeaa merkittävästi esim. Java-ohjelmoinnista. Railsia _ei_ yleensä kannata ohjelmoida siten, että editoriin yritetään kirjoittaa paljon valmista koodia, jonka toimivuus sitten testataan menemällä koodin suorittavalle sivulle. Osittain syy tähän on kielen dynaaminen tyypitys ja tulkattavuus, joka tekee parhaillekin IDE:ille koodin kattavan tarkastuksen haasteelliseksi. Toisaalta kielen tulkattavuus ja konsolityökalut (konsoli ja debuggeri) mahdollistavat pienempien koodinpätkien toiminnallisuuden testaamisen ennen niiden siirtämistä editoitavaan kooditiedostoon.
 
 Tarkastellaan esimerkkinä viime viikolla toteutetun oluiden reittausten keskiarvon toteuttamista luontevaa Rails-workflowta noudattaen.
 

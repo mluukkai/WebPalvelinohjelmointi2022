@@ -2,7 +2,7 @@
 
 Ruby on dynaamisesti tyypitetty tulkattu erittäin olio-orientoitunut kieli.
 
-Kielen syntaksi on melko vapaamielinen ja monien asioiden tekemiseen on useita erilaisia tapoja. Tämä tekee joskus asiat hankalaksi aloittelijan kannalta
+Kieli on melko vapaamielinen ja monien asioiden tekemiseen on useita erilaisia tapoja. Tämä tekee joskus asiat hankalaksi aloittelijan kannalta
 
 Koodi kirjoitetaan rb-päätteisiin tiedostoihin ja suoritetaan (normaalin Ruby-koodin ollessa kyseessä) komentoriviltä Ruby-komennon avulla.
 
