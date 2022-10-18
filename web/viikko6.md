@@ -182,7 +182,7 @@ gem 'mini_racer'
 
 Asennetaan gemit komennolla <code>bundle install</code>, asennuksen jälkeen sovellus tulee uudelleenkäynnistää.
 
-Gemin [asennusohjetta](https://github.com/twbs/bootstrap-rubygem#a-ruby-on-rails) noudattaen lisätään tiedoston _app/assets/javascript/application.js_ **ALKUUN** seuraavat
+Gemin [asennusohjetta](https://github.com/twbs/bootstrap-rubygem#a-ruby-on-rails) noudattaen lisätään tiedoston _app/javascript/application.js_ **ALKUUN** seuraavat
 
 ```
 //= require jquery3
