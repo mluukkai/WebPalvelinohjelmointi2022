@@ -1675,6 +1675,7 @@ Myös luokkametodeja voidaan siirtää yhteiseen moduuliin, tekniikka ei kuitenk
 > ## Tehtävä 15
 >
 > Kurssi on tehtävien osalta ohi ja on aika antaa kurssipalaute osoitteessa coursefeedback.helsinki.fi
+> Voit antaa palautteeen kun olet ensin [ilmoittautunut](https://github.com/mluukkai/WebPalvelinohjelmointi2022/blob/main/web/ilmoittautuminen.md) avoimen yliopiston kurssitoteutukseen (ilmoittautumisen jälkeen menee noin 2 tuntia ennen kuin ilmoittautumistieto valuu kurssipalautesovellukseen)
 
 ## Tehtävien palautus
 
