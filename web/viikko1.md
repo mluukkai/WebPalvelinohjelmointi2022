@@ -35,7 +35,7 @@ Kurssilla kaikki tehtävät ovat upotettu tähän materiaaliin. Seuraavaa tehtä
 >
 > Avaa Chromen developer tool painamalla yhtä aikaa Shift, Control ja i (tai F12). Pääset developer tooliin myös valikon Tools-kautta. Avaa välilehti Network. Välilehti näyttää selaimen lähettämät HTTP-pyynnöt ja palvelimen niihin lähettämät vastaukset.
 >
-> Copypastea selaimen osoiteriville https://fullstack-exampleapp.herokuapp.com/notes ja paina enter.
+> Copypastea selaimen osoiteriville https://studies.cs.helsinki.fi/exampleapp/notes ja paina enter.
 > Ylimpänä näet sivun lataamisen aiheuttaneen GET-pyynnön. Avaa se (klikkaamalla kutsua) ja tutki mitä kaikkea pyynnön mukana menee. Tutki erityisesti headereja ja response-osaa. Developer tools näyttää erikseen pyyntöön liittyvät (request headers) ja vastaukseen liittyvät (response headers) headerit.
 >
 > Pyyntö palauttaa siis välilehdellä response näytettävän HTML-koodin. Koodi sisältää viitteitä css-tyylitiedostoihin, JavaScript-tiedostoihin sekä kuviin. Sivua renderöitäessä selain hakee kunkin näistä omalla GET-pyynnöllä.
