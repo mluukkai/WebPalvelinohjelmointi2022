@@ -1185,7 +1185,7 @@ Nyt orpojen ongelma poistuu.
 >
 > Tee panimo jolla on vähintään yksi olut jolla on reittauksia. Poista panimo ja varmista, että panimoon liittyvät oluet ja niihin liittyvät reittaukset poistuvat.
 >
-> Jos kaikkien painoiden sivulta ei vielä ratkaisussasi pääse yksittäisten panimoiden sivuille, korjaa tilanne!
+> Jos kaikkien panimoiden sivulta ei vielä ratkaisussasi pääse yksittäisten panimoiden sivuille, korjaa tilanne!
 
 ## Olioiden epäsuora yhteys
 
