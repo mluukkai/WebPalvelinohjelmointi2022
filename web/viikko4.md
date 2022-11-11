@@ -1181,7 +1181,7 @@ Toinen vaihoehto on lisätä testiin komento <code>save_and_open_page</code>, jo
 
 Määrittely on voimassa vain siinä shellissä jossa teet sen. Jos haluat määrittelystä pysyvän, lisää se tiedostoon ~/.bashrc
 
-Jotta sekä <code>puts html.page</code>, sekä <code>save_and_open_page</code> komennot toimivat on ne sijoitettava ennen testin viimeistä riviä. Molemmat komennot voikin tässä testissä sijoittaa vaikka heti ensimmäiselle riville.
+Jotta sekä <code>puts page.html</code>, sekä <code>save_and_open_page</code> komennot toimivat on ne sijoitettava ennen testin viimeistä riviä. Molemmat komennot voikin tässä testissä sijoittaa vaikka heti ensimmäiselle riville.
 
 Suorita nyt testi tuttuun tapaan komennolla <code>rspec spec</code>. Jos haluat ajaa ainoastaan nyt määritellyn testin, muista että voit rajata suoritettavat testit antamalla komennon esim. muodossa
 
