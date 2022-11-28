@@ -485,7 +485,7 @@ def print_report
 end
 ```
 
-Tehdään sitten panimolle metodi, jonka avulla panimon voi 'uudelleenkäynnistää', tällöin panimon perustamisvuosi muuttuu vuodeksi 2018:
+Tehdään sitten panimolle metodi, jonka avulla panimon voi 'uudelleenkäynnistää', tällöin panimon perustamisvuosi muuttuu vuodeksi 2022:
 
 ```ruby
 def restart
@@ -511,7 +511,7 @@ eli huomaamme, että vuoden muuttaminen ei toimikaan odotetulla tavalla! Syynä 
 
     def year=(value)
 
-joka sijoittaisi attribuutille uuden arvon, vaan luo metodille paikallisen muuttujan nimeltään <code>year</code> johon arvo 2018 sijoitetaan.
+joka sijoittaisi attribuutille uuden arvon, vaan luo metodille paikallisen muuttujan nimeltään <code>year</code> johon arvo 2022 sijoitetaan.
 
 Jotta sijoitus onnistuu, on metodia kutsuttava <code>self</code>-viitteen kautta:
 
