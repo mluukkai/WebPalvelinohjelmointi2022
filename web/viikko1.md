@@ -1,6 +1,6 @@
-![kuva](https://raw.githubusercontent.com/mluukkai/WebPalvelinohjelmointi2022/main/images/kisko.png | width=300)
+## Kisko afterparty
 
-<img src="https://raw.githubusercontent.com/mluukkai/WebPalvelinohjelmointi2022/main/images/kisko.png" width="48">
+<img src="https://raw.githubusercontent.com/mluukkai/WebPalvelinohjelmointi2022/main/images/kisko.png" width="400">
 
 ## Web-sovellusten toimintaperiaatteita
 
