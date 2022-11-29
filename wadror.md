@@ -16,6 +16,14 @@ Kurssin laajuus on 5 opintopistettä.
 
 Vaikka kurssi on sisällöllisesti hyvin samankaltainen kuin [Web-palvelinohjelmointi Java](https://courses.helsinki.fi/fi/TKT21007/124962332), molempien kurssien suorittaminen on mahdollista.
 
+## Kisko afterparty pe 16.12. klo 16-18
+
+Suomen johtava Rails-talo [Kisko](https://www.kiskolabs.com/) järjestää kurssilaisille illanvieton pe 16.12. klo 16-18
+
+<img src="https://raw.githubusercontent.com/mluukkai/WebPalvelinohjelmointi2022/main/images/kisko.png" width="600">
+
+Jos haluat mukaan, kysy ilmoittautumislinkkiä matti.luukkainen@helsinki.fi tai Discordissa kurssikanavalla tai @mluukkai
+
 ## Esitietovaatimukset
 
 Ohjelmoinnin jatkukurssi ja Tietokantojen perusteet. HTML on hyvä tuntea siinä laajudessa kuin asiaa käsitellään kurssilla [Tietokone työvälineenä](https://tkt-lapio.github.io/).
