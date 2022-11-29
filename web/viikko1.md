@@ -1,6 +1,10 @@
-## Kisko afterparty
+## Kisko afterparty pe 16.12. klo 16-18
+
+Suomen johtava Rails-talo [Kisko](https://www.kiskolabs.com/) järjestää kurssilaisille illanvieton pe 16.12. klo 16-18
 
 <img src="https://raw.githubusercontent.com/mluukkai/WebPalvelinohjelmointi2022/main/images/kisko.png" width="400">
+
+Jos haluat mukaan, kysy ilmoittautumislinkkiä matti.luukkainen@helsinki.fi tai Discordissa kurssikanavalla tai @mluukkai
 
 ## Web-sovellusten toimintaperiaatteita
 
