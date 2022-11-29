@@ -1,4 +1,4 @@
-![kuva](./images/kisko.png)
+![kuva](https://raw.githubusercontent.com/mluukkai/WebPalvelinohjelmointi2022/main/images/kisko.png)
 
 ## Web-sovellusten toimintaperiaatteita
 
