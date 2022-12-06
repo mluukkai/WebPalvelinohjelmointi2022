@@ -600,7 +600,7 @@ Reittausten luovan oliotehtaan _:rating_ lisäksi tiedostossa määritellään p
 
 Tehdas <code>FactoryBot.create(:brewery)</code> luo panimon, jonka nimi on 'anonymous' ja perustamisvuosi 1900.
 
-Tehdas <code>FactoryBot.create(:beer)</code> luo oluen, jonka tyyli on 'Lager' ja nimi 'anonymous' ja oluelle luodaan panimo, johon olut liittyy. Vastaavasti tehdas <code>FactoryBot.create(:rating)</code> luo reittauksen, johon liittyy tehtaan luoma olut. Tehdas ei aseta oletuksena mitään arvoa reittauksen pisteytykselle eli kentälle _score_ tai reittauksen tehneelle käyttäjälle.
+Tehdas <code>FactoryBot.create(:beer)</code> luo oluen, jonka tyyli on 'Lager' ja nimi 'anonymous' ja oluelle luodaan panimo, johon olut liittyy. Vastaavasti tehdas <code>FactoryBot.create(:rating)</code> luo reittauksen, johon liittyvät tehtaan luomat olut ja käyttäjä. Lisäksi reittauksen arvoksi eli kenttään _score_ asetetaan 10.
 
 Testi voidaan muuttaa seuraavaan muotoon
 
